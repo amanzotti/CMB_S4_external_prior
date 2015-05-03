@@ -3,9 +3,9 @@
 Simple fisher code to test prior effect on N effective neutrino estimates
 
 TODO:
-HIGH: lensing noise
+HIGH: lensing noise (almost there: Komatsu perfect is there other from quicklens almost)
 
-low importance: ini file, automate the data creation process and derivative.
+low importance: ini file, automate the data creation process and derivative. Think about PCA to understand what is more important for N_eff
 
 what are this data? documents better
 
@@ -55,13 +55,13 @@ def C(iell, ell, parbin):
     s = 350 * math.sqrt(20626 * 60 * 60) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # print 'noise is ',s
     # s = 0.48 as in table from paper so it is ok.
-    t = 2 / 60 / 180 * math.pi  # 2arcmin beam
+    t = 2 / 60 / 180 * math.pi  # 2arcmin to rads beam
     fac = ell * (ell + 1) / 2 / math.pi
     fac2 = ell ** 4 / ell / (ell + 1)
 
     # Final CMB noise definition
     N = s ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8 / math.log(2))
-    N_phi = 0.* N_phi_l[iell, 1] * ell**2
+    N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
 
     # Check again in particular cosmosis ouptut lensing
     # is it a 3x3 matrix? with    TT,TE,Tphi
@@ -118,19 +118,29 @@ d3 = []
 
 for i in np.arange(-3, -1, 0.1):
     fisher1 = fisher.copy()
+    # Cicle on H0 priors
     fisher1[0, 0] += 1 / (10 ** i * 0.673) ** 2
+    # Invert and get Neff error with these priors
+
     d.append(math.sqrt(np.linalg.inv(fisher1)[3, 3]))
 
     fisher2 = fisher.copy()
-    fisher2[0, 0] += 1 / (10 ** i * 0.673) ** 2
-    fisher2[1, 1] += 1 / (0.01 * 0.96) ** 2
-    fisher2[2, 2] += 1 / (0.01 * 2.2e-9) ** 2
+    # Cicle on H0 priors
 
+    fisher2[0, 0] += 1 / (10 ** i * 0.673) ** 2
+
+    # add 1% prior on ns
+    fisher2[1, 1] += 1 / (0.01 * 0.96) ** 2
+    # add 1% prior on As
+    fisher2[2, 2] += 1 / (0.01 * 2.2e-9) ** 2
+    # Invert and get Neff error with these priors
     d2.append(math.sqrt(np.linalg.inv(fisher2)[3, 3]))
 
     fisher3 = fisher.copy()[[0, 3], :][:, [0, 3]]
-    fisher3[0, 0] += 1 / (10 ** i * 0.673) ** 2
+    # Cicle on H0 priors
 
+    fisher3[0, 0] += 1 / (10 ** i * 0.673) ** 2
+    # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
 plt.plot(10 ** np.arange(-3, -1, 0.1), d, label='No Priors')
