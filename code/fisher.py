@@ -61,7 +61,7 @@ def C(iell, ell, parbin):
 
     # Final CMB noise definition
     N = s ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8 / math.log(2))
-    N_phi = N_phi_l[iell, 1] * ell**2
+    N_phi = 0.* N_phi_l[iell, 1] * ell**2
 
     # Check again in particular cosmosis ouptut lensing
     # is it a 3x3 matrix? with    TT,TE,Tphi
