@@ -97,6 +97,35 @@ def calc_nlqq(qest, clXX, clXY, clYY, flX, flY):
     return nlqq_fullsky
 
 
+def compute_mv(nlpp_TT,nlpp_EE,nlpp_TE,nlpp_TB,nlpp_EB):
+
+    nlpp_TT=np.nan_to_num(nlpp_TT.astype(float))
+    nlpp_EE=np.nan_to_num(nlpp_EE.astype(float))
+    nlpp_TE=np.nan_to_num(nlpp_TE.astype(float))
+    nlpp_TB=np.nan_to_num(nlpp_TB.astype(float))
+    nlpp_EB=np.nan_to_num(nlpp_EB.astype(float))
+
+
+    ells = np.shape(nlpp_TT)[0]
+    temp = np.zeros((3,3,ells))
+    nlpp_mv = np.zeros_like(nlpp_TT)
+    temp[0,0,:]=nlpp_TT[:]
+    temp[0,1,:]=nlpp_TE[:]
+    temp[1,0,:]=temp[0,1,:]
+    temp[0,2,:]=nlpp_TB[:]
+    temp[2,0,:] = temp[0,2,:]
+    temp[1,1,:]=nlpp_EE[:]
+    temp[1,2,:]=nlpp_EB[:]
+    temp[2,1,:] =temp[1,2,:]
+
+    # invert at a given l
+    for ell in np.arange(1,ells):
+    # invert at a given l
+        nlpp_mv[ell] = 1. / np.sum(np.linalg.inv(temp[:,:,ell]).flatten())
+
+    return nlpp_mv
+
+
 nlpp_TT_fullsky = calc_nlqq(qest_TT, cltt, cltt, cltt, flt, flt)
 # nlpp_EE_flatsky, nlpp_EE_fullsky = calc_nlqq(qest_EE, clee, clee, clee, fle, fle)
 nlpp_EE_fullsky = calc_nlqq(qest_EE, clee, clee, clee, fle, fle)
@@ -113,6 +142,7 @@ nlpp_TE_fullsky = np.nan_to_num(nlpp_TE_fullsky.astype(float))
 nlpp_TB_fullsky = np.nan_to_num(nlpp_TB_fullsky.astype(float))
 nlpp_EB_fullsky = np.nan_to_num(nlpp_EB_fullsky.astype(float))
 
+compute_mv()
 
 # make plot
 ls = np.arange(0, lmax + 1)
