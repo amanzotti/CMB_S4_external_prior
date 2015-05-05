@@ -64,7 +64,7 @@ for key, value in values.iteritems():
         # subprocess.call(['/Users/alessandromanzotti/Work/Software/camb2013/camb',configfile_temp])
 
 
-
+np.savetxt('wu_cdd_noise_4.txt',np.vstack((np.arange(2,4800),noise_6_fun( np.arange(2,4800))).T))
 
 
 sys.exit()
