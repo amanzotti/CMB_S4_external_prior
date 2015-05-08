@@ -20,7 +20,7 @@ NNNI-1
 I-1
 I0
 tp8
-bS'{\x14\xaeG\xe1z\x94?'
+bS'{\x14\xaeG\xe1z\xb4?'
 p9
 tp10
 Rp11
@@ -28,7 +28,7 @@ sS'hubble'
 p12
 g2
 (g6
-S'\xfc\xa9\xf1\xd2Mb`?'
+S'\x00\x00\x00\x00\x00\x00\xf0?'
 p13
 tp14
 Rp15
@@ -36,7 +36,7 @@ sS'scalar_spectral_index(1)'
 p16
 g2
 (g6
-S'{\x14\xaeG\xe1z\x94?'
+S'\x9a\x99\x99\x99\x99\x99\xa9?'
 p17
 tp18
 Rp19
@@ -44,7 +44,7 @@ sS'scalar_amp(1)'
 p20
 g2
 (g6
-S'\x95dy\xe1\x7f\xfd\xb5='
+S'\xbb\xbd\xd7\xd9\xdf|\xcb='
 p21
 tp22
 Rp23

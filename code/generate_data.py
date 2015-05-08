@@ -34,7 +34,7 @@ configfile = './fiducial.ini'
 config.read(configfile)
 
 # run fiducial
-subprocess.call(['/Users/alessandromanzotti/Work/Software/camb2013/camb',configfile])
+subprocess.call(['/home/manzotti/local/camb2013/camb', configfile])
 
 # get fiducial values to figure out where to compute next
 
@@ -67,7 +67,6 @@ with open("./data/run3/par_gaps.p", "wb") as output_file:
     pickle.dump(pargaps_dict, output_file)
 
 
-
 # start loop on them and generate.
 
 for key, value in values.iteritems():
@@ -80,7 +79,7 @@ for key, value in values.iteritems():
         config.set('camb', key, str(values[key][i]))
         # print type(config.getfloat('camb', key))
         config.set('camb', 'output_root', './data/run3/' + key + '_{:.13f}'.format(values[key][i]))
-        configfile_temp = key + '_{:.13f}'.format(values[key][i]) + '.ini'
+        configfile_temp = './data/run3/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
         print config.getfloat('camb', 'hubble')
         print config.getfloat('camb', 'scalar_amp(1)')
         print config.getfloat('camb', 'scalar_spectral_index(1)')
@@ -89,7 +88,7 @@ for key, value in values.iteritems():
         with open(configfile_temp, 'w') as confile:
             config.write(confile)
 
-        subprocess.call(['/Users/alessandromanzotti/Work/Software/camb2013/camb', configfile_temp])
+        subprocess.call(['/home/manzotti/local/camb2013/camb', configfile_temp])
 
 
 sys.exit()

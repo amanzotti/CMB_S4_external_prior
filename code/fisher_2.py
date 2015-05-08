@@ -7,7 +7,7 @@ Simple fisher code to test prior effect on N effective neutrino estimates
 TODO:
 HIGH: lensing noise (almost there: Komatsu and quicklens. MV not yet)
 
-low importance: ini file, automate the data creation process and derivative. Think about PCA to understand what is more important for N_eff
+low importance: ini file. Think about PCA to understand what is more important for N_eff
 
 
 create classes or at least external utilities. Maybe a better way to interface with cosmosis
@@ -85,9 +85,9 @@ def C(iell, ell, parbin, data):
     # is it a 3x3 matrix? with    TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    C = np.array([[ data[iell, 1, parbin] / fac + N, data[iell, 4, parbin] / fac , 0 ],
-                  [data[iell, 4, parbin] / fac, data[iell, 2, parbin] / fac + N * 2 ** 0.5,                0],
-                  [0,          0,         data[iell, 5, parbin]/fac2 ]]
+    C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
+                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,                0],
+                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin]]]
                  )
     return C
 
@@ -102,26 +102,27 @@ def C(iell, ell, parbin, data):
 # =============================
 lmax = 5000
 N_phi_l = np.loadtxt('multipole_noisebias.txt')
-run_idx = 1
+run_idx = 3
 # =============================
 
 
 # READ PARAMS
+# load fiducial data
 dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
 fid = np.genfromtxt('data/run{}/fiducial_pars.txt'.format(run_idx))
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
 
+# Load data for all parameters variations
 for key, value in values.iteritems():
     for i in np.arange(0, 4):
-        print key, values[key][i]
+        # print key, values[key][i]
         filename = 'data/run{}/'.format(run_idx)
         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
 
-print np.shape(dats)
 
 # creating the 4 by 4 matrix
 fisher = np.zeros((4, 4))
@@ -144,10 +145,6 @@ for iell, ell in enumerate(range(2, lmax)):
 
         for j in range(0, 4):
             # computing derivatives.
-            ci = (C(iell, ell, i * 4 + 3,dats) - C(iell, ell, i * 4 + 2,dats)) /2./ pargaps[values.keys()[i]]
-            cj = (C(iell, ell, j * 4 + 3,dats) - C(iell, ell, j * 4 + 2,dats)) /2./ pargaps[values.keys()[j]]
-
-            print j, cj[1,1]
 
             # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
@@ -160,24 +157,17 @@ for iell, ell in enumerate(range(2, lmax)):
             # Eq 4.
             tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             # assuming f Eq.4
-            fisher[i, j] += (2 * ell + 1) / 2 * 0.5 * np.trace(tot)
-
-            print j, cj[1,1]
-            print ''
-        # sys.exit()
-
-    # sys.exit()
-# print fisher
-# sys.exit()
+            fisher[i, j] += (2. * ell + 1.) / 2. * 0.5 * np.trace(tot)
 
 d = []
 d2 = []
 d3 = []
 
 for i in np.arange(-3, -1, 0.1):
+
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher1[1, 1] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
 
     d.append(math.sqrt(np.linalg.inv(fisher1)[0, 0]))
@@ -185,7 +175,7 @@ for i in np.arange(-3, -1, 0.1):
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher2[1, 1] += 1 / (10 ** i * 67.04346) ** 2
 
     # add 1% prior on ns
     fisher2[2, 2] += 1 / (0.01 * 0.96) ** 2
@@ -197,16 +187,17 @@ for i in np.arange(-3, -1, 0.1):
     fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
     # Cicle on H0 priors
 
-    fisher3[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher3[1, 1] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[0, 0]))
 
-plt.plot(10 ** np.arange(-3, -1, 0.1), d, label='No Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), d2, label=r'1$\%$ Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), d3, label='Perfect Priors')
+plt.clf()
+plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
+plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
+plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
 plt.xscale('log')
 plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
-plt.ylabel(r'$\sigma(N_\mathrm{eff})$', fontsize=16)
+plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
 plt.legend(loc=0)
 
 plt.savefig('h0_fisher2.pdf')

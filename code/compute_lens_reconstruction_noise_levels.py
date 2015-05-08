@@ -99,6 +99,11 @@ def calc_nlqq(qest, clXX, clXY, clYY, flX, flY):
 
 def compute_mv(nlpp_TT,nlpp_EE,nlpp_TE,nlpp_TB,nlpp_EB):
 
+    '''
+you need a 5x5 wit all the estimator and cross correlation between them
+
+    '''
+
     nlpp_TT=np.nan_to_num(nlpp_TT.astype(float))
     nlpp_EE=np.nan_to_num(nlpp_EE.astype(float))
     nlpp_TE=np.nan_to_num(nlpp_TE.astype(float))
