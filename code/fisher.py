@@ -56,12 +56,12 @@ def C(iell, ell, parbin):
     # print 'noise is ',s
     # s = 0.48 as in table from paper so it is ok.
     t = 2 / 60 / 180 * math.pi  # 2arcmin to rads beam
-    fac = ell * (ell + 1) / 2 / math.pi
+    fac = ell * (ell + 1.) / 2. / math.pi
     fac2 = ell ** 4 / ell / (ell + 1)
 
     # Final CMB noise definition
     N = s ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8 / math.log(2))
-    N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
+    # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
 
     # Check again in particular cosmosis ouptut lensing
     # is it a 3x3 matrix? with    TT,TE,Tphi
@@ -70,7 +70,7 @@ def C(iell, ell, parbin):
 
     C = np.array([[dats[iell, 1, parbin] / fac + N, dats[iell, 2, parbin] / fac, 0],
                   [dats[iell, 2, parbin] / fac, dats[iell, 3, parbin] / fac + N * 2 ** 0.5, 0],
-                  [0, 0, dats[iell, 4, parbin] + N_phi]])
+                  [0, 0, dats[iell, 4, parbin]]])
     return C
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
@@ -83,24 +83,26 @@ for i in range(1, 9):
     newdat = np.genfromtxt('data/dat{}.txt'.format(i))
     dats = np.dstack((dats, newdat))
 
-print dats[:, :, 0]
+# print dats[:, :, 0]
 
 # creating the 4 by 4 matrix
 fisher = np.zeros((4, 4))
 # gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
 pargaps = np.array([0.002, 0.02, 2e-11, 0.02])  # h0, ns, As, Neff
 
-for iell, ell in enumerate(range(2, 4800)):
+for iell, ell in enumerate(range(2, 5000)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     print ell
-
+    c0 = np.zeros((3, 3))
     c0 = C(iell, ell, 0)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data.
-
+    # print c0, iell
+    # sys.exit()
     cinv = np.linalg.inv(c0)
 
     for i in range(0, 4):
+
         for j in range(0, 4):
             # computing derivatives.
             ci = (C(iell, ell, i * 2 + 1) - C(iell, ell, i * 2 + 2)) / pargaps[i]
@@ -111,6 +113,10 @@ for iell, ell in enumerate(range(2, 4800)):
 
             # assuming f
             fisher[i, j] += (2 * ell + 1) / 2 * 0.5 * np.trace(tot)
+            print j, cj[1,1]
+            print ''
+        # sys.exit()
+
 
 d = []
 d2 = []
@@ -143,6 +149,8 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
+plt.figure()
+plt.clf()
 plt.plot(10 ** np.arange(-3, -1, 0.1), d, label='No Priors')
 plt.plot(10 ** np.arange(-3, -1, 0.1), d2, label='1% Priors')
 plt.plot(10 ** np.arange(-3, -1, 0.1), d3, label='Perfect Priors')
@@ -150,6 +158,5 @@ plt.xscale('log')
 plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
 plt.ylabel(r'$\sigma(N_\mathrm{eff})$', fontsize=16)
 plt.legend(loc=0)
-
 plt.savefig('h01.pdf')
-plt.show()
+plt.close()
