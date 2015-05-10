@@ -182,6 +182,8 @@ for i, key in enumerate(par_gaps.keys()):
         np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
     plot3 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
+    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+        np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1 ,marker='o')
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()
@@ -200,6 +202,9 @@ for i, key in enumerate(par_gaps.keys()):
         np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
     plot3 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
+    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+        np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])) , linewidth=1, marker='o')
+
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()
@@ -219,6 +224,12 @@ for i, key in enumerate(par_gaps.keys()):
     plot3 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
     fg.tight_layout(pad=0.1)
+    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
+    # ---------------------------------
+    #   12h
+
+    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+        np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1,marker='o')
 
     legend = ax1.legend()
     ax1.legend(loc=0)

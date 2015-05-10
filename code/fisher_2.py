@@ -102,7 +102,8 @@ def C(iell, ell, parbin, data):
 # =============================
 lmax = 5000
 N_phi_l = np.loadtxt('multipole_noisebias.txt')
-run_idx = 1
+run_idx = 3
+fsky = 0.5
 # =============================
 
 
@@ -144,10 +145,10 @@ for iell, ell in enumerate(range(2, lmax)):
 
         for j in range(0, 4):
             # computing derivatives.
-            ci = (C(iell, ell, i * 4 + 3,dats) - C(iell, ell, i * 4 + 2,dats)) /2./ pargaps[values.keys()[i]]
-            cj = (C(iell, ell, j * 4 + 3,dats) - C(iell, ell, j * 4 + 2,dats)) /2./ pargaps[values.keys()[j]]
+            # ci = (C(iell, ell, i * 4 + 3,dats) - C(iell, ell, i * 4 + 2,dats)) /2./ pargaps[values.keys()[i]]
+            # cj = (C(iell, ell, j * 4 + 3,dats) - C(iell, ell, j * 4 + 2,dats)) /2./ pargaps[values.keys()[j]]
 
-            print j, cj[1,1]
+            # print j, cj[1,1]
 
             # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
@@ -177,7 +178,7 @@ d3 = []
 for i in np.arange(-3, -1, 0.1):
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher1[1, 1] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
 
     d.append(math.sqrt(np.linalg.inv(fisher1)[0, 0]))
@@ -185,7 +186,7 @@ for i in np.arange(-3, -1, 0.1):
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher2[1, 1] += 1 / (10 ** i * 67.04346) ** 2
 
     # add 1% prior on ns
     fisher2[2, 2] += 1 / (0.01 * 0.96) ** 2
@@ -197,7 +198,7 @@ for i in np.arange(-3, -1, 0.1):
     fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
     # Cicle on H0 priors
 
-    fisher3[1, 1] += 1 / (10 ** i * 0.673) ** 2
+    fisher3[1, 1] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[0, 0]))
 

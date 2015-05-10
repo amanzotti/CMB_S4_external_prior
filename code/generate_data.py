@@ -43,7 +43,7 @@ As = config.getfloat('camb', 'scalar_amp(1)')
 ns = config.getfloat('camb', 'scalar_spectral_index(1)')
 N_eff = config.getfloat('camb', 'massless_neutrinos')  # is it true? what do we want to keep fixed?
 
-np.savetxt("./data/run3/fiducial_pars.txt", np.array([h, ns, As, N_eff]))
+np.savetxt("./data/run2/fiducial_pars.txt", np.array([h, ns, As, N_eff]))
 
 # generate values to compute Cls
 values = {}
@@ -58,12 +58,12 @@ pargaps_dict['scalar_spectral_index(1)'] = pargaps[1]
 pargaps_dict['scalar_amp(1)'] = pargaps[2]
 pargaps_dict['massless_neutrinos'] = pargaps[3]
 # save a pickle of data values to be re-used
-with open("./data/run3/grid_values.p", "wb") as output_file:
+with open("./data/run2/grid_values.p", "wb") as output_file:
     pickle.dump(values, output_file)
 
 # save datagaps
 
-with open("./data/run3/par_gaps.p", "wb") as output_file:
+with open("./data/run2/par_gaps.p", "wb") as output_file:
     pickle.dump(pargaps_dict, output_file)
 
 

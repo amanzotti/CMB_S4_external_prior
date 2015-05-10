@@ -1,19 +1,4 @@
-%% ****** Start of file apstemplate.tex ****** %
-%%
-%%
-%%   This file is part of the APS files in the REVTeX 4 distribution.
-%%   Version 4.1r of REVTeX, August 2010
-%%
-%%
-%%   Copyright (c) 2001, 2009, 2010 The American Physical Society.
-%%
-%%   See the REVTeX 4 README file for restrictions and more information.
-%%
-%
-% This is a template for producing manuscripts for use with REVTEX 4.0
-% Copy this file to another name and then work on that file.
-% That way, you always have this original template file to use.
-%
+
 % Group addresses by affiliation; use superscriptaddress for long
 % author lists, or if there are many overlapping affiliations.
 % For Phys. Rev. appearance, change preprint to twocolumn.
@@ -24,7 +9,8 @@
 \documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
-
+\usepackage{bm}
+\usepackage{amsmath}
 % You should use BibTeX and apsrev.bst for references
 % Choosing a journal automatically selects the correct APS
 % BibTeX style file (bst file), so only uncomment the line
@@ -93,6 +79,38 @@ Try to understand the effect of prior on the $N_{\text{eff}}$ parameter with a F
 \subsubsection{}
 
 \section{Theory}
+
+\begin{eqnarray}
+\centering
+	s\ [\;\mu {\rm K.arcmin}\;] \equiv \frac{ {\rm NET}\ [\; \mu{\rm K.}\sqrt{s}\;] \times \sqrt{f_{sky} \ [\;{\rm arcmin}^2\;] }}{ \sqrt {N_{\rm det} \times Y \times \Delta T\ [\;{\rm s }\;]}}.
+	\label{eq:sensitivity_definition}
+\end{eqnarray}
+
+\begin{equation}
+	\centering
+		F_{ij} \equiv - \left\langle\frac{\partial^2 \log \mathcal{L}}{\partial \theta_i \partial \theta_j} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta_0}}\right\rangle
+	\label{eq:Fij_def}
+\end{equation}
+
+ \begin{eqnarray}
+ 	\centering
+		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{Td} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{Td} & 0 & C_\ell^{dd} + N_\ell^{dd}\end{array}\right).
+	\label{eq:cov_definition}
+\end{eqnarray}
+
+\begin{equation}
+\sigma_i \equiv \sigma (\theta_i) = \sqrt{(\mathbf{ F^{-1}})_{ii}}
+\end{equation}
+
+\begin{equation}
+F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,fid})^2}, 
+\end{equation}
+
+
+\begin{eqnarray}
+	T_{\nu} = \left( \frac{4}{11} \right)^{1/3} T_{\gamma} 
+	\label{eq:tnu_propto_tgamma}
+\end{eqnarray}
 
 \section{Data}
 \section{Results}

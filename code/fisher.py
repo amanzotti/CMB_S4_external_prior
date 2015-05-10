@@ -116,7 +116,7 @@ for iell, ell in enumerate(range(2, 5000)):
             print j, cj[1,1]
             print ''
         # sys.exit()
-
+print fisher
 
 d = []
 d2 = []
