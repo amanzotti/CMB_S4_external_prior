@@ -1,4 +1,5 @@
 import numpy as np
+import pickle as pickle
 #import sys
 import matplotlib
 matplotlib.use('Agg')
@@ -34,7 +35,7 @@ data8 = np.genfromtxt('../data/dat8.txt', dtype=float)
 
 # =============================
 
-run_idx = 1
+run_idx = 3
 
 
 # READ PARAMS
@@ -174,6 +175,7 @@ label['scalar_spectral_index(1)'] = 'n_{s}'
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
+<<<<<<< HEAD
     plot2 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
     plot2 = plt.loglog(data_fid[:, 0], np.abs(
@@ -184,6 +186,16 @@ for i, key in enumerate(par_gaps.keys()):
         np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
     plot3 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1 ,marker='o')
+=======
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0] ), linewidth=1, color='k')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='b')
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='r')
+>>>>>>> a28613b5bac605dd6f24be439cf96d8142692ae6
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()
@@ -194,6 +206,7 @@ for i, key in enumerate(par_gaps.keys()):
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
+<<<<<<< HEAD
     plot2 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
     plot2 = plt.loglog(data_fid[:, 0], np.abs(
@@ -205,6 +218,16 @@ for i, key in enumerate(par_gaps.keys()):
     plot3 = plt.loglog(data_fid[:, 0], np.abs(
         np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])) , linewidth=1, marker='o')
 
+=======
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='b')
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='r')
+>>>>>>> a28613b5bac605dd6f24be439cf96d8142692ae6
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()
@@ -215,14 +238,14 @@ for i, key in enumerate(par_gaps.keys()):
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='b')
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='r')
     fg.tight_layout(pad=0.1)
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
     # ---------------------------------
@@ -234,6 +257,42 @@ for i, key in enumerate(par_gaps.keys()):
     legend = ax1.legend()
     ax1.legend(loc=0)
     plt.savefig('../../images/test_der_phi_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+                format='pdf', transparent=True)
+    plt.clf()
+
+for i, key in enumerate(par_gaps.keys()):
+    print key, i
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 6, 4 * i + 3] - dats[:, 6, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='b')
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='r')
+    fg.tight_layout(pad=0.1)
+
+    legend = ax1.legend()
+    ax1.legend(loc=0)
+    plt.savefig('../../images/test_der_phiT_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+                format='pdf', transparent=True)
+    plt.clf()
+
+for i, key in enumerate(par_gaps.keys()):
+    print key, i
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g')
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 4, 4 * i + 3] - dats[:, 4, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='b')
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='r')
+    fg.tight_layout(pad=0.1)
+
+    legend = ax1.legend()
+    ax1.legend(loc=0)
+    plt.savefig('../../images/test_der_TE_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.clf()
 # ============================================

@@ -69,7 +69,7 @@ def C(iell, ell, parbin):
     # phiT,phiE,phiphi
 
     C = np.array([[dats[iell, 1, parbin] / fac + N, dats[iell, 2, parbin] / fac, 0],
-                  [dats[iell, 2, parbin] / fac, dats[iell, 3, parbin] / fac + N * 2 ** 0.5, 0],
+                  [dats[iell, 2, parbin] / fac, dats[iell, 3, parbin] / fac + N * 2. , 0],
                   [0, 0, dats[iell, 4, parbin]]])
     return C
 
