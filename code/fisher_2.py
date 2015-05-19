@@ -70,24 +70,22 @@ def C(iell, ell, parbin, data):
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25%yeld
     N_det = 10 ** 6  # 1 milion of detectors
-    s = 350 * math.sqrt(20626 * 60 * 60) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
-
+    s = 350. * math.sqrt(20626. * 60. * 60.) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
 
-    t = 2 / 60 / 180 * math.pi  # 2arcmin to rads beam
+    t = 2. / 60. / 180. * math.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
-
     # Final CMB noise definition
-    N = s ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8 / math.log(2))  # this noise is in mu_K so check CMB accordingly
+    N = (s* np.pi/180./60.) ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8. / math.log(2))
+      # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
-
     # is it a 3x3 matrix? with    TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
     C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
                   [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,                0],
-                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin]]]
+                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin] +1e-8]]
                  )
     return C
 
@@ -100,7 +98,7 @@ def C(iell, ell, parbin, data):
 
 # TODO LOAD EVERYTHING FROM INI
 # =============================
-lmax = 5000
+lmax = 3000
 N_phi_l = np.loadtxt('multipole_noisebias.txt')
 run_idx = 3
 fsky = 0.5
@@ -164,7 +162,7 @@ for iell, ell in enumerate(range(2, lmax)):
             # Eq 4.
             tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             # assuming f Eq.4
-            fisher[i, j] += (2. * ell + 1.) / 2. * 0.5 * np.trace(tot)
+            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * np.trace(tot)
 
 d = []
 d2 = []
@@ -185,9 +183,9 @@ for i in np.arange(-3, -1, 0.1):
     fisher2[1, 1] += 1 / (10 ** i * 67.04346) ** 2
 
     # add 1% prior on ns
-    fisher2[2, 2] += 1 / (0.01 * 0.96) ** 2
+    fisher2[2, 2] += 1 / (0.001 * 0.96) ** 2
     # add 1% prior on As
-    fisher2[3, 3] += 1 / (0.01 * 2.2e-9) ** 2
+    fisher2[3, 3] += 1 / (0.001 * 2.2e-9) ** 2
     # Invert and get Neff error with these priors
     d2.append(math.sqrt(np.linalg.inv(fisher2)[0, 0]))
 
@@ -207,5 +205,5 @@ plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
 plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
 plt.legend(loc=0)
 
-plt.savefig('h0_fisher2.pdf')
+plt.savefig('h0_fisher_no_noise.pdf')
 plt.show()
