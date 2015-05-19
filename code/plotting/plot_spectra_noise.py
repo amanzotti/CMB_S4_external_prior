@@ -12,6 +12,22 @@ from itertools import cycle
 from matplotlib.ticker import MaxNLocator  # needed for tick
 
 
+def noise(Y,N_det,beam_arc,ell):
+    pass
+# noise definition from the number of observations and time
+# eq 1 of W.hu et al snowmass paper 10^6 detectors
+# Y = 0.25  # 25%yeld
+# N_det = 10 ** 6  # 1 milion of detectors
+s = 350. * math.sqrt(20626. * 60. * 60.) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+# s = 0.48 as in table from paper so it is ok.
+
+t = beam_arc / 60. / 180. * math.pi  # 2arcmin to rads beam
+fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
+fac2 = (ell * (ell + 1.))
+# Final CMB noise definition
+N = (s* np.pi/180./60.) ** 2 * np.exp(ell * (ell + 1) * t ** 2 / 8. / math.log(2))
+
+
 # ============================================
 # ============================================
 # ============================================
@@ -172,90 +188,6 @@ label['hubble'] = 'H_{0}'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
 
-
-for i, key in enumerate(par_gaps.keys()):
-    print key, i
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1 ,marker='o')
-
-    fg.tight_layout(pad=0.1)
-
-    legend = ax1.legend()
-    ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_T_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
-    plt.clf()
-
-for i, key in enumerate(par_gaps.keys()):
-    print key, i
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])) , linewidth=1, marker='o')
-
-    fg.tight_layout(pad=0.1)
-
-    legend = ax1.legend()
-    ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_E_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
-    plt.clf()
-
-for i, key in enumerate(par_gaps.keys()):
-    print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='b')
-    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='r')
-    fg.tight_layout(pad=0.1)
-    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
-    # ---------------------------------
-    #   12h
-
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
-        np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1,marker='o')
-
-    legend = ax1.legend()
-    ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_phi_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
-    plt.clf()
-
-for i, key in enumerate(par_gaps.keys()):
-    print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 3] - dats[:, 6, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='b')
-    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='r')
-    fg.tight_layout(pad=0.1)
-
-    legend = ax1.legend()
-    ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_phiT_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
-    plt.clf()
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i

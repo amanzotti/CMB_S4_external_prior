@@ -98,6 +98,7 @@ def C(iell, ell, parbin, data):
 
 # TODO LOAD EVERYTHING FROM INI
 # =============================
+l_t_max = 3000# this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 3000
 N_phi_l = np.loadtxt('multipole_noisebias.txt')
 run_idx = 3
@@ -123,6 +124,9 @@ for key, value in values.iteritems():
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
 
+# cut Cl^T at ells bigger than l_t_max
+
+dats[l_t_max:, 1, 1:] = 0.
 
 # creating the 4 by 4 matrix
 fisher = np.zeros((4, 4))
