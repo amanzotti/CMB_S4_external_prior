@@ -26,7 +26,7 @@ The matrix is going to run an 4 parameters:
 
 CONVENTIONS:
 
-PARAMETER ORDER = Neff,H0,ns,As
+PARAMETER ORDER = Neff,H0,ns,As,tau
                     0  1   2  3
 
 
@@ -118,7 +118,7 @@ par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
 # Load data for all parameters variations
 for key, value in values.iteritems():
     for i in np.arange(0, 4):
-        # print key, values[key][i]
+        print key, values[key][i]
         filename = 'data/run{}/'.format(run_idx)
         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
         newdat = np.genfromtxt(filename)
@@ -129,9 +129,9 @@ for key, value in values.iteritems():
 dats[l_t_max:, 1, 1:] = 0.
 
 # creating the 4 by 4 matrix
-fisher = np.zeros((4, 4))
+fisher = np.zeros((5, 5))
 # gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
-pargaps = par_gaps  # h0, ns, As, Neff
+pargaps = par_gaps  # h0, ns, As, Neff,tau
 
 for iell, ell in enumerate(range(2, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
