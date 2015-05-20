@@ -189,43 +189,34 @@ label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
 
 
-for i, key in enumerate(par_gaps.keys()):
-    print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g')
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 3] - dats[:, 4, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='b')
-    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='r')
-    fg.tight_layout(pad=0.1)
+plot2 = plt.loglog(dats[:, 0, 0], dats[:, 4, 4 * i + 1] , linewidth=1, color='k')
 
-    legend = ax1.legend()
-    ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_TE_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
-    plt.clf()
+
+legend = ax1.legend()
+ax1.legend(loc=0)
+plt.savefig('../../images/test_der_TE_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+            format='pdf', transparent=True)
+plt.clf()
 # ============================================
 # FINALLY SAVE
-    # print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
-    ax1.set_ylabel(r'$ \frac{\partial C^{T}}{\partial ~' + label[key] + "}$")
-    ax1.set_xlabel(r'$\ell$')
-    # ax1.set_xlim((0, 3))
-    # ax1.set_ylim((10**-16,10**-10))
-    ax1.minorticks_on()
-    # ax1.set_xscale('log')
-    # ax1.set_yscale('log')
-    # ============================================
-    # ============================================
+# print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
+ax1.set_ylabel(r'$ \frac{\partial C^{T}}{\partial ~' + label[key] + "}$")
+ax1.set_xlabel(r'$\ell$')
+# ax1.set_xlim((0, 3))
+# ax1.set_ylim((10**-16,10**-10))
+ax1.minorticks_on()
+# ax1.set_xscale('log')
+# ax1.set_yscale('log')
+# ============================================
+# ============================================
 
-    # ============================================
-    # LEGEND
-    # ============================================
-    # OPTION
-    plt.rcParams['legend.frameon'] = False
-    plt.rcParams['legend.numpoints'] = 3
-    plt.rcParams['legend.handletextpad'] = 0.3
-    # ============================================
+# ============================================
+# LEGEND
+# ============================================
+# OPTION
+plt.rcParams['legend.frameon'] = False
+plt.rcParams['legend.numpoints'] = 3
+plt.rcParams['legend.handletextpad'] = 0.3
+# ============================================
 
 plt.clf()
