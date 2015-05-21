@@ -33,6 +33,7 @@ N_det = parser.getfloat('lensing_noise', 'N_det')
 beam_fwhm = parser.getfloat('lensing_noise', 'beam_fwhm')
 lmin = parser.getint('lensing_noise', 'lmin')
 lmax = parser.getint('lensing_noise', 'lmax')
+lmax= 3000
 fsky = 0.5
 # calculation parameters.
 # lmax = 3000  # maximum multipole for T, E, B and \phi.
@@ -44,17 +45,16 @@ print N_det, beam_fwhm, lmin, lmax, Y
 # nlev_t = 5.   # temperature noise level, in uK.arcmin.
 # nlev_p = 5.   # polarization noise level, in uK.arcmin.
 # beam_fwhm = 1.   # Gaussian beam full-width-at-half-maximum.
-
 # unlensed theory spectra.
 cl_unl = ql.spec.get_camb_scalcl(
     fname='/home/manzotti/n_eff-dependence-on-prior/code/data/run3/fiducial_scalcls.dat', lmax=lmax)
 # lensed theory spectra.
 cl_len = ql.spec.get_camb_lensedcl(
     fname='/home/manzotti/n_eff-dependence-on-prior/code/data/run3/fiducial_lensedcls.dat', lmax=lmax)
-fac = (7.4311 * 10 ** 12)
-print cl_unl.cltt
+beam_fwhm  = 1.   # Gaussian beam full-width-at-half-maximu
 bl = ql.spec.bl(beam_fwhm, lmax)  # transfer function.
 pix = ql.maps.pix(nx, dx)
+print lmax,np.size(cl_len.cltt)
 
 
 # noise definition from the number of observations and time
@@ -65,8 +65,9 @@ pix = ql.maps.pix(nx, dx)
 
 nlev_t = 350. * math.sqrt(fsky2arcmin(0.5)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
 nlev_p = nlev_t * 2.
-# print 'error' , nlev_t,nlev_p
-
+print 'error' , nlev_t,nlev_p
+nlev_t     = 5.   # temperature noise level, in uK.arcmin.
+nlev_p     = 5.   # polarization noise level, in uK.arcmin.
 # noise spectra
 nltt = (np.pi / 180. / 60. * nlev_t) ** 2 / bl ** 2
 nlee = nlbb = (np.pi / 180. / 60. * nlev_p) ** 2 / bl ** 2
