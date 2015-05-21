@@ -25,9 +25,10 @@ we use the _lenspotentialcls so
 The matrix is going to run an 4 parameters:
 
 CONVENTIONS:
-
-PARAMETER ORDER = Neff,H0,ns,As,tau
-                    0  1   2  3
+alphabetical in CAMB description
+hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
+PARAMETER ORDER = H0,Neff,tau,As,ns
+                    0  1   2  3   4
 
 
 
@@ -51,7 +52,14 @@ import sys
 
 
 def years2sec(years):
+    ''' years to sec '''
     return years * 365 * 24. * 60. * 60.
+
+
+def fsky2arcmin(fsky):
+    '''convert fsky in fraction of unity to arcmin^2'''
+    # 41253 square degrees in all sky
+    return 41253. * fsky * 60. * 60.
 
 
 def C(iell, ell, parbin, data):
@@ -70,22 +78,23 @@ def C(iell, ell, parbin, data):
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25%yeld
     N_det = 10 ** 6  # 1 milion of detectors
-    s = 350. * math.sqrt(20626. * 60. * 60.) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+    s = 350. * math.sqrt(fsky2arcmin(0.5)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
-
+    print s,math.sqrt(N_det * Y * years2sec(5))
     t = 2. / 60. / 180. * math.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
     # Final CMB noise definition
-    N = (s* np.pi/180./60.) ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8. / math.log(2))
-      # this noise is in mu_K so check CMB accordingly
+    N = (s * np.pi / 180. / 60.) ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8. / math.log(2))
+    # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
-    # is it a 3x3 matrix? with    TT,TE,Tphi
+    # is it a 3x3 matrix? with
+    # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
     C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
                   [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,                0],
-                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin] +1e-8]]
+                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin] + 1e-8]]
                  )
     return C
 
@@ -98,8 +107,8 @@ def C(iell, ell, parbin, data):
 
 # TODO LOAD EVERYTHING FROM INI
 # =============================
-l_t_max = 3000# this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 3000
+l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
+lmax = 5000
 N_phi_l = np.loadtxt('multipole_noisebias.txt')
 run_idx = 3
 fsky = 0.5
@@ -114,10 +123,10 @@ fid = np.genfromtxt('data/run{}/fiducial_pars.txt'.format(run_idx))
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
-
+n_values = np.size(values.keys())
 # Load data for all parameters variations
 for key, value in values.iteritems():
-    for i in np.arange(0, 4):
+    for i in np.arange(0, n_values - 1):
         print key, values[key][i]
         filename = 'data/run{}/'.format(run_idx)
         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
@@ -125,11 +134,9 @@ for key, value in values.iteritems():
         dats = np.dstack((dats, newdat))
 
 # cut Cl^T at ells bigger than l_t_max
-
 dats[l_t_max:, 1, 1:] = 0.
-
-# creating the 4 by 4 matrix
-fisher = np.zeros((5, 5))
+# creating the n_values by n_values matrix
+fisher = np.zeros((n_values, n_values))
 # gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
 pargaps = par_gaps  # h0, ns, As, Neff,tau
 
@@ -145,15 +152,14 @@ for iell, ell in enumerate(range(2, lmax)):
 
     cinv = np.linalg.inv(c0)
 
-    for i in range(0, 4):
+    for i in range(0, n_values):
 
-        for j in range(0, 4):
+        for j in range(0, n_values):
             # computing derivatives.
             # ci = (C(iell, ell, i * 4 + 3,dats) - C(iell, ell, i * 4 + 2,dats)) /2./ pargaps[values.keys()[i]]
             # cj = (C(iell, ell, j * 4 + 3,dats) - C(iell, ell, j * 4 + 2,dats)) /2./ pargaps[values.keys()[j]]
 
             # print j, cj[1,1]
-
 
             # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
@@ -174,31 +180,42 @@ d3 = []
 
 for i in np.arange(-3, -1, 0.1):
 
+    # '''alphabetical in CAMB description
+    # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
+    # PARAMETER ORDER = H0,Neff,tau,As,ns
+    #                     0  1   2  3   4'''
+
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[1, 1] += 1 / (10 ** i * 67.04346) ** 2
+    fisher1[0, 0] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
 
-    d.append(math.sqrt(np.linalg.inv(fisher1)[0, 0]))
+    d.append(math.sqrt(np.linalg.inv(fisher1)[1, 1]))
 
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[1, 1] += 1 / (10 ** i * 67.04346) ** 2
+    fisher2[0, 0] += 1 / (10 ** i * 67.04346) ** 2
 
     # add 1% prior on ns
-    fisher2[2, 2] += 1 / (0.001 * 0.96) ** 2
+    fisher2[4, 4] += 1 / (0.01 * 0.96) ** 2
     # add 1% prior on As
-    fisher2[3, 3] += 1 / (0.001 * 2.2e-9) ** 2
+    fisher2[3, 3] += 1 / (0.01 * 2.2e-9) ** 2
+    fisher2[2, 2] += 1 / (0.01 * 0.0924518) ** 2
+
     # Invert and get Neff error with these priors
-    d2.append(math.sqrt(np.linalg.inv(fisher2)[0, 0]))
+    d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
 
     fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
     # Cicle on H0 priors
 
-    fisher3[1, 1] += 1 / (10 ** i * 67.04346) ** 2
+    fisher3[0, 0] += 1 / (10 ** i * 67.04346) ** 2
     # Invert and get Neff error with these priors
-    d3.append(math.sqrt(np.linalg.inv(fisher3)[0, 0]))
+    d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
+
+np.savetxt('sigma_1percent.txt',d1)
+np.savetxt('sigma_noPrior.txt',d2)
+np.savetxt('sigma_perfect_prior.txt',d3)
 
 plt.clf()
 plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
@@ -209,5 +226,5 @@ plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
 plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
 plt.legend(loc=0)
 
-plt.savefig('h0_fisher_no_noise.pdf')
+plt.savefig('../images/h0_fisher_tau.pdf')
 plt.show()

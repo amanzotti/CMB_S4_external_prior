@@ -14,42 +14,69 @@ import pylab as pl
 import configparser
 import quicklens as ql
 import sys
+import math
 
+
+def years2sec(years):
+    return years * 365 * 24. * 60. * 60.
+
+
+def fsky2arcmin(fsky):
+    '''convert fsky in fraction of unity to arcmin^2'''
+    # 41253 square degrees in all sky
+    return 41253. * fsky * 60. * 60.
 
 parser = configparser.ConfigParser()
-configfile='./lensing_noise.ini'
+configfile = './lensing_noise.ini'
 parser.read(configfile)
-nlev_t = parser.getfloat('lensing_noise', 'nlev_t')
-nlev_p = parser.getfloat('lensing_noise', 'nlev_p')
+N_det = parser.getfloat('lensing_noise', 'N_det')
 beam_fwhm = parser.getfloat('lensing_noise', 'beam_fwhm')
 lmin = parser.getint('lensing_noise', 'lmin')
 lmax = parser.getint('lensing_noise', 'lmax')
-
-
+fsky = 0.5
 # calculation parameters.
 # lmax = 3000  # maximum multipole for T, E, B and \phi.
 nx = 512  # number of pixels for flat-sky calc.
 dx = 1. / 60. / 180. * np.pi  # pixel width in radians.
+Y = 0.25
+print N_det, beam_fwhm, lmin, lmax, Y
 
 # nlev_t = 5.   # temperature noise level, in uK.arcmin.
 # nlev_p = 5.   # polarization noise level, in uK.arcmin.
 # beam_fwhm = 1.   # Gaussian beam full-width-at-half-maximum.
 
-cl_unl = ql.spec.get_camb_scalcl(fname='/home/manzotti/n_eff-dependence-on-prior/code/fiducial_scalcls.dat',lmax=lmax)  # unlensed theory spectra.
-cl_len = ql.spec.get_camb_lensedcl(fname='/home/manzotti/n_eff-dependence-on-prior/code/fiducial_lensedcls.dat',lmax=lmax)  # lensed theory spectra.
-
+# unlensed theory spectra.
+cl_unl = ql.spec.get_camb_scalcl(
+    fname='/home/manzotti/n_eff-dependence-on-prior/code/data/run3/fiducial_scalcls.dat', lmax=lmax)
+# lensed theory spectra.
+cl_len = ql.spec.get_camb_lensedcl(
+    fname='/home/manzotti/n_eff-dependence-on-prior/code/data/run3/fiducial_lensedcls.dat', lmax=lmax)
+fac = (7.4311 * 10 ** 12)
+print cl_unl.cltt
 bl = ql.spec.bl(beam_fwhm, lmax)  # transfer function.
 pix = ql.maps.pix(nx, dx)
+
+
+# noise definition from the number of observations and time
+# eq 1 of W.hu et al snowmass paper 10^6 detectors
+# Y = 0.25  # 25%yeld
+# N_det = 10 ** 6  # 1 milion of detectors
+# math.sqrt(20626. * 60. * 60.)  # half sky in arcmin^2
+
+nlev_t = 350. * math.sqrt(fsky2arcmin(0.5)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+nlev_p = nlev_t * 2.
+# print 'error' , nlev_t,nlev_p
 
 # noise spectra
 nltt = (np.pi / 180. / 60. * nlev_t) ** 2 / bl ** 2
 nlee = nlbb = (np.pi / 180. / 60. * nlev_p) ** 2 / bl ** 2
 
+
 # signal spectra
-sltt = cl_len.cltt
-slte = cl_len.clte
-slee = cl_len.clee
-slbb = cl_len.clbb
+sltt = cl_len.cltt * (7.4311 * 10 ** 12)
+slte = cl_len.clte * (7.4311 * 10 ** 12)
+slee = cl_len.clee * (7.4311 * 10 ** 12)
+slbb = cl_len.clbb * (7.4311 * 10 ** 12)
 zero = np.zeros(lmax + 1)
 
 # signal+noise spectra
@@ -97,36 +124,34 @@ def calc_nlqq(qest, clXX, clXY, clYY, flX, flY):
     return nlqq_fullsky
 
 
-def compute_mv(nlpp_TT,nlpp_EE,nlpp_TE,nlpp_TB,nlpp_EB):
-
+def compute_mv(nlpp_TT, nlpp_EE, nlpp_TE, nlpp_TB, nlpp_EB):
     '''
 you need a 5x5 wit all the estimator and cross correlation between them
 
     '''
 
-    nlpp_TT=np.nan_to_num(nlpp_TT.astype(float))
-    nlpp_EE=np.nan_to_num(nlpp_EE.astype(float))
-    nlpp_TE=np.nan_to_num(nlpp_TE.astype(float))
-    nlpp_TB=np.nan_to_num(nlpp_TB.astype(float))
-    nlpp_EB=np.nan_to_num(nlpp_EB.astype(float))
-
+    nlpp_TT = np.nan_to_num(nlpp_TT.astype(float))
+    nlpp_EE = np.nan_to_num(nlpp_EE.astype(float))
+    nlpp_TE = np.nan_to_num(nlpp_TE.astype(float))
+    nlpp_TB = np.nan_to_num(nlpp_TB.astype(float))
+    nlpp_EB = np.nan_to_num(nlpp_EB.astype(float))
 
     ells = np.shape(nlpp_TT)[0]
-    temp = np.zeros((3,3,ells))
+    temp = np.zeros((3, 3, ells))
     nlpp_mv = np.zeros_like(nlpp_TT)
-    temp[0,0,:]=nlpp_TT[:]
-    temp[0,1,:]=nlpp_TE[:]
-    temp[1,0,:]=temp[0,1,:]
-    temp[0,2,:]=nlpp_TB[:]
-    temp[2,0,:] = temp[0,2,:]
-    temp[1,1,:]=nlpp_EE[:]
-    temp[1,2,:]=nlpp_EB[:]
-    temp[2,1,:] =temp[1,2,:]
+    temp[0, 0, :] = nlpp_TT[:]
+    temp[0, 1, :] = nlpp_TE[:]
+    temp[1, 0, :] = temp[0, 1, :]
+    temp[0, 2, :] = nlpp_TB[:]
+    temp[2, 0, :] = temp[0, 2, :]
+    temp[1, 1, :] = nlpp_EE[:]
+    temp[1, 2, :] = nlpp_EB[:]
+    temp[2, 1, :] = temp[1, 2, :]
 
     # invert at a given l
-    for ell in np.arange(1,ells):
-    # invert at a given l
-        nlpp_mv[ell] = 1. / np.sum(np.linalg.inv(temp[:,:,ell]).flatten())
+    for ell in np.arange(1, ells):
+        # invert at a given l
+        nlpp_mv[ell] = 1. / np.sum(np.linalg.inv(temp[:, :, ell]).flatten())
 
     return nlpp_mv
 
@@ -147,20 +172,18 @@ nlpp_TE_fullsky = np.nan_to_num(nlpp_TE_fullsky.astype(float))
 nlpp_TB_fullsky = np.nan_to_num(nlpp_TB_fullsky.astype(float))
 nlpp_EB_fullsky = np.nan_to_num(nlpp_EB_fullsky.astype(float))
 
-compute_mv()
+# compute_mv()
 
 # make plot
 ls = np.arange(0, lmax + 1)
 t = lambda l: (l * (l + 1.)) ** 2 / (2. * np.pi)  # scaling to apply to cl_phiphi when plotting.
 lbins = np.linspace(2, lmax, 1)       # multipole bins.
 
-np.savetxt('TT_lensing_noise.txt', np.vstack((ls,nlpp_TT_fullsky)).T )
-np.savetxt('EE_lensing_noise.txt', np.vstack((ls,nlpp_EE_fullsky)).T )
-np.savetxt('TE_lensing_noise.txt', np.vstack((ls,nlpp_TE_fullsky)).T )
-np.savetxt('TB_lensing_noise.txt', np.vstack((ls,nlpp_TB_fullsky)).T )
-np.savetxt('EB_lensing_noise.txt', np.vstack((ls,nlpp_EB_fullsky)).T )
-
-
+np.savetxt('TT_lensing_noise.txt', np.vstack((ls, nlpp_TT_fullsky)).T)
+np.savetxt('EE_lensing_noise.txt', np.vstack((ls, nlpp_EE_fullsky)).T)
+np.savetxt('TE_lensing_noise.txt', np.vstack((ls, nlpp_TE_fullsky)).T)
+np.savetxt('TB_lensing_noise.txt', np.vstack((ls, nlpp_TB_fullsky)).T)
+np.savetxt('EB_lensing_noise.txt', np.vstack((ls, nlpp_EB_fullsky)).T)
 
 
 # ql.spec.cl2cfft(cl_unl.clpp, ql.maps.cfft(nx, dx)).get_ml(lbins, t=t).plot(color='gray', ls='--')

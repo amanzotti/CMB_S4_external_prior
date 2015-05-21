@@ -1,3 +1,18 @@
+'''
+
+# DATA FROM CAMB
+
+we use the _lenspotentialcls so
+
+ l CTT CEE CBB CTE Cdd CdT CdE
+ 0  1  2    3   4   5   6  7
+
+  CX are l(l+1)Cl/2pi and Cdd=[l(l+1)]^2 Clphi/2pi, CdT=[l(l+1)]^(3/2) ClphiT/2pi, CdE=[l(l+1)]^(3/2)ClphiE/2pi
+
+
+'''
+
+
 import numpy as np
 import pickle as pickle
 #import sys
@@ -43,16 +58,6 @@ def noise(Y, N_det, beam_arc, ell):
 
 # READ DATA
 
-data0 = np.genfromtxt('../data/dat0.txt', dtype=float)
-data1 = np.genfromtxt('../data/dat1.txt', dtype=float)
-data2 = np.genfromtxt('../data/dat2.txt', dtype=float)
-data3 = np.genfromtxt('../data/dat3.txt', dtype=float)
-data4 = np.genfromtxt('../data/dat4.txt', dtype=float)
-data5 = np.genfromtxt('../data/dat5.txt', dtype=float)
-data6 = np.genfromtxt('../data/dat6.txt', dtype=float)
-data7 = np.genfromtxt('../data/dat7.txt', dtype=float)
-data8 = np.genfromtxt('../data/dat8.txt', dtype=float)
-
 # =============================
 
 run_idx = 3
@@ -66,12 +71,18 @@ values = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
 fac = (dats[:, 0] * (dats[:, 0] + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
 noise_l = noise(0.25, 10e6, 2., dats[:, 0])
-# ============================================
-# ============================================
-# ============================================
+noise1 = np.loadtxt('../data/noise/wu_cdd_noise_6.txt')
+noise2 = np.loadtxt('../data/noise/wu_cdd_noise_5.txt')
+noise3 = np.loadtxt('../data/noise/wu_cdd_noise_4.txt')
+noise_tt = np.loadtxt('../TT_lensing_noise.txt')
+noise_ee = np.loadtxt('../EE_lensing_noise.txt')
+noise_eb = np.loadtxt('../EB_lensing_noise.txt')
+noise_te = np.loadtxt('../TE_lensing_noise.txt')
+noise_tb = np.loadtxt('../TB_lensing_noise.txt')
 
-
-print "read an array of size=", data1.shape
+# ============================================
+# ============================================
+# ============================================
 
 
 # ============================================
@@ -170,8 +181,6 @@ plt.rcParams['legend.numpoints'] = 3
 plt.rcParams['legend.handletextpad'] = 0.3
 
 
-
-
 # ============================================
 # ============================================
 # ============================================
@@ -186,12 +195,16 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
 
 
-plot2 = plt.loglog(dats[:, 0], dats[:, 1] / fac, linewidth=1,label=r'TT')
-plot2 = plt.loglog(dats[:, 0], dats[:, 2] / fac, linewidth=1,label=r'EE')
-plot2 = plt.loglog(dats[:, 0], dats[:, 3] / fac, linewidth=1,label=r'BB')
-plot2 = plt.loglog(dats[:, 0], np.abs(dats[:, 4] / fac), linewidth=1,label=r'TE')
-plot2 = plt.loglog(dats[:, 0], noise_l[:], linewidth=1, label=r'Noise T')
-plot2 = plt.loglog(dats[:, 0], noise_l[:]*2., linewidth=1, label=r'Noise Pol')
+plot2 = plt.loglog(dats[:, 0], dats[:, 5], linewidth=1, label=r'$\phi$')
+plot2 = plt.loglog(dats[:, 0], dats[:, 5] / dats[:, 5] * 1e-8, linewidth=1, label=r'Noise')
+plot2 = plt.loglog(noise3[:, 0], noise3[:, 1], linewidth=1, label=r'Wu 4')
+plot3 = plt.loglog(noise3[:, 0], noise2[:, 1], linewidth=1, label=r'Wu 5')
+plot4 = plt.loglog(noise3[:, 0], noise1[:, 1], linewidth=1, label=r'Wu 6')
+
+plot4 = plt.loglog(noise_tt[:, 0], noise_tt[:, 0] ** 4 * noise_tt[:, 1], linewidth=1, label=r'quicklens TT')
+plot4 = plt.loglog(noise_te[:, 0], noise_te[:, 0] ** 4 * noise_te[:, 1], linewidth=1, label=r'quicklens TE')
+plot4 = plt.loglog(noise_ee[:, 0], noise_ee[:, 0] ** 4 * noise_ee[:, 1], linewidth=1, label=r'quicklens EE')
+plot4 = plt.loglog(noise_eb[:, 0], noise_eb[:, 0] ** 4 * noise_eb[:, 1], linewidth=1, label=r'quicklens EB')
 
 
 legend = ax1.legend()
@@ -200,7 +213,7 @@ ax1.legend(loc=0)
 # ============================================
 # FINALLY SAVE
 # print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
-ax1.set_ylabel(r'$ $')
+ax1.set_ylabel(r'C')
 ax1.set_xlabel(r'$\ell$')
 # ax1.set_xlim((0, 3))
 # ax1.set_ylim((10**-16,10**-10))
@@ -212,7 +225,7 @@ ax1.minorticks_on()
 
 
 # ============================================
-plt.savefig('../../images/PS_with_noise.pdf', dpi=400, papertype='Letter',
+plt.savefig('../../images/PS_phi_with_noise.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 
 plt.clf()
