@@ -60,25 +60,11 @@ def noise(Y, N_det, beam_arc, ell):
 
 # =============================
 
-run_idx = 3
 
+sigma1per = np.loadtxt('../output/sigma_H0_1percent.txt')
+sigma_no = np.loadtxt('../output/sigma_H0_noPrior.txt')
+sigma_perfect = np.loadtxt('../output/sigma_H0_perfect_prior.txt')
 
-# READ PARAMS
-dats = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
-fid = np.genfromtxt('../data/run{}/fiducial_pars.txt'.format(run_idx))
-# load parameter grid dictionary. The format is a pickle
-values = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
-par_gaps = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
-fac = (dats[:, 0] * (dats[:, 0] + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
-noise_l = noise(0.25, 10e6, 2., dats[:, 0])
-noise1 = np.loadtxt('../data/noise/wu_cdd_noise_6.txt')
-noise2 = np.loadtxt('../data/noise/wu_cdd_noise_5.txt')
-noise3 = np.loadtxt('../data/noise/wu_cdd_noise_4.txt')
-noise_tt = np.loadtxt('../TT_lensing_noise.txt')
-noise_ee = np.loadtxt('../EE_lensing_noise.txt')
-noise_eb = np.loadtxt('../EB_lensing_noise.txt')
-noise_te = np.loadtxt('../TE_lensing_noise.txt')
-noise_tb = np.loadtxt('../TB_lensing_noise.txt')
 
 # ============================================
 # ============================================
@@ -194,29 +180,21 @@ plt.rcParams['legend.handletextpad'] = 0.3
 
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
 
-plot_type = plt.semilogy
-plot2 = plot_type(dats[:, 0], dats[:, 5], linewidth=1, label=r'$\phi$')
-plot2 = plot_type(dats[:, 0], dats[:, 5] / dats[:, 5] * 1e-8, linewidth=1, label=r'Noise')
-# plot2 = plt.loglog(noise3[:, 0], noise3[:, 1], linewidth=1, label=r'Wu 4')
-# plot3 = plt.loglog(noise3[:, 0], noise2[:, 1], linewidth=1, label=r'Wu 5')
-# plot4 = plt.loglog(noise3[:, 0], noise1[:, 1], linewidth=1, label=r'Wu 6')
+plot_type = plt.semilogx
+plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma_no) * 100., linewidth=1,label='No Priors')
+plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma_perfect) * 100., linewidth=1,label='Perfect Priors')
+plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma1per) * 100., linewidth=1,label=r'1$\%$ Priors')
 
-# plot4 = plot_type(noise_tt[:, 0], (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_tt[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens TT')
-# plot4 = plot_type(noise_te[:, 0],  (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_te[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens TE')
-# plot4 = plot_type(noise_ee[:, 0],  (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_ee[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens EE')
-# plot4 = plot_type(noise_eb[:, 0],  (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_eb[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens EB')
-# plot4 = plot_type(noise_tb[:, 0],  (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_tb[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens TB')
 
 legend = ax1.legend()
 ax1.legend(loc=0)
 
 # ============================================
 # FINALLY SAVE
-# print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
-ax1.set_ylabel(r'C')
-ax1.set_xlabel(r'$\ell$')
-ax1.set_xlim((0, 2000))
-ax1.set_ylim((10 ** -9, 10 ** -6))
+ax1.set_ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $')
+ax1.set_xlabel(r'$\Delta H_{0} / H_{0}$')
+# ax1.set_xlim((0, 2000))
+# ax1.set_ylim((10 ** -9, 10 ** -3))
 ax1.minorticks_on()
 # ax1.set_xscale('log')
 # ax1.set_yscale('log')
@@ -225,7 +203,7 @@ ax1.minorticks_on()
 
 
 # ============================================
-plt.savefig('../../images/PS_phi_with_noise.pdf', dpi=400, papertype='Letter',
+plt.savefig('../../images/H0_fisher.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 
-plt.clf()
+plt.close()
