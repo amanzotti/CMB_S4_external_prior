@@ -8,6 +8,7 @@
 # full-sky and flat-sky limits for comparison.
 
 # TODO load details from ini
+#  we can include recursive techniques from hirata seljack the idea is that flbb is now clbb-clbb lens obtained from the ebphi estimator.
 
 import numpy as np
 import pylab as pl
@@ -152,6 +153,7 @@ you need a 5x5 wit all the estimator and cross correlation between them
     # invert at a given l
     for ell in np.arange(1, ells):
         # invert at a given l
+        print ell,temp[:, :, ell],np.linalg.inv(temp[:, :, ell]).flatten()
         nlpp_mv[ell] = 1. / np.sum(np.linalg.inv(temp[:, :, ell]).flatten())
 
     return nlpp_mv

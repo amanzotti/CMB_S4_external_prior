@@ -226,7 +226,7 @@ plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
 plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
 plt.legend(loc=0)
 
-plt.savefig('../images/h0_fisher.pdf')
+plt.savefig('../images/h0_fisher_tau.pdf')
 
 # DO the same for tau
 
@@ -281,7 +281,7 @@ plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
 plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
 plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
 plt.xscale('log')
-plt.xlabel(r'$\Delta \tau / \tau$', fontsize=16)
+plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
 plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
 plt.legend(loc=0)
 plt.savefig('../images/tau_fisher.pdf')
