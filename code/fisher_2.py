@@ -38,7 +38,6 @@ GOAL
 
 '''
 
-__author__ = "Y. Park"
 
 
 import numpy as np
@@ -125,7 +124,7 @@ par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
 n_values = np.size(values.keys())
 # Load data for all parameters variations
 for key, value in values.iteritems():
-    for i in np.arange(0, n_values - 1):
+    for i in np.arange(0, 4):
         print key, values[key][i]
         filename = 'data/run{}/'.format(run_idx)
         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
@@ -205,10 +204,9 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
 
-    fisher3[0, 0] += 1 / (10 ** i * 67.04346) ** 2
-
     fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
     # Cicle on H0 priors
+    fisher3[0, 0] += 1 / (10 ** i * 67.04346) ** 2
 
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
@@ -217,16 +215,16 @@ np.savetxt('sigma_H0_1percent.txt',d)
 np.savetxt('sigma_H0_noPrior.txt',d2)
 np.savetxt('sigma_H0_perfect_prior.txt',d3)
 
-plt.clf()
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
-plt.xscale('log')
-plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
-plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
-plt.legend(loc=0)
+# plt.clf()
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
+# plt.xscale('log')
+# plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
+# plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
+# plt.legend(loc=0)
 
-plt.savefig('../images/h0_fisher.pdf')
+# plt.savefig('../images/h0_fisher.pdf')
 
 # DO the same for tau
 
@@ -265,7 +263,7 @@ for i in np.arange(-3, -1, 0.1):
 
 
 
-    fisher3 = fisher.copy()[[3, 1], :][:, [3, 1]]
+    fisher3 = fisher.copy()[[2, 1], :][:, [2, 1]]
     # Cicle on H0 priors
     fisher3[0, 0] += 1 / (10 ** i * 0.0924518) ** 2
 
@@ -276,13 +274,80 @@ np.savetxt('sigma_tau_1percent.txt',d)
 np.savetxt('sigma_tau_noPrior.txt',d2)
 np.savetxt('sigma_tau_perfect_prior.txt',d3)
 
-plt.clf()
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
-plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
-plt.xscale('log')
-plt.xlabel(r'$\Delta \tau / \tau$', fontsize=16)
-plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
-plt.legend(loc=0)
-plt.savefig('../images/tau_fisher.pdf')
+
+# ===========================
+# DO the same for n_s
+# ===========================
+
+
+d = []
+d2 = []
+d3 = []
+
+for i in np.arange(-3, -1, 0.1):
+
+    # '''alphabetical in CAMB description
+    # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
+    # PARAMETER ORDER = H0,Neff,tau,As,ns
+    #                     0  1   2  3   4'''
+    fid_ns=fid[4]
+    fisher1 = fisher.copy()
+    # Cicle on H0 priors
+    fisher1[4, 4] += 1 / (10 ** i * fid_ns) ** 2
+    # Invert and get Neff error with these priors
+
+    d.append(math.sqrt(np.linalg.inv(fisher1)[1, 1]))
+
+    fisher2 = fisher.copy()
+    # Cicle on H0 priors
+
+    fisher2[4, 4] += 1 / (10 ** i * fid_ns) ** 2
+
+    # add 1% prior on ns
+    fisher2[2, 2] += 1 / (0.01 * fid[2]) ** 2
+    # add 1% prior on As
+    fisher2[3, 3] += 1 / (0.01 * fid[3]) ** 2
+    fisher2[0, 0] += 1 / (0.01 * fid[0]) ** 2
+
+    # Invert and get Neff error with these priors
+    d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
+
+
+
+    fisher3 = fisher.copy()[[4, 1], :][:, [4, 1]]
+    # Cicle on H0 priors
+    fisher3[0, 0] += 1 / (10 ** i * fid_ns) ** 2
+
+    # Invert and get Neff error with these priors
+    d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
+
+np.savetxt('sigma_ns_1percent.txt',d)
+np.savetxt('sigma_ns_noPrior.txt',d2)
+np.savetxt('sigma_ns_perfect_prior.txt',d3)
+
+print 'finally how much constraint on parameters without prior?'
+print ''
+fisher_single = fisher.copy()
+fisher_inv = np.sqrt(np.linalg.inv(fisher_single))
+print 'sigma(H0)', fisher_inv[0,0],'=',100.*fisher_inv[0,0]/fid[0],'%'
+print ''
+print "sigma(Neff)", fisher_inv[1,1],'=',100.*fisher_inv[1,1]/fid[1],'%'
+print ''
+print "sigma(tau)", fisher_inv[2,2],'=',100.*fisher_inv[2,2]/fid[2],'%'
+print ''
+print "sigma(As)", fisher_inv[3,3],'=',100.*fisher_inv[3,3]/fid[3],'%'
+print ''
+print "sigma(ns)", fisher_inv[4,4],'=',100.*fisher_inv[4,4]/fid[4],'%'
+print ''
+
+
+# plt.clf()
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
+# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
+# plt.xscale('log')
+# plt.xlabel(r'$\Delta \tau / \tau$', fontsize=16)
+# plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
+# plt.legend(loc=0)
+# plt.savefig('../images/tau_fisher.pdf')
 
