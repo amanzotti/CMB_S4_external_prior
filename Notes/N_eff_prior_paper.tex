@@ -61,6 +61,13 @@
 \begin{abstract}
 Try to understand the effect of priors on different parameters on the $N_{\text{eff}}$ errors with a Fisher matrix approach. Where should you invest time and money if you really care about the value of $N_{\text{eff}}$?
 
+\begin{itemize}
+\item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet.
+\item We are varying $\tau ~ n_{s} ~ A_{s} ~ N_{\rm eff} ~ H_{0}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, $\Omega_{\nu}h^{2}=0.0009$
+\item Next TODO: Check for bugs and errors code in its early stages. PCA? what prior is more important? Full MCMC should not be extremely hard with cosmosis.
+\end{itemize}
+
+
 \end{abstract}
 
 % insert suggested PACS numbers in braces on next line
@@ -90,6 +97,17 @@ Try to understand the effect of priors on different parameters on the $N_{\text{
 \label{fig:phi-cl-noise}
 \end{center}
 \end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.6]{PS_with_noise.pdf}
+\caption{CMB power spectrum for our fiducial cosmology together with the instrumental noise used in this work.}
+\label{fig:cmb-cl-noise}
+\end{center}
+\end{figure}
+
+
+
 
 
 \begin{eqnarray}

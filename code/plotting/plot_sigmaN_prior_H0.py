@@ -184,6 +184,7 @@ plot_type = plt.semilogx
 plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma_no) * 100., linewidth=1,label='No Priors')
 plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma_perfect) * 100., linewidth=1,label='Perfect Priors')
 plot2 = plot_type(10 ** np.arange(-3, -1, 0.1), np.array(sigma1per) * 100., linewidth=1,label=r'1$\%$ Priors')
+plot2=plt.axvline(0.01,linewidth=1, ls= '--')
 
 
 legend = ax1.legend()
