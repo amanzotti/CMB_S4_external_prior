@@ -1,17 +1,19 @@
 '''
 Script to produced the different Cls with different parameters needed to compute derivative for the Fisher matrices.
 
-It chenge the ini file of CAMB at each step with configparser
+It changes the ini file of CAMB at each step with configparser
 and it then run camb.
+
+For better accuracy the derivative should be computed with a 5 point stencil algorithms
+
 
 f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
       ---------------------------------
                     12h
-For better accuracy the derivative  should be computed with a 5 point stencil algorithms
 
 CONVENTIONS:
 
-PARAMETER ORDER = h0, ns, As, Neff
+PARAMETER ORDER = we are using ordered dictionaries. So the order is the alphabetical order of the name of the variable sin the camb ini.
 
 
 '''
@@ -34,7 +36,7 @@ configfile = './fiducial.ini'
 config.read(configfile)
 
 # run fiducial
-subprocess.call(['/home/manzotti/local/camb2013/camb', configfile])
+subprocess.call(['/Users/alessandromanzotti/Work/Software/camb2013/camb', configfile])
 
 # get fiducial values to figure out where to compute next
 
@@ -44,8 +46,34 @@ As = config.getfloat('camb', 'scalar_amp(1)')
 ns = config.getfloat('camb', 'scalar_spectral_index(1)')
 N_eff = config.getfloat('camb', 'massless_neutrinos')  # is it true? what do we want to keep fixed?
 
-np.savetxt("./data/run3/fiducial_pars.txt", np.array([h, ns, As, N_eff, tau]))
+
+fid = {}
+fid['hubble'] =  h
+fid['scalar_spectral_index(1)'] =  ns
+fid['scalar_amp(1)'] = As
+fid['massless_neutrinos'] =  N_eff
+fid['re_optical_depth'] = tau
+fid = collections.OrderedDict(sorted(fid.items(), key=lambda t: t[0]))
+
+with open("./data/run3/fid_values.p", "wb") as output_file:
+    pickle.dump(fid, output_file)
+
+# KEEP THIS IN THE ALPABETHICAL ORDER OR USE THE DICT
+
+np.savetxt("./data/run3/fiducial_pars.txt", np.array([h, N_eff, tau, As, ns]))
 print np.array([h, ns, As, N_eff, tau])
+
+
+# # Generate delta_par to be used in computing derivative. this are define as percentage values of the fiducial one.
+# pargaps_dict = {}
+# pargaps_dict['hubble'] = fid['hubble']*0.08
+# pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)']*0.08
+# pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.08
+# pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos']*0.08
+# pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.08
+# pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
+
+
 # generate values to compute Cls
 values = {}
 values['hubble'] = pargaps[0] * np.array([-2, -1, 1, 2]) + h
@@ -54,6 +82,16 @@ values['scalar_amp(1)'] = pargaps[2] * np.array([-2, -1, 1, 2]) + As
 values['massless_neutrinos'] = pargaps[3] * np.array([-2, -1, 1, 2]) + N_eff
 values['re_optical_depth'] = pargaps[4] * np.array([-2, -1, 1, 2]) + tau
 values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
+
+# values = {}
+# values['hubble'] = fid['hubble']* np.array([-2, -1, 1, 2]) + fid['hubble']
+# values['scalar_spectral_index(1)'] = pargaps[1] * np.array([-2, -1, 1, 2]) + ns
+# values['scalar_amp(1)'] = pargaps[2] * np.array([-2, -1, 1, 2]) + As
+# values['massless_neutrinos'] = pargaps[3] * np.array([-2, -1, 1, 2]) + N_eff
+# values['re_optical_depth'] = pargaps[4] * np.array([-2, -1, 1, 2]) + tau
+# values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
+
+
 
 pargaps_dict = {}
 pargaps_dict['hubble'] = pargaps[0]

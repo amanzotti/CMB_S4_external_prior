@@ -11,6 +11,8 @@
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
 \usepackage{bm}
 \usepackage{amsmath}
+\usepackage{graphicx}
+
 % You should use BibTeX and apsrev.bst for references
 % Choosing a journal automatically selects the correct APS
 % BibTeX style file (bst file), so only uncomment the line
@@ -18,6 +20,7 @@
 %\bibliographystyle{apsrev4-1}
 
 \begin{document}
+\graphicspath{{../images/}}
 
 % Use the \preprint command to place your local institutional report
 % number in the upper righthand corner of the title page in preprint mode.
@@ -56,7 +59,14 @@
 \date{\today}
 
 \begin{abstract}
-Try to understand the effect of prior on the $N_{\text{eff}}$ parameter with a Fisher matrix approach. Where should you invest time and money if you really care about the value of $N_{\text{eff}}$?
+Try to understand the effect of priors on different parameters on the $N_{\text{eff}}$ errors with a Fisher matrix approach. Where should you invest time and money if you really care about the value of $N_{\text{eff}}$?
+
+\begin{itemize}
+\item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet.
+\item We are varying $\tau ~ n_{s} ~ A_{s} ~ N_{\rm eff} ~ H_{0}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, $\Omega_{\nu}h^{2}=0.0009$
+\item Next TODO: Check for bugs and errors code in its early stages. PCA? what prior is more important? Full MCMC should not be extremely hard with cosmosis.
+\end{itemize}
+
 
 \end{abstract}
 
@@ -79,6 +89,26 @@ Try to understand the effect of prior on the $N_{\text{eff}}$ parameter with a F
 \subsubsection{}
 
 \section{Theory}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.6]{PS_phi_with_noise.pdf}
+\caption{Lensing potential power spectrum for our fiducial cosmology together with the lensing reconstruction noise $N^{\phi}$ used in this work.}
+\label{fig:phi-cl-noise}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.6]{PS_with_noise.pdf}
+\caption{CMB power spectrum for our fiducial cosmology together with the instrumental noise used in this work.}
+\label{fig:cmb-cl-noise}
+\end{center}
+\end{figure}
+
+
+
+
 
 \begin{eqnarray}
 \centering
@@ -114,6 +144,54 @@ F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,fid})^2},
 
 \section{Data}
 \section{Results}
+
+\begin{table}[htdp]
+\caption{How well we do constrain separate parameters with this data without any external prior?}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$H_{0}$ & 0.32\% \\
+\hline
+\hline
+$\tau$ & 2.26 \%\\
+\hline
+
+\hline
+$A_{s}$ & 0.37 \%\\
+\hline
+
+\hline
+$n_{s}$ & 0.25 \%\\
+\hline
+
+\hline
+$N_{eff}$ & 0.9 \%\\
+\hline
+
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.6]{h0_fisher.pdf}
+\caption{}
+\label{fig:phi-cl-noise}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.6]{tau_fisher.pdf}
+\caption{}
+\label{fig:phi-cl-noise}
+\end{center}
+\end{figure}
+
+
+
 \section{Conclusions}
 
 
