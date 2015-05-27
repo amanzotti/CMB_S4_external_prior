@@ -323,9 +323,9 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
-np.savetxt('sigma_ns_1percent.txt',d)
-np.savetxt('sigma_ns_noPrior.txt',d2)
-np.savetxt('sigma_ns_perfect_prior.txt',d3)
+np.savetxt('output/sigma_ns_1percent.txt',d)
+np.savetxt('output/sigma_ns_noPrior.txt',d2)
+np.savetxt('output/sigma_ns_perfect_prior.txt',d3)
 
 print 'finally how much constraint on parameters without prior?'
 print ''
