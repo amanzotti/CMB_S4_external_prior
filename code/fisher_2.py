@@ -205,17 +205,18 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
 
+    fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
+
     fisher3[0, 0] += 1 / (10 ** i * 67.04346) ** 2
 
-    fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
     # Cicle on H0 priors
 
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
-np.savetxt('sigma_H0_1percent.txt',d)
-np.savetxt('sigma_H0_noPrior.txt',d2)
-np.savetxt('sigma_H0_perfect_prior.txt',d3)
+np.savetxt('output/sigma_H0_1percent.txt',d)
+np.savetxt('output/sigma_H0_noPrior.txt',d2)
+np.savetxt('output/sigma_H0_perfect_prior.txt',d3)
 
 plt.clf()
 plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
@@ -272,9 +273,9 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
-np.savetxt('sigma_tau_1percent.txt',d)
-np.savetxt('sigma_tau_noPrior.txt',d2)
-np.savetxt('sigma_tau_perfect_prior.txt',d3)
+np.savetxt('output/sigma_tau_1percent.txt',d)
+np.savetxt('output/sigma_tau_noPrior.txt',d2)
+np.savetxt('output/sigma_tau_perfect_prior.txt',d3)
 
 plt.clf()
 plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
