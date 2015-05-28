@@ -60,7 +60,7 @@ def noise(Y, N_det, beam_arc, ell):
 
 # =============================
 
-run_idx = 3
+run_idx = 2
 
 
 # READ PARAMS
@@ -199,7 +199,7 @@ plot2 = plot_type(dats[:, 0], dats[:, 5], linewidth=1, label=r'$\phi$')
 plot2 = plot_type(dats[:, 0], dats[:, 5] / dats[:, 5] * 1e-8, linewidth=1, label=r'Noise')
 # plot2 = plt.loglog(noise3[:, 0], noise3[:, 1], linewidth=1, label=r'Wu 4')
 # plot3 = plt.loglog(noise3[:, 0], noise2[:, 1], linewidth=1, label=r'Wu 5')
-# plot4 = plt.loglog(noise3[:, 0], noise1[:, 1], linewidth=1, label=r'Wu 6')
+plot4 = plt.loglog(noise3[:, 0], noise1[:, 1], linewidth=1, label=r'Wu 6')
 
 # plot4 = plot_type(noise_tt[:, 0], (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_tt[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens TT')
 # plot4 = plot_type(noise_te[:, 0],  (noise_tt[:, 0]*(noise_tt[:, 0]+1))** 2 * noise_te[:, 1] / 2 / np.pi, linewidth=1, label=r'quicklens TE')

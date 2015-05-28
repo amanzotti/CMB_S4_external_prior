@@ -1,6 +1,6 @@
 '''
 
-SECOND VERSION TO SUBSTITUTE THE first one
+SECOND VERSION TO SUBSTITUTE THE first one A. Manzotti
 
 Simple fisher code to test prior effect on N effective neutrino estimates
 
@@ -26,9 +26,9 @@ The matrix is going to run an 4 parameters:
 
 CONVENTIONS:
 alphabetical in CAMB description
-hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-PARAMETER ORDER = H0,Neff,tau,As,ns
-                    0  1   2  3   4
+hubble,massless_neutrinos,omnuh2,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
+PARAMETER ORDER = H0,Neff,Omega_nuh^2,tau,As,ns
+                    0  1      2        3   4  5
 
 
 
@@ -76,14 +76,14 @@ def C(iell, ell, parbin, data):
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25%yeld
-    N_det = 10 ** 6  # 1 milion of detectors
-    s = 350. * math.sqrt(fsky2arcmin(0.5)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+    N_det = 10 ** 4  # 1 milion of detectors
+    s = 350. * math.sqrt(fsky2arcmin(0.75)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
-    t = 2. / 60. / 180. * math.pi  # 2arcmin to rads beam
+    t = 1. / 60. / 180. * math.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
     # Final CMB noise definition
-    N = (s * np.pi / 180. / 60.) ** 2 * math.exp(ell * (ell + 1) * t ** 2 / 8. / math.log(2))
+    N = (s * np.pi / 180. / 60.) ** 2 * math.exp(ell * (ell + 1.) * t ** 2 / 8. / math.log(2))
     # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
     # is it a 3x3 matrix? with
@@ -91,9 +91,10 @@ def C(iell, ell, parbin, data):
     # TE,EE,Ephi
     # phiT,phiE,phiphi
     C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,                0],
-                  [data[iell, 6, parbin],          0,         data[iell, 5, parbin] + 1e-8]]
+                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2. ,               0.],
+                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell,1]]]
                  )
+
     return C
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
@@ -106,10 +107,10 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 5000
-N_phi_l = np.loadtxt('multipole_noisebias.txt')
-run_idx = 3
-fsky = 0.5
+lmax = 4700
+N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
+run_idx = 2
+fsky = 0.75
 
 # =============================
 
@@ -131,10 +132,12 @@ for key, value in values.iteritems():
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
 
+
 # cut Cl^T at ells bigger than l_t_max
 dats[l_t_max:, 1, 1:] = 0.
 # creating the n_values by n_values matrix
 fisher = np.zeros((n_values, n_values))
+print 'fisher_size',fisher.shape
 # gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
 pargaps = par_gaps  # h0, ns, As, Neff,tau
 
@@ -336,6 +339,9 @@ print ''
 print "sigma(Neff)", fisher_inv[1,1],'=',100.*fisher_inv[1,1]/fid[1],'%'
 print ''
 print "sigma(tau)", fisher_inv[2,2],'=',100.*fisher_inv[2,2]/fid[2],'%'
+print ''
+print ''
+print "sigma(tau)", fisher_inv[5,5],'=',100.*fisher_inv[5,5]/fid[5],'%'
 print ''
 print "sigma(As)", fisher_inv[3,3],'=',100.*fisher_inv[3,3]/fid[3],'%'
 print ''
