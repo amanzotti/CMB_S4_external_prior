@@ -36,7 +36,7 @@ configfile = './fiducial.ini'
 config.read(configfile)
 
 # run fiducial
-subprocess.call(['/Users/alessandromanzotti/Work/Software/camb2013/camb', configfile])
+subprocess.call(['/home/manzotti/local/camb2013/camb', configfile])
 
 # get fiducial values to figure out where to compute next
 
@@ -45,6 +45,11 @@ tau = config.getfloat('camb', 're_optical_depth')
 As = config.getfloat('camb', 'scalar_amp(1)')
 ns = config.getfloat('camb', 'scalar_spectral_index(1)')
 N_eff = config.getfloat('camb', 'massless_neutrinos')  # is it true? what do we want to keep fixed?
+omnuh2 = config.getfloat('camb', 'omnuh2')
+# Load it for later
+omch2 = config.getfloat('camb', 'omch2')
+
+pargaps = np.array([1., 0.05, 5e-11, 0.08, 0.00462259,omnuh2*0.40])
 
 
 fid = {}
@@ -53,14 +58,16 @@ fid['scalar_spectral_index(1)'] =  ns
 fid['scalar_amp(1)'] = As
 fid['massless_neutrinos'] =  N_eff
 fid['re_optical_depth'] = tau
+fid['omnuh2'] = omnuh2
+
 fid = collections.OrderedDict(sorted(fid.items(), key=lambda t: t[0]))
 
-with open("./data/run3/fid_values.p", "wb") as output_file:
+with open("./data/run2/fid_values.p", "wb") as output_file:
     pickle.dump(fid, output_file)
 
 # KEEP THIS IN THE ALPABETHICAL ORDER OR USE THE DICT
 
-np.savetxt("./data/run3/fiducial_pars.txt", np.array([h, N_eff, tau, As, ns]))
+np.savetxt("./data/run2/fiducial_pars.txt", np.array([h, N_eff, tau, As, ns]))
 print np.array([h, ns, As, N_eff, tau])
 
 
@@ -81,6 +88,8 @@ values['scalar_spectral_index(1)'] = pargaps[1] * np.array([-2, -1, 1, 2]) + ns
 values['scalar_amp(1)'] = pargaps[2] * np.array([-2, -1, 1, 2]) + As
 values['massless_neutrinos'] = pargaps[3] * np.array([-2, -1, 1, 2]) + N_eff
 values['re_optical_depth'] = pargaps[4] * np.array([-2, -1, 1, 2]) + tau
+values['omnuh2'] = pargaps[5] * np.array([-2, -1, 1, 2]) + omnuh2
+
 values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
 
 # values = {}
@@ -99,16 +108,18 @@ pargaps_dict['scalar_spectral_index(1)'] = pargaps[1]
 pargaps_dict['scalar_amp(1)'] = pargaps[2]
 pargaps_dict['massless_neutrinos'] = pargaps[3]
 pargaps_dict['re_optical_depth'] = pargaps[4]
+pargaps_dict['omnuh2'] = pargaps[5]
+
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
 
 
 # save a pickle of data values to be re-used
-with open("./data/run3/grid_values.p", "wb") as output_file:
+with open("./data/run2/grid_values.p", "wb") as output_file:
     pickle.dump(values, output_file)
 
 # save datagaps
 
-with open("./data/run3/par_gaps.p", "wb") as output_file:
+with open("./data/run2/par_gaps.p", "wb") as output_file:
     pickle.dump(pargaps_dict, output_file)
 
 
@@ -116,21 +127,33 @@ with open("./data/run3/par_gaps.p", "wb") as output_file:
 
 for key, value in values.iteritems():
     for i in np.arange(0, 4):
+        print ''
+
         print 'modifying', key, values[key][i]
         print ''
         config.read('./fiducial.ini')
+        if key=='omnuh2':
+            # set omega
+            config.set('camb', key, str(values[key][i]))
+            # reduce omega_m
+            print 'test_omeganu',omch2, (values[key][i]-fid[key]), omnuh2, values[key][i]
+
+            config.set('camb', 'omch2', str(omch2-(values[key][i]-fid[key])) )
+
+
         # print config.getfloat('camb', 'massless_neutrinos')
         # print key=='massless_neutrinos',
         config.set('camb', key, str(values[key][i]))
         # print type(config.getfloat('camb', key))
-        config.set('camb', 'output_root', './data/run3/' + key + '_{:.13f}'.format(values[key][i]))
-        configfile_temp = './data/run3/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
+        config.set('camb', 'output_root', './data/run2/' + key + '_{:.13f}'.format(values[key][i]))
+        configfile_temp = './data/run2/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
         print ''
         print config.getfloat('camb', 'hubble')
         print config.getfloat('camb', 'scalar_amp(1)')
         print config.getfloat('camb', 'scalar_spectral_index(1)')
         print config.getfloat('camb', 'massless_neutrinos')
         print config.getfloat('camb', 're_optical_depth')
+        print config.getfloat('camb', 'omnuh2')
 
         with open(configfile_temp, 'w') as confile:
             config.write(confile)

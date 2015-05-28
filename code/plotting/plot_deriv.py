@@ -23,19 +23,8 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 
 # READ DATA
 
-data0 = np.genfromtxt('../data/dat0.txt', dtype=float)
-data1 = np.genfromtxt('../data/dat1.txt', dtype=float)
-data2 = np.genfromtxt('../data/dat2.txt', dtype=float)
-data3 = np.genfromtxt('../data/dat3.txt', dtype=float)
-data4 = np.genfromtxt('../data/dat4.txt', dtype=float)
-data5 = np.genfromtxt('../data/dat5.txt', dtype=float)
-data6 = np.genfromtxt('../data/dat6.txt', dtype=float)
-data7 = np.genfromtxt('../data/dat7.txt', dtype=float)
-data8 = np.genfromtxt('../data/dat8.txt', dtype=float)
 
-# =============================
-
-run_idx = 3
+run_idx = 2
 
 
 # READ PARAMS
@@ -54,7 +43,6 @@ for key, value in values.iteritems():
         dats = np.dstack((dats, newdat))
 
 
-pargaps = np.array([0.002, 0.02, 2e-11, 0.02])  # h0, ns, As, Neff
 
 
 # ============================================
@@ -62,7 +50,7 @@ pargaps = np.array([0.002, 0.02, 2e-11, 0.02])  # h0, ns, As, Neff
 # ============================================
 
 
-print "read an array of size=", data1.shape
+print "read an array of size=", dats.shape
 
 
 # ============================================
@@ -171,19 +159,25 @@ label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
+label['omnuh2'] = '\Omega'
+label['re_optical_depth'] = '\tau'
 
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1 ,marker='o')
 
     fg.tight_layout(pad=0.1)
@@ -196,15 +190,19 @@ for i, key in enumerate(par_gaps.keys()):
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
-    plot2 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])) , linewidth=1, marker='o')
 
     fg.tight_layout(pad=0.1)
@@ -230,7 +228,7 @@ for i, key in enumerate(par_gaps.keys()):
     # ---------------------------------
     #   12h
 
-    plot3 = plt.loglog(data_fid[:, 0], np.abs(
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1,marker='o')
 
     legend = ax1.legend()
