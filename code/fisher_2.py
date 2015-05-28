@@ -119,6 +119,7 @@ fsky = 0.75
 # load fiducial data
 dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
 fid = np.genfromtxt('data/run{}/fiducial_pars.txt'.format(run_idx))
+print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
@@ -333,20 +334,29 @@ np.savetxt('output/sigma_ns_perfect_prior.txt',d3)
 print 'finally how much constraint on parameters without prior?'
 print ''
 fisher_single = fisher.copy()
-fisher_inv = np.sqrt(np.linalg.inv(fisher_single))
-print 'sigma(H0)', fisher_inv[0,0],'=',100.*fisher_inv[0,0]/fid[0],'%'
+fisher_inv = np.linalg.inv(fisher_single)
+print fisher_inv
+print 'sigma(H0)', np.sqrt(fisher_inv[0,0]),'=',100.*np.sqrt(fisher_inv[0,0])/fid[0],'%'
 print ''
-print "sigma(Neff)", fisher_inv[1,1],'=',100.*fisher_inv[1,1]/fid[1],'%'
+print "sigma(Neff)", np.sqrt(fisher_inv[1,1]),'=',100.*np.sqrt(fisher_inv[1,1])/fid[1],'%'
 print ''
-print "sigma(tau)", fisher_inv[2,2],'=',100.*fisher_inv[2,2]/fid[2],'%'
+print "sigma(Omnu)", np.sqrt(fisher_inv[2,2]),'=',100.*np.sqrt(fisher_inv[2,2])/fid[2],'%'
 print ''
 print ''
-print "sigma(tau)", fisher_inv[5,5],'=',100.*fisher_inv[5,5]/fid[5],'%'
+print "sigma(tau)", np.sqrt(fisher_inv[3,3]),'=',100.*np.sqrt(fisher_inv[3,3])/fid[3],'%'
 print ''
-print "sigma(As)", fisher_inv[3,3],'=',100.*fisher_inv[3,3]/fid[3],'%'
+print "sigma(As)", np.sqrt(fisher_inv[4,4]),'=',100.*np.sqrt(fisher_inv[4,4])/fid[4],'%'
 print ''
-print "sigma(ns)", fisher_inv[4,4],'=',100.*fisher_inv[4,4]/fid[4],'%'
+print "sigma(ns)", np.sqrt(fisher_inv[5,5]),'=',100.*np.sqrt(fisher_inv[5,5])/fid[5],'%'
 print ''
+
+param_cov = np.zeros((6,6))
+for i in range(6):
+    for j in range(6):
+        if i!=j:
+            param_cov[i,j] = fisher_inv[i,j]/np.sqrt(fisher_inv[i,i]*fisher_inv[j,j])
+print param_cov
+np.savetxt('param_cov.txt',param_cov)
 
 
 # plt.clf()

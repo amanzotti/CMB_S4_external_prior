@@ -67,8 +67,8 @@ with open("./data/run2/fid_values.p", "wb") as output_file:
 
 # KEEP THIS IN THE ALPABETHICAL ORDER OR USE THE DICT
 
-np.savetxt("./data/run2/fiducial_pars.txt", np.array([h, N_eff, tau, As, ns]))
-print np.array([h, ns, As, N_eff, tau])
+np.savetxt("./data/run2/fiducial_pars.txt", np.array([h, N_eff, omnuh2, tau, As, ns]))
+print np.array([h, N_eff, omnuh2, tau, As, ns])
 
 
 # # Generate delta_par to be used in computing derivative. this are define as percentage values of the fiducial one.
