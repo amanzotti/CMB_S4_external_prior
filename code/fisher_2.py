@@ -335,6 +335,16 @@ print 'finally how much constraint on parameters without prior?'
 print ''
 fisher_single = fisher.copy()
 fisher_inv = np.linalg.inv(fisher_single)
+
+param_cov = np.zeros((6,6))
+for i in range(6):
+    for j in range(6):
+        if i!=j:
+            param_cov[i,j] = fisher_inv[i,j]/np.sqrt(fisher_inv[i,i]*fisher_inv[j,j])
+print param_cov
+np.savetxt('output/param_cov.txt',param_cov)
+
+
 print fisher_inv
 print 'sigma(H0)', np.sqrt(fisher_inv[0,0]),'=',100.*np.sqrt(fisher_inv[0,0])/fid[0],'%'
 print ''
@@ -350,13 +360,7 @@ print ''
 print "sigma(ns)", np.sqrt(fisher_inv[5,5]),'=',100.*np.sqrt(fisher_inv[5,5])/fid[5],'%'
 print ''
 
-param_cov = np.zeros((6,6))
-for i in range(6):
-    for j in range(6):
-        if i!=j:
-            param_cov[i,j] = fisher_inv[i,j]/np.sqrt(fisher_inv[i,i]*fisher_inv[j,j])
-print param_cov
-np.savetxt('param_cov.txt',param_cov)
+
 
 
 # plt.clf()
