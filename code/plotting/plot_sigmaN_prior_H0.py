@@ -193,7 +193,7 @@ ax1.legend(loc=0)
 # ============================================
 # FINALLY SAVE
 ax1.set_ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $')
-ax1.set_xlabel(r'$\Delta H_{0} / H_{0}$')
+ax1.set_xlabel(r'$\sigma_{ H_{0} }/ H_{0}$')
 # ax1.set_xlim((0, 2000))
 # ax1.set_ylim((10 ** -9, 10 ** -3))
 ax1.minorticks_on()

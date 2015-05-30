@@ -61,9 +61,9 @@ def noise(Y, N_det, beam_arc, ell):
 # =============================
 
 
-sigma1per = np.loadtxt('../output/sigma_tau_1percent.txt')
-sigma_no = np.loadtxt('../output/sigma_tau_noPrior.txt')
-sigma_perfect = np.loadtxt('../output/sigma_tau_perfect_prior.txt')
+sigma1per = np.loadtxt('../output/sigma_ns_1percent.txt')
+sigma_no = np.loadtxt('../output/sigma_ns_noPrior.txt')
+sigma_perfect = np.loadtxt('../output/sigma_ns_perfect_prior.txt')
 
 
 # ============================================
@@ -193,7 +193,7 @@ ax1.legend(loc=0)
 # ============================================
 # FINALLY SAVE
 ax1.set_ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $')
-ax1.set_xlabel(r'$\sigma_{\tau} / \tau$')
+ax1.set_xlabel(r'$\sigma_{ n_s}/ n_s$')
 # ax1.set_xlim((0, 2000))
 # ax1.set_ylim((10 ** -9, 10 ** -3))
 ax1.minorticks_on()
@@ -204,7 +204,7 @@ ax1.minorticks_on()
 
 
 # ============================================
-plt.savefig('../../images/tau_fisher.pdf', dpi=400, papertype='Letter',
+plt.savefig('../../images/ns_fisher.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 
 plt.close()

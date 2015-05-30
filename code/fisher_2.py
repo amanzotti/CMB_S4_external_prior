@@ -39,7 +39,6 @@ GOAL
 '''
 
 
-
 import numpy as np
 import math
 import matplotlib.pyplot as plt
@@ -91,8 +90,8 @@ def C(iell, ell, parbin, data):
     # TE,EE,Ephi
     # phiT,phiE,phiphi
     C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2. ,               0.],
-                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell,1]]]
+                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,               0.],
+                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
                  )
 
     return C
@@ -107,7 +106,8 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 4700
+lmax = 2500
+lmin =30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
 run_idx = 2
 fsky = 0.75
@@ -118,7 +118,7 @@ fsky = 0.75
 # READ PARAMS
 # load fiducial data
 dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
-fid = np.genfromtxt('data/run{}/fiducial_pars.txt'.format(run_idx))
+fid = pickle.load(open('data/run{}/fid_values.p'.format(run_idx), "rb"))
 print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
@@ -133,16 +133,19 @@ for key, value in values.iteritems():
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
 
+print fid.keys().index('omnuh2')
 
 # cut Cl^T at ells bigger than l_t_max
 dats[l_t_max:, 1, 1:] = 0.
+dats[900:, 6, 0:] = 0.
+
 # creating the n_values by n_values matrix
 fisher = np.zeros((n_values, n_values))
-print 'fisher_size',fisher.shape
+print 'fisher_size', fisher.shape
 # gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
 pargaps = par_gaps  # h0, ns, As, Neff,tau
 
-for iell, ell in enumerate(range(2, lmax)):
+for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     print ell
@@ -179,7 +182,6 @@ for iell, ell in enumerate(range(2, lmax)):
 d = []
 d2 = []
 d3 = []
-
 for i in np.arange(-3, -1, 0.1):
 
     # '''alphabetical in CAMB description
@@ -189,37 +191,41 @@ for i in np.arange(-3, -1, 0.1):
 
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[0, 0] += 1 / (10 ** i * 67.04346) ** 2
+    fisher1[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (10 ** i * fid['hubble']) ** 2
     # Invert and get Neff error with these priors
 
-    d.append(math.sqrt(np.linalg.inv(fisher1)[1, 1]))
+    d.append(
+        math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[0, 0] += 1 / (10 ** i * 67.04346) ** 2
+    fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (10 ** i * fid['hubble']) ** 2
 
     # add 1% prior on ns
-    fisher2[4, 4] += 1 / (0.01 * 0.96) ** 2
+    fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
+                     (0.01 * fid['scalar_spectral_index(1)']) ** 2
     # add 1% prior on As
-    fisher2[3, 3] += 1 / (0.01 * 2.2e-9) ** 2
-    fisher2[2, 2] += 1 / (0.01 * 0.0924518) ** 2
+    fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
+                     (0.01 * fid['scalar_amp(1)']) ** 2
+    fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+                     (0.01 * fid['re_optical_depth']) ** 2
 
     # Invert and get Neff error with these priors
-    d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
+    d2.append(
+        math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-    fisher3 = fisher.copy()[[0, 1], :][:, [0, 1]]
+    fisher3 = fisher.copy()[[fid.keys().index('hubble'), fid.keys().index('massless_neutrinos')], :][
+                          :, [fid.keys().index('hubble'), fid.keys().index('massless_neutrinos')]]
 
-    fisher3[0, 0] += 1 / (10 ** i * 67.04346) ** 2
-
-
+    fisher3[0, 0] += 1 / (10 ** i * fid['hubble']) ** 2
 
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
-np.savetxt('output/sigma_H0_1percent.txt',d)
-np.savetxt('output/sigma_H0_noPrior.txt',d2)
-np.savetxt('output/sigma_H0_perfect_prior.txt',d3)
+np.savetxt('output/sigma_H0_1percent.txt', d2)
+np.savetxt('output/sigma_H0_noPrior.txt', d)
+np.savetxt('output/sigma_H0_perfect_prior.txt', d3)
 
 # plt.clf()
 # plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
@@ -234,7 +240,6 @@ np.savetxt('output/sigma_H0_perfect_prior.txt',d3)
 
 # DO the same for tau
 
-
 d = []
 d2 = []
 d3 = []
@@ -245,40 +250,50 @@ for i in np.arange(-3, -1, 0.1):
     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
     # PARAMETER ORDER = H0,Neff,tau,As,ns
     #                     0  1   2  3   4'''
-    fid_tau=fid[2]
+    fid_tau = fid['re_optical_depth']
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[2, 2] += 1 / (10 ** i * 0.0924518) ** 2
+    fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+                     (10 ** i * fid['re_optical_depth']) ** 2
     # Invert and get Neff error with these priors
 
-    d.append(math.sqrt(np.linalg.inv(fisher1)[1, 1]))
+    print 'test = ' ,fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] , fisher[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]/(1 / \
+                     (10 ** i * fid['re_optical_depth']) ** 2)
+
+    d.append(
+        math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[2, 2] += 1 / (10 ** i * 0.0924518) ** 2
+    fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+                     (10 ** i * fid['re_optical_depth']) ** 2
 
     # add 1% prior on ns
-    fisher2[4, 4] += 1 / (0.01 * fid[4]) ** 2
+    fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
+                     (0.01 * fid['scalar_spectral_index(1)']) ** 2
     # add 1% prior on As
-    fisher2[3, 3] += 1 / (0.01 * fid[3]) ** 2
-    fisher2[0, 0] += 1 / (0.01 * fid[0]) ** 2
+    fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
+                     (0.01 * fid['scalar_amp(1)']) ** 2
+    fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
 
     # Invert and get Neff error with these priors
-    d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
+    d2.append(
+        math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-
-
-    fisher3 = fisher.copy()[[2, 1], :][:, [2, 1]]
+    fisher3 = fisher.copy()[[fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')], :][
+                          :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
     # Cicle on H0 priors
-    fisher3[0, 0] += 1 / (10 ** i * 0.0924518) ** 2
+    # in the cut matrix tau is in the 0 place
+    fisher3[0, 0] += 1 / (10 ** i * fid['re_optical_depth']) ** 2
 
     # Invert and get Neff error with these priors
-    d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
+    d3.append(
+        math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-np.savetxt('output/sigma_tau_1percent.txt',d)
-np.savetxt('output/sigma_tau_noPrior.txt',d2)
-np.savetxt('output/sigma_tau_perfect_prior.txt',d3)
+np.savetxt('output/sigma_tau_1percent.txt', d2)
+np.savetxt('output/sigma_tau_noPrior.txt', d)
+np.savetxt('output/sigma_tau_perfect_prior.txt', d3)
 
 
 # ===========================
@@ -296,68 +311,80 @@ for i in np.arange(-3, -1, 0.1):
     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
     # PARAMETER ORDER = H0,Neff,tau,As,ns
     #                     0  1   2  3   4'''
-    fid_ns=fid[4]
     fisher1 = fisher.copy()
     # Cicle on H0 priors
-    fisher1[4, 4] += 1 / (10 ** i * fid_ns) ** 2
+    fisher1[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
+                     (10 ** i * fid['scalar_spectral_index(1)']) ** 2
     # Invert and get Neff error with these priors
 
-    d.append(math.sqrt(np.linalg.inv(fisher1)[1, 1]))
+    d.append(
+        math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
     fisher2 = fisher.copy()
     # Cicle on H0 priors
 
-    fisher2[4, 4] += 1 / (10 ** i * fid_ns) ** 2
+    fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
+                     (10 ** i * fid['scalar_spectral_index(1)']) ** 2
 
     # add 1% prior on ns
-    fisher2[2, 2] += 1 / (0.01 * fid[2]) ** 2
+    fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+                     (0.01 * fid['re_optical_depth']) ** 2
     # add 1% prior on As
-    fisher2[3, 3] += 1 / (0.01 * fid[3]) ** 2
-    fisher2[0, 0] += 1 / (0.01 * fid[0]) ** 2
+    fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
+                     (0.01 * fid['scalar_amp(1)']) ** 2
+    fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
 
     # Invert and get Neff error with these priors
-    d2.append(math.sqrt(np.linalg.inv(fisher2)[1, 1]))
+    d2.append(
+        math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-
-
-    fisher3 = fisher.copy()[[4, 1], :][:, [4, 1]]
+    fisher3 = fisher.copy()[[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('massless_neutrinos')], :][
+                          :, [fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('massless_neutrinos')]]
     # Cicle on H0 priors
-    fisher3[0, 0] += 1 / (10 ** i * fid_ns) ** 2
+    fisher3[0, 0] += 1 / (10 ** i * fid['scalar_spectral_index(1)']) ** 2
 
     # Invert and get Neff error with these priors
-    d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
+    d3.append(
+        math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-np.savetxt('output/sigma_ns_1percent.txt',d)
-np.savetxt('output/sigma_ns_noPrior.txt',d2)
-np.savetxt('output/sigma_ns_perfect_prior.txt',d3)
+np.savetxt('output/sigma_ns_1percent.txt', d2)
+np.savetxt('output/sigma_ns_noPrior.txt', d)
+np.savetxt('output/sigma_ns_perfect_prior.txt', d3)
 
 print 'finally how much constraint on parameters without prior?'
 print ''
 fisher_single = fisher.copy()
 fisher_inv = np.linalg.inv(fisher_single)
 
-param_cov = np.zeros((6,6))
+param_cov = np.zeros((6, 6))
 for i in range(6):
     for j in range(6):
-        if i!=j:
-            param_cov[i,j] = fisher_inv[i,j]/np.sqrt(fisher_inv[i,i]*fisher_inv[j,j])
-print param_cov
-np.savetxt('output/param_cov.txt',param_cov)
+        if i != j:
+            param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
+# print param_cov
+np.savetxt('output/param_cov.txt', param_cov)
+np.savetxt('output/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 
 
-print fisher_inv
-print 'sigma(H0)', np.sqrt(fisher_inv[0,0]),'=',100.*np.sqrt(fisher_inv[0,0])/fid[0],'%'
+# print fisher_inv
+print 'sigma(H0)', np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]) / fid['hubble'], '%'
+
 print ''
-print "sigma(Neff)", np.sqrt(fisher_inv[1,1]),'=',100.*np.sqrt(fisher_inv[1,1])/fid[1],'%'
+print "sigma(Neff)", np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]) / fid['massless_neutrinos'], '%'
+
 print ''
-print "sigma(Omnu)", np.sqrt(fisher_inv[2,2]),'=',100.*np.sqrt(fisher_inv[2,2])/fid[2],'%'
+print "sigma(tau)", np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]) / fid['re_optical_depth'], '%'
 print ''
 print ''
-print "sigma(tau)", np.sqrt(fisher_inv[3,3]),'=',100.*np.sqrt(fisher_inv[3,3])/fid[3],'%'
+print "sigma(omnuh2)", np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]) / fid['omnuh2'], '%'
+
+print fid['omnuh2']
+
 print ''
-print "sigma(As)", np.sqrt(fisher_inv[4,4]),'=',100.*np.sqrt(fisher_inv[4,4])/fid[4],'%'
+print "sigma(As)", np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]) / fid['scalar_amp(1)'], '%'
+
 print ''
-print "sigma(ns)", np.sqrt(fisher_inv[5,5]),'=',100.*np.sqrt(fisher_inv[5,5])/fid[5],'%'
+print "sigma(ns)", np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]) / fid['scalar_spectral_index(1)'], '%'
 print ''
 
 

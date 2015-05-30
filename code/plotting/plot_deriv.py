@@ -166,19 +166,19 @@ label['re_optical_depth'] = '\tau'
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='k')
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g')
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='b')
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='r')
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1 ,marker='o')
+        np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 1, 0]), linewidth=1 ,marker='o')
 
     fg.tight_layout(pad=0.1)
 
@@ -191,19 +191,19 @@ for i, key in enumerate(par_gaps.keys()):
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k')
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g')
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='b')
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='r')
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])) , linewidth=1, marker='o')
+        np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 2, 0]) , linewidth=1, marker='o')
 
     fg.tight_layout(pad=0.1)
 
