@@ -62,7 +62,7 @@ def fsky2arcmin(fsky):
 
 def C(iell, ell, parbin, data):
     '''
-    Given CMB data dats it normalize them anf create a 3x3 matrix
+    Given CMB data dats it normalize them and create a 3x3 matrix
 
     ell is the multiple
     iell is the index in the data ell corresponds to
@@ -89,10 +89,7 @@ def C(iell, ell, parbin, data):
     # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,               0.],
-                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
-                 )
+    C = np.array([data[iell, 4, parbin]])
 
     return C
 
@@ -162,7 +159,7 @@ for iell, ell in enumerate(range(lmin, lmax)):
 
     # sys.exit()
 
-    cinv = np.linalg.inv(c0)
+    cinv = 1./c0
 
     for i in range(0, n_values):
 
@@ -182,17 +179,18 @@ for iell, ell in enumerate(range(lmin, lmax)):
             cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
                   C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
-            tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
+            # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
+            tot = cinv*ci*cinv *cj
             # assuming f Eq.4
-            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * np.trace(tot)
+            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * tot
 
     no_marginalized_ell[iell,:] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell,:] = np.sqrt(np.diag(fisher_inv))
 
 
-np.savetxt('output/no_marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),no_marginalized_ell)))
-np.savetxt('output/marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),marginalized_ell)))
+np.savetxt('output_TE/no_marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),no_marginalized_ell)))
+np.savetxt('output_TE/marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),marginalized_ell)))
 
 d = []
 d2 = []
@@ -238,9 +236,9 @@ for i in np.arange(-3, -1, 0.1):
     # Invert and get Neff error with these priors
     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
 
-np.savetxt('output/sigma_H0_1percent.txt', d2)
-np.savetxt('output/sigma_H0_noPrior.txt', d)
-np.savetxt('output/sigma_H0_perfect_prior.txt', d3)
+np.savetxt('output_TE/sigma_H0_1percent.txt', d2)
+np.savetxt('output_TE/sigma_H0_noPrior.txt', d)
+np.savetxt('output_TE/sigma_H0_perfect_prior.txt', d3)
 
 # plt.clf()
 # plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
@@ -306,9 +304,9 @@ for i in np.arange(-3, -1, 0.1):
     d3.append(
         math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-np.savetxt('output/sigma_tau_1percent.txt', d2)
-np.savetxt('output/sigma_tau_noPrior.txt', d)
-np.savetxt('output/sigma_tau_perfect_prior.txt', d3)
+np.savetxt('output_TE/sigma_tau_1percent.txt', d2)
+np.savetxt('output_TE/sigma_tau_noPrior.txt', d)
+np.savetxt('output_TE/sigma_tau_perfect_prior.txt', d3)
 
 
 # ===========================
@@ -362,9 +360,9 @@ for i in np.arange(-3, -1, 0.1):
     d3.append(
         math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-np.savetxt('output/sigma_ns_1percent.txt', d2)
-np.savetxt('output/sigma_ns_noPrior.txt', d)
-np.savetxt('output/sigma_ns_perfect_prior.txt', d3)
+np.savetxt('output_TE/sigma_ns_1percent.txt', d2)
+np.savetxt('output_TE/sigma_ns_noPrior.txt', d)
+np.savetxt('output_TE/sigma_ns_perfect_prior.txt', d3)
 
 print 'finally how much constraint on parameters without prior?'
 print ''
@@ -377,8 +375,8 @@ for i in range(6):
         if i != j:
             param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
 # print param_cov
-np.savetxt('output/param_cov.txt', param_cov)
-np.savetxt('output/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
+np.savetxt('output_TE/param_cov.txt', param_cov)
+np.savetxt('output_TE/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 
 
 # print fisher_inv
