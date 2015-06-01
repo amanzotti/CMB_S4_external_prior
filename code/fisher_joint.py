@@ -1,11 +1,11 @@
 '''
 
-SECOND VERSION TO SUBSTITUTE THE first one A. Manzotti
+SECOND VERSION TO SUBSTITUTE THE first one (AM)
 
 Simple fisher code to test prior effect on N effective neutrino estimates
 
 TODO:
-HIGH: lensing noise (almost there: Komatsu and quicklens. MV not yet)
+HIGH: lensing noise (almost there: Komatsu and quicklens.)
 
 low importance: ini file. Think about PCA to understand what is more important for N_eff
 
@@ -34,7 +34,7 @@ PARAMETER ORDER = H0,Neff,Omega_nuh^2,tau,As,ns
 
 GOAL
 
-1) reproduce Wu paper
+1) reproduce Wu paper and beyond
 
 '''
 
@@ -74,7 +74,7 @@ def C(iell, ell, parbin, data):
 
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    Y = 0.25  # 25%yeld
+    Y = 0.25  # 25% yeld
     N_det = 10 ** 4  # 1 milion of detectors
     s = 350. * math.sqrt(fsky2arcmin(0.75)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
@@ -118,6 +118,7 @@ fsky = 0.75
 # READ PARAMS
 # load fiducial data
 dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
+# load fiducial parameters used
 fid = pickle.load(open('data/run{}/fid_values.p'.format(run_idx), "rb"))
 print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
@@ -133,10 +134,9 @@ for key, value in values.iteritems():
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
 
-print fid.keys().index('omnuh2')
-
 # cut Cl^T at ells bigger than l_t_max
 dats[l_t_max:, 1, 1:] = 0.
+# phi_T has oscillations in it.
 dats[900:, 6, 0:] = 0.
 
 # creating the n_values by n_values matrix
@@ -149,8 +149,7 @@ marginalized_ell = np.zeros((np.size(range(lmin, lmax)), n_values))
 
 
 print 'fisher_size', fisher.shape
-# gaps beween  x1 x_-1 these three are used to get the value of the derivative in the middle
-pargaps = par_gaps  # h0, ns, As, Neff,tau
+pargaps = par_gaps
 
 for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
@@ -186,14 +185,18 @@ for iell, ell in enumerate(range(lmin, lmax)):
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * np.trace(tot)
 
-    no_marginalized_ell[iell,:] = 1. / np.sqrt(np.diag(fisher))
+    no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
-    marginalized_ell[iell,:] = np.sqrt(np.diag(fisher_inv))
+    marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
-np.savetxt('output/no_marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),no_marginalized_ell)))
-np.savetxt('output/marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),marginalized_ell)))
+np.savetxt('output/no_marginalized_ell.txt', np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)))
+np.savetxt('output/marginalized_ell.txt', np.column_stack((np.arange(lmin, lmax), marginalized_ell)))
 
+
+# =======================================================
+#  N_eff with H0 priors
+# =======================================================
 d = []
 d2 = []
 d3 = []
@@ -201,8 +204,7 @@ for i in np.arange(-3, -1, 0.1):
 
     # '''alphabetical in CAMB description
     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-    # PARAMETER ORDER = H0,Neff,tau,As,ns
-    #                     0  1   2  3   4'''
+
 
     fisher1 = fisher.copy()
     # Cicle on H0 priors
@@ -242,18 +244,10 @@ np.savetxt('output/sigma_H0_1percent.txt', d2)
 np.savetxt('output/sigma_H0_noPrior.txt', d)
 np.savetxt('output/sigma_H0_perfect_prior.txt', d3)
 
-# plt.clf()
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
-# plt.xscale('log')
-# plt.xlabel(r'$\Delta H_0 / H_0$', fontsize=16)
-# plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
-# plt.legend(loc=0)
 
-# plt.savefig('../images/h0_fisher.pdf')
-
-# DO the same for tau
+# =======================================================
+#  N_eff with tau priors
+# =======================================================
 
 d = []
 d2 = []
@@ -265,7 +259,6 @@ for i in np.arange(-3, -1, 0.1):
     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
     # PARAMETER ORDER = H0,Neff,tau,As,ns
     #                     0  1   2  3   4'''
-    fid_tau = fid['re_optical_depth']
     fisher1 = fisher.copy()
     # Cicle on H0 priors
     fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
@@ -311,9 +304,9 @@ np.savetxt('output/sigma_tau_noPrior.txt', d)
 np.savetxt('output/sigma_tau_perfect_prior.txt', d3)
 
 
-# ===========================
-# DO the same for n_s
-# ===========================
+# =======================================================
+#  N_eff with ns priors
+# =======================================================
 
 
 d = []
@@ -402,13 +395,3 @@ print ''
 print "sigma(ns)", np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]) / fid['scalar_spectral_index(1)'], '%'
 print ''
 
-
-# plt.clf()
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
-# plt.xscale('log')
-# plt.xlabel(r'$\Delta \tau / \tau$', fontsize=16)
-# plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
-# plt.legend(loc=0)
-# plt.savefig('../images/tau_fisher.pdf')
