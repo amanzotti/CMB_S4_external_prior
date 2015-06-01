@@ -75,7 +75,7 @@ def C(iell, ell, parbin, data):
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25% yeld
-    N_det = 10 ** 4  # 1 milion of detectors
+    N_det = 10 ** 6  # 1 milion of detectors
     s = 350. * math.sqrt(fsky2arcmin(0.75)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
     t = 1. / 60. / 180. * math.pi  # 2arcmin to rads beam
@@ -108,7 +108,7 @@ def C(iell, ell, parbin, data):
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 2500
 lmin = 30
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
+N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 run_idx = 2
 fsky = 0.75
 
@@ -155,8 +155,10 @@ for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     print ell
+    ell_index = np.where(dats[:,0,0]==ell)[0][0]
+
     c0 = np.zeros((3, 3))
-    c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
+    c0 = C(ell_index, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
 
     # sys.exit()
@@ -176,10 +178,10 @@ for iell, ell in enumerate(range(lmin, lmax)):
                   # ---------------------------------
                               #   12h
 
-            ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
-                  C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
-                  C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
+            ci = (-C(ell_index, ell, i * 4 + 4, dats) + 8. * C(ell_index, ell, i * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, i * 4 + 2, dats) + C(ell_index, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
+            cj = (-C(ell_index, ell, j * 4 + 4, dats) + 8. * C(ell_index, ell, j * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, j * 4 + 2, dats) + C(ell_index, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
             tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             # assuming f Eq.4
@@ -385,8 +387,6 @@ print "sigma(tau)", np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid
 print ''
 print ''
 print "sigma(omnuh2)", np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]) / fid['omnuh2'], '%'
-
-print fid['omnuh2']
 
 print ''
 print "sigma(As)", np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]) / fid['scalar_amp(1)'], '%'

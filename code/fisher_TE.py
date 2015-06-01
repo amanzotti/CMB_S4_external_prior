@@ -108,6 +108,7 @@ lmin = 30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
 run_idx = 2
 fsky = 0.75
+# fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
 
 # =============================
 
@@ -153,13 +154,14 @@ for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     print ell
+    ell_index = np.where(dats[:,0,0]==ell)[0][0]
     c0 = np.zeros((3, 3))
-    c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
+    c0 = C(ell_index, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
 
     # sys.exit()
 
-    cinv = 1./c0
+    cinv = np.sqrt(1./(0.5*(dats[ell_index, 4, 0]**2 + dats[ell_index, 1, 0]*dats[ell_index, 2, 0])))
 
     for i in range(0, n_values):
 
@@ -174,16 +176,17 @@ for iell, ell in enumerate(range(lmin, lmax)):
                   # ---------------------------------
                               #   12h
 
-            ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
-                  C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
-                  C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
+            ci = (-C(ell_index, ell, i * 4 + 4, dats) + 8. * C(ell_index, ell, i * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, i * 4 + 2, dats) + C(ell_index, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
+            cj = (-C(ell_index, ell, j * 4 + 4, dats) + 8. * C(ell_index, ell, j * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, j * 4 + 2, dats) + C(ell_index, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             tot = cinv*ci*cinv *cj
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * tot
 
+    # print fisher
     no_marginalized_ell[iell,:] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell,:] = np.sqrt(np.diag(fisher_inv))
@@ -363,6 +366,9 @@ for i in np.arange(-3, -1, 0.1):
 np.savetxt('output_TE/sigma_ns_1percent.txt', d2)
 np.savetxt('output_TE/sigma_ns_noPrior.txt', d)
 np.savetxt('output_TE/sigma_ns_perfect_prior.txt', d3)
+print ''
+print ''
+print ''
 
 print 'finally how much constraint on parameters without prior?'
 print ''

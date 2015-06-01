@@ -153,6 +153,8 @@ for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     print ell
+    ell_index = np.where(dats[:,0,0]==ell)[0][0]
+
     c0 = np.zeros((3, 3))
     c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
@@ -174,10 +176,10 @@ for iell, ell in enumerate(range(lmin, lmax)):
                   # ---------------------------------
                               #   12h
 
-            ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
-                  C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
-                  C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
+            ci = (-C(ell_index, ell, i * 4 + 4, dats) + 8. * C(ell_index, ell, i * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, i * 4 + 2, dats) + C(ell_index, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
+            cj = (-C(ell_index, ell, j * 4 + 4, dats) + 8. * C(ell_index, ell, j * 4 + 3, dats) - 8. *
+                  C(ell_index, ell, j * 4 + 2, dats) + C(ell_index, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             tot = cinv*ci*cinv *cj
