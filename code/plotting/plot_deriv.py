@@ -166,16 +166,16 @@ label['re_optical_depth'] = '\tau'
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='k',rasterized=True)
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g',rasterized=True)
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='b',rasterized=True)
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='r',rasterized=True)
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 1, 0]), linewidth=1 ,marker='o')
@@ -191,16 +191,16 @@ for i, key in enumerate(par_gaps.keys()):
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k',rasterized=True)
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g',rasterized=True)
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='b',rasterized=True)
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='r',rasterized=True)
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 2, 0]) , linewidth=1, marker='o')
@@ -216,20 +216,20 @@ for i, key in enumerate(par_gaps.keys()):
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='r',rasterized=True)
     fg.tight_layout(pad=0.1)
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
     # ---------------------------------
     #   12h
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])), linewidth=1,marker='o')
+        np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 5, 0]), linewidth=1,marker='o')
 
     legend = ax1.legend()
     ax1.legend(loc=0)
@@ -240,13 +240,13 @@ for i, key in enumerate(par_gaps.keys()):
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 3] - dats[:, 6, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 6, 4 * i + 3] - dats[:, 6, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='r',rasterized=True)
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()
@@ -258,13 +258,13 @@ for i, key in enumerate(par_gaps.keys()):
 for i, key in enumerate(par_gaps.keys()):
     print key, i
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k')
+        np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g')
+        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 3] - dats[:, 4, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='b')
+        np.nan_to_num(dats[:, 4, 4 * i + 3] - dats[:, 4, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='r')
+        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='r',rasterized=True)
     fg.tight_layout(pad=0.1)
 
     legend = ax1.legend()

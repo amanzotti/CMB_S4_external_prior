@@ -154,13 +154,13 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
 
 plot_type = plt.semilogy
-plot2 = plot_type(sigma1[10:,0],sigma1[10:,fid.keys().index('massless_neutrinos')+1]/sigma1tt[-1,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='Joint')
+plot2 = plot_type(sigma1[10:,0],sigma1[10:,fid.keys().index('scalar_spectral_index(1)')+1]/sigma1tt[-1,fid.keys().index('re_optical_depth')+1], linewidth=1,label='Joint')
 # plot2 = plot_type(sigma_no[:,0],sigma_no[:,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='Perfect priors')
-plot2 = plot_type(sigma1ee[10:,0],sigma1ee[10:,fid.keys().index('massless_neutrinos')+1]/sigma1tt[-1,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='EE')
+plot2 = plot_type(sigma1ee[10:,0],sigma1ee[10:,fid.keys().index('scalar_spectral_index(1)')+1]/sigma1tt[-1,fid.keys().index('re_optical_depth')+1], linewidth=1,label='EE')
 # plot2 = plot_type(sigma_no[:,0],sigma_no[:,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='Perfect priors')
-plot2 = plot_type(sigma1te[10:,0],sigma1te[10:,fid.keys().index('massless_neutrinos')+1]/sigma1tt[-1,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='TE')
+plot2 = plot_type(sigma1te[10:,0],sigma1te[10:,fid.keys().index('scalar_spectral_index(1)')+1]/sigma1tt[-1,fid.keys().index('re_optical_depth')+1], linewidth=1,label='TE')
 # plot2 = plot_type(sigma_no[:,0],sigma_no[:,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='Perfect priors')
-plot2 = plot_type(sigma1tt[10:,0],sigma1tt[10:,fid.keys().index('massless_neutrinos')+1]/sigma1tt[-1,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='TT')
+plot2 = plot_type(sigma1tt[10:,0],sigma1tt[10:,fid.keys().index('scalar_spectral_index(1)')+1]/sigma1tt[-1,fid.keys().index('re_optical_depth')+1], linewidth=1,label='TT')
 # plot2 = plot_type(sigma_no[:,0],sigma_no[:,fid.keys().index('massless_neutrinos')+1], linewidth=1,label='Perfect priors')
 # plot2=plt.axvline(0.01,linewidth=1, ls= '--')
 
@@ -170,10 +170,10 @@ ax1.legend(loc=0)
 
 # ============================================
 # FINALLY SAVE
-ax1.set_ylabel(r'$\sigma(N_\mathrm{eff}) $')
+ax1.set_ylabel(r'$\sigma(n_{s}) $')
 ax1.set_xlabel(r'$\ell_{\mathrm{max}}$')
 ax1.set_xlim((800, 2500))
-# ax1.set_ylim((10 ** -9, 10 ** -3))
+# ax1.set_ylim((0.1,4.))
 ax1.minorticks_on()
 # ax1.set_xscale('log')
 # ax1.set_yscale('log')
@@ -182,7 +182,7 @@ ax1.minorticks_on()
 
 
 # ============================================
-plt.savefig('../../images/sigma_N_eff_ell_data.pdf', dpi=400, papertype='Letter',
+plt.savefig('../../images/sigma_ns_ell_data.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 
 plt.close()
