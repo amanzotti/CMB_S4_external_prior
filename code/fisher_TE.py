@@ -153,7 +153,6 @@ pargaps = par_gaps  # h0, ns, As, Neff,tau
 for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
-    print ell
     ell_index = np.where(dats[:,0,0]==ell)[0][0]
     c0 = np.zeros((3, 3))
     c0 = C(ell_index, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
@@ -191,6 +190,7 @@ for iell, ell in enumerate(range(lmin, lmax)):
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell,:] = np.sqrt(np.diag(fisher_inv))
 
+print ell
 
 np.savetxt('output_TE/no_marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),no_marginalized_ell)))
 np.savetxt('output_TE/marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),marginalized_ell)))

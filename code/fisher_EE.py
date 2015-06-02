@@ -75,7 +75,7 @@ def C(iell, ell, parbin, data):
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25%yeld
-    N_det = 10 ** 4  # 1 milion of detectors
+    N_det = 10 ** 6  # 1 milion of detectors
     s = 350. * math.sqrt(fsky2arcmin(0.75)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
     t = 1. / 60. / 180. * math.pi  # 2arcmin to rads beam
@@ -153,7 +153,6 @@ pargaps = par_gaps  # h0, ns, As, Neff,tau
 for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
-    print ell
 
     ell_index = np.where(dats[:,0,0]==ell)[0][0]
 
@@ -192,6 +191,7 @@ for iell, ell in enumerate(range(lmin, lmax)):
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell,:] = np.sqrt(np.diag(fisher_inv))
 
+print ell
 
 np.savetxt('output_EE/no_marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),no_marginalized_ell)))
 np.savetxt('output_EE/marginalized_ell.txt',np.column_stack((np.arange(lmin, lmax),marginalized_ell)))

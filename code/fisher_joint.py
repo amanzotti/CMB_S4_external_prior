@@ -154,7 +154,6 @@ pargaps = par_gaps
 for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
-    print ell
     ell_index = np.where(dats[:,0,0]==ell)[0][0]
 
     c0 = np.zeros((3, 3))
@@ -191,6 +190,7 @@ for iell, ell in enumerate(range(lmin, lmax)):
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
+print ell
 
 np.savetxt('output/no_marginalized_ell.txt', np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)))
 np.savetxt('output/marginalized_ell.txt', np.column_stack((np.arange(lmin, lmax), marginalized_ell)))
@@ -295,7 +295,7 @@ for i in np.arange(-3, -1, 0.1):
         :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
     # Cicle on H0 priors
     # in the cut matrix tau is in the 0 place
-    fisher3[0, 0] += 1 / (10 ** i * fid['re_optical_depth']) ** 2
+    fisher3[0, 0] += 1 / (100 ** i * fid['re_optical_depth']) ** 2
 
     # Invert and get Neff error with these priors
     d3.append(
@@ -364,6 +364,7 @@ np.savetxt('output/sigma_ns_perfect_prior.txt', d3)
 print 'finally how much constraint on parameters without prior?'
 print ''
 fisher_single = fisher.copy()
+
 fisher_inv = np.linalg.inv(fisher_single)
 
 param_cov = np.zeros((6, 6))
@@ -381,6 +382,7 @@ print 'sigma(H0)', np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().ind
 
 print ''
 print "sigma(Neff)", np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]) / fid['massless_neutrinos'], '%'
+
 
 print ''
 print "sigma(tau)", np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]) / fid['re_optical_depth'], '%'
