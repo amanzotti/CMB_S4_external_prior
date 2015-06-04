@@ -25,7 +25,7 @@ import pickle
 import collections
 
 
-output_folder = 'run2'
+output_folder = 'run3'
 
 # load fiducial camb ini file
 config = configparser.ConfigParser()
@@ -53,10 +53,14 @@ fid['scalar_spectral_index(1)'] =  config.getfloat('camb', 'scalar_spectral_inde
 fid['scalar_amp(1)'] = config.getfloat('camb', 'scalar_amp(1)')
 fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
+fid['w'] = config.getfloat('camb', 'w') #DE W parameters
+fid['ombh2'] = config.getfloat('camb', 'ombh2')
+fid['omch2'] = config.getfloat('camb', 'omch2')
 fid['omnuh2'] = config.getfloat('camb', 'omnuh2')
-
 fid = collections.OrderedDict(sorted(fid.items(), key=lambda t: t[0]))
 
+
+print "./data/{}/fid_values.p".format(output_folder)
 with open("./data/{}/fid_values.p".format(output_folder), "wb") as output_file:
     pickle.dump(fid, output_file)
 
@@ -71,6 +75,10 @@ pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.1
 pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos']*0.1
 pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.1
 pargaps_dict['omnuh2'] = fid['omnuh2']*0.4
+pargaps_dict['w'] = fid['w']*0.1
+pargaps_dict['ombh2'] = fid['ombh2']*0.1
+pargaps_dict['omch2'] = fid['omch2']*0.1
+
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
 # save datagaps
@@ -91,6 +99,9 @@ values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2
 values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
 values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * np.array([-2, -1, 1, 2]) + fid['re_optical_depth']
 values['omnuh2'] = pargaps_dict['omnuh2'] * np.array([-2, -1, 1, 2]) + fid['omnuh2']
+values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
+values['ombh2'] = pargaps_dict['ombh2'] * np.array([-2, -1, 1, 2]) + fid['ombh2']
+values['omch2'] = pargaps_dict['omch2'] * np.array([-2, -1, 1, 2]) + fid['omch2']
 
 values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
 # save a pickle of data values to be re-used
@@ -99,9 +110,6 @@ with open("./data/{}/grid_values.p".format(output_folder), "wb") as output_file:
 
 
 # ================================================
-
-
-
 
 
 # start loop on them and generate.
@@ -113,12 +121,38 @@ for key, value in values.iteritems():
         print 'modifying', key, 'values=', values[key][i]
         print ''
         config.read('./fiducial.ini')
+        omch2 = config.getfloat('camb', 'omch2')
+
+        # SPECIAL CONDITIONS FOR SOME VALUES FLATNESS IS ALWAYS ENFORCED. BUT THAT IS IT EVERYTHING ELSE NEED TO BE INSERTED BY HAND
+
+
+        if key=='hubble':
+            # CHANGE hubble-> chenge all the h^2 quantity to keep lambda fixed
+            # set omega
+            config.set('camb', key, str( (fid['hubble']/values[key][i])) )
+            # reduce omega_m
+            print 'test_hubble',values[key][i]/fid['hubble'], fid['omch2']/fid['hubble']**2, fid['omch2'] * (fid['hubble']/values[key][i])**2
+            config.set('camb', 'omch2', str(fid['omch2'] * (values[key][i]/fid['hubble'])**2 ) )
+            config.set('camb', 'ombh2', str(fid['ombh2'] * (values[key][i]/fid['hubble'])**2) )
+            config.set('camb', 'omnuh2', str(fid['omnuh2']* (values[key][i]/fid['hubble'])**2) )
+
+
+
         if key=='omnuh2':
+            # CHANGE OMEGA NU but keeping lambda fixed
             # set omega
             config.set('camb', key, str(values[key][i]))
             # reduce omega_m
-            print 'test_omeganu',omch2, (values[key][i]-fid[key]), omnuh2, values[key][i]
+            print 'test_omeganu',omch2, (values[key][i]-fid[key]), fid['omnuh2'], values[key][i]
 
+            config.set('camb', 'omch2', str(omch2-(values[key][i]-fid[key])) )
+
+        if key=='ombh2':
+            # set omega
+            config.set('camb', key, str(values[key][i]))
+            # reduce omega_m
+            print 'test_ombh2 ',omch2, (values[key][i]-fid[key]), fid['ombh2'], values[key][i]
+            # reduce omega_c to keep lambda constant
             config.set('camb', 'omch2', str(omch2-(values[key][i]-fid[key])) )
 
 
@@ -127,8 +161,8 @@ for key, value in values.iteritems():
         config.set('camb', key, str(values[key][i]))
 
         # print type(config.getfloat('camb', key))
-        config.set('camb', 'output_root', './data/run2/' + key + '_{:.13f}'.format(values[key][i]))
-        configfile_temp = './data/run2/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
+        config.set('camb', 'output_root', './data/run3/' + key + '_{:.13f}'.format(values[key][i]))
+        configfile_temp = './data/run3/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
         print ''
         print config.getfloat('camb', 'hubble')
         print config.getfloat('camb', 'scalar_amp(1)')

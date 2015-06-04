@@ -29,8 +29,9 @@ run_idx = 2
 
 # READ PARAMS
 dats = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
-fid = np.genfromtxt('../data/run{}/fiducial_pars.txt'.format(run_idx))
-# load parameter grid dictionary. The format is a pickle
+# load fiducial parameters used
+fid = pickle.load(open('../data/run{}/fid_values.p'.format(run_idx), "rb"))
+print "fid ", fid# load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
 
