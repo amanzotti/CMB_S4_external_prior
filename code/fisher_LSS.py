@@ -412,22 +412,6 @@ np.savetxt('output/param_cov_LSS.txt', param_cov)
 np.savetxt('output/invetered_sqrt_fisher_LSS.txt', np.sqrt(fisher_inv))
 
 
-# print fisher_inv
-print 'sigma(H0)', np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]) / fid['hubble'], '%'
+for key, value in values.iteritems():
 
-print ''
-print "sigma(Neff)", np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]) / fid['massless_neutrinos'], '%'
-
-
-print ''
-# print "sigma(tau)", np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]) / fid['re_optical_depth'], '%'
-# print ''
-# print ''
-# print "sigma(omnuh2)", np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]) / fid['omnuh2'], '%'
-
-print ''
-print "sigma(As)", np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]) / fid['scalar_amp(1)'], '%'
-
-print ''
-print "sigma(ns)", np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]) / fid['scalar_spectral_index(1)'], '%'
-print ''
+    print 'sigma(',key,')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%' ,"with no degeneracies", 1./np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
