@@ -106,7 +106,7 @@ l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, t
 lmax = 2500
 lmin = 30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
-run_idx = 2
+run_idx = 3
 fsky = 0.75
 
 # =============================
@@ -382,35 +382,6 @@ for i in range(6):
 np.savetxt('output_EE/param_cov.txt', param_cov)
 np.savetxt('output_EE/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 
+for key, value in values.iteritems():
 
-# print fisher_inv
-print 'sigma(H0)', np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('hubble'), fid.keys().index('hubble')]) / fid['hubble'], '%'
-
-print ''
-print "sigma(Neff)", np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]) / fid['massless_neutrinos'], '%'
-
-print ''
-print "sigma(tau)", np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')]) / fid['re_optical_depth'], '%'
-print ''
-print ''
-print "sigma(omnuh2)", np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('omnuh2'), fid.keys().index('omnuh2')]) / fid['omnuh2'], '%'
-
-print fid['omnuh2']
-
-print ''
-print "sigma(As)", np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')]) / fid['scalar_amp(1)'], '%'
-
-print ''
-print "sigma(ns)", np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')]) / fid['scalar_spectral_index(1)'], '%'
-print ''
-
-
-# plt.clf()
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d) * 100., label='No Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d2) * 100., label=r'1$\%$ Priors')
-# plt.plot(10 ** np.arange(-3, -1, 0.1), np.array(d3) * 100., label='Perfect Priors')
-# plt.xscale('log')
-# plt.xlabel(r'$\Delta \tau / \tau$', fontsize=16)
-# plt.ylabel(r'$10^{2} ~ \sigma(N_\mathrm{eff}) $', fontsize=16)
-# plt.legend(loc=0)
-# plt.savefig('../images/tau_fisher.pdf')
+    print 'sigma(',key,')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%' ,"with no degeneracies", 1./np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
