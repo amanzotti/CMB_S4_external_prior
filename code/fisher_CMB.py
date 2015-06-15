@@ -280,7 +280,6 @@ for i in np.arange(-3, -1, 0.1):
         (10 ** i * fid['re_optical_depth']) ** 2
     # Invert and get Neff error with these priors
 
-    print 'test = ', fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')], fisher[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] / (1 /(10 ** i * fid['re_optical_depth']) ** 2)
 
     d.append(
         math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))

@@ -25,7 +25,7 @@ import pickle
 import collections
 
 
-output_folder = 'run3'
+output_folder = 'run4'
 
 # load fiducial camb ini file
 config = configparser.ConfigParser()
@@ -69,15 +69,15 @@ with open("./data/{}/fid_values.p".format(output_folder), "wb") as output_file:
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble']*0.1
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)']*0.1
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.1
+pargaps_dict['hubble'] = fid['hubble']*0.06
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)']*0.06
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.06
 pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos']*0.1
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.1
-pargaps_dict['omnuh2'] = fid['omnuh2']*0.4
-pargaps_dict['w'] = fid['w']*0.1
-pargaps_dict['ombh2'] = fid['ombh2']*0.1
-pargaps_dict['omch2'] = fid['omch2']*0.1
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.06
+pargaps_dict['omnuh2'] = fid['omnuh2']*0.3
+pargaps_dict['w'] = fid['w']*0.06
+pargaps_dict['ombh2'] = fid['ombh2']*0.06
+pargaps_dict['omch2'] = fid['omch2']*0.06
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
@@ -161,8 +161,8 @@ for key, value in values.iteritems():
         config.set('camb', key, str(values[key][i]))
 
         # print type(config.getfloat('camb', key))
-        config.set('camb', 'output_root', './data/run3/' + key + '_{:.13f}'.format(values[key][i]))
-        configfile_temp = './data/run3/' + key + '_{:.13f}'.format(values[key][i]) + '.ini'
+        config.set('camb', 'output_root', './data/{}/'.format(output_folder) + key + '_{:.13f}'.format(values[key][i]))
+        configfile_temp = './data/{}/'.format(output_folder) + key + '_{:.13f}'.format(values[key][i]) + '.ini'
         print ''
         print config.getfloat('camb', 'hubble')
         print config.getfloat('camb', 'scalar_amp(1)')

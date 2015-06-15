@@ -24,7 +24,7 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 # READ DATA
 
 
-run_idx = 2
+run_idx = 3
 
 
 # READ PARAMS

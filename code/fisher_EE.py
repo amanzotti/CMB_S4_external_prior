@@ -370,8 +370,11 @@ np.savetxt('output_EE/sigma_ns_perfect_prior.txt', d3)
 
 print 'finally how much constraint on parameters without prior?'
 print ''
+
+
 fisher_single = fisher.copy()
 fisher_inv = np.linalg.inv(fisher_single)
+
 
 param_cov = np.zeros((6, 6))
 for i in range(6):
@@ -381,6 +384,10 @@ for i in range(6):
 # print param_cov
 np.savetxt('output_EE/param_cov.txt', param_cov)
 np.savetxt('output_EE/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
+
+fisher_single[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+    (0.14 * fid['re_optical_depth']) ** 2
+fisher_inv = np.linalg.inv(fisher_single)
 
 for key, value in values.iteritems():
 

@@ -384,7 +384,7 @@ np.savetxt('output_TT/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 fisher_single = fisher.copy()
 
 fisher_single[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
-    (0.09 * fid['re_optical_depth']) ** 2
+    (0.14 * fid['re_optical_depth']) ** 2
 fisher_inv = np.linalg.inv(fisher_single)
 
 

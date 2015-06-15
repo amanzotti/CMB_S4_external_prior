@@ -384,6 +384,10 @@ for i in range(6):
 np.savetxt('output_TE/param_cov.txt', param_cov)
 np.savetxt('output_TE/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 
+fisher_single[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+    (0.14 * fid['re_optical_depth']) ** 2
+fisher_inv = np.linalg.inv(fisher_single)
+
 
 for key, value in values.iteritems():
 
