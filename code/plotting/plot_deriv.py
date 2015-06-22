@@ -1,3 +1,15 @@
+'''
+Plot scipt to plot the derivatives of CMB specctra respect to all the parameters of the Fisher matrix.
+
+Different lines corresponde to different gaps and techniques.
+
+
+
+'''
+
+
+
+
 import numpy as np
 import pickle as pickle
 #import sys
@@ -108,10 +120,7 @@ plt.rcParams['ytick.major.size'] = 5
 plt.rcParams['ytick.minor.width'] = 0.13
 plt.rcParams['ytick.minor.size'] = 2.8
 
-# fg = plt.figure(figsize=fig_dims)
-fg = plt.figure(figsize=(8, 8))
 
-ax1 = plt.subplot2grid((1, 1), (0, 0))  # , rowspan=2)
 #ax2 = plt.subplot2grid((1,2), (0, 1))
 #ax3 = plt.subplot2grid((2,2), (1, 1))
 
@@ -119,7 +128,7 @@ ax1 = plt.subplot2grid((1, 1), (0, 0))  # , rowspan=2)
 # set colors and lines
 lines = ["-", "--", "-.", ":"]
 linecycler = cycle(lines)
-ax1.set_color_cycle(['#38197A', '#FC7D00', '#318B10', '#B61911'])
+# ax1.set_color_cycle(['#38197A', '#FC7D00', '#318B10', '#B61911'])
 colorcycler = cycle(['#38197A', '#FC7D00', '#318B10', '#B61911'])
 
 # ============================================
@@ -160,18 +169,26 @@ label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = '\Omega'
-label['re_optical_depth'] = '\tau'
+label['omnuh2'] = r'\Omega_{\nu}'
+label['re_optical_depth'] = r'~\tau'
+label['ombh2'] = '\Omega_{b}'
+label['omch2'] = '\Omega_{c}'
+label['w'] = 'w'
+
+
+
+# fg = plt.figure(figsize=fig_dims)
 
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='k',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 1, 4 * i + 2] - dats[:, 1, 4 * i + 1]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='k',rasterized=True)
 
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g',rasterized=True)
-
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 1, 4 * i + 4] - dats[:, 1, 4 * i + 3]) / (par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='g',rasterized=True)
+    fg = plt.figure(figsize=(8, 8))
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 1, 4 * i + 3] - dats[:, 1, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 1, 0]), linewidth=1, color='b',rasterized=True)
 
@@ -180,22 +197,27 @@ for i, key in enumerate(par_gaps.keys()):
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(-dats[:, 1, 4 * i + 4] + 8. * dats[:, 1, 4 * i + 3] - 8. * dats[:, 1, 4 * i + 2] + dats[:, 1, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 1, 0]), linewidth=1 ,marker='o')
+    # print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
+    ax1.set_ylabel(r'$ \frac{\partial C^{T}}{\partial ~' + label[key] + "}$")
+    ax1.set_xlabel(r'$\ell$')
 
-    fg.tight_layout(pad=0.1)
-
+    ax1.minorticks_on()
     legend = ax1.legend()
     ax1.legend(loc=0)
     plt.savefig('../../images/test_der_T_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
-    plt.clf()
+    plt.close()
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 2, 4 * i + 2] - dats[:, 2, 4 * i + 1]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='k',rasterized=True)
 
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 2, 4 * i + 4] - dats[:, 2, 4 * i + 3]) / (par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='g',rasterized=True)
+
+    fg = plt.figure(figsize=(8, 8))
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
 
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 2, 4 * i + 3] - dats[:, 2, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 2, 0]), linewidth=1, color='b',rasterized=True)
@@ -206,78 +228,104 @@ for i, key in enumerate(par_gaps.keys()):
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num( -dats[:, 2, 4 * i + 4] + 8. * dats[:, 2, 4 * i + 3] - 8. * dats[:,2 , 4 * i + 2] + dats[:, 2, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 2, 0]) , linewidth=1, marker='o')
 
-    fg.tight_layout(pad=0.1)
+
+    ax1.set_ylabel(r'$ \frac{\partial C^{E}}{\partial ~' + label[key] + "}$")
+    ax1.set_xlabel(r'$\ell$')
+    ax1.minorticks_on()
 
     legend = ax1.legend()
     ax1.legend(loc=0)
     plt.savefig('../../images/test_der_E_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
-    plt.clf()
+    plt.close()
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k',rasterized=True)
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 5, 4 * i + 2] - dats[:, 5, 4 * i + 1]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='k',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 3]) / (par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='g',rasterized=True)
+    fg = plt.figure(figsize=(8, 8))
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
+
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 5, 4 * i + 3] - dats[:, 5, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 5, 4 * i + 4] - dats[:, 5, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 5, 0]), linewidth=1, color='r',rasterized=True)
-    fg.tight_layout(pad=0.1)
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
     # ---------------------------------
     #   12h
 
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(-dats[:, 5, 4 * i + 4] + 8. * dats[:, 5, 4 * i + 3] - 8. * dats[:, 5, 4 * i + 2] + dats[:, 5, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 5, 0]), linewidth=1,marker='o')
-
+    ax1.minorticks_on()
+    ax1.set_ylabel(r'$ \frac{\partial C^{\phi}}{\partial ~' + label[key] + "}$")
+    ax1.set_xlabel(r'$\ell$')
     legend = ax1.legend()
     ax1.legend(loc=0)
     plt.savefig('../../images/test_der_phi_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
-    plt.clf()
+    plt.close()
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k',rasterized=True)
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g',rasterized=True)
+
+    fg = plt.figure(figsize=(8, 8))
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 6, 4 * i + 2] - dats[:, 6, 4 * i + 1]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='k',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 3]) / (par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='g',rasterized=True)
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 6, 4 * i + 3] - dats[:, 6, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 6, 4 * i + 4] - dats[:, 6, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 6, 0]), linewidth=1, color='r',rasterized=True)
-    fg.tight_layout(pad=0.1)
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(-dats[:, 6, 4 * i + 4] + 8. * dats[:, 6, 4 * i + 3] - 8. * dats[:, 6, 4 * i + 2] + dats[:, 6, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 6, 0]), linewidth=1,marker='o')
 
+
+
+    ax1.minorticks_on()
+    ax1.set_ylabel(r'$ \frac{\partial C^{\phi~T}}{\partial ~' + label[key] + "}$")
+    ax1.set_xlabel(r'$\ell$')
     legend = ax1.legend()
     ax1.legend(loc=0)
+
     plt.savefig('../../images/test_der_phiT_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
-    plt.clf()
+    plt.close()
 
 for i, key in enumerate(par_gaps.keys()):
     print key, i
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k',rasterized=True)
-    plot2 = plt.loglog(dats[:, 0, 0], np.abs(
-        np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 4, 4 * i + 2] - dats[:, 4, 4 * i + 1]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='k',rasterized=True)
+    # plot2 = plt.loglog(dats[:, 0, 0], np.abs(
+    #     np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 3]) / (par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='g',rasterized=True)
+
+    fg = plt.figure(figsize=(8, 8))
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
     plot2 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 4, 4 * i + 3] - dats[:, 4, 4 * i + 2]) / (2 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='b',rasterized=True)
     plot3 = plt.loglog(dats[:, 0, 0], np.abs(
         np.nan_to_num(dats[:, 4, 4 * i + 4] - dats[:, 4, 4 * i + 1]) / (4 * par_gaps[key])/dats[:, 4, 0]), linewidth=1, color='r',rasterized=True)
-    fg.tight_layout(pad=0.1)
+    plot3 = plt.loglog(dats[:, 0, 0], np.abs(
+        np.nan_to_num(-dats[:, 6, 4 * i + 4] + 8. * dats[:, 6, 4 * i + 3] - 8. * dats[:, 6, 4 * i + 2] + dats[:, 6, 4 * i + 1]) / (12 * par_gaps[key])/dats[:, 6, 0]), linewidth=1,marker='o')
 
+
+
+    ax1.minorticks_on()
+    ax1.set_ylabel(r'$ \frac{\partial C^{TE}}{\partial ~' + label[key] + "}$")
+    ax1.set_xlabel(r'$\ell$')
     legend = ax1.legend()
     ax1.legend(loc=0)
     plt.savefig('../../images/test_der_TE_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
-    plt.clf()
+    plt.close()
 # ============================================
 # FINALLY SAVE
     # print r'$ \frac{\partial C^{T}}{\partial ~'+label[key]+"$"
-    ax1.set_ylabel(r'$ \frac{\partial C^{T}}{\partial ~' + label[key] + "}$")
-    ax1.set_xlabel(r'$\ell$')
+    # ax1.set_ylabel(r'$ \frac{\partial C^{T}}{\partial ~' + label[key] + "}$")
+    # ax1.set_xlabel(r'$\ell$')
     # ax1.set_xlim((0, 3))
     # ax1.set_ylim((10**-16,10**-10))
     ax1.minorticks_on()
