@@ -6,9 +6,7 @@ import pickle
 import sys
 
 
-
-def load_data(run_idx,lensed,values):
-
+def load_data(run_idx, lensed, values):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
 
@@ -17,29 +15,34 @@ def load_data(run_idx,lensed,values):
     0  1  2    3   4   5   6  7
     '''
 
-    cmb = np.genfromtxt('data/run{}/fiducial_lensedcls.dat'.format(run_idx),usecols=(0,1,2,3,4)) if lensed else np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx),usecols=(0,1,2,3,4))
-    lensing = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx),usecols=(5,6,7))
+    cmb = np.genfromtxt('data/run{}/fiducial_lensedcls.dat'.format(run_idx), usecols=(0, 1, 2, 3, 4)
+                        ) if lensed else np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx), usecols=(0, 1, 2, 3, 4))
+    lensing = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx), usecols=(5, 6, 7))
     dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
-    dats = np.concatenate((cmb,lensing[:cmb.shape[0],:]),axis=1)
+    dats = np.concatenate((cmb, lensing[:cmb.shape[0], :]), axis=1)
     # Load data for all parameters variations
     for key, value in values.iteritems():
         for i in np.arange(0, 4):
             print key, values[key][i]
             filename = 'data/run{}/'.format(run_idx)
             # filename_cmb = filename + key + '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat'
-            filename_cmb = filename + key + '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat' if lensed else filename + key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
+            filename_cmb = filename + key + \
+                '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat' if lensed else filename + \
+                key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
 
             filename_lensing = filename + key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
-            cmb = np.genfromtxt(filename_cmb.format(run_idx),usecols=(0,1,2,3,4))
-            lensing = np.genfromtxt(filename_lensing.format(run_idx),usecols=(5,6,7))
-            newdat = np.concatenate((cmb,lensing[:dats.shape[0],:]),axis=1)
+            cmb = np.genfromtxt(filename_cmb.format(run_idx), usecols=(0, 1, 2, 3, 4))
+            lensing = np.genfromtxt(filename_lensing.format(run_idx), usecols=(5, 6, 7))
+            newdat = np.concatenate((cmb, lensing[:dats.shape[0], :]), axis=1)
             # newdat = np.genfromtxt(filename)
             dats = np.dstack((dats, newdat))
 
     return dats
 
+
 def study_prior_H0_on_N_eff():
     pass
+
 
 def study_prior_tau_on_N_eff():
     d = []
@@ -59,7 +62,11 @@ def study_prior_tau_on_N_eff():
             (10 ** i * fid['re_optical_depth']) ** 2
         # Invert and get Neff error with these priors
 
-        # print 'test = ', fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')], fisher[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] / (1 / (10 ** i * fid['re_optical_depth']) ** 2)
+        # print 'test = ', fisher1[fid.keys().index('re_optical_depth'),
+        # fid.keys().index('re_optical_depth')],
+        # fisher[fid.keys().index('re_optical_depth'),
+        # fid.keys().index('re_optical_depth')] / (1 / (10 ** i *
+        # fid['re_optical_depth']) ** 2)
 
         d.append(
             math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
@@ -96,8 +103,10 @@ def study_prior_tau_on_N_eff():
         np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
         np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
 
+
 def study_prior_ns_on_N_eff():
     pass
+
 
 def save_cov_matrix(filename='output_cmb/param_cov.txt'):
 
@@ -109,9 +118,52 @@ def save_cov_matrix(filename='output_cmb/param_cov.txt'):
     # print param_cov
     np.savetxt(filename, param_cov)
 
+
 def print_resume_stat(values):
     for key, value in values.iteritems():
 
         print 'sigma(', key, ')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%', "with no degeneracies", 1. / np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
 
 
+def fisher_marginalize(fisher, marginalize_parameters_list, fid):
+    '''
+    This function is used to marginalize the fisher matrix following http://wfirst.gsfc.nasa.gov/science/fomswg/fomswg_technical.pdf eq (14) DETF.
+    It is used to avoid ill-conditioned matrix to be inverted.
+
+    Input:
+
+    fisher= fisher matrix to marginalize
+    list: parameters to be marginalized
+    fid : describe the parameters
+
+
+    Note:
+    Fqq containes the parameters we want to keep.
+
+    '''
+    import scipy.linalg as linalg
+    parameters_to_keep = list(set(fid.keys()) - set(marginalize_parameters_list))
+    indeces_to_keep = []
+    indeces_to_marg = []
+    for key in parameters_to_keep:
+        indeces_to_keep.append(fid.keys().index(key))
+    #  build the 2 matrices
+    indeces_to_marg = list(set(np.arange(0, np.size(fid.keys()))) - set(indeces_to_keep))
+
+    Fqq = fisher[indeces_to_keep, :][:, indeces_to_keep]
+
+    Frr = fisher[indeces_to_marg, :][:, indeces_to_marg]
+    # U orthogonal matrix diagonalising V its transpose
+    # s array of eigenvalues
+    Fqr = fisher[indeces_to_keep, :][:, indeces_to_marg]
+    U, s, V = linalg.svd(Frr, full_matrices=True)
+    s_inv = np.diag(1/s)
+    G = Fqq - np.dot( (np.dot(Fqr,U)) , np.dot(s_inv,((np.dot(Fqr,U)).T)))
+
+class Fisher_matrix(object):
+
+    """docstring for Fisher_matrix"""
+
+    def __init__(self, arg):
+        super(Fisher_matrix, self).__init__()
+        self.arg = arg
