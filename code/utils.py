@@ -6,6 +6,27 @@ import pickle
 import sys
 
 
+def bl(fwhm_arcmin, lmax):
+    """ returns the map-level transfer function for a symmetric Gaussian beam.
+         * fwhm_arcmin      - beam full-width-at-half-maximum (fwhm) in arcmin.
+         * lmax             - maximum multipole.
+    """
+    ls = np.arange(0, lmax+1)
+    return np.exp( -(fwhm_arcmin * np.pi/180./60.)**2 / (16.*np.log(2.)) * ls*(ls+1.) )
+
+def nl(noise_uK_arcmin, fwhm_arcmin, lmax):
+    """ returns the beam-deconvolved noise power spectrum in units of uK^2 for
+          * noise_uK_arcmin - map noise level in uK.arcmin
+          * fwhm_arcmin     - beam full-width-at-half-maximum (fwhm) in arcmin.
+          * lmax            - maximum multipole.
+    """
+    return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
+
+def noise_uK_arcmin(noise_uK_arcmin, fwhm_arcmin, lmax):
+    """ returns noise_uK_arcmin given the number of detectors and the time of obsrvation
+    """
+    return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
+
 def load_data(run_idx, lensed, values):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
@@ -157,8 +178,10 @@ def fisher_marginalize(fisher, marginalize_parameters_list, fid):
     # s array of eigenvalues
     Fqr = fisher[indeces_to_keep, :][:, indeces_to_marg]
     U, s, V = linalg.svd(Frr, full_matrices=True)
+    print 'marginalize matrix eig', s
     s_inv = np.diag(1/s)
     G = Fqq - np.dot( (np.dot(Fqr,U)) , np.dot(s_inv,((np.dot(Fqr,U)).T)))
+    return G
 
 class Fisher_matrix(object):
 
