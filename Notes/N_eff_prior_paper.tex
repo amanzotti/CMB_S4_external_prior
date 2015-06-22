@@ -63,7 +63,7 @@ Try to understand the effect of priors on different parameters on the $N_{\text{
 
 \begin{itemize}
 \item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet.
-\item We are varying $\tau ~ n_{s} ~ A_{s} ~ N_{\rm eff} ~ H_{0}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, $\Omega_{\nu}h^{2}=0.0009$
+\item We are varying $\tau, ~ n_{s}, ~ A_{s}, ~ N_{\rm eff}, ~ H_{0}, w,~\Omega_{\nu}h^{2},~\Omega_{c}h^{2},~\Omega_{b}h^{2}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, $\Omega_{\nu}h^{2}=0.0009$
 \item Next TODO: Check for bugs and errors code in its early stages. PCA? what prior is more important? Full MCMC should not be extremely hard with cosmosis.
 \end{itemize}
 
@@ -90,6 +90,16 @@ Try to understand the effect of priors on different parameters on the $N_{\text{
 
 \section{Theory}
 
+\subsection{Fisher Matrix formalism}
+Copied from paper change it for pubblication:
+
+To avoid any possible numerical instability in the marginalising procedure, we calculate the the Fisher matrix marginalised over the standard LCDM parameters following (Albrecht et al. 2009)
+\begin{equation}
+G = F^{\phi\phi} - F^{\phi\psi}U\Lambda^{-1}U^{T}F^{\phi\psi},
+\end{equation}
+where we define $\phi = \{N_{eff},...\}$ and $\psi = \{\Omega_{m} ... marginal\}$; therefore, $F^{\phi\phi}$ is the block of the total Fisher matrix containing the parameters we want to constrain, whilst $F^{\psi\psi}$ is the nuisance-parameter Fisher sub-matrix. Here, $\Lambda$ is the diagonal matrix whose elements are the eigenvalues of $F^{\psi\psi}$, whilst U is the orthogonal matrix diagonalising $F^{\psi\psi}$. By using Eq., our marginalising procedure is more stable, since degeneracies in $F^{\phi\phi}$ are properly propagated to G with no instabilities, and we do not even worry about a possibly ill-conditioned $F^{\phi\phi}$ sub-matrix, since we check its stability on the fly by the diagonalisation.
+
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=0.6]{PS_phi_with_noise.pdf}
@@ -101,7 +111,7 @@ Try to understand the effect of priors on different parameters on the $N_{\text{
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=0.6]{PS_with_noise.pdf}
-\caption{CMB power spectrum for our fiducial cosmology together with the instrumental noise used in this work.}
+\caption{CMB power spectrum for our fiducial cosmology together with the instrumental noise used in this work. They are basically equivalent to a cosmic variance limited experiment with $l_{max}\sim 3000$}
 \label{fig:cmb-cl-noise}
 \end{center}
 \end{figure}
@@ -143,6 +153,35 @@ F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,fid})^2},
 \end{eqnarray}
 
 \section{Data}
+
+\begin{table}[htdp]
+\caption{Fiducial values used.}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$H_{0}$ &\\
+\hline
+\hline
+$\tau$ &  \\
+\hline
+
+\hline
+$A_{s}$ & \\
+\hline
+
+\hline
+$n_{s}$ & \\
+\hline
+
+\hline
+$N_{eff}$ & \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+
 \section{Results}
 
 \begin{table}[htdp]
