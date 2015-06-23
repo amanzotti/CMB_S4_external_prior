@@ -1,7 +1,6 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-import util
 import pickle
 import sys
 
@@ -140,8 +139,9 @@ def save_cov_matrix(filename='output_cmb/param_cov.txt'):
     np.savetxt(filename, param_cov)
 
 
-def print_resume_stat(values):
-    for key, value in values.iteritems():
+def print_resume_stat(fisher,fid):
+    fisher_inv =np.linalg.inv(fisher)
+    for key, value in fid.iteritems():
 
         print 'sigma(', key, ')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%', "with no degeneracies", 1. / np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
 
@@ -181,7 +181,19 @@ def fisher_marginalize(fisher, marginalize_parameters_list, fid):
     print 'marginalize matrix eig', s
     s_inv = np.diag(1/s)
     G = Fqq - np.dot( (np.dot(Fqr,U)) , np.dot(s_inv,((np.dot(Fqr,U)).T)))
-    return G
+    return G,parameters_to_keep
+
+# ROUTINES TO STUDY INSTABILITY
+def pert_element(fisher,pos,pert_ampl):
+    b= np.zeros_like(fisher)
+    b[pos] = np.random.rand()*pert_ampl
+    return b
+
+def cond_removing_el(fisher,fid):
+    temp =np.linalg.cond(fisher)
+    for i in np.arange(0,np.shape(fisher)[0]):
+        survived = list(set(np.arange(0,np.shape(fisher)[0]))-set([i]))
+        print 'element removed',i,fid.keys()[i], 'condition number',np.linalg.cond(fisher[survived,:][:,survived]),'improvement', np.linalg.cond(fisher[survived,:][:,survived])/temp
 
 class Fisher_matrix(object):
 

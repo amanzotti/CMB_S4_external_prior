@@ -42,7 +42,7 @@ GOAL
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-import util
+import utils
 import pickle
 import sys
 
@@ -109,15 +109,14 @@ l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, t
 lmax = 2500
 lmin = 30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-run_idx = 2
+run_idx = 4
 fsky = 0.75
-
+lensed= True
 # =============================
 
 
 # READ PARAMS
 # load fiducial data
-dats = np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
 # load fiducial parameters used
 fid = pickle.load(open('data/run{}/fid_values.p'.format(run_idx), "rb"))
 print "fid ", fid
@@ -125,14 +124,20 @@ print "fid ", fid
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
 n_values = np.size(values.keys())
-# Load data for all parameters variations
-for key, value in values.iteritems():
-    for i in np.arange(0, 4):
-        print key, values[key][i]
-        filename = 'data/run{}/'.format(run_idx)
-        filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
-        newdat = np.genfromtxt(filename)
-        dats = np.dstack((dats, newdat))
+
+dats = utils.load_data(run_idx, lensed, values)
+
+# # Load data for all parameters variations
+# for key, value in values.iteritems():
+#     for i in np.arange(0, 4):
+#         print key, values[key][i]
+#         filename = 'data/run{}/'.format(run_idx)
+#         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
+#         newdat = np.genfromtxt(filename)
+#         dats = np.dstack((dats, newdat))
+
+
+
 
 # cut Cl^T at ells bigger than l_t_max
 dats[l_t_max:, 1, 1:] = 0.

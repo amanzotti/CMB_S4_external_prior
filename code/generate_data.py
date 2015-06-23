@@ -48,9 +48,9 @@ omch2 = config.getfloat('camb', 'omch2')
 # ================================================
 
 fid = {}
-fid['hubble'] =  config.getfloat('camb', 'hubble')
+fid['hubble'] =  config.getfloat('camb', 'hubble')/100.
 fid['scalar_spectral_index(1)'] =  config.getfloat('camb', 'scalar_spectral_index(1)')
-fid['scalar_amp(1)'] = config.getfloat('camb', 'scalar_amp(1)')
+fid['scalar_amp(1)'] = np.log(10**10*config.getfloat('camb', 'scalar_amp(1)'))
 fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
 fid['w'] = config.getfloat('camb', 'w') #DE W parameters
@@ -108,7 +108,7 @@ values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
 with open("./data/{}/grid_values.p".format(output_folder), "wb") as output_file:
     pickle.dump(values, output_file)
 
-
+print fid,values
 # ================================================
 
 
@@ -158,7 +158,16 @@ for key, value in values.iteritems():
 
         # print config.getfloat('camb', 'massless_neutrinos')
         # print key=='massless_neutrinos',
-        config.set('camb', key, str(values[key][i]))
+        if (key=='hubble'):
+            config.set('camb', key, str(100.*values[key][i]))
+
+        elif (key=='scalar_amp(1)'):
+            config.set('camb', key, str( np.exp(values[key][i])/1e10 ))
+
+        else:
+
+            config.set('camb', key, str(values[key][i]))
+
 
         # print type(config.getfloat('camb', key))
         config.set('camb', 'output_root', './data/{}/'.format(output_folder) + key + '_{:.13f}'.format(values[key][i]))

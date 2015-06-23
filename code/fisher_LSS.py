@@ -104,7 +104,7 @@ def fsky2arcmin(fsky):
 # parameters
 
 # TODO LOAD EVERYTHING FROM INI
-run_idx = 3
+run_idx = 4
 
 # READ PARAMS
 # load fiducial data
