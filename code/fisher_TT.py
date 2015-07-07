@@ -42,7 +42,7 @@ GOAL
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-import util
+import utils
 import pickle
 import sys
 

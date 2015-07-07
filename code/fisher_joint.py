@@ -76,21 +76,21 @@ def C(iell, ell, parbin, data):
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25% yeld
     N_det = 10 ** 6  # 1 milion of detectors
-    s = 350. * math.sqrt(fsky2arcmin(0.75)) / math.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+    s = 350. * np.sqrt(fsky2arcmin(0.75)) / np.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
-    t = 1. / 60. / 180. * math.pi  # 2arcmin to rads beam
-    fac = (ell * (ell + 1.) / 2. / math.pi) / (7.4311 * 10 ** 12)
+    t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
     # Final CMB noise definition
-    N = (s * np.pi / 180. / 60.) ** 2 * math.exp(ell * (ell + 1.) * t ** 2 / 8. / math.log(2))
+    N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
     # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
     # is it a 3x3 matrix? with
     # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    C = np.array([[data[iell, 1, parbin] / fac + N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] / fac + N * 2.,               0.],
+    C = np.array([[data[iell, 1, parbin] +  fac*N, data[iell, 4, parbin], data[iell, 6, parbin]],
+                  [data[iell, 4, parbin], data[iell, 2, parbin] + fac * N * 2.,               0.],
                   [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
                  )
 
@@ -106,7 +106,7 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 2500
+lmax = 3500
 lmin = 30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 run_idx = 4
@@ -123,9 +123,16 @@ print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/run{}/grid_values.p'.format(run_idx), "rb"))
 par_gaps = pickle.load(open('data/run{}/par_gaps.p'.format(run_idx), "rb"))
-n_values = np.size(values.keys())
 
-dats = utils.load_data(run_idx, lensed, values)
+# exclude = ['omnuh2','w','ombh2','omch2']
+exclude = ['w']
+for e in exclude:
+    par_gaps.pop(e)
+    values.pop(e)
+    fid.pop(e)
+
+dats = utils.load_data(run_idx,values, lensed)
+n_values = np.size(values.keys())
 
 # # Load data for all parameters variations
 # for key, value in values.iteritems():
@@ -372,13 +379,13 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-param_cov = np.zeros((6, 6))
-for i in range(6):
-    for j in range(6):
-        if i != j:
-            param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
-# print param_cov
-np.savetxt('output/param_cov.txt', param_cov)
+# param_cov = np.zeros((6, 6))
+# for i in range(6):
+#     for j in range(6):
+#         if i != j:
+#             param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
+# # print param_cov
+# np.savetxt('output/param_cov.txt', param_cov)
 np.savetxt('output/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
 
 

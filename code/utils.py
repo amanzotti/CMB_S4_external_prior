@@ -26,7 +26,7 @@ def noise_uK_arcmin(noise_uK_arcmin, fwhm_arcmin, lmax):
     """
     return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
 
-def load_data(run_idx, lensed, values):
+def load_data(run_idx,  values,lensed = True):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
 
@@ -61,7 +61,65 @@ def load_data(run_idx, lensed, values):
 
 
 def study_prior_H0_on_N_eff():
-    pass
+
+    d = []
+    d2 = []
+    d3 = []
+
+    for i in np.arange(-3, -1, 0.1):
+
+        # '''alphabetical in CAMB description
+        # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
+        # PARAMETER ORDER = H0,Neff,tau,As,ns
+        #                     0  1   2  3   4'''
+        fid_tau = fid['re_optical_depth']
+        fisher1 = fisher.copy()
+        # Cicle on H0 priors
+        fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+            (10 ** i * fid['re_optical_depth']) ** 2
+        # Invert and get Neff error with these priors
+
+        # print 'test = ', fisher1[fid.keys().index('re_optical_depth'),
+        # fid.keys().index('re_optical_depth')],
+        # fisher[fid.keys().index('re_optical_depth'),
+        # fid.keys().index('re_optical_depth')] / (1 / (10 ** i *
+        # fid['re_optical_depth']) ** 2)
+
+        d.append(
+            math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+
+        fisher2 = fisher.copy()
+        # Cicle on H0 priors
+
+        fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
+            (10 ** i * fid['re_optical_depth']) ** 2
+
+        # add 1% prior on ns
+        fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
+            (0.01 * fid['scalar_spectral_index(1)']) ** 2
+        # add 1% prior on As
+        fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
+            (0.01 * fid['scalar_amp(1)']) ** 2
+        fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
+
+        # Invert and get Neff error with these priors
+        d2.append(
+            math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+
+        fisher3 = fisher.copy()[[fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')], :][
+            :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
+        # Cicle on H0 priors
+        # in the cut matrix tau is in the 0 place
+        fisher3[0, 0] += 1 / (10 ** i * fid['re_optical_depth']) ** 2
+
+        # Invert and get Neff error with these priors
+        d3.append(
+            math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+
+        np.savetxt('output_cmb/sigma_tau_1percent.txt', d2)
+        np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
+        np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
+
 
 
 def study_prior_tau_on_N_eff():
