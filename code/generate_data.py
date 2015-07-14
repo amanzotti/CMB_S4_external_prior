@@ -23,17 +23,17 @@ import numpy as np
 import sys
 import pickle
 import collections
+import os
 
-
-output_folder = 'run3'
-
+output_folder = 'test_fisher'
+camb_location = '/home/manzotti/local/camb/camb'
 # load fiducial camb ini file
 config = configparser.ConfigParser()
 configfile = './fiducial.ini'
 config.read(configfile)
 
 # run fiducial
-subprocess.call(['/home/manzotti/local/camb2013/camb', configfile])
+subprocess.call([camb_location, configfile])
 
 
 # Load it for later
@@ -51,9 +51,9 @@ fid = {}
 fid['hubble'] =  config.getfloat('camb', 'hubble')/100.
 fid['scalar_spectral_index(1)'] =  config.getfloat('camb', 'scalar_spectral_index(1)')
 fid['scalar_amp(1)'] = np.log(10**10*config.getfloat('camb', 'scalar_amp(1)'))
-fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
+# fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
-fid['w'] = config.getfloat('camb', 'w') #DE W parameters
+# fid['w'] = config.getfloat('camb', 'w') #DE W parameters
 fid['ombh2'] = config.getfloat('camb', 'ombh2')
 fid['omch2'] = config.getfloat('camb', 'omch2')
 fid['omnuh2'] = config.getfloat('camb', 'omnuh2')
@@ -69,15 +69,15 @@ with open("./data/{}/fid_values.p".format(output_folder), "wb") as output_file:
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble']*0.04
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)']*0.04
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.04
-pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos']*0.06
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.04
-pargaps_dict['omnuh2'] = fid['omnuh2']*0.22
-pargaps_dict['w'] = fid['w']*0.04
-pargaps_dict['ombh2'] = fid['ombh2']*0.04
-pargaps_dict['omch2'] = fid['omch2']*0.04
+pargaps_dict['hubble'] = fid['hubble']*0.05
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)']*0.05
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)']*0.05
+# pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos']*0.06
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth']*0.05
+pargaps_dict['omnuh2'] = fid['omnuh2']*0.10
+# pargaps_dict['w'] = fid['w']*0.04
+pargaps_dict['ombh2'] = fid['ombh2']*0.05
+pargaps_dict['omch2'] = fid['omch2']*0.05
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
@@ -96,10 +96,10 @@ values = {}
 values['hubble'] = pargaps_dict['hubble'] * np.array([-2, -1, 1, 2]) + fid['hubble']
 values['scalar_spectral_index(1)'] = pargaps_dict['scalar_spectral_index(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_spectral_index(1)']
 values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_amp(1)']
-values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
+# values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
 values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * np.array([-2, -1, 1, 2]) + fid['re_optical_depth']
 values['omnuh2'] = pargaps_dict['omnuh2'] * np.array([-2, -1, 1, 2]) + fid['omnuh2']
-values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
+# values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
 values['ombh2'] = pargaps_dict['ombh2'] * np.array([-2, -1, 1, 2]) + fid['ombh2']
 values['omch2'] = pargaps_dict['omch2'] * np.array([-2, -1, 1, 2]) + fid['omch2']
 
@@ -125,8 +125,8 @@ for key, value in values.iteritems():
 
         # SPECIAL CONDITIONS FOR SOME VALUES FLATNESS IS ALWAYS ENFORCED. BUT THAT IS IT EVERYTHING ELSE NEED TO BE INSERTED BY HAND
 
-        if key != 'massless_neutrinos':
-            continue
+        # if key != 'massless_neutrinos':
+        #     continue
 
         if key=='hubble':
             # CHANGE hubble-> chenge all the h^2 quantity to keep lambda fixed
@@ -174,18 +174,21 @@ for key, value in values.iteritems():
         # print type(config.getfloat('camb', key))
         config.set('camb', 'output_root', './data/{}/'.format(output_folder) + key + '_{:.13f}'.format(values[key][i]))
         configfile_temp = './data/{}/'.format(output_folder) + key + '_{:.13f}'.format(values[key][i]) + '.ini'
+        # if os.path.isfile(path): sys.exit('this inifile already exist, delete if you want to ovwrwrite')
+        if os.path.isfile(configfile_temp): continue
+
         print ''
         print config.getfloat('camb', 'hubble')
         print config.getfloat('camb', 'scalar_amp(1)')
         print config.getfloat('camb', 'scalar_spectral_index(1)')
-        print config.getfloat('camb', 'massless_neutrinos')
+        # print config.getfloat('camb', 'massless_neutrinos')
         print config.getfloat('camb', 're_optical_depth')
         print config.getfloat('camb', 'omnuh2')
 
         with open(configfile_temp, 'w') as confile:
             config.write(confile)
 
-        subprocess.call(['/home/manzotti/local/camb2013/camb', configfile_temp])
+        subprocess.call([camb_location, configfile_temp])
 
 
 sys.exit()

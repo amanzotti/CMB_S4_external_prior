@@ -26,7 +26,7 @@ def noise_uK_arcmin(noise_uK_arcmin, fwhm_arcmin, lmax):
     """
     return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
 
-def load_data(data_folder,  values,lensed = False):
+def load_data(run_idx,  values,lensed = True):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
 
@@ -35,24 +35,24 @@ def load_data(data_folder,  values,lensed = False):
     0  1  2    3   4   5   6  7
     '''
 
-    cmb = np.genfromtxt('data/{}/fiducial_lensedcls.dat'.format(data_folder), usecols=(0, 1, 2, 3, 4)
-                        ) if lensed else np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder), usecols=(0, 1, 2, 3, 4))
-    lensing = np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder), usecols=(5, 6, 7))
-    dats = np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder))
+    cmb = np.genfromtxt('../data/run{}/fiducial_lensedcls.dat'.format(run_idx), usecols=(0, 1, 2, 3, 4)
+                        ) if lensed else np.genfromtxt('data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx), usecols=(0, 1, 2, 3, 4))
+    lensing = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx), usecols=(5, 6, 7))
+    dats = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
     dats = np.concatenate((cmb, lensing[:cmb.shape[0], :]), axis=1)
     # Load data for all parameters variations
     for key, value in values.iteritems():
         for i in np.arange(0, 4):
             print key, values[key][i]
-            filename = 'data/{}/'.format(data_folder)
+            filename = '../data/run{}/'.format(run_idx)
             # filename_cmb = filename + key + '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat'
             filename_cmb = filename + key + \
                 '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat' if lensed else filename + \
                 key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
 
             filename_lensing = filename + key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
-            cmb = np.genfromtxt(filename_cmb.format(data_folder), usecols=(0, 1, 2, 3, 4))
-            lensing = np.genfromtxt(filename_lensing.format(data_folder), usecols=(5, 6, 7))
+            cmb = np.genfromtxt(filename_cmb.format(run_idx), usecols=(0, 1, 2, 3, 4))
+            lensing = np.genfromtxt(filename_lensing.format(run_idx), usecols=(5, 6, 7))
             newdat = np.concatenate((cmb, lensing[:dats.shape[0], :]), axis=1)
             # newdat = np.genfromtxt(filename)
             dats = np.dstack((dats, newdat))
@@ -61,75 +61,10 @@ def load_data(data_folder,  values,lensed = False):
 
 
 def study_prior_H0_on_N_eff():
-
-    '''
-    TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
-    '''
-
-    d = []
-    d2 = []
-    d3 = []
-
-    for i in np.arange(-3, -1, 0.1):
-
-        # '''alphabetical in CAMB description
-        # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-        # PARAMETER ORDER = H0,Neff,tau,As,ns
-        #                     0  1   2  3   4'''
-        fid_tau = fid['re_optical_depth']
-        fisher1 = fisher.copy()
-        # Cicle on H0 priors
-        fisher1[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
-            (10 ** i * fid['re_optical_depth']) ** 2
-        # Invert and get Neff error with these priors
-
-        # print 'test = ', fisher1[fid.keys().index('re_optical_depth'),
-        # fid.keys().index('re_optical_depth')],
-        # fisher[fid.keys().index('re_optical_depth'),
-        # fid.keys().index('re_optical_depth')] / (1 / (10 ** i *
-        # fid['re_optical_depth']) ** 2)
-
-        d.append(
-            math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-        fisher2 = fisher.copy()
-        # Cicle on H0 priors
-
-        fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
-            (10 ** i * fid['re_optical_depth']) ** 2
-
-        # add 1% prior on ns
-        fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
-            (0.01 * fid['scalar_spectral_index(1)']) ** 2
-        # add 1% prior on As
-        fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
-            (0.01 * fid['scalar_amp(1)']) ** 2
-        fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
-
-        # Invert and get Neff error with these priors
-        d2.append(
-            math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-        fisher3 = fisher.copy()[[fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')], :][
-            :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
-        # Cicle on H0 priors
-        # in the cut matrix tau is in the 0 place
-        fisher3[0, 0] += 1 / (10 ** i * fid['re_optical_depth']) ** 2
-
-        # Invert and get Neff error with these priors
-        d3.append(
-            math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-        np.savetxt('output_cmb/sigma_tau_1percent.txt', d2)
-        np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
-        np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
-
+    pass
 
 
 def study_prior_tau_on_N_eff():
-    '''
-    TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
-    '''
     d = []
     d2 = []
     d3 = []
@@ -190,14 +125,11 @@ def study_prior_tau_on_N_eff():
 
 
 def study_prior_ns_on_N_eff():
-    '''
-    TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
-    '''
     pass
 
 
-def save_cov_matrix(fisher_inv,filename='output_cmb/param_cov.txt'):
-    n_values = np.shape(fisher_inv)[0]
+def save_cov_matrix(filename='output_cmb/param_cov.txt'):
+
     param_cov = np.zeros((n_values, n_values))
     for i in range(n_values):
         for j in range(n_values):
@@ -206,17 +138,6 @@ def save_cov_matrix(fisher_inv,filename='output_cmb/param_cov.txt'):
     # print param_cov
     np.savetxt(filename, param_cov)
 
-def exclude_parameters(excluded_parameters,par_gaps,values,fid):
-    '''
-    easily exclude parameters for the analysis
-    '''
-    if excluded_parameters == None: return par_gaps,values,fid
-    else:
-        for e in excluded_parameters:
-            par_gaps.pop(e)
-            values.pop(e)
-            fid.pop(e)
-        return par_gaps,values,fid
 
 def print_resume_stat(fisher,fid):
     fisher_inv =np.linalg.inv(fisher)
@@ -272,7 +193,7 @@ def cond_removing_el(fisher,fid):
     temp =np.linalg.cond(fisher)
     for i in np.arange(0,np.shape(fisher)[0]):
         survived = list(set(np.arange(0,np.shape(fisher)[0]))-set([i]))
-        print 'element removed',i,fid.keys()[i], 'condition number',np.linalg.cond(fisher[survived,:][:,survived]),'improvement', temp/np.linalg.cond(fisher[survived,:][:,survived])
+        print 'element removed',i,fid.keys()[i], 'condition number',np.linalg.cond(fisher[survived,:][:,survived]),'improvement', np.linalg.cond(fisher[survived,:][:,survived])/temp
 
 class Fisher_matrix(object):
 
