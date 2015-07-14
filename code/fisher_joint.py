@@ -112,7 +112,7 @@ lmax = 3000
 lmin = 2
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 run_idx = 'test_fisher'
-data_folder = 'test_fisher'
+data_folder = 'test_fisher/run1'
 fsky = 0.5
 lensed= False
 exclude = None
@@ -122,11 +122,11 @@ exclude = None
 # READ PARAMS
 # load fiducial data
 # load fiducial parameters used
-fid = pickle.load(open('data/{}/fid_values.p'.format('test_fisher'), "rb"))
+fid = pickle.load(open('data/{}/fid_values.p'.format(data_folder), "rb"))
 print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
-values = pickle.load(open('data/{}/grid_values.p'.format('test_fisher'), "rb"))
-par_gaps = pickle.load(open('data/{}/par_gaps.p'.format('test_fisher'), "rb"))
+values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
+par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
 
 # exclude = ['omnuh2','w','ombh2','omch2']
 # exclude = ['w']
@@ -392,6 +392,7 @@ utils.save_cov_matrix(fisher_inv)
 # np.savetxt('output/param_cov.txt', param_cov)
 
 np.savetxt('output/invetered_sqrt_fisher.txt', np.sqrt(fisher_inv))
+np.savetxt('output/fisher_mat.txt', fisher_single)
 
 print fisher
 
