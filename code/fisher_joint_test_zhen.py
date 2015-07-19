@@ -117,7 +117,7 @@ lmax = 3000 # as zhen did
 lmin = 2 # as zhen did
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 run_idx = 'test_fisher'
-data_folder = 'test_fisher/run5'
+data_folder = 'test_fisher/run8'
 fsky = 0.5 # ask zhen to confirm
 lensed= False # as zhen did
 exclude = None
@@ -205,8 +205,8 @@ for iell, ell in enumerate(range(lmin, lmax)):
 
 print ell
 
-np.savetxt('output/no_marginalized_ell_test_run5.txt', np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)))
-np.savetxt('output/marginalized_ell_test_run5.txt', np.column_stack((np.arange(lmin, lmax), marginalized_ell)))
+np.savetxt('output/no_marginalized_ell_test_run8.txt', np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)))
+np.savetxt('output/marginalized_ell_test_run8.txt', np.column_stack((np.arange(lmin, lmax), marginalized_ell)))
 
 
 # # =======================================================
@@ -391,8 +391,8 @@ utils.save_cov_matrix(fisher_inv)
 # # print param_cov
 # np.savetxt('output/param_cov.txt', param_cov)
 
-np.savetxt('output/invetered_fisher_test_run5.txt', (fisher_inv))
-np.savetxt('output/fisher_mat_test_run5.txt', fisher_single)
+np.savetxt('output/invetered_fisher_test_run8.txt', (fisher_inv))
+np.savetxt('output/fisher_mat_test_run8.txt', fisher_single)
 
 print fisher
 

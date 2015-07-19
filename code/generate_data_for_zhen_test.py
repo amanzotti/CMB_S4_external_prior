@@ -27,7 +27,7 @@ import os
 import warnings
 
 output_folder = 'test_fisher'
-output_folder_2 = 'run7'
+output_folder_2 = 'run4'
 camb_location = '/home/manzotti/local/camb/camb'
 
 config = configparser.ConfigParser()
@@ -81,13 +81,13 @@ with open("./data/{}/{}/fid_values.p".format(output_folder, output_folder_2), "w
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble'] * 0.05
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.05
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.05
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.05
-pargaps_dict['mnu'] = fid['mnu'] * 0.05
-pargaps_dict['ombh2'] = fid['ombh2'] * 0.05
-pargaps_dict['ombch2'] = fid['ombch2'] * 0.05
+pargaps_dict['hubble'] = fid['hubble'] * 0.02
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.02
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.02
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.02
+pargaps_dict['mnu'] = fid['mnu'] * 0.02
+pargaps_dict['ombh2'] = fid['ombh2'] * 0.02
+pargaps_dict['ombch2'] = fid['ombch2'] * 0.02
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
