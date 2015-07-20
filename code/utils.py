@@ -10,8 +10,9 @@ def bl(fwhm_arcmin, lmax):
          * fwhm_arcmin      - beam full-width-at-half-maximum (fwhm) in arcmin.
          * lmax             - maximum multipole.
     """
-    ls = np.arange(0, lmax+1)
-    return np.exp( -(fwhm_arcmin * np.pi/180./60.)**2 / (16.*np.log(2.)) * ls*(ls+1.) )
+    ls = np.arange(0, lmax + 1)
+    return np.exp(-(fwhm_arcmin * np.pi / 180. / 60.) ** 2 / (16. * np.log(2.)) * ls * (ls + 1.))
+
 
 def nl(noise_uK_arcmin, fwhm_arcmin, lmax):
     """ returns the beam-deconvolved noise power spectrum in units of uK^2 for
@@ -19,14 +20,16 @@ def nl(noise_uK_arcmin, fwhm_arcmin, lmax):
           * fwhm_arcmin     - beam full-width-at-half-maximum (fwhm) in arcmin.
           * lmax            - maximum multipole.
     """
-    return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
+    return (noise_uK_arcmin * np.pi / 180. / 60.) ** 2 / bl(fwhm_arcmin, lmax) ** 2
+
 
 def noise_uK_arcmin(noise_uK_arcmin, fwhm_arcmin, lmax):
     """ returns noise_uK_arcmin given the number of detectors and the time of obsrvation
     """
-    return (noise_uK_arcmin * np.pi/180./60.)**2 / bl(fwhm_arcmin, lmax)**2
+    return (noise_uK_arcmin * np.pi / 180. / 60.) ** 2 / bl(fwhm_arcmin, lmax) ** 2
 
-def load_data(data_folder,  values,lensed = False):
+
+def load_data(data_folder,  values, lensed=False):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
 
@@ -61,7 +64,6 @@ def load_data(data_folder,  values,lensed = False):
 
 
 def study_prior_H0_on_N_eff():
-
     '''
     TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
     '''
@@ -123,7 +125,6 @@ def study_prior_H0_on_N_eff():
         np.savetxt('output_cmb/sigma_tau_1percent.txt', d2)
         np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
         np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
-
 
 
 def study_prior_tau_on_N_eff():
@@ -196,7 +197,7 @@ def study_prior_ns_on_N_eff():
     pass
 
 
-def save_cov_matrix(fisher_inv,filename='output_cmb/param_cov.txt'):
+def save_cov_matrix(fisher_inv, filename='output_cmb/param_cov.txt'):
     n_values = np.shape(fisher_inv)[0]
     param_cov = np.zeros((n_values, n_values))
     for i in range(n_values):
@@ -206,20 +207,23 @@ def save_cov_matrix(fisher_inv,filename='output_cmb/param_cov.txt'):
     # print param_cov
     np.savetxt(filename, param_cov)
 
-def exclude_parameters(excluded_parameters,par_gaps,values,fid):
+
+def exclude_parameters(excluded_parameters, par_gaps, values, fid):
     '''
     easily exclude parameters for the analysis
     '''
-    if excluded_parameters == None: return par_gaps,values,fid
+    if excluded_parameters == None:
+        return par_gaps, values, fid
     else:
         for e in excluded_parameters:
             par_gaps.pop(e)
             values.pop(e)
             fid.pop(e)
-        return par_gaps,values,fid
+        return par_gaps, values, fid
 
-def print_resume_stat(fisher,fid):
-    fisher_inv =np.linalg.inv(fisher)
+
+def print_resume_stat(fisher, fid):
+    fisher_inv = np.linalg.inv(fisher)
     for key, value in fid.iteritems():
 
         print 'sigma(', key, ')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%', "with no degeneracies", 1. / np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
@@ -258,21 +262,29 @@ def fisher_marginalize(fisher, marginalize_parameters_list, fid):
     Fqr = fisher[indeces_to_keep, :][:, indeces_to_marg]
     U, s, V = linalg.svd(Frr, full_matrices=True)
     print 'marginalize matrix eig', s
-    s_inv = np.diag(1/s)
-    G = Fqq - np.dot( (np.dot(Fqr,U)) , np.dot(s_inv,((np.dot(Fqr,U)).T)))
-    return G,parameters_to_keep
+    s_inv = np.diag(1 / s)
+    G = Fqq - np.dot((np.dot(Fqr, U)), np.dot(s_inv, ((np.dot(Fqr, U)).T)))
+    red_fid = {}
+    for key in parameters_to_keep:
+        red_fid[key] = fid[key]
+
+    return G, red_fid
 
 # ROUTINES TO STUDY INSTABILITY
-def pert_element(fisher,pos,pert_ampl):
-    b= np.zeros_like(fisher)
-    b[pos] = np.random.rand()*pert_ampl
+
+
+def pert_element(fisher, pos, pert_ampl):
+    b = np.zeros_like(fisher)
+    b[pos] = np.random.rand() * pert_ampl
     return b
 
-def cond_removing_el(fisher,fid):
-    temp =np.linalg.cond(fisher)
-    for i in np.arange(0,np.shape(fisher)[0]):
-        survived = list(set(np.arange(0,np.shape(fisher)[0]))-set([i]))
-        print 'element removed',i,fid.keys()[i], 'condition number',np.linalg.cond(fisher[survived,:][:,survived]),'improvement', temp/np.linalg.cond(fisher[survived,:][:,survived])
+
+def cond_removing_el(fisher, fid):
+    temp = np.linalg.cond(fisher)
+    for i in np.arange(0, np.shape(fisher)[0]):
+        survived = list(set(np.arange(0, np.shape(fisher)[0])) - set([i]))
+        print 'element removed', i, fid.keys()[i], 'condition number', np.linalg.cond(fisher[survived, :][:, survived]), 'improvement', temp / np.linalg.cond(fisher[survived, :][:, survived])
+
 
 class Fisher_matrix(object):
 

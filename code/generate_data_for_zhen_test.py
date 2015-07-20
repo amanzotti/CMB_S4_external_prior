@@ -27,7 +27,7 @@ import os
 import warnings
 
 output_folder = 'test_fisher'
-output_folder_2 = 'run4'
+output_folder_2 = 'run2'
 camb_location = '/home/manzotti/local/camb/camb'
 
 config = configparser.ConfigParser()
