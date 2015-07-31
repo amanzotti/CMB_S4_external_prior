@@ -1,7 +1,0 @@
-Noise files created digitizing Fig, 1 of
-1402.4108 A Guide to Designing Future Ground-based CMB Experiments
-
-Note they are noise for l (l+1) Cldd/ (2 pi)
-
-with
-Cdd = l(l+1) Cphi
