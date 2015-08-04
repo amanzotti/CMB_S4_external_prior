@@ -1,0 +1,10 @@
+In this runs we want to keep EVERYTHING fixed while we change the Omega_nu omega_b parameters for example so that lambda is always changing
+
+
+
+
+
+
+
+run 1 has 5% steps in all.
+run 2 has 3.5% steps in all.

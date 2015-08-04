@@ -127,7 +127,7 @@ def study_prior_H0_on_N_eff():
         np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
 
 
-def study_prior_tau_on_N_eff():
+def study_prior_tau_on_N_eff(fid, fisher, output_folder, header):
     '''
     TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
     '''
@@ -185,9 +185,78 @@ def study_prior_tau_on_N_eff():
         d3.append(
             math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
-        np.savetxt('output_cmb/sigma_tau_1percent.txt', d2)
-        np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
-        np.savetxt('output_cmb/sigma_tau_perfect_prior.txt', d3)
+        np.savetxt('{}/sigma_tau_1percent.txt'.format(output_folder), d2, header=header)
+        np.savetxt('{}/sigma_tau_noPrior.txt'.format(output_folder), d, header=header)
+        np.savetxt('{}/sigma_tau_perfect_prior.txt'.format(output_folder), d3, header=header)
+
+
+def return_simgax_y_prior(fid, fisher, x, y, prior_val):
+    '''
+Concept return sigma x given a possible prior on y
+    '''
+
+    if isinstance(prior_val, (int, long, float)):
+        assert (fid.has_key(x))
+        assert (fid.has_key(y))
+
+        fisher1 = fisher.copy()
+        # Cicle on H0 priors
+        fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
+            (prior_val * fid[y]) ** 2
+
+        return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+
+    elif (isinstance(prior_val, (np.ndarray))) or (isinstance(prior_val, list)):
+
+        sigma_x_prior = np.zeros(np.size(prior_val))
+        for i, prior in enumerate(prior_val):
+
+            fisher1 = fisher.copy()
+            # Cicle on H0 priors
+            fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
+                (prior * fid[y]) ** 2
+
+            sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+        return sigma_x_prior
+    else:
+        sys.exit('type not recognized')
+
+
+
+
+def return_simgax_y_prior2D(fid, fisher, x, y, prior_val1, prior_val2):
+    '''
+    Concept return sigma x given a possible prior on y
+    '''
+
+    par1 = y[0]
+    par2 = y[1]
+    if isinstance(prior_val1, (int, long, float)):
+        assert (fid.has_key(x))
+        assert (fid.has_key(y))
+        fisher1 = fisher.copy()
+        fisher1[fid.keys().index(par1), fid.keys().index(par1)] += 1 / \
+            (prior_val1 * fid[par1]) ** 2
+        fisher1[fid.keys().index(par2), fid.keys().index(par2)] += 1 / \
+            (prior_val2 * fid[par1]) ** 2
+
+        return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+
+    elif (isinstance(prior_val1, (np.ndarray))) or (isinstance(prior_val1, list)):
+
+        sigma_x_prior = np.zeros((np.size(prior_val1), np.size(prior_val2)))
+        for i, prior_1 in enumerate(prior_val1):
+            for j, prior_2 in enumerate(prior_val2):
+
+                fisher1 = fisher.copy()
+                # Cicle on H0 priors
+                fisher1[fid.keys().index(par1), fid.keys().index(par1)] += 1 / \
+                    (prior_1 * fid[par1]) ** 2
+                fisher1[fid.keys().index(par2), fid.keys().index(par2)] += 1 / \
+                    (prior_2 * fid[par1]) ** 2
+
+                sigma_x_prior[i, j] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+        return sigma_x_prior
 
 
 def study_prior_ns_on_N_eff():
@@ -195,6 +264,60 @@ def study_prior_ns_on_N_eff():
     TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
     '''
     pass
+
+
+# def study_prior_x_on_y(x, y, fid, fisher, output_folder):
+#     '''
+#     TO be finished we want to study the effect of priors on parameters manipulating the fisher matrix
+#     '''
+
+#     d = []
+#     d2 = []
+#     d3 = []
+
+# cycling on x prior
+#     for i in np.arange(-3, -1, 0.1):
+
+#         fisher1 = fisher.copy()
+# Cicle on x priors
+#         fisher1[fid.keys().index(x)), fid.keys().index(x)] += 1 /
+#             (10 ** i * fid[x]) ** 2
+# Invert and get y error with these priors
+
+#         d.append(
+#             math.sqrt(np.linalg.inv(fisher1)[fid.keys().index(y), fid.keys().index(y)]))
+
+#         fisher2=fisher.copy()
+# Cicle on x priors
+
+#         fisher2[fid.keys().index(x), fid.keys().index(x)] += 1 /
+#             (10 ** i * fid[x]) ** 2
+
+# add 1% prior on ns
+#         fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 /
+#             (0.01 * fid['scalar_spectral_index(1)']) ** 2
+# add 1% prior on As
+#         fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 /
+#             (0.01 * fid['scalar_amp(1)']) ** 2
+#         fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
+
+# Invert and get y error with these priors
+#         d2.append(
+#             math.sqrt(np.linalg.inv(fisher2)[fid.keys().index(y), fid.keys().index(y)]))
+
+#         fisher3=fisher.copy()[[fid.keys().index(x), fid.keys().index(y)], :][
+#             :, [fid.keys().index(x), fid.keys().index(y)]]
+# Cicle on x priors
+# in the cut matrix tau is in the 0 place
+#         fisher3[0, 0] += 1 / (10 ** i * fid[x]) ** 2
+
+# Invert matrix and get error  on y with perfect priors
+#         d3.append(
+#             math.sqrt(np.linalg.inv(fisher3)[fid.keys().index(y), fid.keys().index(y)]))
+
+#         np.savetxt('{}/sigma_{}_1percent.txt'.format(output_folder, y), d2, header = 'test_header')
+#         np.savetxt('{}/sigma_{}_noPrior.txt'.format(output_folder, y), d, header = 'test_header')
+#         np.savetxt('{}/sigma_{}_perfect_prior.txt'.format(output_folder, y), d3, header = 'test_header')
 
 
 def save_cov_matrix(fisher_inv, filename='output_cmb/param_cov.txt'):
@@ -227,6 +350,8 @@ def print_resume_stat(fisher, fid):
     for key, value in fid.iteritems():
 
         print 'sigma(', key, ')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%', "with no degeneracies", 1. / np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])
+
+
 
 
 def fisher_marginalize(fisher, marginalize_parameters_list, fid):

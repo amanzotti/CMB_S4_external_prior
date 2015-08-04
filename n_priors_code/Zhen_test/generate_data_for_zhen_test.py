@@ -62,9 +62,9 @@ fid = {}
 fid['hubble'] = config.getfloat('camb', 'hubble') / 100.
 fid['scalar_spectral_index(1)'] = config.getfloat('camb', 'scalar_spectral_index(1)')
 fid['scalar_amp(1)'] = 10 ** 9 * config.getfloat('camb', 'scalar_amp(1)')
-# fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
+fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos')
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
-# fid['w'] = config.getfloat('camb', 'w') #DE W parameters
+fid['w'] = config.getfloat('camb', 'w') #DE W parameters
 fid['ombh2'] = config.getfloat('camb', 'ombh2')
 fid['ombch2'] = config.getfloat('camb', 'omch2') + config.getfloat('camb', 'ombh2')
 fid['mnu'] = config.getfloat('camb', 'omnuh2') * 93.359
@@ -88,7 +88,8 @@ pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.02
 pargaps_dict['mnu'] = fid['mnu'] * 0.02
 pargaps_dict['ombh2'] = fid['ombh2'] * 0.02
 pargaps_dict['ombch2'] = fid['ombch2'] * 0.02
-
+pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.02
+pargaps_dict['w'] = fid['w'] * 0.02
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
 # save datagaps
@@ -106,10 +107,10 @@ values['hubble'] = pargaps_dict['hubble'] * np.array([-2, -1, 1, 2]) + fid['hubb
 values['scalar_spectral_index(1)'] = pargaps_dict['scalar_spectral_index(1)'] * \
     np.array([-2, -1, 1, 2]) + fid['scalar_spectral_index(1)']
 values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_amp(1)']
-# values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
+values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
 values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * np.array([-2, -1, 1, 2]) + fid['re_optical_depth']
 values['mnu'] = pargaps_dict['mnu'] * np.array([-2, -1, 1, 2]) + fid['mnu']
-# values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
+values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
 values['ombh2'] = pargaps_dict['ombh2'] * np.array([-2, -1, 1, 2]) + fid['ombh2']
 values['ombch2'] = pargaps_dict['ombch2'] * np.array([-2, -1, 1, 2]) + fid['ombch2']
 
