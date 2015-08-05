@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.28)  20 JUN 2015 15:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.28)  4 AUG 2015 17:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -72,8 +72,8 @@ File: aps4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for docu
 mentation)
 Class revtex4-1 Info: RevTeX society APS selected on input line 31.
 )
-Class revtex4-1 Info: Selecting journal prl on input line 7544.
-Class revtex4-1 Info: APS journal PRL selected on input line 7545.
+Class revtex4-1 Info: Selecting journal prd on input line 7544.
+Class revtex4-1 Info: APS journal PRD selected on input line 7545.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/revtex/aps12pt4-1.rtx
 File: aps12pt4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for 
@@ -211,6 +211,9 @@ Class revtex4-1 Info: multicol was not loaded (OK!) on input line 22.
 
 (./N_eff_prior_paper.aux
 
+LaTeX Warning: Label `sec:intro' multiply defined.
+
+
 LaTeX Warning: Label `default' multiply defined.
 
 
@@ -297,79 +300,169 @@ e
 ))
 \openout3 = `N_eff_prior_paperNotes.bib'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 65.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 52.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 65.
- [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<../images/PS_phi_with_noise.pdf, id=15, 578.16pt x 578.16pt>
-File: ../images/PS_phi_with_noise.pdf Graphic file (type pdf)
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 52.
 
-<use ../images/PS_phi_with_noise.pdf>
-Package pdftex.def Info: ../images/PS_phi_with_noise.pdf used on input line 105
-.
-(pdftex.def)             Requested size: 346.89867pt x 346.89867pt.
 
-<../images/PS_with_noise.pdf, id=16, 578.16pt x 578.16pt>
-File: ../images/PS_with_noise.pdf Graphic file (type pdf)
+Class revtex4-1 Warning: Assuming \noaffiliation for authors.
 
-<use ../images/PS_with_noise.pdf>
-Package pdftex.def Info: ../images/PS_with_noise.pdf used on input line 113.
-(pdftex.def)             Requested size: 346.89867pt x 346.89867pt.
- [2]
-<../images/h0_fisher.pdf, id=25, 578.16pt x 578.16pt>
-File: ../images/h0_fisher.pdf Graphic file (type pdf)
+[1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2]
+./N_eff_prior_paper.tex:125: Undefined control sequence.
+l.125 ...a big change in its inverse. Given \refeq
+                                                  {cramer-rao} this can be a...
 
-<use ../images/h0_fisher.pdf>
-Package pdftex.def Info: ../images/h0_fisher.pdf used on input line 218.
-(pdftex.def)             Requested size: 346.89867pt x 346.89867pt.
+? 
+[3]
 
-<../images/tau_fisher.pdf, id=26, 578.16pt x 578.16pt>
-File: ../images/tau_fisher.pdf Graphic file (type pdf)
+LaTeX Warning: File `PS_phi_with_noise.pdf' not found on input line 146.
 
-<use ../images/tau_fisher.pdf>
-Package pdftex.def Info: ../images/tau_fisher.pdf used on input line 226.
-(pdftex.def)             Requested size: 346.89867pt x 346.89867pt.
 
-No file N_eff_prior_paper.bbl.
-[3 <../images/PS_phi_with_noise.pdf>] [4 <../images/PS_with_noise.pdf>]
-[5 <../images/h0_fisher.pdf>] [6 <../images/tau_fisher.pdf>]
-(./N_eff_prior_paper.aux)
+./N_eff_prior_paper.tex:146: Package pdftex.def Error: File `PS_phi_with_noise.
+pdf' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.146 ...raphics[scale=0.6]{PS_phi_with_noise.pdf}
+                                                  
+? 
+
+LaTeX Warning: File `PS_with_noise.pdf' not found on input line 154.
+
+
+./N_eff_prior_paper.tex:154: Package pdftex.def Error: File `PS_with_noise.pdf'
+ not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.154 ...udegraphics[scale=0.6]{PS_with_noise.pdf}
+                                                  
+? 
+[4]
+
+Package natbib Warning: Citation `planck-collaboration:2014g' on page 5 undefin
+ed on input line 182.
+
+
+LaTeX Warning: File `h0_fisher.pdf' not found on input line 248.
+
+
+./N_eff_prior_paper.tex:248: Package pdftex.def Error: File `h0_fisher.pdf' not
+ found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.248 \includegraphics[scale=0.6]{h0_fisher.pdf}
+                                                
+? 
+
+LaTeX Warning: File `tau_fisher.pdf' not found on input line 256.
+
+
+./N_eff_prior_paper.tex:256: Package pdftex.def Error: File `tau_fisher.pdf' no
+t found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.256 \includegraphics[scale=0.6]{tau_fisher.pdf}
+                                                 
+? 
+[5] (./N_eff_prior_paper.bbl [6]
+./N_eff_prior_paper.bbl:80: Undefined control sequence.
+<argument> \bibinfo {journal} {\jcap 
+                                     }\ 
+l.80   (\bibinfo {year} {2012})}
+                                ,\ \Eprint {http://arxiv.org/abs/1205.3984}
+? 
+./N_eff_prior_paper.bbl:80: Undefined control sequence.
+<argument> \jcap 
+                 
+l.80   (\bibinfo {year} {2012})}
+                                ,\ \Eprint {http://arxiv.org/abs/1205.3984}
+? 
+./N_eff_prior_paper.bbl:94: Undefined control sequence.
+<argument> \bibinfo {journal} {\jcap 
+                                     }\ 
+l.94   {eid} {013} (\bibinfo {year} {2006})}
+                                            ,\ \Eprint
+? 
+./N_eff_prior_paper.bbl:94: Undefined control sequence.
+<argument> \jcap 
+                 
+l.94   {eid} {013} (\bibinfo {year} {2006})}
+                                            ,\ \Eprint
+? 
+./N_eff_prior_paper.bbl:163: Undefined control sequence.
+<argument> \bibinfo {journal} {\aap 
+                                    }\ 
+l.163 ...nfo {eid} {A16} (\bibinfo {year} {2014})}
+                                                  ,\ \Eprint
+? 
+./N_eff_prior_paper.bbl:163: Undefined control sequence.
+<argument> \aap 
+                
+l.163 ...nfo {eid} {A16} (\bibinfo {year} {2014})}
+                                                  ,\ \Eprint
+? 
+)
+
+Package natbib Warning: There were undefined citations.
+
+[7] (./N_eff_prior_paper.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4218 strings out of 493109
- 56420 string characters out of 6135004
- 135369 words of memory out of 5000000
- 7629 multiletter control sequences out of 15000+600000
- 16698 words of font info for 58 fonts, out of 8000000 for 9000
+ 4254 strings out of 493109
+ 56837 string characters out of 6135004
+ 137819 words of memory out of 5000000
+ 7665 multiletter control sequences out of 15000+600000
+ 13903 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,12n,25p,740b,317s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></
 usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></us
 r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
 /local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
 local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/l
 ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/loc
 al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr
 /local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
 ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
-al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local
-/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
-xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on N_eff_prior_paper.pdf (6 pages, 740413 bytes).
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
+2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on N_eff_prior_paper.pdf (7 pages, 238656 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 134 compressed objects within 2 object streams
+ 108 PDF objects out of 1000 (max. 8388607)
+ 78 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

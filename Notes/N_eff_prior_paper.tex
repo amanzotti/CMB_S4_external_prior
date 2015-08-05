@@ -6,7 +6,7 @@
 %  Add 'draft' option to mark overfull boxes with black boxes
 %  Add 'showpacs' option to make PACS codes appear
 %  Add 'showkeys' option to make keywords appear
-\documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
+\documentclass[aps,prd,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
 \usepackage{bm}
@@ -17,7 +17,7 @@
 % Choosing a journal automatically selects the correct APS
 % BibTeX style file (bst file), so only uncomment the line
 % below if necessary.
-%\bibliographystyle{apsrev4-1}
+\bibliographystyle{apsrev4-1}
 
 \begin{document}
 \graphicspath{{../images/}}
@@ -30,41 +30,28 @@
 %\preprint{}
 
 %Title of paper
-\title{$N_{\text{eff}}$ priors}
+\title{The importance of external priors for the S4 generation of CMB experiments.}
 
-% repeat the \author .. \affiliation  etc. as needed
-% \email, \thanks, \homepage, \altaffiliation all apply to the current
-% author. Explanatory text should go in the []'s, actual e-mail
-% address or url should go in the {}'s for \email and \homepage.
-% Please use the appropriate macro foreach each type of information
+\author{A. Manzotti}
+%\email{\href{mailto:manzotti.alessandro@gmail.com}{manzotti.alessandro@gmail.com}}
+%\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
+%\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
+\author{S. Dodelson}
+%\affiliation{Fermilab Center for Particle Astrophysics, Fermi National Accelerator Laboratory, Batavia, IL 60510-0500}
+%\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
+%\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
 
-% \affiliation command applies to all authors since the last
-% \affiliation command. The \affiliation command should follow the
-% other information
-% \affiliation can be followed by \email, \homepage, \thanks as well.
-\author{}
-%\email[]{Your e-mail address}
-%\homepage[]{Your web page}
-%\thanks{}
-%\altaffiliation{}
-\affiliation{}
-
-%Collaboration name if desired (requires use of superscriptaddress
-%option in \documentclass). \noaffiliation is required (may also be
-%used with the \author command).
-%\collaboration can be followed by \email, \homepage, \thanks as well.
-%\collaboration{}
-%\noaffiliation
 
 \date{\today}
 
 \begin{abstract}
-Try to understand the effect of priors on different parameters on the $N_{\text{eff}}$ errors with a Fisher matrix approach. Where should you invest time and money if you really care about the value of $N_{\text{eff}}$?
+The next generation of CMB experiments is expected to drastically improve our understanding of neutrino physics, inflation, Dark Matter and Dark Energy.
+Indeed they will measure with cosmic variance limited precision the temperature and polarization mode together with a lensing potential reconstruction with signal to noise bigger than one on several scales. Detailed forecasts have been done and will tremendously help to plan and motivate this next generation of CMB experiments. However we think that theoretical priors coming from external non-CMB experiments were not fully analyzed. For this reason in this work we use a fisher-matrix technique to test how improving on external priors can lead to improvement in S4 CMB parameters constraint. We find that.. 
 
 \begin{itemize}
-\item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet.
-\item We are varying $\tau, ~ n_{s}, ~ A_{s}, ~ N_{\rm eff}, ~ H_{0}, w,~\Omega_{\nu}h^{2},~\Omega_{c}h^{2},~\Omega_{b}h^{2}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, $\Omega_{\nu}h^{2}=0.0009$
-\item Next TODO: Check for bugs and errors code in its early stages. PCA? what prior is more important? Full MCMC should not be extremely hard with cosmosis.
+\item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet. Needed?
+\item We are varying $\tau, ~ n_{s}, ~ A_{s}, ~ N_{\rm eff}, ~ H_{0}, w,~\Omega_{\nu}h^{2},~\Omega_{c}h^{2},~\Omega_{b}h^{2}$. The neutrino sector consists of one massive neutrino of $m_{\nu}=0.083$ eV, which corresponds to $\Omega_{\nu}h^{2}=0.0009$.
+\item Next TODO: Check for bugs and errors code (DONE look at Zhen test). PCA? what prior is more important? Full MCMC should not be extremely hard with cosmosis (I implemented a toy likelihood analysis to be improved).
 \end{itemize}
 
 
@@ -80,20 +67,74 @@ Try to understand the effect of priors on different parameters on the $N_{\text{
 
 % body of paper here - Use proper section commands
 % References should be done using the \cite, \ref, and \label commands
-\section{Introduction}
+\section{Introduction \label{sec:intro}}
+
+Since the first results coming from the COBE experiments great results.
+
+Far from finished S4 experiment will measure
+
+This will give us amazing information on..
+
+Forecast is important \cite{wu:2014} ... we think that also a detailed study of priors will be important in planning new experiment.
+
+For this reason we...
+
+This paper is organized as follow:
 
 
-% Put \label in argument of \section for cross-referencing
-%\section{\label{}}
-\subsection{}
-\subsubsection{}
 
-\section{Theory}
+\section{Assumption and methods \label{sec:intro} }
+We start this section by introducing the Fisher matrix formalism a simple but powerful technique widely used to predict the constrains on the parameters of the assumed cosmological model with future experiments. We then specify the model we used in this work and the fiducial parameters we assumed. 
+We adopt a standard $\Lambda$CDM model with basic possible extensions with parameters taken from recent CMB+BAO+SN fit.
 
 \subsection{Fisher Matrix formalism}
-Copied from paper change it for pubblication:
+The starting point to estimate errors on cosmological parameters  is the Bayes theorem that relates the likelihood of measuring a set of data given the parameters of the model to what we want: the posterior probability of those parameters given the data.
+These are related by the priors probability of the parameters $P(\theta)$ through:
+\begin{equation}
+\mathcal{L}(\theta|d)\propto \mathcal{L}(d|\theta)P(\theta),
+\end{equation}
 
-To avoid any possible numerical instability in the marginalising procedure, we calculate the the Fisher matrix marginalised over the standard LCDM parameters following (Albrecht et al. 2009)
+where,as usual we have neglect the probability of the data itself.
+These general framework can be simplified in the context of cosmology by focusing on small perturbations around the maximum of a Gaussian likelihood. 
+Indeed we will assume that the likelihood can be approximated as Gaussian.
+While this approximate the true likelihood most of the time the opposite as been found in other cases \cite{2012JCAP...09..009W}. Even if other methods of analysis have been proposed \cite{2006JCAP...10..013P,2006astro.ph..9591A} this is still the standard assumption when future constrains have been forecasted \cite{wu:2014}.
+Secondly we will assume to know the true ``fiducial'' parameters that maximize the likelihood $\mathcal{L}(\theta|d)$. A consequence is that we are then able to estimate the uncertainties on those parameters by a simple analysis of the likelihood curvature around the fiducial values.
+As usual we define the fisher matrix elements as:
+\begin{equation}
+	\centering
+		F_{ij} \equiv - \left\langle\frac{\partial^2 \log \mathcal{L}}{\partial \theta_i \partial \theta_j} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta_0}}\right\rangle,
+	\label{eq:Fij_def}
+\end{equation}
+where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters array that, by definition, maximize the likelihood.
+We refer the reader for a detailed explanation of the fact that with the usual definition of power spectrum $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$ with in our case $X,Y\in\{T,E,\phi\}$ the Fisher matrix can be rewritten as:
+\begin{equation}
+ F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right)
+ \end{equation}
+ with $\boldsymbol{C}_\ell$ encapsulating the usual power spectra in a matrix structure:
+ \begin{eqnarray}
+ 	\centering
+		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{Td} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{Td} & 0 & C_\ell^{dd} + N_\ell^{dd}\end{array}\right).
+	\label{eq:cov_definition}
+\end{eqnarray}
+
+The power of this method come from the fact that, given the Cramer-Rao inequality we can get the errors on parameter $i$ marginalized over all the other parameters simply inverting the Fisher matrix as:
+\begin{equation}
+\sigma_i \equiv \sigma (\theta_i) = \sqrt{(\mathbf{ F^{-1}})_{ii}}.
+\label{eq:cramer-rao}
+\end{equation}
+Approaching the forecast problem using a Fisher matrix introduce some technical difficulties together with the previously mentioned assumption that the likelihood is gaussian. Indeed it is known that the more the paramters used in the analysis the easier it is to face numerical isseus. Fisher matrix are can be ill-conditioned: a small change in the fisher matrix led to a big change in its inverse. Given \refeq{cramer-rao} this can be a problem for error estimation. While we understand this possible concern we carefully compare our results to the literature  \footnote{we thank the authors of \cite{pan:2015} for their collaboration.}
+Furthermore we use the same technique used in \cite{2006astro.ph..9591A} to avoid any possible numerical instability in the marginalising procedure. This allow not to invert the entire matrix when we want to marginalize over a set of parameters minimizin numerical issue and conserving parameters degeneracies as much as possible.
+
+Priors on cosmological parameters coming from external experiments, the main focus or our work can be easily treated in this contest.
+For example a $1\%$ prior on $H_{0}$ can be obtained by:
+\begin{equation}
+F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,\text{fid}})^2}, 
+\end{equation}
+
+
+
+ 
+PUT in an appendix?
 \begin{equation}
 G = F^{\phi\phi} - F^{\phi\psi}U\Lambda^{-1}U^{T}F^{\phi\psi},
 \end{equation}
@@ -117,34 +158,37 @@ where we define $\phi = \{N_{eff},...\}$ and $\psi = \{\Omega_{m} ... marginal\}
 \end{figure}
 
 
+\subsection{CMB S4 experiments: level of noise.}
 
-
-
-\begin{eqnarray}
-\centering
-	s\ [\;\mu {\rm K.arcmin}\;] \equiv \frac{ {\rm NET}\ [\; \mu{\rm K.}\sqrt{s}\;] \times \sqrt{f_{sky} \ [\;{\rm arcmin}^2\;] }}{ \sqrt {N_{\rm det} \times Y \times \Delta T\ [\;{\rm s }\;]}}.
-	\label{eq:sensitivity_definition}
-\end{eqnarray}
-
-\begin{equation}
-	\centering
-		F_{ij} \equiv - \left\langle\frac{\partial^2 \log \mathcal{L}}{\partial \theta_i \partial \theta_j} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta_0}}\right\rangle
-	\label{eq:Fij_def}
-\end{equation}
-
- \begin{eqnarray}
+The next generation of CMB experiments defined as S4 will have an extraordinary resolution and depth.\
+We will also assume that for the measurement we use, the temperature and E-mode polarization of the CMB large scale foreground like dust are under control and negligible. We will deal with the poisson noise in the temperature signal by discarding all the small scales modes with $\ell>\ell_{T,max}=3000$.
+The remaining source of noise, the instrumental noise is added to the power spectrum in the usual way:
+ \begin{equation}
  	\centering
-		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{Td} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{Td} & 0 & C_\ell^{dd} + N_\ell^{dd}\end{array}\right).
-	\label{eq:cov_definition}
-\end{eqnarray}
-
-\begin{equation}
-\sigma_i \equiv \sigma (\theta_i) = \sqrt{(\mathbf{ F^{-1}})_{ii}}
+		N^{ XX' }_\ell = s^{\, 2} \exp \left(\ell(\ell+1) \frac{\theta^{\ 2}_{\textsc{fwhm}}}{8\log2}\right),
+	\label{eq:beamnoise}
 \end{equation}
+where $\theta^{\ 2}_{\textsc{fwhm}}$ is the FWHM of the experiment's beam and $s$ represent instrumental the white noise.
+We decide to use a $1.5$ muK and a beam of 1 arcmin.
+Note that  $s \rightarrow s\times \sqrt{2}$ in the case of $ XX' = \{ EE, BB \}$.
 
-\begin{equation}
-F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,fid})^2}, 
-\end{equation}
+
+Together with E and T we will also consider the information contained in the  
+lensing potential $phi$ reconstructed from CMB experiments. The lensing potential represents the integration along the line of site of the gravitational potential and it leaves its signature in the CMB, both in temperature and polarization, by bending CMB photons. This introduce non gaussianities that couples different modes in the otherwise independent CMB modes and using a quadrature estimator technique it can be reconstructed \cite{okamoto:2003,hu:2002}.
+For the noise associated to the recosntructed $\phi$ we follow \cite{okamoto:2003,hu:2002} without using more advanced iterative techniques.
+
+We parametrize our cosmology using a flat $\nu \Lambda$CDM universe. We also allow different Dark Energy framework by introducing the equations of state parameter w as a free parameter.
+
+We use the $\Lambda$CDM parameter values from Table 2 of \textit{Planck} best fit value \cite{planck-collaboration:2014g}, i.e. $\Omega_c h^2 =  0.12029$,  $\Omega_b h^2  = 0.022068$, $A_s = 2.215\times10^{-9}$ at $k_0 = 0.05\ {\rm Mpc}^{-1}$, $n_s = 0.9624$, $\tau = 0.0925$, and $H_0 = 67.11$ km/s/Mpc. Regarding the $\Lambda$CDM extension we chose a neutrino energy densities$\Omega_{\nu} h^2$=0.0009, which corresponds to $M_{\nu}$  $\simeq$ 85\ meV and we also set $w=1$.
+
+
+%\begin{eqnarray}
+%\centering
+%	s\ [\;\mu {\rm K.arcmin}\;] \equiv \frac{ {\rm NET}\ [\; \mu{\rm K.}\sqrt{s}\;] \times \sqrt{f_{sky} \ [\;{\rm arcmin}^2\;] }}{ \sqrt {N_{\rm det} \times Y \times \Delta T\ [\;{\rm s }\;]}}.
+%	\label{eq:sensitivity_definition}
+%\end{eqnarray}
+%
+
 
 
 \begin{eqnarray}
@@ -152,7 +196,7 @@ F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,fid})^2},
 	\label{eq:tnu_propto_tgamma}
 \end{eqnarray}
 
-\section{Data}
+\section{Results: \label{sec:results}}
 
 \begin{table}[htdp]
 \caption{Fiducial values used.}
@@ -181,35 +225,21 @@ $N_{eff}$ & \\
 \label{default}
 \end{table}%
 
-
-\section{Results}
-
 \begin{table}[htdp]
 \caption{How well we do constrain separate parameters with this data without any external prior?}
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-$H_{0}$ & 0.32\% \\
-\hline
-\hline
-$\tau$ & 2.26 \%\\
-\hline
+$H_{0}$ &$ M_{\nu}$ &$\Omega_{bc}h^{2}$&$\Omega_{b}h^{2}$&$\tau$&$A_{s}$&$n_{s}$ \\
+$0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
 
 \hline
-$A_{s}$ & 0.37 \%\\
-\hline
 
-\hline
-$n_{s}$ & 0.25 \%\\
-\hline
-
-\hline
-$N_{eff}$ & 0.9 \%\\
-\hline
 
 \end{tabular}
 \end{center}
 \label{default}
+\caption{Things to notice: this is done with the Zhen test parameters ($\ell<3000$ and no error on lensing). Now if we trust it CMB alone can get a $0.8\%$ error on $H_{0}$ thus I am not surprised if a prior on H would not help. However what do we think about it? is it really CMB better than SN. People will not agree on that. $\tau$ will probably improve and also M$\nu$ from BAO may help improving parameters.}
 \end{table}%
 
 
@@ -231,9 +261,12 @@ $N_{eff}$ & 0.9 \%\\
 
 
 
-\section{Conclusions}
+\section{Conclusions \label{sec:conclusions}}
+We find that...
 
+This means that supernova experiments CMB spatial distortions and large scale structure can/will/should
 
+Future works
 
 % If in two-column mode, this environment will change to single-column
 % format so that long equations can be displayed. Use
@@ -308,13 +341,16 @@ $N_{eff}$ & 0.9 \%\\
 %\appendix
 %\section{}
 
-% If you have acknowledgments, this puts in the proper section head.
-%\begin{acknowledgments}
-% put your acknowledgments here.
-%\end{acknowledgments}
+\begin{acknowledgments}
+We thank Youngsoo Park for..
+AM want to thank Zhen Pan who allow a careful comparison of our results.
+This work was partially supported by the Kavli Institute for Cosmological Physics at the University of Chicago through grants NSF PHY-1125897 and an endowment from the Kavli Foundation and its founder Fred Kavli.
+%%%=================================================================
+The work of SD is supported by the U.S. Department of Energy, including grant DE-FG02-95ER40896.
+\end{acknowledgments}
 
 % Create the reference section using BibTeX:
-\bibliography{basename of .bib file}
+\bibliography{N_eff_prior_paper}
 
 \end{document}
 
