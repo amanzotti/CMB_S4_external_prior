@@ -6,13 +6,13 @@
 %  Add 'draft' option to mark overfull boxes with black boxes
 %  Add 'showpacs' option to make PACS codes appear
 %  Add 'showkeys' option to make keywords appear
-\documentclass[aps,prd,preprint,groupedaddress]{revtex4-1}
+\documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
 \usepackage{bm}
 \usepackage{amsmath}
 \usepackage{graphicx}
-
+\input{papers_packages_command._include_tex}
 % You should use BibTeX and apsrev.bst for references
 % Choosing a journal automatically selects the correct APS
 % BibTeX style file (bst file), so only uncomment the line
@@ -20,7 +20,7 @@
 \bibliographystyle{apsrev4-1}
 
 \begin{document}
-\graphicspath{{../images/}}
+\graphicspath{{images/}}
 
 % Use the \preprint command to place your local institutional report
 % number in the upper righthand corner of the title page in preprint mode.
@@ -46,7 +46,7 @@
 
 \begin{abstract}
 The next generation of CMB experiments is expected to drastically improve our understanding of neutrino physics, inflation, Dark Matter and Dark Energy.
-Indeed they will measure with cosmic variance limited precision the temperature and polarization mode together with a lensing potential reconstruction with signal to noise bigger than one on several scales. Detailed forecasts have been done and will tremendously help to plan and motivate this next generation of CMB experiments. However we think that theoretical priors coming from external non-CMB experiments were not fully analyzed. For this reason in this work we use a fisher-matrix technique to test how improving on external priors can lead to improvement in S4 CMB parameters constraint. We find that.. 
+Indeed they will measure with cosmic variance limited precision the temperature and E mode polarization that will also allow the reconstruction of lensing potential with a signal to noise bigger than one on several scales. Detailed forecasts have been done and will tremendously help to plan and motivate the next generation of CMB experiments. However we think that the dependence of this results on the assumed external priors need to be explored. For this reason in this work we use a fisher-matrix technique to test how external priors can lead to improvement in S4 CMB parameters constraint. We find that quite surprisingly CMB S4 are very powerful even on
 
 \begin{itemize}
 \item We are now using a simplistic lensing noise but I have lensing noise with the usual Hu Okamoto formula. Iterative Seljack not there yet. Needed?
@@ -71,34 +71,39 @@ Indeed they will measure with cosmic variance limited precision the temperature 
 
 Since the first results coming from the COBE experiments great results.
 
-Far from finished S4 experiment will measure
+Far from finished S4 experiment will reveal several unclear aspect of the universe like the neutrino sector, Dark Energy and Dark matter properties. 
 
-This will give us amazing information on..
+
+The number of relativistic species,like neutrinos, present in the early influence alter the expansion history of the universe. This can be probe by CMB by comparing the sound horizon scale with the silk damping. Indeed their ration scales differently with the expansion rate giving $r_{d}/r_{s}\propto\sqrt{H}$ (see \cite{2013arXiv1309.5383A}, \cite{2013PhRvD..87h3008H} and references therein). Their mass on the other hand has very little influence on the CMB physics because for the range of masses allowed by recent constraints neutrinos are relativist at the last scattering surface. As a lot of other low redshift effect however they modify the CMB through the lensing effect of large scale structure on CMB photons. Different neutrino masses led to different growth of structure which consequently lead to different CMB lensing. The lensing potential can be reconstructed from the CMB itself opening the possibilities of constraining the neutrino mass with CMB. In the future according for example to \cite{wu:2014}, CMB alone will constrain $N_{\rm eff}$ with a $1\%$ precision and the total mass of neutrinos at $60\%$ with a consistent factor of two improvement when BAO are added. Even if these constraints depends on the fiducial values used the recent future will be a big step from the neutrino sector.
+
+CMB is also sensitive to Dark energy (see \cite{2010MNRAS.405.2639J}) mainly from its effect on the Hubble function that modifies the distance to the last scattering surface. Furthermore the influence of Dark Energy in the low redshift universe modify the energy of CMB photons through the Integrated sachs wolfe Effect. Also as it was true in the neutrino case, CMB can thorugh lensing probe the growth of structure that depends on the dark energy properties and in particular its equation of state. When trying to constrain dark energy properties however we have to remember that they are strongly degenerate with other geometrical parameters like $H_{0}$ and $\Omega_{k}$. To get competitive constraint, CMB experiments will have to rely on external prior coming from BAO and supernova experiments.
+
+The importance of external priors in the dark energy case lead us to a more general concept. It is certainly true that CMB S4 will open an all new window
+but the synergy with other experiments like large scale structure clustering and weak lensing, BAO targeted experiments, SN, and proposed experiments like SPIRE. Indeed forecasted constrains very often assume external realistic prior.
 
 Forecast is important \cite{wu:2014} ... we think that also a detailed study of priors will be important in planning new experiment.
 
 For this reason we...
 
-This paper is organized as follow:
+This paper is organized as follow: in \refsec{method} we in \refsec{results} and we conclude with a discussion of our results in \refsec{conclusions}
 
 
 
-\section{Assumption and methods \label{sec:intro} }
-We start this section by introducing the Fisher matrix formalism a simple but powerful technique widely used to predict the constrains on the parameters of the assumed cosmological model with future experiments. We then specify the model we used in this work and the fiducial parameters we assumed. 
-We adopt a standard $\Lambda$CDM model with basic possible extensions with parameters taken from recent CMB+BAO+SN fit.
+\section{Assumption and methods \label{sec:methods} }
+We start this section by introducing the Fisher matrix formalism, a simple but powerful technique widely used to forecast future experimental constraints on the parameters of the assumed cosmological model. Then, we describe in details the $\nu\Lambda$CDM cosmological model we use in this work and the fiducial parameters we assume (from recent BAO+CMB). 
+
 
 \subsection{Fisher Matrix formalism}
-The starting point to estimate errors on cosmological parameters  is the Bayes theorem that relates the likelihood of measuring a set of data given the parameters of the model to what we want: the posterior probability of those parameters given the data.
-These are related by the priors probability of the parameters $P(\theta)$ through:
+The starting point to estimate errors on cosmological parameters is the Bayes theorem that relates the likelihood of measuring a set of data given the parameters of the model ($\mathcal{L}(d|\theta)$) to what we want: the posterior probability of those parameters given the data, $\mathcal{L}(\theta|d)$.
+These are related by the prior probability of the parameters $P(\theta)$ through:
 \begin{equation}
 \mathcal{L}(\theta|d)\propto \mathcal{L}(d|\theta)P(\theta),
 \end{equation}
-
-where,as usual we have neglect the probability of the data itself.
-These general framework can be simplified in the context of cosmology by focusing on small perturbations around the maximum of a Gaussian likelihood. 
+where, as usual, we have neglect the probability of the data itself.
+These general framework can be simplified in the context of cosmology by focusing not on the entire posterior distribution but on small perturbations around the maximum of an assumed Gaussian likelihood. 
 Indeed we will assume that the likelihood can be approximated as Gaussian.
-While this approximate the true likelihood most of the time the opposite as been found in other cases \cite{2012JCAP...09..009W}. Even if other methods of analysis have been proposed \cite{2006JCAP...10..013P,2006astro.ph..9591A} this is still the standard assumption when future constrains have been forecasted \cite{wu:2014}.
-Secondly we will assume to know the true ``fiducial'' parameters that maximize the likelihood $\mathcal{L}(\theta|d)$. A consequence is that we are then able to estimate the uncertainties on those parameters by a simple analysis of the likelihood curvature around the fiducial values.
+While this approximate the true likelihood most of the time, the opposite has been found in other cases \cite{2012JCAP...09..009W}. Even if other methods of analysis have been proposed \cite{2006JCAP...10..013P,2006astro.ph..9591A} this is still the standard assumption when future constrains have been forecasted \cite{wu:2014}. Moreover the gaussian approximation gets better at smaller scales which, a part for the exception of the optical depth parameters $\tau$, is where most of the information is coming from in our case.
+Secondly we will assume to know the true ``fiducial'' parameters that maximize the likelihood $\mathcal{L}(\theta|d)$. Given that we are then able to estimate the uncertainties on those parameters by a simple analysis of the likelihood curvature around the fiducial values.
 As usual we define the fisher matrix elements as:
 \begin{equation}
 	\centering
@@ -106,7 +111,7 @@ As usual we define the fisher matrix elements as:
 	\label{eq:Fij_def}
 \end{equation}
 where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters array that, by definition, maximize the likelihood.
-We refer the reader for a detailed explanation of the fact that with the usual definition of power spectrum $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$ with in our case $X,Y\in\{T,E,\phi\}$ the Fisher matrix can be rewritten as:
+We refer the reader to \cite{} for a detailed explanation of the fact that with the usual definition of power spectrum $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$ with $X,Y\in\{T,E,\phi\}$ the Fisher matrix can be rewritten as:
 \begin{equation}
  F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right)
  \end{equation}
@@ -116,14 +121,15 @@ We refer the reader for a detailed explanation of the fact that with the usual d
 		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{Td} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{Td} & 0 & C_\ell^{dd} + N_\ell^{dd}\end{array}\right).
 	\label{eq:cov_definition}
 \end{eqnarray}
-
-The power of this method come from the fact that, given the Cramer-Rao inequality we can get the errors on parameter $i$ marginalized over all the other parameters simply inverting the Fisher matrix as:
+The terms $N_\ell^{X}$ represents the instrumental noise of the experiment and will be discussed in \refsec{noise}.
+The power of this method descend from Cramer-Rao inequality that relates the errors on parameter $i$ marginalized over all the other parameters $\sigma_i$ to the Fisher matrix as:
 \begin{equation}
 \sigma_i \equiv \sigma (\theta_i) = \sqrt{(\mathbf{ F^{-1}})_{ii}}.
-\label{eq:cramer-rao}
+\label{eqn:cramer-rao}
 \end{equation}
-Approaching the forecast problem using a Fisher matrix introduce some technical difficulties together with the previously mentioned assumption that the likelihood is gaussian. Indeed it is known that the more the paramters used in the analysis the easier it is to face numerical isseus. Fisher matrix are can be ill-conditioned: a small change in the fisher matrix led to a big change in its inverse. Given \refeq{cramer-rao} this can be a problem for error estimation. While we understand this possible concern we carefully compare our results to the literature  \footnote{we thank the authors of \cite{pan:2015} for their collaboration.}
-Furthermore we use the same technique used in \cite{2006astro.ph..9591A} to avoid any possible numerical instability in the marginalising procedure. This allow not to invert the entire matrix when we want to marginalize over a set of parameters minimizin numerical issue and conserving parameters degeneracies as much as possible.
+
+This powerful and simple approach however introduce some technical difficulties together with the previously mentioned assumption that the likelihood is gaussian. Indeed it is known that increasing the number of parameters used in the analysis can lead to numerical issues. Fisher matrix  can become ill-conditioned: a small change in the fisher matrix led to a big change in its inverse. Given \refeq{cramer-rao} this can be a problem for error estimation. While we understand this as possible concern we carefully compare our results to the literature  \footnote{we thank the authors of \cite{pan:2015} for their collaboration.}
+Furthermore we use the same technique used in \cite{2006astro.ph..9591A} to avoid possible numerical instability in the marginalizing procedure. This allow not to invert the entire matrix when we want to marginalize over a set of parameters minimizing numerical issue and conserving parameters degeneracies as much as possible.
 
 Priors on cosmological parameters coming from external experiments, the main focus or our work can be easily treated in this contest.
 For example a $1\%$ prior on $H_{0}$ can be obtained by:
@@ -131,14 +137,6 @@ For example a $1\%$ prior on $H_{0}$ can be obtained by:
 F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,\text{fid}})^2}, 
 \end{equation}
 
-
-
- 
-PUT in an appendix?
-\begin{equation}
-G = F^{\phi\phi} - F^{\phi\psi}U\Lambda^{-1}U^{T}F^{\phi\psi},
-\end{equation}
-where we define $\phi = \{N_{eff},...\}$ and $\psi = \{\Omega_{m} ... marginal\}$; therefore, $F^{\phi\phi}$ is the block of the total Fisher matrix containing the parameters we want to constrain, whilst $F^{\psi\psi}$ is the nuisance-parameter Fisher sub-matrix. Here, $\Lambda$ is the diagonal matrix whose elements are the eigenvalues of $F^{\psi\psi}$, whilst U is the orthogonal matrix diagonalising $F^{\psi\psi}$. By using Eq., our marginalising procedure is more stable, since degeneracies in $F^{\phi\phi}$ are properly propagated to G with no instabilities, and we do not even worry about a possibly ill-conditioned $F^{\phi\phi}$ sub-matrix, since we check its stability on the fly by the diagonalisation.
 
 
 \begin{figure}[htbp]
@@ -158,7 +156,7 @@ where we define $\phi = \{N_{eff},...\}$ and $\psi = \{\Omega_{m} ... marginal\}
 \end{figure}
 
 
-\subsection{CMB S4 experiments: level of noise.}
+\subsection{CMB S4 experiments: level of noise.\label{sec:noise}}
 
 The next generation of CMB experiments defined as S4 will have an extraordinary resolution and depth.\
 We will also assume that for the measurement we use, the temperature and E-mode polarization of the CMB large scale foreground like dust are under control and negligible. We will deal with the poisson noise in the temperature signal by discarding all the small scales modes with $\ell>\ell_{T,max}=3000$.
@@ -191,10 +189,10 @@ We use the $\Lambda$CDM parameter values from Table 2 of \textit{Planck} best fi
 
 
 
-\begin{eqnarray}
-	T_{\nu} = \left( \frac{4}{11} \right)^{1/3} T_{\gamma} 
-	\label{eq:tnu_propto_tgamma}
-\end{eqnarray}
+%\begin{eqnarray}
+%	T_{\nu} = \left( \frac{4}{11} \right)^{1/3} T_{\gamma} 
+%	\label{eq:tnu_propto_tgamma}
+%\end{eqnarray}
 
 \section{Results: \label{sec:results}}
 
@@ -243,21 +241,21 @@ $0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
 \end{table}%
 
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=0.6]{h0_fisher.pdf}
-\caption{}
-\label{fig:phi-cl-noise}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=0.6]{tau_fisher.pdf}
-\caption{}
-\label{fig:phi-cl-noise}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=0.6]{h0_fisher.pdf}
+%\caption{}
+%\label{fig:phi-cl-noise}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=0.6]{tau_fisher.pdf}
+%\caption{}
+%\label{fig:phi-cl-noise}
+%\end{center}
+%\end{figure}
 
 
 
@@ -338,11 +336,17 @@ Future works
 
 % Specify following sections are appendices. Use \appendix* if there
 % only one appendix.
-%\appendix
+\appendix
+\section{Appendix I}
+\begin{equation}
+G = F^{\phi\phi} - F^{\phi\psi}U\Lambda^{-1}U^{T}F^{\phi\psi},
+\end{equation}
+where we define $\phi = \{N_{eff},...\}$ and $\psi = \{\Omega_{m} ... marginal\}$; therefore, $F^{\phi\phi}$ is the block of the total Fisher matrix containing the parameters we want to constrain, whilst $F^{\psi\psi}$ is the nuisance-parameter Fisher sub-matrix. Here, $\Lambda$ is the diagonal matrix whose elements are the eigenvalues of $F^{\psi\psi}$, whilst U is the orthogonal matrix diagonalising $F^{\psi\psi}$. By using Eq., our marginalizing procedure is more stable, since degeneracies in $F^{\phi\phi}$ are properly propagated to G with no instabilities, and we do not even worry about a possibly ill-conditioned $F^{\phi\phi}$ sub-matrix, since we check its stability on the fly by the diagonalisation.
+
 %\section{}
 
 \begin{acknowledgments}
-We thank Youngsoo Park for..
+We thank Youngsoo Park for his contribution in the early stage of this work.
 AM want to thank Zhen Pan who allow a careful comparison of our results.
 This work was partially supported by the Kavli Institute for Cosmological Physics at the University of Chicago through grants NSF PHY-1125897 and an endowment from the Kavli Foundation and its founder Fred Kavli.
 %%%=================================================================
