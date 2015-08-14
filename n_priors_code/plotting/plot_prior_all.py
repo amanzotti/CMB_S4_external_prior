@@ -1,7 +1,9 @@
 '''
-Plot scipt to plot the derivatives of CMB specctra respect to all the parameters of the Fisher matrix.
+This plotting script is used to plot the effect of external priors on all the parameters involved.
 
-Different lines corresponde to different gaps and techniques.
+To put all the parameters in the same plot the prior is defined as the improvement from the CMB S4 results we get.
+
+the same is true for the improvement on the y axis parameters
 
 
 
@@ -35,10 +37,11 @@ from palettable.colorbrewer.qualitative import Set1_9
 
 # READ DATA
 
-
+# DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
 run_idx = 1
+# ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
 par_gaps = pickle.load(open(base_dir + 'data/{}/run{}/par_gaps.p'.format(data_type, str(run_idx)), "rb"))
@@ -46,7 +49,7 @@ fisher_mat = np.loadtxt(base_dir + 'data/{}/run{}/output/fisher_mat.txt'.format(
 
 
 # ============================================
-# ============================================
+# PLOTTING DEFINITION SKIP TO ~155
 # ============================================
 
 
@@ -148,6 +151,7 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # REAL PLOT HERE
 # ============================================
 
+# DEFINE LABELS
 
 label = {}
 
@@ -157,7 +161,7 @@ label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
 label['omnuh2'] = r'\Omega_{\nu}'
-label['re_optical_depth'] = r'~\tau'
+label['re_optical_depth'] = r'\tau'
 label['ombh2'] = '\Omega_{b}h^{2}'
 label['ombch2'] = '\Omega_{m}h^{2}'
 label['omch2'] = '\Omega_{c}h^{2}'
@@ -165,47 +169,53 @@ label['w'] = 'w'
 fisher_inv = np.linalg.inv(fisher_mat)
 
 
-
+# CYCLE ON PARAMETERS (KEYS HERE)
 for y, key_y in enumerate(par_gaps.keys()):
     print key_y
-    fg = plt.figure(figsize=(8 ,8))
+    fg = plt.figure(figsize=(8, 8))
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
-    lines = ["-","--","-.",":"]
+    lines = ["-", "--", "-.", ":"]
     linecycler = cycle(lines)
-    prior_value = np.linspace(0.0001, 1, 900)
 
     for i, key in enumerate(par_gaps.keys()):
 
-        if key==key_y:
+        if key == key_y:
             continue
-        sigma_just_CMB_y =(np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
-        sigma_just_CMB_x =(np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key])
+            # DO NOT TEST PRIOR ON ONE PARMS IN ITSELF; TRIVIAL
 
-        normalize_x =prior_value / sigma_just_CMB_x
+        # ERROR ON Y IN THE CMB S4
+        sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
+        # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
+        sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key])
+
+        prior_value = np.linspace(sigma_just_CMB_x/10., sigma_just_CMB_x*4.5, 900)
+
+        # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
+        normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
+        # compute the new sigma on y given the prior
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
-        normalize_y = new_sigma /sigma_just_CMB_y
-        # print normalize_y
-        plt.plot(normalize_x , normalize_y , label=r'${}$'.format(label[key]), linewidth=1.5, rasterized=True,linestyle=next(linecycler))
-        # plt.semilogy(normalize_x , utils.return_simgax_y_prior(fid,fisher_mat,'massless_neutrinos',key,prior_value)/fid['massless_neutrinos']*100.,label=r'${}$'.format(label[key]),linewidth=1, rasterized=True)
+        normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
+        # plot
+        plt.plot(normalize_x, normalize_y, label=r'${0}={1:.1f}\%$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linewidth=1.5, rasterized=True, linestyle=next(linecycler))
 
     legend = ax1.legend()
     ax1.legend(loc=0)
     ax1.minorticks_on()
     ax1.set_ylim((0.1, 1.3))
-    ax1.set_xlim((0.001, 3.1))
-    ax1.set_ylabel(r'$\frac{\sigma(' + label[key_y] +')_{\rm old}}{\sigma('+ label[key_y]  +')_{\rm new}}$')
-    ax1.set_xlabel(r'$\frac{\sigma(x)_{\rm old}}{\sigma(x)_{\rm new}}$')
+    ax1.set_xlim((0.1, 3.1))
+    ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
+    ax1.set_ylabel(r'$\frac{\sigma('+ label[key_y] + r')_{\rm old}}{\sigma(' + label[key_y] + r')_{\rm new}}$')
+    ax1.set_xlabel(r'$\frac{\sigma(x)_{\rm old}}{\rm{prior}}$')
 
     # ============================================
     # FINALLY SAVE
     # ============================================
     # ============================================
 
-
     # ============================================
-    # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
-    #             format='pdf', transparent=True)
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}.pdf'.format(data_type, str(run_idx),str(key_y)), dpi=400, papertype='Letter',
+
+    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()

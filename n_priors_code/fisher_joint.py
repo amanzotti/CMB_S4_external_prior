@@ -76,7 +76,7 @@ def C(iell, ell, parbin, data):
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25% yeld
     N_det = 10 ** 6  # 1 milion of detectors
-    s = 350. * np.sqrt(fsky2arcmin(0.75)) / np.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
+    s = 350. * np.sqrt(fsky2arcmin(fsky)) / np.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
     t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
@@ -109,10 +109,10 @@ def C(iell, ell, parbin, data):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 3000
-lmin = 2
+lmin = 30
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_lambda/run1'
-output_folder = 'varying_lambda/run1/output'
+data_folder = 'varying_lambda/run2'
+output_folder = 'varying_lambda/run2/output'
 fsky = 0.5
 lensed= False
 exclude = None
