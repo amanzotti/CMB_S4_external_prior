@@ -192,7 +192,12 @@ def study_prior_tau_on_N_eff(fid, fisher, output_folder, header):
 
 def return_simgax_y_prior(fid, fisher, x, y, prior_val):
     '''
-Concept return sigma x given a possible prior on y
+    Concept return sigma x given a possible prior on y
+
+    As an input it gets the fisher matrix but what it spits out is not a relative sigma.
+    just sigma.
+
+
     '''
 
     if isinstance(prior_val, (int, long, float)):
