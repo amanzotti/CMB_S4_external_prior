@@ -75,7 +75,7 @@ def C(iell, ell, parbin, data):
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
     Y = 0.25  # 25% yeld
-    N_det = 10 ** 6  # 1 milion of detectors
+    # N_det = 10 ** 6  # 1 milion of detectors
     s = 350. * np.sqrt(fsky2arcmin(fsky)) / np.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
     # s = 0.48 as in table from paper so it is ok.
     t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
@@ -83,7 +83,7 @@ def C(iell, ell, parbin, data):
     fac2 = (ell * (ell + 1.))
     # Final CMB noise definition
     # overwrite s to check
-    s=1.5 #1.5 muK
+    # s=1.5 #1.5 muK
     N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
     # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
@@ -108,17 +108,18 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 3000
-lmin = 30
+lmax = 4499
+lmin = 4
+N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_lambda/run2'
 output_folder = 'varying_lambda/run2/output'
-fsky = 0.5
+fsky = 0.75
 lensed= False
 exclude = None
 # =============================
 header = 'Joint fisher CMB T E + phi lensing used \n'
-header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n'.format(lmax,lmin,l_t_max,fsky,lensed,data_folder)
+header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(lmax,lmin,l_t_max,fsky,lensed,data_folder,N_det)
 
 
 

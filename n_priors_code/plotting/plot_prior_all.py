@@ -40,7 +40,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
-run_idx = 1
+run_idx = 2
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -206,8 +206,8 @@ for y, key_y in enumerate(par_gaps.keys()):
     ax1.set_ylim((0.1, 1.3))
     ax1.set_xlim((0.1, 3.1))
     ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
-    ax1.set_ylabel(r'$\frac{\sigma('+ label[key_y] + r')_{\rm old}}{\sigma(' + label[key_y] + r')_{\rm new}}$')
-    ax1.set_xlabel(r'$\frac{\sigma(x)_{\rm old}}{\rm{prior}}$')
+    ax1.set_ylabel(r'$\frac{\sigma('+ label[key_y] + r')_{\rm new}}{\sigma(' + label[key_y] + r')_{\rm old}}$')
+    ax1.set_xlabel(r'$\frac{\rm{prior}}{\sigma(x)_{\rm old}}$')
 
     # ============================================
     # FINALLY SAVE
@@ -216,6 +216,6 @@ for y, key_y in enumerate(par_gaps.keys()):
 
     # ============================================
 
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
+    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
