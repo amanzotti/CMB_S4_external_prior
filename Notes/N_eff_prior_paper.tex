@@ -13,21 +13,22 @@
 \usepackage{amsmath}
 \usepackage{lineno}
 \usepackage{graphicx}
-\input{papers_packages_command._include_tex}
-
+%\input{papers_packages_command._include_tex}
+\newcommand\refsec[1]{\S\ref{sec:#1}}
+\newcommand\refeq[1]{Eq.~(\ref{eqn:#1})}
 \bibliographystyle{apsrev4-1}
 
 \begin{document}
 \graphicspath{{images/}}
 
 %Title of paper
-\title{The importance of external priors for the next generation of CMB experiments.}
+\title{External priors for the next generation of CMB experiments.}
 
-\author{A. Manzotti}
+\author{Alessandro Manzotti}
 %\email{\href{mailto:manzotti.alessandro@gmail.com}{manzotti.alessandro@gmail.com}}
 %\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
 %\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
-\author{S. Dodelson}
+\author{Scott Dodelson}
 %\affiliation{Fermilab Center for Particle Astrophysics, Fermi National Accelerator Laboratory, Batavia, IL 60510-0500}
 %\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
 %\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
@@ -36,11 +37,12 @@
 \date{\today}
 \linenumbers
 \begin{abstract}
-The next generation of cosmic microwave background (CMB) experiments can potentially improve drastically what we know about neutrino physics, inflation, Dark Matter and Dark Energy.
-Indeed they will likely exploit the great sensitivity of the CMB to the details of physical processes in the early Universe (through temperature and polarization) as well as in the late universe (through CMB secondary effects like lensing). 
-They will be possible because the temperature anisotropies and E mode polarization of the CMB will be measured with cosmic variance limited precision. Such a low level of noise, together with the improved resolution, will also allow CMB experiment to reconstruct the lensing potential of high redshift large scale structure with a signal to noise bigger than one on several scales. 
-Indeed recently, forecasts papers validate these possible outcomes and help to plan and motivate the next generation of CMB experiments. However these results also indirectly disclose the needed synergy between CMB and other experiments, for example the need of imposing external prior on some of the cosmological parameters. We think that the extent to which CMB constraints depend on external priors needs to be explored, for instance to guide the combined effort of different experimental fields.
-For this reason, in this work we adopt a fisher-matrix technique to test how external priors can lead to improvement in the S4 generation of CMB parameters constraint. 
+The next generation of cosmic microwave background (CMB) experiments can dramatically improve what we know about neutrino physics, inflation, Dark Matter and Dark Energy.
+%Indeed these experiments will likely exploit the sensitivity of the CMB to the details of physical processes in the early Universe (through temperature and polarization) as well as in the late universe (through CMB secondary effects like lensing). 
+%They will be possible because the temperature anisotropies and E mode polarization of the CMB will be measured with cosmic variance limited precision. 
+The low level of noise, together with improved angular resolution, will allow CMB experiments to reconstruct the lensing potential of high redshift large scale structure with a signal to noise bigger than one over a wide range of scales. 
+%Indeed recently, forecast papers validate these possible outcomes and help to plan and motivate the next generation of CMB experiments. However these results also indirectly disclose the needed synergy between CMB and other experiments, for example the need of imposing external prior on some of the cosmological parameters. We think that the extent to which CMB constraints depend on external priors needs to be explored, for instance to guide the combined effort of different experimental fields.
+Projected constraints on cosmological parameters are extremely tight, but these can be improved even further with information from external experiments. Here, we examine quantitatively the extent to which external priors can lead to improvement in projected constraints from a CMB-Stage 4 experiment.
 We find that quite surprisingly CMB S4 are very powerful even on .. There are few exceptions.. like $w$.
 
 %\begin{itemize}
@@ -191,11 +193,11 @@ The remaining source of noise, the instrumental noise is added to the power spec
 	\label{eq:beamnoise}
 \end{equation}
 where $\theta^{\ 2}_{\textsc{fwhm}}$ is the FWHM of the experiment's beam and $s$ represent the instrumental white noise.
-We decide to use a level of noise $s = 1.5$ $\mu$K-arcmin for $X=T$ and a beam of 1 arcmin (PRELIMINARY).
+We decide to use a level of noise $s = 1.5$ $\mu$K-arcmin for $X=T$ and a beam of $\theta_{\textsc{fwhm}}=1$ arcmin (PRELIMINARY).
 Note that $1.5$ $\mu$K-arcmin is the noise in temperature and we need $s \rightarrow s\times \sqrt{2}$ in the case of polarization $ XX' = \{ EE, BB \}$.
 
 
-Together with E and T we will use the information contained in the lensing potential $\phi$ as it is reconstructed from CMB experiments. The lensing potential represents the integration along the line of site of the gravitational potential and it leaves its signature in the CMB, both in temperature and polarization, by bending the trajectory of CMB photons. This introduce non gaussianities that couple different modes in the otherwise independent CMB modes and it can be reconstructed using a quadrature estimator technique \cite{okamoto:2003,hu:2002}.
+Together with E and T we will use the information contained in the lensing potential $\phi$ as it is reconstructed from CMB experiments. The lensing potential represents the integration along the line of site of the gravitational potential and it leaves its signature in the CMB, both in temperature and polarization, by bending the trajectory of CMB photons. This introduce non gaussianities that couple different modes in the otherwise independent CMB modes and it can be reconstructed using a quadratic estimator technique \cite{okamoto:2003,hu:2002}.
 For the noise $N_\ell^{\phi\phi}$ associated to the reconstructed $\phi$ we follow \cite{okamoto:2003,hu:2002} without using more advanced iterative techniques.
 
 
@@ -348,7 +350,7 @@ The work of SD is supported by the U.S. Department of Energy, including grant DE
 \end{acknowledgments}
 
 % Create the reference section using BibTeX:
-\bibliography{N_eff_prior_paper}
+\bibliography{N_eff_prior_paperNotes}
 
 \end{document}
 
