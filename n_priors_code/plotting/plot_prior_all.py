@@ -81,31 +81,30 @@ plt.rcParams['font.weight'] = 400
 
 # ============================================
 # FONT SIZES
-font_size = 32
+font_size = 14
 plt.rcParams['font.size'] = font_size
-plt.rcParams['axes.labelsize'] = font_size / 1.2
-plt.rcParams['axes.linewidth'] = font_size / 38.
+plt.rcParams['axes.labelsize'] = font_size / 1.3
 plt.rcParams['axes.titlesize'] = font_size / 1.1
 plt.rcParams['legend.fontsize'] = font_size / 1.7
-plt.rcParams['xtick.labelsize'] = font_size / 2
-plt.rcParams['ytick.labelsize'] = font_size / 2
+plt.rcParams['xtick.labelsize'] = font_size / 2.
+plt.rcParams['ytick.labelsize'] = font_size / 2.
 
 
-plt.rcParams['lines.linewidth'] = font_size / 1000
+plt.rcParams['lines.linewidth'] = font_size / 20.
 
 
 # ============================================
 # ============================================
 # TICKS
 
-plt.rcParams['xtick.major.width'] = 0.13
-plt.rcParams['xtick.major.size'] = 5
-plt.rcParams['xtick.minor.width'] = 0.13
-plt.rcParams['xtick.minor.size'] = 2.8
-plt.rcParams['ytick.major.width'] = 0.13
-plt.rcParams['ytick.major.size'] = 5
-plt.rcParams['ytick.minor.width'] = 0.13
-plt.rcParams['ytick.minor.size'] = 2.8
+plt.rcParams['xtick.major.width'] = 0.13/1.1
+plt.rcParams['xtick.major.size'] = 5/1.1
+plt.rcParams['xtick.minor.width'] = 0.13/1.1
+plt.rcParams['xtick.minor.size'] = 2.8/1.1
+plt.rcParams['ytick.major.width'] = 0.13/1.1
+plt.rcParams['ytick.major.size'] = 5/1.1
+plt.rcParams['ytick.minor.width'] = 0.13/1.1
+plt.rcParams['ytick.minor.size'] = 2.8/1.1
 
 
 #ax2 = plt.subplot2grid((1,2), (0, 1))
@@ -125,7 +124,7 @@ colorcycler = cycle(['#38197A', '#FC7D00', '#318B10', '#B61911'])
 
 # Simplify paths by removing "invisible" points, useful for reducing
 # file size when plotting a large number of points
-plt.rcParams['path.simplify'] = False
+plt.rcParams['path.simplify'] = True
 # ============================================
 
 # ============================================
@@ -133,7 +132,7 @@ plt.rcParams['path.simplify'] = False
 # Have the legend only plot one point instead of two, turn off the
 # frame, and reduce the space between the point and the label
 
-plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['axes.linewidth'] = font_size/18.5
 #plt.rc("lines", markeredgewidth=10)
 # ============================================
 # ============================================
@@ -172,7 +171,7 @@ fisher_inv = np.linalg.inv(fisher_mat)
 # CYCLE ON PARAMETERS (KEYS HERE)
 for y, key_y in enumerate(par_gaps.keys()):
     print key_y
-    fg = plt.figure(figsize=(8, 8))
+    fg = plt.figure(figsize=fig_dims)
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
     lines = ["-", "--", "-.", ":"]
@@ -197,17 +196,17 @@ for y, key_y in enumerate(par_gaps.keys()):
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
-        plt.plot(normalize_x, normalize_y, label=r'${0}={1:.1f}\%$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linewidth=1.5, rasterized=True, linestyle=next(linecycler))
+        plt.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), rasterized=True, linestyle=next(linecycler))
 
     legend = ax1.legend()
     ax1.legend(loc=0)
     ax1.minorticks_on()
-    ax1.set_ylim((0.1, 1.3))
+    # ax1.set_ylim((0.1, 1.3))
     ax1.set_xlim((0.1, 3.1))
-    ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
-    ax1.set_ylabel(r'$\frac{\sigma('+ label[key_y] + r')_{\rm new}}{\sigma(' + label[key_y] + r')_{\rm old}}$')
-    ax1.set_xlabel(r'$\frac{\rm{prior}}{\sigma(x)_{\rm old}}$')
+    # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
+    ax1.set_ylabel(r'$\sigma('+ label[key_y] + r')$')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
 
     # ============================================
     # FINALLY SAVE
@@ -215,7 +214,6 @@ for y, key_y in enumerate(par_gaps.keys()):
     # ============================================
 
     # ============================================
-
     plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True)
+                format='pdf', transparent=True, bbox_inches='tight')
     plt.close()
