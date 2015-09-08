@@ -100,17 +100,17 @@ We start this section in \refssec{fm-formalism} by introducing the Fisher matrix
 
 
 \subsection{Fisher Matrix formalism \label{subsec:fm-formalism}}
-The natural starting point to estimate errors on cosmological parameters is the Bayes theorem that relates the likelihood to measure a set of data given the parameters of the model $\mathcal{L}(d|\theta)$, to what we want: the posterior probability of those parameters given the data, $\mathcal{L}(\theta|d)$.
+To estimate errors on cosmological parameters we follow the Bayes theorem that relates the likelihood to measure a set of data given the parameters of the model $\mathcal{L}(d|\theta)$, to what we want: the posterior probability of those parameters given the data, $\mathcal{L}(\theta|d)$.
 These two are related by the prior probability of the parameters $P(\theta)$ through:
 \begin{equation}
 \mathcal{L}(\theta|d)\propto \mathcal{L}(d|\theta)P(\theta),
 \end{equation}
-where, as usual, we have neglected the probability of the data itself.
+where, as usual, we have neglected the probability of the data $P(d)$.
 These general framework can be simplified in our case. We will focus not on an entirely general posterior distribution, but we will assume that the likelihoods are gaussian.
 Furthermore we will not derive the global shape of the likelihood but we will obtain parameters errors by studying small perturbations around its maximum. These are the two basic assumptions of the Fisher-matrix approach.
 
 Regarding the first assumption, we recognize the fact that, even if the gaussian approximation has been shown to be appropriate most of the time, some problems have been found in other cases \cite{2012JCAP...09..009W}. Despite this, we do not need the level of accuracy that will require a careful modeling of the likelihoods, because we are looking for the general behavior of parameters errors as a function of external priors.
-Moreover the gaussian approximation gets better at smaller scales (high $\ell$ in Fourier space) which, a part for the exception of the optical depth parameters $\tau$, is where most of the constraining power of the CMB is coming from.
+Moreover the gaussian approximation gets better at smaller scales (high $\ell$ in Fourier space) which, with the exception of the optical depth parameters $\tau$, is where most of the constraining power of the CMB is coming from.
 
  
 Secondly we will assume to know the true ``fiducial'' parameters that maximize the likelihood $\mathcal{L}(\theta|d)$ and we will get the errors on those from the likelihood curvature around the fiducial values.
@@ -120,40 +120,40 @@ Indeed, as usual, we define the fisher matrix elements as the curvature:
 		F_{ij} \equiv - \left\langle\frac{\partial^2 \log \mathcal{L}}{\partial \theta_i \partial \theta_j} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta_0}}\right\rangle,
 	\label{eqn:Fij_def}
 \end{equation}
-where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters values array that, by definition, maximize the likelihood.
-We refer the reader to \cite{} for a detailed proof that with the usual definition of power spectrum $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$, where $a_{\ell m}^{X}$ represent the spherical harmonics coefficients of the field X, the Fisher matrix of a CMB experiment can be rewritten as:
+where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters values array that, by definition, maximizes the likelihood.
+ With the usual definition \cite{} $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$, where $a_{\ell m}^{X}$ represent the spherical harmonics coefficients of the field X, the Fisher matrix of a CMB experiment can be rewritten as:
 \begin{equation}
  F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right).
  \label{eqn:Fij_def2}
  \end{equation}
- In this work we will use the CMB temperature and E mode polarization together with the reconstructed lensing potential to constrain parameters. For this reason, $\boldsymbol{C}_\ell$ in \refeq{Fij_def2} is:
+ In this work we will constrain cosmological parameters with the CMB temperature and E mode polarization together with the reconstructed lensing potential. For this reason, $\boldsymbol{C}_\ell$ in \refeq{Fij_def2} is:
  \begin{eqnarray}
  	\centering
 		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{Td} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{Td} & 0 & C_\ell^{dd} + N_\ell^{dd}\end{array}\right).
 	\label{eqn:cov_definition}
 \end{eqnarray}
 Note that we are neglecting the term $C_\ell^{E\phi}$. As also noticed in previous literature (like \cite{wu:2014,2013PhRvD..87h3008H}) this term contains very little information while adding possible numerical issues.
-The terms $N_\ell^{X}$ represents the instrumental noise power of the specific experiment and will be discussed in \refssec{cosmo-noise}.
-The power of the Fisher approach descend from the Cramer-Rao inequality that relates the errors on parameter $i$, marginalized over all the other parameters, $\sigma_i$, to the Fisher matrix as:
+The term $N_\ell^{X}$ represents the instrumental noise power of the specific experiment and will be discussed in \refssec{cosmo-noise}.
+The power of the Fisher approach descend from the Cramer-Rao inequality that relates the error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, to the Fisher matrix as:
 \begin{equation}
 \sigma_i \equiv \sigma (\theta_i) = \sqrt{(\mathbf{ F^{-1}})_{ii}}.
 \label{eqn:cramer-rao}
 \end{equation}
 Once $F_{ij}$ is computed following \refeq{Fij_def2} it is straightforwards to get the error $\sigma_i$ from \refeq{cramer-rao}. Furthermore in this context it is easy to introduce external priors on cosmological parameters.
-Indeed to introduce priors we simply need to add the Fisher matrixes of the external experiements before performing the matrix inversion of \refeq{cramer-rao}, i.e.:
+Indeed to introduce priors we simply need to add the Fisher matrixes of the external experiments (before we perform the matrix inversion of \refeq{cramer-rao}), i.e.:
 \begin{equation}
-F_{total}=F_{CMB}+\sum F_{external}.
+F_{\rm total}=F_{\rm CMB}+\sum F_{\rm external}.
 \end{equation}
-In the same way we can add priors on a single cosmological parameter just by modyfing the correspondent matrix element.
+In the same way we can add a prior on a single cosmological parameter just by modyfing the correspondent matrix element.
 For example, a $1\%$ prior on $H_{0}$ can be obtained by:
 \begin{equation}
 F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,\text{fid}})^2}.
 \end{equation}
 
 
-We chose a Fisher matrix approach because of its ability to rapidly forecast future experiments performances without generating mock data, together with the ease of including external priors. 
-This technique however introduce some technical difficulties together the previously mentioned assumption that the likelihood is gaussian. 
-Indeed it is known \cite{2006astro.ph..9591A} that increasing the number of parameters used in the analysis can lead to numerical issues (see also \cite{2008PhRvD..77d2001V} in the gravitational waves contest were a lot of parameters are used).
+We chose a Fisher matrix approach because it is able to forecast future experiments performances without generating mock data, together with the ease of including external priors. 
+This technique however introduces also some technical difficulties and assumptions. 
+Indeed it is known \cite{2006astro.ph..9591A} that increasing the number of parameters used in the analysis can lead to numerical issues (see also \cite{2008PhRvD..77d2001V} in the gravitational waves context were several parameters are used).
 Fisher matrix indeed can become ill-conditioned: a small change in the fisher matrix led to a big change in its inverse. Because we use \refeq{cramer-rao} this can be a problem for error estimation. 
 Even if other methods of analysis have been proposed \cite{2006JCAP...10..013P,2006astro.ph..9591A} this is still the standard method used to forecast future constrains \cite{wu:2014}.
 We carefully try to avoid any possible source of errors in computing the elements of \refeq{Fij_def2} and in the matrix inversion of \refeq{cramer-rao}.
@@ -162,6 +162,7 @@ We compute the derivatives in \refeq{Fij_def2} using a 5 points formula:
 \frac{\partial C}{\partial \theta}\bigg|_{\theta_{0}} \sim \frac{-C(\theta_{0}+2h)+8C(\theta_{0}+h)-8C(\theta_{0}-h)+C(\theta_{0}-2h)}{12h}.
 \label{eqn:deriv}
 \end{equation}
+
 This high order definition allow us to use a bigger gap $h$ around the fiducial parameters $\theta_{0}$. As a consequence the differences of power spectra corresponding to different values are big enough to make possible numerical accuracy issues in computing C negligible.
 We also test the robustness of this calculation by changing the gap $h$ in the range $2-7\%$ of the correspondent $\theta_{0}$ without noticing any significant change in the results.
 Furthermore we compare our results to similar previous work in the literature \footnote{we thank the authors of \cite{pan:2015} for their collaboration.} obtaining a perfect agreement.
