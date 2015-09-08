@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{21}%
+\begin{thebibliography}{22}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -555,29 +555,6 @@
   {volume} {405}},\ \bibinfo {pages} {2639} (\bibinfo {year} {2010})},\ \Eprint
   {http://arxiv.org/abs/astro-ph/0601389} {astro-ph/0601389} \BibitemShut
   {NoStop}%
-\bibitem [{\citenamefont {{Kogut}}\ \emph {et~al.}(2011)\citenamefont
-  {{Kogut}}, \citenamefont {{Fixsen}}, \citenamefont {{Chuss}}, \citenamefont
-  {{Dotson}}, \citenamefont {{Dwek}}, \citenamefont {{Halpern}}, \citenamefont
-  {{Hinshaw}}, \citenamefont {{Meyer}}, \citenamefont {{Moseley}},
-  \citenamefont {{Seiffert}}, \citenamefont {{Spergel}},\ and\ \citenamefont
-  {{Wollack}}}]{2011JCAP...07..025K}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {{Kogut}}}, \bibinfo {author} {\bibfnamefont {D.~J.}\ \bibnamefont
-  {{Fixsen}}}, \bibinfo {author} {\bibfnamefont {D.~T.}\ \bibnamefont
-  {{Chuss}}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {{Dotson}}},
-  \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {{Dwek}}}, \bibinfo
-  {author} {\bibfnamefont {M.}~\bibnamefont {{Halpern}}}, \bibinfo {author}
-  {\bibfnamefont {G.~F.}\ \bibnamefont {{Hinshaw}}}, \bibinfo {author}
-  {\bibfnamefont {S.~M.}\ \bibnamefont {{Meyer}}}, \bibinfo {author}
-  {\bibfnamefont {S.~H.}\ \bibnamefont {{Moseley}}}, \bibinfo {author}
-  {\bibfnamefont {M.~D.}\ \bibnamefont {{Seiffert}}}, \bibinfo {author}
-  {\bibfnamefont {D.~N.}\ \bibnamefont {{Spergel}}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {E.~J.}\ \bibnamefont {{Wollack}}},\ }\href {\doibase
-  10.1088/1475-7516/2011/07/025} {\bibfield  {journal} {\bibinfo  {journal}
-  {\jcap}\ }\textbf {\bibinfo {volume} {7}},\ \bibinfo {eid} {025} (\bibinfo
-  {year} {2011})},\ \Eprint {http://arxiv.org/abs/1105.2044} {arXiv:1105.2044}
-  \BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Wolz}}\ \emph {et~al.}(2012)\citenamefont {{Wolz}},
   \citenamefont {{Kilbinger}}, \citenamefont {{Weller}},\ and\ \citenamefont
   {{Giannantonio}}}]{2012JCAP...09..009W}%
@@ -662,6 +639,17 @@
   {volume} {571}},\ \bibinfo {eid} {A16} (\bibinfo {year}
   {2014}{\natexlab{b}})},\ \Eprint {http://arxiv.org/abs/1303.5076}
   {arXiv:1303.5076} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lewis}\ \emph {et~al.}(2000)\citenamefont {Lewis},
+  \citenamefont {Challinor},\ and\ \citenamefont {Lasenby}}]{Lewis:1999bs}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Lewis}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Challinor}}, \
+  and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Lasenby}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Astrophys. J.}\
+  }\textbf {\bibinfo {volume} {538}},\ \bibinfo {pages} {473} (\bibinfo {year}
+  {2000})},\ \Eprint {http://arxiv.org/abs/astro-ph/9911177} {astro-ph/9911177}
+  \BibitemShut {NoStop}%
+%%CITATION = ASTRO-PH 9911177;%%
 \bibitem [{\citenamefont {{Okamoto}}\ and\ \citenamefont
   {{Hu}}(2003)}]{okamoto:2003}%
   \BibitemOpen
@@ -682,4 +670,12 @@
   {pages} {566} (\bibinfo {year} {2002})},\ \Eprint
   {http://arxiv.org/abs/arXiv:astro-ph/0111606} {arXiv:astro-ph/0111606}
   \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Pan}}\ and\ \citenamefont
+  {{Knox}}(2015)}]{pan:2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont
+  {{Pan}}}\ and\ \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {{Knox}}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ }
+  (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1506.07493}
+  {arXiv:1506.07493} \BibitemShut {NoStop}%
 \end{thebibliography}%
