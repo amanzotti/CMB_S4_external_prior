@@ -17,7 +17,7 @@
 \newcommand\refsec[1]{\S\ref{sec:#1}}
 \newcommand\refeq[1]{Eq.~(\ref{eqn:#1})}
 \newcommand{\refssec}[1]{section~\ref{subsec:#1}}
-
+\newcommand{\reffig}[1]{Fig.~\ref{fig:#1}}
 % For various journals
 %\newcommand{\apj}{ApJ}
 \newcommand{\physrep}{Physics Reports}
@@ -57,7 +57,7 @@
 The next generation of cosmic microwave background (CMB) experiments can dramatically improve what we know about neutrino physics, inflation, Dark Matter and Dark Energy. 
 Indeed the low level of noise, together with improved angular resolution, will drastically increase the signal to noise of the CMB polarized signal as well as the reconstructed lensing potential of high redshift large scale structure. 
 Projected constraints on cosmological parameters are extremely tight, but these can be improved even further with information from external experiments. Here, we examine quantitatively the extent to which external priors can lead to improvement in projected constraints from a CMB-Stage 4 experiment.
-We find that, quite surprisingly, CMB S4 are very powerful even on .. There are few exceptions.. like $w$.
+We find that CMB S4 are quite powerful even on .. There are few exceptions.. like $w$.
 \end{abstract}
 
 \pacs{}
@@ -152,10 +152,10 @@ F_{H_0 H_0} \rightarrow F_{H_0 H_0} + \frac{1}{(1\% \times H_{0,\text{fid}})^2}.
 
 
 We chose a Fisher matrix approach because it is able to forecast future experiments performances without generating mock data, together with the ease of including external priors. 
-This technique however introduces also some technical difficulties and assumptions. 
+This technique however introduces also some technical difficulties. 
 Indeed it is known \cite{2006astro.ph..9591A} that increasing the number of parameters used in the analysis can lead to numerical issues (see also \cite{2008PhRvD..77d2001V} in the gravitational waves context were several parameters are used).
 Fisher matrix indeed can become ill-conditioned: a small change in the fisher matrix led to a big change in its inverse. Because we use \refeq{cramer-rao} this can be a problem for error estimation. 
-Even if other methods of analysis have been proposed \cite{2006JCAP...10..013P,2006astro.ph..9591A} this is still the standard method used to forecast future constrains \cite{wu:2014}.
+Even if other methods have been used \cite{2006JCAP...10..013P,2006astro.ph..9591A} Fisher matrices are still the standard method used to forecast future constrains \cite{wu:2014}.
 We carefully try to avoid any possible source of errors in computing the elements of \refeq{Fij_def2} and in the matrix inversion of \refeq{cramer-rao}.
 We compute the derivatives in \refeq{Fij_def2} using a 5 points formula:
 \begin{equation}
@@ -229,6 +229,8 @@ For the noise $N_\ell^{\phi\phi}$ associated to the reconstructed $\phi$ we foll
 %\end{eqnarray}
 
 \section{Results \label{sec:results}}
+Our main results are shown in \reffig{prior_massless_neutrinos} \reffig{prior_w}, \reffig{prior_re_optical_depth}
+
 
 %\begin{table}[htdp]
 %\begin{center}
@@ -276,7 +278,8 @@ $0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{prior_w_snow_mass.pdf}
-\caption{}
+\caption{$w$ costraints will be dramatically improved by $H_{0}$ external priors. 
+\footnotesize In the figure: on the y axis we have the relative error on $w$ as a function of the prior we impose on the other parameters. These priors on the x-axis are measured relative to the error on that parameters from CMB Stage 4 experiments alone.}
 \label{fig:prior_w}
 \end{center}
 \end{figure}
@@ -284,7 +287,7 @@ $0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{prior_massless_neutrinos_snow_mass.pdf}
-\caption{}
+\caption{$N_{eff}$ costraints mainly benefit from $\Omega_{b}$ and $n_{s}$ external priors.}
 \label{fig:prior_massless_neutrinos}
 \end{center}
 \end{figure}
@@ -293,7 +296,7 @@ $0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{prior_re_optical_depth_snow_mass.pdf}
-\caption{}
+\caption{$\tau$ constraints are limited by the well known degeneracies with $A_{s}$. An external prior on $A_{s}$ already tightly constrained from CMB alone can still be beneficial. }
 \label{fig:prior_re_optical_depth}
 \end{center}
 \end{figure}
