@@ -34,7 +34,7 @@
 \newcommand{\physrevlett}{Phys. Rev. Lett.}
 \newcommand{\jcap}{{\em JCAP }}
 \newcommand{\aj}{AJ }
-\def\pr{{Phys.\ Rev.\ }}
+\def\pr{{Phys.\ Rev.\}}
 \def\astropart{{Astro-particle Phys.~}}
 \def\rvmp{{Rev.\ Mod.\ Phys.\ }}
 
