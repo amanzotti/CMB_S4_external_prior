@@ -26,6 +26,8 @@ import sys
 from matplotlib.patches import Ellipse
 import n_priors_code.utils as utils
 from palettable.colorbrewer.qualitative import Set1_9
+from bokeh.plotting import output_file, show,save
+from bokeh import mpl
 # ============================================
 # ============================================
 # ============================================
@@ -81,30 +83,30 @@ plt.rcParams['font.weight'] = 400
 
 # ============================================
 # FONT SIZES
-font_size = 14
+font_size = 24
 plt.rcParams['font.size'] = font_size
 plt.rcParams['axes.labelsize'] = font_size / 1.3
 plt.rcParams['axes.titlesize'] = font_size / 1.1
-plt.rcParams['legend.fontsize'] = font_size / 2.9
+plt.rcParams['legend.fontsize'] = font_size / 1.7
 plt.rcParams['xtick.labelsize'] = font_size / 2.
 plt.rcParams['ytick.labelsize'] = font_size / 2.
 
 
-plt.rcParams['lines.linewidth'] = font_size / 20.
+plt.rcParams['lines.linewidth'] = font_size / 10.
 
 
 # ============================================
 # ============================================
 # TICKS
 
-plt.rcParams['xtick.major.width'] = 0.13 / 1.1
-plt.rcParams['xtick.major.size'] = 5 / 1.1
-plt.rcParams['xtick.minor.width'] = 0.13 / 1.1
-plt.rcParams['xtick.minor.size'] = 2.8 / 1.1
-plt.rcParams['ytick.major.width'] = 0.13 / 1.1
-plt.rcParams['ytick.major.size'] = 5 / 1.1
-plt.rcParams['ytick.minor.width'] = 0.13 / 1.1
-plt.rcParams['ytick.minor.size'] = 2.8 / 1.1
+plt.rcParams['xtick.major.width'] = 0.13/1.1
+plt.rcParams['xtick.major.size'] = 5/1.1
+plt.rcParams['xtick.minor.width'] = 0.13/1.1
+plt.rcParams['xtick.minor.size'] = 2.8/1.1
+plt.rcParams['ytick.major.width'] = 0.13/1.1
+plt.rcParams['ytick.major.size'] = 5/1.1
+plt.rcParams['ytick.minor.width'] = 0.13/1.1
+plt.rcParams['ytick.minor.size'] = 2.8/1.1
 
 
 #ax2 = plt.subplot2grid((1,2), (0, 1))
@@ -132,7 +134,7 @@ plt.rcParams['path.simplify'] = True
 # Have the legend only plot one point instead of two, turn off the
 # frame, and reduce the space between the point and the label
 
-plt.rcParams['axes.linewidth'] = font_size / 18.5
+plt.rcParams['axes.linewidth'] = font_size/18.5
 #plt.rc("lines", markeredgewidth=10)
 # ============================================
 # ============================================
@@ -154,66 +156,60 @@ plt.rcParams['legend.handletextpad'] = 0.3
 
 label = {}
 
-label['massless_neutrinos'] = 'N_{eff}'
-label['hubble'] = 'H_{0}'
-label['mnu'] = 'M'
-label['scalar_amp(1)'] = 'A_{s}'
-label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = r'\Omega_{\nu}'
-label['re_optical_depth'] = r'\tau'
-label['ombh2'] = '\Omega_{b}h^{2}'
-label['ombch2'] = '\Omega_{m}h^{2}'
-label['omch2'] = '\Omega_{c}h^{2}'
+label['massless_neutrinos'] = 'N eff'
+label['hubble'] = 'H0'
+label['mnu'] = 'Mnu'
+label['scalar_amp(1)'] = 'As'
+label['scalar_spectral_index(1)'] = 'ns'
+label['omnuh2'] = r'Omega nu'
+label['re_optical_depth'] = r'tau'
+label['ombh2'] = 'Omega b h2'
+label['ombch2'] = 'Omega m h2'
+label['omch2'] = 'Omega c h2'
 label['w'] = 'w'
 fisher_inv = np.linalg.inv(fisher_mat)
-fisher_inplace = fisher_mat.copy()
 
 
 # CYCLE ON PARAMETERS (KEYS HERE)
 for y, key_y in enumerate(par_gaps.keys()):
     print key_y
-    fg = plt.figure(figsize=fig_dims)
+    fg = plt.figure(figsize=(10,10))
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
     lines = ["-", "--", "-.", ":"]
     linecycler = cycle(lines)
-    sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
     for i, key in enumerate(par_gaps.keys()):
 
         if key == key_y:
             continue
             # DO NOT TEST PRIOR ON ONE PARMS IN ITSELF; TRIVIAL
+
         # ERROR ON Y IN THE CMB S4
+        sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
-        sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
-        # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(sigma_just_CMB_x / 10., sigma_just_CMB_x * 4.5, 900)
-        # print sigma_just_CMB_x
+        sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key])
+
+        prior_value = np.linspace(sigma_just_CMB_x/10., sigma_just_CMB_x*4.5, 900)
+
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
         # compute the new sigma on y given the prior
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
-        plt.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
+        plt.plot(normalize_x, new_sigma, label=r'{0}={1:.1f} %'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), rasterized=True, linestyle=next(linecycler))
-
-
-    new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat,key_y)
-
-    plt.plot(normalize_x, new_sigma_all, label=r'All', rasterized=True,
-             linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
     legend = ax1.legend()
     ax1.legend(loc=0)
     ax1.minorticks_on()
-    ax1.set_ylim((0.8 * np.amin(new_sigma_all), 1.1 * np.amax(new_sigma)))
+    ax1.set_ylim((0, np.max(new_sigma)))
     ax1.set_xlim((0.1, 3.1))
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
-    ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
-
+    ax1.set_ylabel(r'sigma('+ label[key_y] + r')')
+    ax1.set_xlabel(r'prior/sigma(x) old')
+    plt.title(r'Prior results on ' + label[key_y])
     # ============================================
     # FINALLY SAVE
     # ============================================
@@ -221,6 +217,8 @@ for y, key_y in enumerate(par_gaps.keys()):
 
     # ============================================
 
+    output_file("subplots.html")
+    save(mpl.to_bokeh())
     plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True, bbox_inches='tight')
     plt.close()
