@@ -84,7 +84,7 @@ font_size = 14
 plt.rcParams['font.size'] = font_size
 plt.rcParams['axes.labelsize'] = font_size / 1.3
 plt.rcParams['axes.titlesize'] = font_size / 1.1
-plt.rcParams['legend.fontsize'] = font_size / 2.9
+plt.rcParams['legend.fontsize'] = font_size / 1.9
 plt.rcParams['xtick.labelsize'] = font_size / 2.
 plt.rcParams['ytick.labelsize'] = font_size / 2.
 
