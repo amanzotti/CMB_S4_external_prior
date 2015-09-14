@@ -25,16 +25,13 @@ we use the _lenspotentialcls so
 The matrix is going to run an 4 parameters:
 
 CONVENTIONS:
-alphabetical in CAMB description
+alphabetical in CAMB description. Use the ordered dict tools to explore it.
 hubble,massless_neutrinos,omnuh2,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-PARAMETER ORDER = H0,Neff,Omega_nuh^2,tau,As,ns
-                    0  1      2        3   4  5
-
 
 
 GOAL
 
-1) reproduce Wu paper and beyond
+1) reproduce Wu paper and beyond/ DONE. Cross checked with Zhen Pan UC Davis
 
 '''
 
@@ -59,6 +56,43 @@ def fsky2arcmin(fsky):
     # 41253 square degrees in all sky
     return 41253. * fsky * 60. * 60.
 
+def calc_deriv_vectorial(iell, ell, parbin, data):
+    '''
+
+    Work in progress vectorial derivative calcualtion this can improve a lot the speed
+
+    remember the order from CAMB
+     l CTT CEE CBB CTE Cdd CdT CdE
+
+
+    '''
+    # noise definition from the number of observations and time
+    # eq 1 of W.hu et al snowmass paper 10^6 detectors
+    # Y = 0.25  # 25% yeld
+    # N_det = 10 ** 6  # 1 milion of detectors
+    # these are taken from global
+    global Y,sec_of_obs,arcmin_from_fsky
+
+    s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
+    t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
+    fac2 = (ell * (ell + 1.))
+    # Final CMB noise definition
+    N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
+    # this noise is in mu_K so check CMB accordingly
+    # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
+    # is it a 3x3 matrix? with
+    # TT,TE,Tphi
+    # TE,EE,Ephi
+    # phiT,phiE,phiphi
+    C = np.array([[data[iell, 1, parbin] +  fac*N, data[iell, 4, parbin], data[iell, 6, parbin]],
+                  [data[iell, 4, parbin], data[iell, 2, parbin] + fac * N * 2.,               0.],
+                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
+                 )
+
+    return C
+
+
 
 def C(iell, ell, parbin, data):
     '''
@@ -70,20 +104,20 @@ def C(iell, ell, parbin, data):
     remember the order from CAMB
      l CTT CEE CBB CTE Cdd CdT CdE
 
-    '''
 
+    '''
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    Y = 0.25  # 25% yeld
+    # Y = 0.25  # 25% yeld
     # N_det = 10 ** 6  # 1 milion of detectors
-    s = 350. * np.sqrt(fsky2arcmin(fsky)) / np.sqrt(N_det * Y * years2sec(5))  # half sky in arcmin^2
-    # s = 0.48 as in table from paper so it is ok.
+    # these are taken from global
+    global Y,sec_of_obs,arcmin_from_fsky
+
+    s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
     t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
     # Final CMB noise definition
-    # overwrite s to check
-    # s=1.5 #1.5 muK
     N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
     # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
@@ -118,6 +152,11 @@ fsky = 0.75
 lensed= False
 exclude = None
 # =============================
+# DERIVED
+arcmin_from_fsky = fsky2arcmin(fsky)
+sec_of_obs = years2sec(5)
+Y = 0.25  # 25% yeld
+# ===================
 header = 'Joint fisher CMB T E + phi lensing used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(lmax,lmin,l_t_max,fsky,lensed,data_folder,N_det)
 
@@ -206,120 +245,14 @@ for iell, ell in enumerate(range(lmin, lmax)):
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
-print ell
+print 'lmax =',ell
 
 np.savetxt('data/{}/no_marginalized_ell.txt'.format(output_folder), np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)),header=header)
 np.savetxt('data/{}/marginalized_ell.txt'.format(output_folder), np.column_stack((np.arange(lmin, lmax), marginalized_ell)),header=header)
 
 
-
-# # =======================================================
-# #  N_eff with H0 priors
-# # =======================================================
-# d = []
-# d2 = []
-# d3 = []
-# for i in np.arange(-3, -1, 0.1):
-
-#     # '''alphabetical in CAMB description
-#     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-
-
-#     fisher1 = fisher.copy()
-#     # Cicle on H0 priors
-#     fisher1[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (10 ** i * fid['hubble']) ** 2
-#     # Invert and get Neff error with these priors
-
-#     d.append(
-#         math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-#     fisher2 = fisher.copy()
-#     # Cicle on H0 priors
-
-#     fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (10 ** i * fid['hubble']) ** 2
-
-#     # add 1% prior on ns
-#     fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
-#         (0.01 * fid['scalar_spectral_index(1)']) ** 2
-#     # add 1% prior on As
-#     fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
-#         (0.01 * fid['scalar_amp(1)']) ** 2
-#     fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
-#         (0.01 * fid['re_optical_depth']) ** 2
-
-#     # Invert and get Neff error with these priors
-#     d2.append(
-#         math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-#     fisher3 = fisher.copy()[[fid.keys().index('hubble'), fid.keys().index('massless_neutrinos')], :][
-#         :, [fid.keys().index('hubble'), fid.keys().index('massless_neutrinos')]]
-
-#     fisher3[0, 0] += 1 / (10 ** i * fid['hubble']) ** 2
-
-#     # Invert and get Neff error with these priors
-#     d3.append(math.sqrt(np.linalg.inv(fisher3)[1, 1]))
-
-# np.savetxt('output/sigma_H0_1percent.txt', d2)
-# np.savetxt('output/sigma_H0_noPrior.txt', d)
-# np.savetxt('output/sigma_H0_perfect_prior.txt', d3)
-
-
 utils.study_prior_tau_on_N_eff(fid,fisher,'data/'+output_folder ,header)
 
-# # =======================================================
-# #  N_eff with ns priors
-# # =======================================================
-
-
-# d = []
-# d2 = []
-# d3 = []
-
-# for i in np.arange(-3, -1, 0.1):
-
-#     # '''alphabetical in CAMB description
-#     # hubble,massless_neutrinos,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
-#     # PARAMETER ORDER = H0,Neff,tau,As,ns
-#     #                     0  1   2  3   4'''
-#     fisher1 = fisher.copy()
-#     # Cicle on H0 priors
-#     fisher1[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
-#         (10 ** i * fid['scalar_spectral_index(1)']) ** 2
-#     # Invert and get Neff error with these priors
-
-#     d.append(
-#         math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-#     fisher2 = fisher.copy()
-#     # Cicle on H0 priors
-
-#     fisher2[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('scalar_spectral_index(1)')] += 1 / \
-#         (10 ** i * fid['scalar_spectral_index(1)']) ** 2
-
-#     # add 1% prior on ns
-#     fisher2[fid.keys().index('re_optical_depth'), fid.keys().index('re_optical_depth')] += 1 / \
-#         (0.01 * fid['re_optical_depth']) ** 2
-#     # add 1% prior on As
-#     fisher2[fid.keys().index('scalar_amp(1)'), fid.keys().index('scalar_amp(1)')] += 1 / \
-#         (0.01 * fid['scalar_amp(1)']) ** 2
-#     fisher2[fid.keys().index('hubble'), fid.keys().index('hubble')] += 1 / (0.01 * fid['hubble']) ** 2
-
-#     # Invert and get Neff error with these priors
-#     d2.append(
-#         math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-#     fisher3 = fisher.copy()[[fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('massless_neutrinos')], :][
-#         :, [fid.keys().index('scalar_spectral_index(1)'), fid.keys().index('massless_neutrinos')]]
-#     # Cicle on H0 priors
-#     fisher3[0, 0] += 1 / (10 ** i * fid['scalar_spectral_index(1)']) ** 2
-
-#     # Invert and get Neff error with these priors
-#     d3.append(
-#         math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
-
-# np.savetxt('output/sigma_ns_1percent.txt', d2)
-# np.savetxt('output/sigma_ns_noPrior.txt', d)
-# np.savetxt('output/sigma_ns_perfect_prior.txt', d3)
 
 print 'finally how much constraint on parameters without prior?'
 print ''
@@ -330,14 +263,6 @@ fisher_inv = np.linalg.inv(fisher_single)
 utils.save_cov_matrix(fisher_inv)
 
 
-# param_cov = np.zeros((6, 6))
-# for i in range(6):
-#     for j in range(6):
-#         if i != j:
-#             param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
-# # print param_cov
-# np.savetxt('output/param_cov.txt', param_cov)
-
 np.savetxt('data/{}/invetered_sqrt_fisher.txt'.format(output_folder), np.sqrt(fisher_inv),header=header)
 np.savetxt('data/{}/fisher_mat.txt'.format(output_folder), fisher_single,header=header)
 
@@ -345,6 +270,3 @@ print fisher
 
 utils.print_resume_stat(fisher,fid)
 
-# for key, value in values.iteritems():
-
-#     print 'sigma(',key,')', np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]), '=', 100. * np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / fid[key], '%' ,"with no degeneracies", 1./np.sqrt(fisher[fid.keys().index(key), fid.keys().index(key)])

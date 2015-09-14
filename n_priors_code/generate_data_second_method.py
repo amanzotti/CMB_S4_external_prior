@@ -28,8 +28,8 @@ import collections
 import os
 import warnings
 
-output_folder = 'varying_lambda'
-output_folder_2 = 'run2'
+output_folder = 'varying_w'
+output_folder_2 = 'run1'
 camb_location = '/home/manzotti/local/camb/camb'
 
 config = configparser.ConfigParser()
