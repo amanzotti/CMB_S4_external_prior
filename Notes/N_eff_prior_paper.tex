@@ -63,7 +63,7 @@
 The next generation of cosmic microwave background (CMB) experiments can dramatically improve what we know about neutrino physics, inflation, Dark Matter and Dark Energy. 
 Indeed the low level of noise, together with improved angular resolution, will drastically increase the signal to noise of the CMB polarized signal as well as the reconstructed lensing potential of high redshift large scale structure. 
 Projected constraints on cosmological parameters are extremely tight, but these can be improved even further with information from external experiments. Here, we examine quantitatively with a Fisher matrix approach, the extent to which external priors can lead to improvement in projected constraints from a CMB-Stage 4 experiment.
-We find that CMB S4 are quite powerful even on .. There are few exceptions.. like $w$.
+We find that CMB S4 
 \end{abstract}
 
 \pacs{}
@@ -168,7 +168,9 @@ Even if other methods have been used \cite{2006JCAP...10..013P,2006astro.ph..959
 We carefully try to avoid any possible source of errors in computing the elements of \refeq{Fij_def2} and in the matrix inversion of \refeq{cramer-rao}.
 We compute the derivatives in \refeq{Fij_def2} using a 5 points formula:
 \begin{equation}
-\frac{\partial C}{\partial \theta}\bigg|_{\theta_{0}} \sim \frac{-C(\theta_{0}+2h)+8C(\theta_{0}+h)-8C(\theta_{0}-h)+C(\theta_{0}-2h)}{12h}.
+\begin{split}
+\frac{\partial C}{\partial \theta}\bigg|_{\theta_{0}} \sim & \frac{1}{12 h} [ -C(\theta_{0}+2h)+ 8C(\theta_{0}+h) \\ &-8C(\theta_{0}-h)+C(\theta_{0}-2h)].
+\end{split}
 \label{eqn:deriv}
 \end{equation}
 
@@ -237,22 +239,26 @@ For the noise $N_\ell^{\phi\phi}$ associated to the reconstructed $\phi$ we foll
 %\end{eqnarray}
 
 \section{Results \label{sec:results}}
+In this section we present our main results. We will start from 
+
 
 {\bf Let's open up one parameter at a time: first standard LCDM with neff, and then with mnu, and then with w. Also, let's show a curve in each plot with constraints on *all*  parameters, not just one of them, as that will give people a sense of what is gained if multiple priors can be obtained.}
 
-\subsection{Relativistic Degrees of Freedom}
+\subsection{Relativistic Degrees of Freedom, $N_{\rm eff}$}
 
-In the standard cosmology, there are three active neutrinos thermally produced in the early universe. Were they to decouple well before the epoch of electron-positron annihilation, their energy density after their decoupling would be equal to $3\times (7/8)\times (4/11)^{4/3}\,\rho_{\rm cmb}$, with the first factor capturing the contributions from the 3 active species; the second the difference between fermions and bosons; and the last the relative heating of the photons in the CMB by electron-positron annihilation. Decoupling is not a discrete event and occurs close to the time of electron-positron annihilation, so the neutrinos share a bit in the heating, with the factor of 3 replaced by $N_{\rm eff}=3.046$. The additional fraction depends not only on well-known neutrino scattering rates but also finite temperature quantum corrections. Were we to measure this deviation of $N_{\rm eff}$ from 3, it would be an indication that we understand well physics when the Universe was about a second old, so this is a natural target for upcoming experiments.
-
+In the standard cosmology, three active neutrinos are thermally produced in the early universe. Were they to decouple well before the epoch of electron-positron annihilation, their energy density after their decoupling would be equal to $3\times (7/8)\times (4/11)^{4/3}\,\rho_{\rm cmb}$, with the first factor capturing the contributions from the 3 active species; the second the difference between fermions and bosons; and the last the relative heating of the photons in the CMB by electron-positron annihilation. However decoupling is not a discrete event and occurs close to the time of electron-positron annihilation, so the neutrinos share a bit in the heating, with the factor of 3 replaced by $N_{\rm eff}=3.046$. The additional fraction depends not only on well-known neutrino scattering rates but also finite temperature quantum corrections. 
+Upcoming experiment have the potential to measure this tiny deviation of $N_{\rm eff}$ from 3. This will be an amazing test of our understanding of the Universe when it was about a second old.
+Furthermore any significant deviation from this value could be a hint of a different scenario not predicted by the standard model. 
+%==========
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{prior_massless_neutrinos_snow_mass.pdf}
-\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of the strength of the prior on the 6 cosmological parameters in the standard model. Each prior is expressed in units of the error that would be obtained internally from our suite of CMB experiments; e.g., $\sigma(H_0)_{old}=4.1\%$. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$. The bottom-most curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.}
+\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of the strength of the prior on the other 6 cosmological parameters of the standard $\Lambda$CDM model. Each prior is expressed in units of the error that would be obtained internally from our suite of CMB experiments; e.g., $\sigma(H_0)_{\rm old}=4.1\%$. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$. The bottom-most (grey) curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.}
 \label{fig:prior_massless_neutrinos}
 \end{center}
 \end{figure}
-
-\reffig{prior_massless_neutrinos} shows projections for how well our suite of CMB experiments will do at measuring $N_{\rm eff}$ as a function of priors on the other 6 parameters in the standard cosmological model ($H_0, \Omega_mh^2,\Omega_bh^2, n_s, A_s,$ and $\tau$). With no priors on the other parameters, the projected 1-sigma error is  about 0.02, suggesting a 2-sigma detection of the deviation from $N_{\rm eff}=3$. The sensitivity comes from the effect of extra species on the damping tail of the CMB anisotropies, both in temperature and polarization, so parameters that also affect the shape of the damping tail, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are most degenerate with $N_{\rm eff}$. As such, \reffig{prior_massless_neutrinos} shows that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to ensure a 3-sigma detection of the partial decoupling prediction. The bottom-most curve shows that if all parameters were constrained externally, then the projected error on $N_{\rm eff}$ would improve significantly.
+%==========
+\reffig{prior_massless_neutrinos} shows projections for how well our suite of CMB experiments will do at measuring $N_{\rm eff}$ as a function of priors on the other 6 parameters in the standard cosmological model ($H_0, \Omega_mh^2,\Omega_bh^2, n_s, A_s,$ and $\tau$). With no priors on the other parameters, the projected $1$-sigma error is  about $0.02$, suggesting a 2-sigma detection of the deviation from $N_{\rm eff}=3$. The sensitivity comes from the effect of extra species on the damping tail of the CMB anisotropies, both in temperature and polarization, so parameters that also affect the shape of the damping tail, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are most degenerate with $N_{\rm eff}$. As such, \reffig{prior_massless_neutrinos} shows that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to ensure a 3-sigma detection of the partial decoupling prediction. The bottom-most curve shows that if all parameters were constrained externally, then the projected error on $N_{\rm eff}$ would improve significantly.
 
 
 \subsection{Neutrino Masses}
@@ -307,8 +313,7 @@ While the primordial CMB has limited information about the late-time dark energy
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{prior_w_snow_mass.pdf}
-\caption{$w$ costraints will be dramatically improved by $H_{0}$ external priors. 
-\footnotesize In the figure: on the y axis we have the relative error on $w$ as a function of the prior we impose on the other parameters. These priors on the x-axis are measured relative to the error on that parameters from CMB Stage 4 experiments alone.}
+\caption{Constraints on the dark energy equation of state $w$ as a function of priors on cosmological parameters, as in \reffig{prior_massless_neutrinos}. An external prior on $H_{0}$ will be crucial to improve the constraint.} 
 \label{fig:prior_w}
 \end{center}
 \end{figure}
@@ -316,21 +321,21 @@ While the primordial CMB has limited information about the late-time dark energy
 \reffig{prior_w} shows that without any priors, CMB experiments will not do much better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ considerably. {\bf We should try to understand why.}
 
 
-{\bf I don't really understand this table.}
-\begin{table}[htdp]
-
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|}
-\hline
-$H_{0}$ &$ M_{\nu}$ &$\Omega_{bc}h^{2}$&$\Omega_{b}h^{2}$&$\tau$&$A_{s}$&$n_{s}$ \\
-$0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
-
-\hline
-\end{tabular}
-\caption{How well we do constrain separate parameters with this data without any external prior? Things to notice: this is done with the Zhen test parameters ($\ell<3000$ and no error on lensing). Now if we trust it CMB alone can get a $0.8\%$ error on $H_{0}$ thus I am not surprised if a prior on H would not help. However what do we think about it? is it really CMB better than SN. People will not agree on that. $\tau$ will probably improve and also M$\nu$ from BAO may help improving parameters.}
-\end{center}
-\label{default}
-\end{table}%
+%{\bf I don't really understand this table.}
+%\begin{table}[htdp]
+%
+%\begin{center}
+%\begin{tabular}{|c|c|c|c|c|c|c|}
+%\hline
+%$H_{0}$ &$ M_{\nu}$ &$\Omega_{bc}h^{2}$&$\Omega_{b}h^{2}$&$\tau$&$A_{s}$&$n_{s}$ \\
+%$0.80 \%$&$40.92\%$&$0.44\%$&$0.11\%$&$3.075\%$&$0.53\%$&$0.18\%$\\
+%
+%\hline
+%\end{tabular}
+%\caption{How well we do constrain separate parameters with this data without any external prior? Things to notice: this is done with the Zhen test parameters ($\ell<3000$ and no error on lensing). Now if we trust it CMB alone can get a $0.8\%$ error on $H_{0}$ thus I am not surprised if a prior on H would not help. However what do we think about it? is it really CMB better than SN. People will not agree on that. $\tau$ will probably improve and also M$\nu$ from BAO may help improving parameters.}
+%\end{center}
+%\label{default}
+%\end{table}%
 
 
 
