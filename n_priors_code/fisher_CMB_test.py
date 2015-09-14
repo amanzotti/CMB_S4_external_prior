@@ -201,7 +201,7 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
-header = 'Joint fisher CMB T E + phi lensing used \n'
+header = 'Joint fisher CMB T E. NO LENSING used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
