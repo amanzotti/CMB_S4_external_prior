@@ -36,7 +36,6 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 
 # READ DATA
-
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
@@ -170,9 +169,10 @@ fisher_inplace = fisher_mat.copy()
 
 
 # CYCLE ON PARAMETERS (KEYS HERE)
+fg = plt.figure(figsize=fig_dims)
+
 for y, key_y in enumerate(par_gaps.keys()):
     print key_y
-    fg = plt.figure(figsize=fig_dims)
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
     lines = ["-", "--", "-.", ":"]
@@ -196,16 +196,15 @@ for y, key_y in enumerate(par_gaps.keys()):
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
-        plt.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), rasterized=True, linestyle=next(linecycler))
 
+        line_plot = ax1.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), rasterized=True, linestyle=next(linecycler))
 
     new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat,key_y)
 
     plt.plot(normalize_x, new_sigma_all, label=r'All', rasterized=True,
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
-    legend = ax1.legend()
     ax1.legend(loc=0)
     ax1.minorticks_on()
     ax1.set_ylim((0.8 * np.amin(new_sigma_all), 1.1 * np.amax(new_sigma)))
@@ -223,4 +222,4 @@ for y, key_y in enumerate(par_gaps.keys()):
 
     plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True, bbox_inches='tight')
-    plt.close()
+    plt.clf()
