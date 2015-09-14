@@ -6,11 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-%<<<<<<< HEAD
-\begin{thebibliography}{1}%
-%=======
-%\begin{thebibliography}{22}%
->>>>>>> 683231e77bc036bad411dd2244ca99280568d723
+\begin{thebibliography}{21}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -54,8 +50,6 @@
 \providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
 \let\auto@bib@innerbib\@empty
 %</preamble>
-<<<<<<< HEAD
-=======
 \bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
   {et~al.}(2015)\citenamefont {{Planck Collaboration}}, \citenamefont {{Ade}},
   \citenamefont {{Aghanim}}, \citenamefont {{Arnaud}}, \citenamefont
@@ -618,13 +612,10 @@
   {eid} {013} (\bibinfo {year} {2006})},\ \Eprint
   {http://arxiv.org/abs/astro-ph/0606227} {astro-ph/0606227} \BibitemShut
   {NoStop}%
->>>>>>> 683231e77bc036bad411dd2244ca99280568d723
 \bibitem [{Note1()}]{Note1}%
   \BibitemOpen
   \bibinfo {note} {We thank the authors of \cite {pan:2015} for their
   collaboration.}\BibitemShut {Stop}%
-<<<<<<< HEAD
-=======
 \bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
   {et~al.}(2014{\natexlab{b}})\citenamefont {{Planck Collaboration}},
   \citenamefont {{Ade}}, \citenamefont {{Aghanim}}, \citenamefont
@@ -679,13 +670,4 @@
   {pages} {566} (\bibinfo {year} {2002})},\ \Eprint
   {http://arxiv.org/abs/arXiv:astro-ph/0111606} {arXiv:astro-ph/0111606}
   \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {{Pan}}\ and\ \citenamefont
-  {{Knox}}(2015)}]{pan:2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont
-  {{Pan}}}\ and\ \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {{Knox}}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ }
-  (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1506.07493}
-  {arXiv:1506.07493} \BibitemShut {NoStop}%
->>>>>>> 683231e77bc036bad411dd2244ca99280568d723
 \end{thebibliography}%
