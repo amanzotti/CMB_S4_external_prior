@@ -92,7 +92,7 @@ def study_prior_H0_on_N_eff():
         # fid['re_optical_depth']) ** 2)
 
         d.append(
-            math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         fisher2 = fisher.copy()
         # Cicle on H0 priors
@@ -110,7 +110,7 @@ def study_prior_H0_on_N_eff():
 
         # Invert and get Neff error with these priors
         d2.append(
-            math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         fisher3 = fisher.copy()[[fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')], :][
             :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
@@ -120,7 +120,7 @@ def study_prior_H0_on_N_eff():
 
         # Invert and get Neff error with these priors
         d3.append(
-            math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         np.savetxt('output_cmb/sigma_tau_1percent.txt', d2)
         np.savetxt('output_cmb/sigma_tau_noPrior.txt', d)
@@ -155,7 +155,7 @@ def study_prior_tau_on_N_eff(fid, fisher, output_folder, header):
         # fid['re_optical_depth']) ** 2)
 
         d.append(
-            math.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher1)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         fisher2 = fisher.copy()
         # Cicle on H0 priors
@@ -173,7 +173,7 @@ def study_prior_tau_on_N_eff(fid, fisher, output_folder, header):
 
         # Invert and get Neff error with these priors
         d2.append(
-            math.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher2)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         fisher3 = fisher.copy()[[fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')], :][
             :, [fid.keys().index('re_optical_depth'), fid.keys().index('massless_neutrinos')]]
@@ -183,7 +183,7 @@ def study_prior_tau_on_N_eff(fid, fisher, output_folder, header):
 
         # Invert and get Neff error with these priors
         d3.append(
-            math.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
+            np.sqrt(np.linalg.inv(fisher3)[fid.keys().index('massless_neutrinos'), fid.keys().index('massless_neutrinos')]))
 
         np.savetxt('{}/sigma_tau_1percent.txt'.format(output_folder), d2, header=header)
         np.savetxt('{}/sigma_tau_noPrior.txt'.format(output_folder), d, header=header)

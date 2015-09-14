@@ -57,48 +57,27 @@ def fsky2arcmin(fsky):
     return 41253. * fsky * 60. * 60.
 
 
-def calc_deriv_vectorial(data):
-    '''
+# def calc_deriv_vectorial(iell, ell, fisher_index ,parbin, data,pargaps,values):
+#     '''
+#     Given CMB data dats it normalize them anf create a 3x3 matrix
 
-    Work in progress vectorial derivative calcualtion this can improve a lot the speed
+#     ell is the multiple
+#     iell is the index in the data ell corresponds to
 
-    remember the order from CAMB
-     l CTT CEE CBB CTE Cdd CdT CdE
-
-    ell: array of l values
-    should be easy you gest have to deal with the slight difference in ell starting finishing point
-    '''
-    # noise definition from the number of observations and time
-    # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    # Y = 0.25  # 25% yeld
-    # N_det = 10 ** 6  # 1 milion of detectors
-    # these are taken from global
-    ell = data[:, 0, 0]
-
-    global Y, sec_of_obs, arcmin_from_fsky
-    # PREPARE NOISE LEVEL
-
-    s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
-    t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
-    fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
-    fac2 = (ell * (ell + 1.))
-    # Final CMB noise definition
-    N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
-    # this noise is in mu_K so check CMB accordingly
-    # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
-    # is it a 3x3 matrix? with
-    # TT,TE,Tphi
-    # TE,EE,Ephi
-    # phiT,phiE,phiphi
-    C = np.array([[data[iell, 1, parbin] + fac * N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] + fac * N * 2.,               0.],
-                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
-                 )
-
-    return C
+#     remember the order from CAMB
+#      l CTT CEE CBB CTE Cdd CdT CdE
 
 
-def calc_cinv_fiducial(data):
+#     '''
+#     calc_c_general(data,parabin)
+
+#     ci = (-calc_c_general(dats,fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
+#       calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
+
+#     return ci
+
+
+def calc_c_fiducial(data):
     '''
     Given CMB data dats it normalize them anf create a 3x3 matrix
 
@@ -134,19 +113,52 @@ def calc_cinv_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    C_inv =np.reshape([ [ data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0], data[:lmax_index, 6, 0] ],
+    return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0], data[:lmax_index, 6, 0]],
 
-                        [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,  data[:lmax_index, 2, 0] * 0.],
+                      [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,  data[:lmax_index, 2, 0] * 0.],
 
-                        [ data[:lmax_index, 6,0] ,data[:lmax_index, 2, 0] * 0. ,   data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
+                      [data[:lmax_index, 6, 0], data[:lmax_index, 2, 0] * 0.,
+                          data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
 
-                        ] ,(-1,3,3))
+                      ])
 
-    return C_inv
+
+
+# def calc_c_general(data,parabin):
+#     '''
+#     Given CMB data dats it normalize them anf create a 3x3 matrix
+
+#     ell is the multiple
+#     iell is the index in the data ell corresponds to
+
+#     remember the order from CAMB
+#      l CTT CEE CBB CTE Cdd CdT CdE
+
+
+#     '''
+#     # noise definition from the number of observations and time
+#     # eq 1 of W.hu et al snowmass paper 10^6 detectors
+#     # Y = 0.25  # 25% yeld
+#     # N_det = 10 ** 6  # 1 milion of detectors
+#     # these are taken from global
+
+#     C_general = np.array([[data[:lmax_index, 1, parabin] + fac * N, data[:lmax_index, 4, parabin], data[:lmax_index, 6, parabin]],
+
+#                       [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin] + fac * N * 2.,  data[:lmax_index, 2, parabin] * 0.],
+
+#                       [data[:lmax_index, 6, parabin], data[:lmax_index, 2, parabin] * 0.,
+#                           data[:lmax_index, 5, parabin] + N_phi_l[:lmax_index, 1]]
+
+#                       ])
+
+#     return C_general
 
 
 def C(iell, ell, parbin, data):
     '''
+
+    Here is used to compute derivatives so we do not need noise
+
     Given CMB data dats it normalize them anf create a 3x3 matrix
 
     ell is the multiple
@@ -159,29 +171,14 @@ def C(iell, ell, parbin, data):
     '''
     # noise definition from the number of observations and time
     # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    # Y = 0.25  # 25% yeld
-    # N_det = 10 ** 6  # 1 milion of detectors
-    # these are taken from global
-    global Y, sec_of_obs, arcmin_from_fsky
-
-    s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
-    t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
-    fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
-    fac2 = (ell * (ell + 1.))
-    # Final CMB noise definition
-    N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
-    # this noise is in mu_K so check CMB accordingly
-    # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
     # is it a 3x3 matrix? with
     # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    C = np.array([[data[iell, 1, parbin] + fac * N, data[iell, 4, parbin], data[iell, 6, parbin]],
-                  [data[iell, 4, parbin], data[iell, 2, parbin] + fac * N * 2.,               0.],
-                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin] + N_phi_l[iell, 1]]]
+    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
+                  [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
+                  [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
                  )
-
-    return C
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -217,7 +214,9 @@ header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_fold
 # load fiducial data
 # load fiducial parameters used
 fid = pickle.load(open('data/{}/fid_values.p'.format(data_folder), "rb"))
+
 print "fid ", fid
+
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
 par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
@@ -229,21 +228,10 @@ print 'loading files'
 dats = utils.load_data(data_folder, values, lensed)
 n_values = np.size(values.keys())
 lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
-ltmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
-
-
-# Load data for all parameters variations
-# for key, value in values.iteritems():
-#     for i in np.arange(0, 4):
-#         print key, values[key][i]
-#         filename = 'data/run{}/'.format(run_idx)
-#         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
-#         newdat = np.genfromtxt(filename)
-#         dats = np.dstack((dats, newdat))
-
+ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
 
 # cut Cl^T at ells bigger than l_t_max
-dats[l_t_max:, 1, 1:] = 0.
+dats[ltmax_index:, 1, 1:] = 0.
 # phi_T has oscillations in it.
 # dats[900:, 6, 0:] = 0.
 
@@ -251,26 +239,29 @@ dats[l_t_max:, 1, 1:] = 0.
 fisher = np.zeros((n_values, n_values))
 fisher_inv = np.zeros((n_values, n_values))
 
-no_marginalized_ell = np.zeros((np.size(range(lmin, lmax)), n_values))
-marginalized_ell = np.zeros((np.size(range(lmin, lmax)), n_values))
+no_marginalized_ell = np.zeros((np.size(dats[:lmax_index, 0, 0]), n_values))
+marginalized_ell = np.zeros((np.size(dats[:lmax_index, 0, 0]), n_values))
 
 
 print 'fisher_size', fisher.shape
 pargaps = par_gaps
+C_inv_array = calc_c_fiducial(dats)
 
+for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
 
-for iell, ell in enumerate(range(lmin, lmax)):
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
     ell_index = np.where(dats[:, 0, 0] == ell)[0][0]
 
-    c0 = np.zeros((3, 3))
-    c0 = C(ell_index, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
+    # c0 = np.zeros((3, 3))
+    # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
-
+    c0 = C_inv_array[:, :, iell]
     # print ''
-    # print c0[0],C_inv_array[iell,:,:]
+    # print 'c0', c0
     # print ''
+    # print np.sum(C_inv_array[:,:,iell]-c0)
+    # print iell
     # sys.exit()
 
     cinv = np.linalg.inv(c0)
@@ -283,10 +274,10 @@ for iell, ell in enumerate(range(lmin, lmax)):
                   # ---------------------------------
                               #   12h
 
-            ci = (-C(ell_index, ell, i * 4 + 4, dats) + 8. * C(ell_index, ell, i * 4 + 3, dats) - 8. *
-                  C(ell_index, ell, i * 4 + 2, dats) + C(ell_index, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            cj = (-C(ell_index, ell, j * 4 + 4, dats) + 8. * C(ell_index, ell, j * 4 + 3, dats) - 8. *
-                  C(ell_index, ell, j * 4 + 2, dats) + C(ell_index, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
+            ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
+                  C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
+            cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
+                  C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
             tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             # assuming f Eq.4
@@ -297,11 +288,12 @@ for iell, ell in enumerate(range(lmin, lmax)):
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 print 'lmax =', ell
+print fisher_inv
 
 np.savetxt('data/{}/no_marginalized_ell.txt'.format(output_folder),
-           np.column_stack((np.arange(lmin, lmax), no_marginalized_ell)), header=header)
+           np.column_stack((dats[:lmax_index, 0, 0], no_marginalized_ell)), header=header)
 np.savetxt('data/{}/marginalized_ell.txt'.format(output_folder),
-           np.column_stack((np.arange(lmin, lmax), marginalized_ell)), header=header)
+           np.column_stack((dats[:lmax_index, 0, 0], marginalized_ell)), header=header)
 
 
 utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
