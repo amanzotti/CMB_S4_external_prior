@@ -1,7 +1,4 @@
-# README #
-
-Fisher Matrix Suite
-
+# Fisher Matrix Suite#
 ### What is this repository for? ###
 
 * Compute fisher matrix estimation using CMB E,T,Lensing
@@ -24,4 +21,4 @@ Fisher Matrix Suite
 
 ### Contact ###
 
-* A. Manzotti 
+* A. Manzotti
