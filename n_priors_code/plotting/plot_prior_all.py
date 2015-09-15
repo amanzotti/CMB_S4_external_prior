@@ -198,11 +198,11 @@ for y, key_y in enumerate(par_gaps.keys()):
         # plot
 
         line_plot = ax1.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), rasterized=True, linestyle=next(linecycler))
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
     new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat,key_y)
 
-    plt.plot(normalize_x, new_sigma_all, label=r'All', rasterized=True,
+    plt.plot(normalize_x, new_sigma_all, label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
     ax1.legend(loc=0)
@@ -221,5 +221,5 @@ for y, key_y in enumerate(par_gaps.keys()):
     # ============================================
 
     plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass.pdf'.format(data_type, str(run_idx), str(key_y)), dpi=400, papertype='Letter',
-                format='pdf', transparent=True, bbox_inches='tight')
+                format='pdf', bbox_inches='tight')
     plt.clf()

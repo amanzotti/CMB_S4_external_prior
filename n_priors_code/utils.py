@@ -41,7 +41,7 @@ def load_data(data_folder,  values, lensed=False):
     cmb = np.genfromtxt('data/{}/fiducial_lensedcls.dat'.format(data_folder), usecols=(0, 1, 2, 3, 4)
                         ) if lensed else np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder), usecols=(0, 1, 2, 3, 4))
     lensing = np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder), usecols=(5, 6, 7))
-    dats = np.genfromtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder))
+    dats = np.loadtxt('data/{}/fiducial_lenspotentialcls.dat'.format(data_folder))
     dats = np.concatenate((cmb, lensing[:cmb.shape[0], :]), axis=1)
     # Load data for all parameters variations
     for key, value in values.iteritems():

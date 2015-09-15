@@ -1,11 +1,11 @@
-
 #!/usr/bin/env python
 
 
 '''
 
-FAST VERSION
-Fisher code to test prior effect on N effective neutrino estimates
+SECOND VERSION TO SUBSTITUTE THE first one (AM)
+
+Simple fisher code to test prior effect on N effective neutrino estimates
 
 TODO:
 HIGH: lensing noise (almost there: Komatsu and quicklens.)
@@ -116,13 +116,8 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0], data[:lmax_index, 6, 0]],
-
-                     [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,  data[:lmax_index, 2, 0] * 0.],
-
-                     [data[:lmax_index, 6, 0], data[:lmax_index, 2, 0] * 0.,
-                      data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
-
+    return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0]],
+                     [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.]
                      ])
 
 
@@ -137,11 +132,9 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[:lmax_index, 1, parabin] , data[:lmax_index, 4, parabin], data[:lmax_index, 6, parabin]],
-                     [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin]
-                      ,  data[:lmax_index, 2, parabin] * 0.],
-                     [data[:lmax_index, 6, parabin], data[:lmax_index, 2, parabin] * 0.,
-                      data[:lmax_index, 5, parabin]]
+    return np.array([[data[:lmax_index, 1, parabin], data[:lmax_index, 4, parabin]],
+
+                     [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin]]
                      ])
 
 
@@ -166,10 +159,11 @@ def C(iell, ell, parbin, data):
     # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
-                     [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
-                     [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
+    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin]],
+                     [data[iell, 4, parbin], data[iell, 2, parbin]],
+                     ]
                     )
+
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -239,21 +233,21 @@ pargaps = par_gaps
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray( (3,3,np.size(dats[:lmax_index, 0, 0]),n_values), dtype= 'float64' )
+derivatives = np.ndarray((2, 2, np.size(dats[:lmax_index, 0, 0]), n_values), dtype='float64')
 
 for i in range(0, n_values):
-            # computing derivatives.
-            # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
+    # computing derivatives.
+    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
                               #   12h
-            derivatives[:,:,:,i]= calc_deriv_vectorial(i, dats, pargaps, values)[:,:,:]
-
+    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, pargaps, values)[:, :, :]
 
 
 for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
 
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
+    ell_index = np.where(dats[:, 0, 0] == ell)[0][0]
 
     # c0 = np.zeros((3, 3))
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
@@ -281,14 +275,13 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
             # cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
             #       C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
 
-            ci = derivatives[:,:,iell,i]
+            ci = derivatives[:, :, iell, i]
 
-            cj = derivatives[:,:,iell,j]
+            cj = derivatives[:, :, iell, j]
 
             # Eq 4.
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
-            trace = np.sum (np.dot(np.dot(cinv, ci),  cinv) * cj.T)
-
+            trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
@@ -300,9 +293,9 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
 print 'lmax =', ell
 # print fisher_inv
 
-np.savetxt('data/{}/no_marginalized_ell_joint.txt'.format(output_folder),
+np.savetxt('data/{}/no_marginalized_ell.txt'.format(output_folder),
            np.column_stack((dats[:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_joint.txt'.format(output_folder),
+np.savetxt('data/{}/marginalized_ell.txt'.format(output_folder),
            np.column_stack((dats[:lmax_index, 0, 0], marginalized_ell)), header=header)
 
 
@@ -318,9 +311,9 @@ fisher_inv = np.linalg.inv(fisher_single)
 utils.save_cov_matrix(fisher_inv)
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_joint.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint.txt'.format(output_folder), fisher_single, header=header)
+np.savetxt('data/{}/invetered_sqrt_fisher.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
+np.savetxt('data/{}/fisher_mat.txt'.format(output_folder), fisher_single, header=header)
 
-print 'fisher=' , fisher
+print 'fisher=', fisher
 
 utils.print_resume_stat(fisher, fid)
