@@ -116,9 +116,7 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0]],
-                     [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.]
-                     ])
+    return np.array([data[:lmax_index, 1, 0] + fac * N])
 
 
 def calc_c_general(data, parabin):
@@ -132,10 +130,7 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[:lmax_index, 1, parabin], data[:lmax_index, 4, parabin]],
-
-                     [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin]]
-                     ])
+    return np.array([data[:lmax_index, 1, parabin]])
 
 
 def C(iell, ell, parbin, data):
@@ -159,10 +154,7 @@ def C(iell, ell, parbin, data):
     # TT,TE,Tphi
     # TE,EE,Ephi
     # phiT,phiE,phiphi
-    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin]],
-                     [data[iell, 4, parbin], data[iell, 2, parbin]],
-                     ]
-                    )
+    return np.array([data[iell, 1, parbin]])
 
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
@@ -233,26 +225,25 @@ pargaps = par_gaps
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray((2, 2, np.size(dats[:lmax_index, 0, 0]), n_values), dtype='float64')
+derivatives = np.ndarray((np.size(dats[:lmax_index, 0, 0]), n_values), dtype='float64')
 
 for i in range(0, n_values):
     # computing derivatives.
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
                               #   12h
-    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, pargaps, values)[:, :, :]
 
+    derivatives[:, i] = calc_deriv_vectorial(i, dats, pargaps, values)[:]
+
+print 'NOTE:  THIS TT SCRIPT NEED TO BE TESTED MORE (AM 15 Sept)'
+raw_input('')
 
 for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
-
     #  filling it the matrix l goes from l_min =2 to l_max =5000
-
-    ell_index = np.where(dats[:, 0, 0] == ell)[0][0]
-
     # c0 = np.zeros((3, 3))
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
-    c0 = C_inv_array[:, :, iell]
+    c0 = C_inv_array[0,iell]
     # print ''
     # print 'c0', c0
     # print ''
@@ -260,7 +251,7 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
     # print iell
     # sys.exit()
 
-    cinv = np.linalg.inv(c0)
+    cinv = 1 / c0
 
     for i in range(0, n_values):
 
@@ -275,16 +266,15 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
             # cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
             #       C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
 
-            ci = derivatives[:, :, iell, i]
+            ci = derivatives[iell, i]
 
-            cj = derivatives[:, :, iell, j]
+            cj = derivatives[iell, j]
 
             # Eq 4.
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
-            trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
-
+            tot = cinv * ci * cinv * cj
             # assuming f Eq.4
-            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
+            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * tot
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)

@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-
-
 '''
 
 SECOND VERSION TO SUBSTITUTE THE first one (AM)
@@ -37,12 +34,7 @@ GOAL
 1) reproduce Wu paper and beyond/ DONE. Cross checked with Zhen Pan UC Davis
 
 '''
-__author__ = "A.Manzotti"
-__license__ = "GPL"
-__version__ = "2.0"
-__maintainer__ = "A.Manzotti"
-__email__ = "manzotti.alessandro@gmail.com"
-__status__ = "Production"
+
 
 import numpy as np
 import math
@@ -65,19 +57,24 @@ def fsky2arcmin(fsky):
     return 41253. * fsky * 60. * 60.
 
 
-def calc_deriv_vectorial(fisher_index, dats, pargaps, values):
-    '''
-    Given CMB data dats it normalize them anf create a 3x3 matrix
+# def calc_deriv_vectorial(iell, ell, fisher_index ,parbin, data,pargaps,values):
+#     '''
+#     Given CMB data dats it normalize them anf create a 3x3 matrix
 
-    ell is the multiple
-    iell is the index in the data ell corresponds to
+#     ell is the multiple
+#     iell is the index in the data ell corresponds to
 
-    remember the order from CAMB
-     l CTT CEE CBB CTE Cdd CdT CdE
-    '''
-    ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
-          calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
-    return ci
+#     remember the order from CAMB
+#      l CTT CEE CBB CTE Cdd CdT CdE
+
+
+#     '''
+#     calc_c_general(data,parabin)
+
+#     ci = (-calc_c_general(dats,fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
+#       calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
+
+#     return ci
 
 
 def calc_c_fiducial(data):
@@ -117,25 +114,40 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
     return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0]],
-                     [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.]
-                     ])
+
+                      [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.]
+                      ])
 
 
-def calc_c_general(data, parabin):
-    '''
-    Given CMB data dats it normalize them anf create a 3x3 matrix
 
-    ell is the multiple
-    iell is the index in the data ell corresponds to
+# def calc_c_general(data,parabin):
+#     '''
+#     Given CMB data dats it normalize them anf create a 3x3 matrix
 
-    remember the order from CAMB
-     l CTT CEE CBB CTE Cdd CdT CdE
+#     ell is the multiple
+#     iell is the index in the data ell corresponds to
 
-    '''
-    return np.array([[data[:lmax_index, 1, parabin], data[:lmax_index, 4, parabin]],
+#     remember the order from CAMB
+#      l CTT CEE CBB CTE Cdd CdT CdE
 
-                     [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin]]
-                     ])
+
+#     '''
+#     # noise definition from the number of observations and time
+#     # eq 1 of W.hu et al snowmass paper 10^6 detectors
+#     # Y = 0.25  # 25% yeld
+#     # N_det = 10 ** 6  # 1 milion of detectors
+#     # these are taken from global
+
+#     C_general = np.array([[data[:lmax_index, 1, parabin] + fac * N, data[:lmax_index, 4, parabin], data[:lmax_index, 6, parabin]],
+
+#                       [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin] + fac * N * 2.,  data[:lmax_index, 2, parabin] * 0.],
+
+#                       [data[:lmax_index, 6, parabin], data[:lmax_index, 2, parabin] * 0.,
+#                           data[:lmax_index, 5, parabin] + N_phi_l[:lmax_index, 1]]
+
+#                       ])
+
+#     return C_general
 
 
 def C(iell, ell, parbin, data):
@@ -160,10 +172,9 @@ def C(iell, ell, parbin, data):
     # TE,EE,Ephi
     # phiT,phiE,phiphi
     return np.array([[data[iell, 1, parbin], data[iell, 4, parbin]],
-                     [data[iell, 4, parbin], data[iell, 2, parbin]],
-                     ]
-                    )
-
+                  [data[iell, 4, parbin], data[iell, 2, parbin]],
+                  ]
+                 )
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -190,7 +201,7 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
-header = 'Joint fisher CMB T E + phi lensing used \n'
+header = 'Joint fisher CMB T E. NO LENSING used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
@@ -230,18 +241,7 @@ marginalized_ell = np.zeros((np.size(dats[:lmax_index, 0, 0]), n_values))
 
 print 'fisher_size', fisher.shape
 pargaps = par_gaps
-# generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
-
-derivatives = np.ndarray((2, 2, np.size(dats[:lmax_index, 0, 0]), n_values), dtype='float64')
-
-for i in range(0, n_values):
-    # computing derivatives.
-    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
-                  # ---------------------------------
-                              #   12h
-    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, pargaps, values)[:, :, :]
-
 
 for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
 
@@ -270,28 +270,20 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
                   # ---------------------------------
                               #   12h
 
-            # ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
-            #       C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            # cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
-            #       C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
-
-            ci = derivatives[:, :, iell, i]
-
-            cj = derivatives[:, :, iell, j]
-
+            ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
+                  C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
+            cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
+                  C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
             # Eq 4.
-            # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
-            trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
-
+            tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             # assuming f Eq.4
-            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
+            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * np.trace(tot)
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 print 'lmax =', ell
-# print fisher_inv
 
 np.savetxt('data/{}/no_marginalized_ell.txt'.format(output_folder),
            np.column_stack((dats[:lmax_index, 0, 0], no_marginalized_ell)), header=header)
@@ -314,6 +306,6 @@ utils.save_cov_matrix(fisher_inv)
 np.savetxt('data/{}/invetered_sqrt_fisher.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
 np.savetxt('data/{}/fisher_mat.txt'.format(output_folder), fisher_single, header=header)
 
-print 'fisher=', fisher
+print fisher
 
 utils.print_resume_stat(fisher, fid)
