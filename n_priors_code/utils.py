@@ -207,7 +207,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
         fisher1 = fisher.copy()
         # Cicle on H0 priors
         fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-            (prior_val * fid[y] ) ** 2
+            (prior_val * fid[y]) ** 2
         print np.diag(fisher1)
 
         return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
@@ -221,12 +221,13 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
             # Cicle on H0 priors
 
             fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-                (prior * fid[y] ) ** 2
+                (prior * fid[y]) ** 2
 
             sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
         return sigma_x_prior
     else:
         sys.exit('type not recognized')
+
 
 def return_simgax_y_prior(fid, fisher, x, y, prior_val):
     '''
@@ -245,7 +246,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
         fisher1 = fisher.copy()
         # Cicle on H0 priors
         fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-            (prior_val * fid[y] ) ** 2
+            (prior_val * fid[y]) ** 2
         print np.diag(fisher1)
 
         return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
@@ -259,7 +260,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
             # Cicle on H0 priors
 
             fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-                (prior * fid[y] ) ** 2
+                (prior * fid[y]) ** 2
 
             sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
         return sigma_x_prior
@@ -268,7 +269,6 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
 
 
 def apply_simgax_y_prior(fid, fisher, x, y, prior_val):
-
     '''
     Concept return sigma x given a possible prior on y
 
@@ -279,23 +279,22 @@ def apply_simgax_y_prior(fid, fisher, x, y, prior_val):
 
     '''
 
-    fisher_mat_multi= np.array([fisher for i in range(np.size(prior_val) )])
+    fisher_mat_multi = np.array([fisher for i in range(np.size(prior_val))])
 
-    fisher_mat_multi[:,fid.keys().index(y), fid.keys().index(y)] += 1 / \
-                                (prior_val * fid[y] ) ** 2
+    fisher_mat_multi[:, fid.keys().index(y), fid.keys().index(y)] += 1 / \
+        (prior_val * fid[y]) ** 2
 
-
-    return  np.sqrt(np.linalg.inv(fisher_mat_multi)[:,fid.keys().index(x), fid.keys().index(x)])
+    return np.sqrt(np.linalg.inv(fisher_mat_multi)[:, fid.keys().index(x), fid.keys().index(x)])
 
     # if isinstance(prior_val, (int, long, float)):
     #     assert (fid.has_key(x))
     #     assert (fid.has_key(y))
 
-    #     # fisher1 = fisher.copy()
-    #     # Cicle on H0 priors
+    # fisher1 = fisher.copy()
+    # Cicle on H0 priors
     #     fisher[fid.keys().index(y), fid.keys().index(y)] += 1 / \
     #         (prior_val * fid[y] ) ** 2
-    #     # print np.diag(fisher)
+    # print np.diag(fisher)
 
     #     return np.sqrt(np.linalg.inv(fisher)[fid.keys().index(x), fid.keys().index(x)])
 
@@ -303,9 +302,9 @@ def apply_simgax_y_prior(fid, fisher, x, y, prior_val):
 
     #     sigma_x_prior = np.zeros(np.size(prior_val))
     #     for i, prior in enumerate(prior_val):
-    #         # print 'prior in single',prior
-    #         # fisher1 = fisher.copy()
-    #         # Cicle on H0 priors
+    # print 'prior in single',prior
+    # fisher1 = fisher.copy()
+    # Cicle on H0 priors
 
     #         fisher[fid.keys().index(y), fid.keys().index(y)] += 1 / \
     #             (prior * fid[y] ) ** 2
@@ -316,7 +315,7 @@ def apply_simgax_y_prior(fid, fisher, x, y, prior_val):
     #     sys.exit('type not recognized')
 
 
-def return_simgax_all_prior(fid, fisher_mat,key_y):
+def return_simgax_all_prior(fid, fisher_mat, key_y):
     '''
     Concept return sigma x given a possible prior on *ALL* the other parameters
 
@@ -329,7 +328,7 @@ def return_simgax_all_prior(fid, fisher_mat,key_y):
     '''
     fisher_inv = np.linalg.inv(fisher_mat)
     prior_size = 900
-    fisher_mat_multi= np.array([fisher_mat for i in range(prior_size)])
+    fisher_mat_multi = np.array([fisher_mat for i in range(prior_size)])
     # this is  s [prior_size,9,9] 3d matrix
     for i, key in enumerate(fid.keys()):
 
@@ -340,18 +339,10 @@ def return_simgax_all_prior(fid, fisher_mat,key_y):
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         prior_value = np.linspace(sigma_just_CMB_x / 10., sigma_just_CMB_x * 4.5, prior_size)
         # if you have an array of prior to apply, cycle on them.
-        fisher_mat_multi[:,fid.keys().index(key), fid.keys().index(key)] += 1 / \
-                            (prior_value * fid[key] ) ** 2
+        fisher_mat_multi[:, fid.keys().index(key), fid.keys().index(key)] += 1 / \
+            (prior_value * fid[key]) ** 2
 
-
-
-    return np.sqrt(np.linalg.inv(fisher_mat_multi)[:,fid.keys().index(key_y), fid.keys().index(key_y)])
-
-
-
-
-
-
+    return np.sqrt(np.linalg.inv(fisher_mat_multi)[:, fid.keys().index(key_y), fid.keys().index(key_y)])
 
 
 def return_simgax_y_prior2D(fid, fisher, x, y, prior_val1, prior_val2):
@@ -472,7 +463,23 @@ def exclude_parameters(excluded_parameters, par_gaps, values, fid):
             par_gaps.pop(e)
             values.pop(e)
             fid.pop(e)
+
         return par_gaps, values, fid
+
+
+def exclude_parameters_from_fisher(excluded_parameters, par_gaps, values, fid, fisher_mat):
+    '''
+    easily exclude parameters for the analysis
+    '''
+    if excluded_parameters == None:
+        return par_gaps, values, fid, fisher_mat
+    else:
+        for e in excluded_parameters:
+            fisher_mat = np.delete(np.delete(fisher_mat, fid.keys().index(e), 0), fid.keys().index(e), 1)
+            par_gaps.pop(e)
+            values.pop(e)
+            fid.pop(e)
+        return par_gaps, values, fid, fisher_mat
 
 
 def print_resume_stat(fisher, fid):
