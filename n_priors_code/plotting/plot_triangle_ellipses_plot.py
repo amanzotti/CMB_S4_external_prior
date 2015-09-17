@@ -1,11 +1,21 @@
+#!/usr/bin/env python
 '''
-Plot scipt to plot the derivatives of CMB specctra respect to all the parameters of the Fisher matrix.
+This script plot the usual tringle ellispes plot for the given dataset.
+Remember this is a Fisher matrix code so everything is approximated to be gaussian.
 
-Different lines corresponde to different gaps and techniques.
-
-
-
+This was written to compare our results with the one given by Zhen
 '''
+
+
+__author__ = "A.Manzotti"
+__license__ = "GPL"
+__version__ = "2.0"
+__maintainer__ = "A.Manzotti"
+__email__ = "manzotti.alessandro@gmail.com"
+__status__ = "Production"
+
+
+
 
 
 
