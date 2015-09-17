@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.28)  14 SEP 2015 09:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.28)  16 SEP 2015 12:44
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -211,28 +211,28 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen116
 \Gin@req@width=\dimen117
 )
-Class revtex4-1 Info: Patching LaTeX tabular. on input line 45.
-Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 45.
+Class revtex4-1 Info: Patching LaTeX tabular. on input line 39.
+Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 39.
 
-Class revtex4-1 Info: cite was not loaded (OK!) on input line 45.
-Class revtex4-1 Info: mcite was not loaded (OK!) on input line 45.
-Class revtex4-1 Info: multicol was not loaded (OK!) on input line 45.
+Class revtex4-1 Info: cite was not loaded (OK!) on input line 39.
+Class revtex4-1 Info: mcite was not loaded (OK!) on input line 39.
+Class revtex4-1 Info: multicol was not loaded (OK!) on input line 39.
 
 (./N_eff_prior_paper.aux)
 \openout1 = `N_eff_prior_paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
 
 (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -296,46 +296,42 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Class revtex4-1 Info: Overriding lineo.sty, restoring output routine, on input 
-line 45.
-Class revtex4-1 Info: Line numbering not turned on yet on input line 45.
+line 39.
+Class revtex4-1 Info: Line numbering not turned on yet on input line 39.
 \openout3 = `N_eff_prior_paperNotes.bib'.
 
-Class revtex4-1 Info: Overriding \@LN@LLerror on input line 45.
+Class revtex4-1 Info: Overriding \@LN@LLerror on input line 39.
 
 
 Class revtex4-1 Warning: If you want your keywords to appear in your output, us
 e document class option showkeys.
 
 [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 99.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 93.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 99.
-
-
-LaTeX Warning: Reference `sec:conclusions' on page 2 undefined on input line 99
-.
-
-[2] <images/PS_phi_with_noise.pdf, id=29, 578.16pt x 578.16pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 93.
+ [2]
+<images/PS_phi_with_noise.pdf, id=29, 578.16pt x 578.16pt>
 File: images/PS_phi_with_noise.pdf Graphic file (type pdf)
 
 <use images/PS_phi_with_noise.pdf>
-Package pdftex.def Info: images/PS_phi_with_noise.pdf used on input line 185.
+Package pdftex.def Info: images/PS_phi_with_noise.pdf used on input line 176.
 (pdftex.def)             Requested size: 231.2599pt x 231.2599pt.
 
 <images/PS_with_noise.pdf, id=30, 578.16pt x 578.16pt>
 File: images/PS_with_noise.pdf Graphic file (type pdf)
 
 <use images/PS_with_noise.pdf>
-Package pdftex.def Info: images/PS_with_noise.pdf used on input line 194.
+Package pdftex.def Info: images/PS_with_noise.pdf used on input line 185.
 (pdftex.def)             Requested size: 231.2599pt x 231.2599pt.
  [3 <./images/PS_phi_with_noise.pdf>]
 
 LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 207.
+ on input line 200.
 
 
 <images/prior_massless_neutrinos_snow_mass.pdf, id=66, 224.55035pt x 182.17517p
@@ -343,33 +339,29 @@ t>
 File: images/prior_massless_neutrinos_snow_mass.pdf Graphic file (type pdf)
  <use images/prior_massless_neutrinos_snow_mass.pdf>
 Package pdftex.def Info: images/prior_massless_neutrinos_snow_mass.pdf used on 
-input line 255.
+input line 241.
 (pdftex.def)             Requested size: 224.5498pt x 182.17471pt.
- [4 <./images/PS_with_noise.pdf>]
+ [4 <./images/PS_with_noise.pdf> <./images/prior_massless_neutrinos_snow_mass.p
+df
 
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 262.
-
-<images/prior_omnuh2_snow_mass.pdf, id=85, 232.13376pt x 182.17517pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./images/prior_massless_neutrinos_sn
+ow_mass.pdf): PDF inclusion: multiple pdfs with page group included in a single
+ page
+>] <images/prior_omnuh2_snow_mass.pdf, id=152, 232.13376pt x 182.17517pt>
 File: images/prior_omnuh2_snow_mass.pdf Graphic file (type pdf)
 
 <use images/prior_omnuh2_snow_mass.pdf>
 Package pdftex.def Info: images/prior_omnuh2_snow_mass.pdf used on input line 2
-72.
+59.
 (pdftex.def)             Requested size: 232.13318pt x 182.17471pt.
 
-<images/prior_w_snow_mass.pdf, id=86, 220.17537pt x 183.82486pt>
+<images/prior_w_snow_mass.pdf, id=153, 220.17537pt x 183.82486pt>
 File: images/prior_w_snow_mass.pdf Graphic file (type pdf)
 
 <use images/prior_w_snow_mass.pdf>
-Package pdftex.def Info: images/prior_w_snow_mass.pdf used on input line 315.
+Package pdftex.def Info: images/prior_w_snow_mass.pdf used on input line 302.
 (pdftex.def)             Requested size: 220.17484pt x 183.82439pt.
- [5 <./images/prior_massless_neutrinos_snow_mass.pdf> <./images/prior_omnuh2_sn
-ow_mass.pdf
-
-pdfTeX warning: /usr/texbin/pdflatex (file ./images/prior_omnuh2_snow_mass.pdf)
-: PDF inclusion: multiple pdfs with page group included in a single page
-> <./images/prior_w_snow_mass.pdf
+ [5 <./images/prior_omnuh2_snow_mass.pdf> <./images/prior_w_snow_mass.pdf
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./images/prior_w_snow_mass.pdf): PDF
  inclusion: multiple pdfs with page group included in a single page
@@ -379,32 +371,29 @@ Underfull \hbox (badness 1173) in paragraph at lines 91--103
  []
 
 [6]
-
-Package natbib Warning: Citation `pan:2015' on page 7 undefined on input line 6
-18.
-
-
 Underfull \hbox (badness 1173) in paragraph at lines 637--643
  []\OT1/cmr/m/n/9 Planck Col-lab-o-ra-tion, P. A. R. Ade, N. Aghanim,
  []
 
-)
 
-Package natbib Warning: There were undefined citations.
+Underfull \hbox (badness 5756) in paragraph at lines 678--681
+ []\OT1/cmr/m/n/9 Z. Pan and L. Knox, ArXiv e-prints  (2015),
+ []
 
-[7] (./N_eff_prior_paper.aux)
+) [7] (./N_eff_prior_paper.aux)
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right .
+
 
  ) 
 Here is how much of TeX's memory you used:
- 4466 strings out of 493109
- 61107 string characters out of 6135004
- 150466 words of memory out of 5000000
- 7870 multiletter control sequences out of 15000+600000
+ 4470 strings out of 493109
+ 61174 string characters out of 6135004
+ 150344 words of memory out of 5000000
+ 7874 multiletter control sequences out of 15000+600000
  13080 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,19n,25p,1140b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,19n,25p,1140b,322s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></
@@ -412,34 +401,35 @@ usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></us
 r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/
 local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/
 local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/l
-ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/lo
-cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/loc
-al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local
-/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive
-/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/20
-14/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2014/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmti9.pfb>
-Output written on N_eff_prior_paper.pdf (7 pages, 1145587 bytes).
+ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
+/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
+local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/loca
+l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/loca
+l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texl
+ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
+/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/20
+14/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti9.pfb>
+Output written on N_eff_prior_paper.pdf (7 pages, 1149982 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 255 compressed objects within 3 object streams
+ 361 PDF objects out of 1000 (max. 8388607)
+ 258 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
