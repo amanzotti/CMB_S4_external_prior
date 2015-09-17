@@ -25,7 +25,7 @@ __license__ = "GPL"
 __version__ = "2.0"
 __maintainer__ = "A.Manzotti"
 __email__ = "manzotti.alessandro@gmail.com"
-__status__ = "Production
+__status__ = "Production"
 
 import configparser
 import subprocess

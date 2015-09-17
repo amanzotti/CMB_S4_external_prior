@@ -298,7 +298,7 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-utils.save_cov_matrix(fisher_inv)
+utils.save_cov_matrix(fisher_inv,'data/{}/param_cov.txt'.format(output_folder))
 
 
 np.savetxt('data/{}/invetered_sqrt_fisher.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
