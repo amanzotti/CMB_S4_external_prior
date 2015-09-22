@@ -17,9 +17,6 @@ __status__ = "Production"
 
 
 
-
-
-
 import numpy as np
 import pickle as pickle
 import utils
@@ -34,7 +31,9 @@ from itertools import cycle
 from matplotlib.ticker import MaxNLocator  # needed for tick
 import sys
 from matplotlib.patches import Ellipse
-import n_priors_code.utils
+import n_priors_code.utils as utils
+from palettable.colorbrewer.qualitative import Set1_9
+
 
 
 # ============================================
@@ -50,8 +49,9 @@ import n_priors_code.utils
 
 
 no_lcdm_parameters =  ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['massless_neutrinos']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) -set(plot_now))
+excluded_parameters = None
 # omnuh2
 
 # READ DATA
@@ -70,8 +70,10 @@ fisher_mat = np.loadtxt(
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
-plot_param = list(set(fid.keys()) -set(excluded_parameters))
+# plot_param = list(set(fid.keys()) -set(excluded_parameters))
 
+
+my_fisher_inv = np.linalg.inv(fisher_mat)
 index = {}
 
 index['hubble'] = 3
@@ -81,30 +83,6 @@ index['re_optical_depth'] = 2
 index['ombh2'] = 4
 index['ombch2'] = 5
 index['mnu'] = 6
-
-new_order = [index[fid.keys()[0]], index[fid.keys()[1]], index[fid.keys()[2]], index[fid.keys()[3]],
-             index[fid.keys()[4]], index[fid.keys()[5]], index[fid.keys()[6]]]
-# import zhen fisher
-fisher_zhen = np.genfromtxt(base_dir+'data/test_fisher/F_CMBS4.dat')
-
-reordered_fisher = np.zeros_like(fisher_zhen)
-reordered_fisher = fisher_zhen[:, new_order][new_order]
-fisher_zhen = reordered_fisher
-
-my_fisher_1 = np.genfromtxt(base_dir+'output/fisher_mat_test_run1.txt')
-my_fisher_2 = np.genfromtxt(base_dir+'output/fisher_mat_test_run2.txt')
-my_fisher_3 = np.genfromtxt(base_dir+'output/fisher_mat_test_run3.txt')
-my_fisher_4 = np.genfromtxt(base_dir+'output/fisher_mat_test_run4.txt')
-my_fisher_5 = np.genfromtxt(base_dir+'output/fisher_mat_test_run5.txt')
-
-
-my_fisher_inv_1 = (np.linalg.inv(my_fisher_1))
-my_fisher_inv_2 = (np.linalg.inv(my_fisher_2))
-my_fisher_inv_3 = (np.linalg.inv(my_fisher_3))
-my_fisher_inv_4 = (np.linalg.inv(my_fisher_4))
-my_fisher_inv_5 = (np.linalg.inv(my_fisher_5))
-
-fisher_zhen_inv = (np.linalg.inv(reordered_fisher))
 
 
 # ============================================
@@ -219,7 +197,7 @@ label['ombch2'] = '\Omega_{m}h^{2}'
 label['omch2'] = '\Omega_{c}h^{2}'
 label['w'] = 'w'
 
-my_fisher_inv= my_fisher_inv_1
+
 
 fg = plt.figure(figsize=(10,10))
 
@@ -290,6 +268,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('trinagle_1.pdf', dpi=400, papertype='Letter',
+plt.savefig('triangle_all.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 plt.close()

@@ -181,8 +181,8 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 3000
-lmin = 50
+lmax = 4499
+lmin = 4
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_lambda/run2'
@@ -290,7 +290,7 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             trace = np.sum (np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
-
+            print ell, fisher[1,1]
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
 
@@ -307,7 +307,7 @@ np.savetxt('data/{}/marginalized_ell_joint.txt'.format(output_folder),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
 
 
-utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
+# utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 
 
 print 'finally how much constraint on parameters without prior?'
@@ -324,4 +324,4 @@ np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}.txt'.format(output_folder,l
 
 print 'fisher=' , fisher
 
-utils.print_resume_stat(fisher, fid)
+utils.print_resume_stat(fisher_single, fid)

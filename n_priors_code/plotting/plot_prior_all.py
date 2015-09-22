@@ -46,7 +46,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
 run_idx = 2
 lmax = 4499
-lmin = 4
+lmin = 100
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -56,6 +56,7 @@ fisher_mat = np.loadtxt(
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
+plot_param = list(set(fid.keys()) -set(excluded_parameters))
 
 # ============================================
 # PLOTTING DEFINITION SKIP TO ~155
@@ -168,7 +169,7 @@ label['hubble'] = 'H_{0}'
 label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = r'\Omega_{\nu}'
+label['omnuh2'] = r'\Omega_{\nu}h^{2}'
 label['re_optical_depth'] = r'\tau'
 label['ombh2'] = '\Omega_{b}h^{2}'
 label['ombch2'] = '\Omega_{m}h^{2}'
@@ -239,8 +240,8 @@ for y, key_y in enumerate(plot_now):
 
     # ============================================
 
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}.pdf'.format(data_type, str(run_idx), str(key_y), lmin, lmax), dpi=400, papertype='Letter',
-                format='pdf', bbox_inches='tight')
+    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax), dpi=400, papertype='Letter',
+                format='png', bbox_inches='tight')
     plt.clf()
 
 plt.close()
