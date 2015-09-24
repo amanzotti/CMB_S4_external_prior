@@ -98,7 +98,7 @@ def calc_c_fiducial(data):
     # N_det = 10 ** 6  # 1 milion of detectors
     # these are taken from global
     global Y, sec_of_obs, arcmin_from_fsky, lmax_index
-    ell = data[:lmax_index, 0, 0]
+    ell = data[lmin_index:lmax_index, 0, 0]
     s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
     t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
@@ -116,12 +116,12 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    return np.array([[data[:lmax_index, 1, 0] + fac * N, data[:lmax_index, 4, 0], data[:lmax_index, 6, 0]],
+    return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N, data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 6, 0]],
 
-                     [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,  data[:lmax_index, 2, 0] * 0.],
+                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] + fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
 
-                     [data[:lmax_index, 6, 0], data[:lmax_index, 2, 0] * 0.,
-                      data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
+                     [data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
+                      data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
 
                      ])
 
@@ -137,11 +137,11 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[:lmax_index, 1, parabin] , data[:lmax_index, 4, parabin], data[:lmax_index, 6, parabin]],
-                     [data[:lmax_index, 4, parabin], data[:lmax_index, 2, parabin]
-                      ,  data[:lmax_index, 2, parabin] * 0.],
-                     [data[:lmax_index, 6, parabin], data[:lmax_index, 2, parabin] * 0.,
-                      data[:lmax_index, 5, parabin]]
+    return np.array([[data[lmin_index:lmax_index, 1, parabin] , data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
+                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 2, parabin]
+                      ,  data[lmin_index:lmax_index, 2, parabin] * 0.],
+                     [data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
+                      data[lmin_index:lmax_index, 5, parabin]]
                      ])
 
 
@@ -220,6 +220,7 @@ dats = utils.load_data(data_folder, values, lensed)
 n_values = np.size(values.keys())
 lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
 ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
+lmin_index = np.where(dats[:, 0, 0] == lmin)[0][0]
 
 # cut Cl^T at ells bigger than l_t_max
 dats[ltmax_index:, 1, 1:] = 0.
@@ -230,8 +231,8 @@ dats[ltmax_index:, 1, 1:] = 0.
 fisher = np.zeros((n_values, n_values))
 fisher_inv = np.zeros((n_values, n_values))
 
-no_marginalized_ell = np.zeros((np.size(dats[:lmax_index, 0, 0]), n_values))
-marginalized_ell = np.zeros((np.size(dats[:lmax_index, 0, 0]), n_values))
+no_marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
+marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
 
 
 print 'fisher_size', fisher.shape
@@ -239,7 +240,7 @@ pargaps = par_gaps
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray( (3,3,np.size(dats[:lmax_index, 0, 0]),n_values), dtype= 'float64' )
+derivatives = np.ndarray( (3,3,np.size(dats[lmin_index:lmax_index, 0, 0]),n_values), dtype= 'float64' )
 
 for i in range(0, n_values):
             # computing derivatives.
@@ -250,7 +251,7 @@ for i in range(0, n_values):
 
 
 
-for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
+for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
     #  filling it the matrix l goes from l_min =2 to l_max =5000
 
@@ -289,7 +290,7 @@ for iell, ell in enumerate(dats[:lmax_index, 0, 0]):
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             trace = np.sum (np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
-
+            print ell, fisher[1,1]
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
 
@@ -301,12 +302,12 @@ print 'lmax =', ell
 # print fisher_inv
 
 np.savetxt('data/{}/no_marginalized_ell_joint.txt'.format(output_folder),
-           np.column_stack((dats[:lmax_index, 0, 0], no_marginalized_ell)), header=header)
+           np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
 np.savetxt('data/{}/marginalized_ell_joint.txt'.format(output_folder),
-           np.column_stack((dats[:lmax_index, 0, 0], marginalized_ell)), header=header)
+           np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
 
 
-utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
+# utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 
 
 print 'finally how much constraint on parameters without prior?'
@@ -315,12 +316,12 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-utils.save_cov_matrix(fisher_inv)
+utils.save_cov_matrix(fisher_inv,'data/{}/param_cov.txt'.format(output_folder))
 
 
 np.savetxt('data/{}/invetered_sqrt_fisher_joint.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint.txt'.format(output_folder), fisher_single, header=header)
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}.txt'.format(output_folder,lmin,lmax), fisher_single, header=header)
 
 print 'fisher=' , fisher
 
-utils.print_resume_stat(fisher, fid)
+utils.print_resume_stat(fisher_single, fid)

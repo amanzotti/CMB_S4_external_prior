@@ -224,7 +224,7 @@ par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
 
 # exclude = ['w','massless_neutrinos']
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
-
+print fid,exclude
 print 'loading files'
 dats = utils.load_data(data_folder, values, lensed)
 n_values = np.size(values.keys())

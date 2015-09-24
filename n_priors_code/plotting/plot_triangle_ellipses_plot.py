@@ -1,11 +1,21 @@
+#!/usr/bin/env python
 '''
-Plot scipt to plot the derivatives of CMB specctra respect to all the parameters of the Fisher matrix.
+This script plot the usual tringle ellispes plot for the given dataset.
+Remember this is a Fisher matrix code so everything is approximated to be gaussian.
 
-Different lines corresponde to different gaps and techniques.
-
-
-
+This was written to compare our results with the one given by Zhen
 '''
+
+
+__author__ = "A.Manzotti"
+__license__ = "GPL"
+__version__ = "2.0"
+__maintainer__ = "A.Manzotti"
+__email__ = "manzotti.alessandro@gmail.com"
+__status__ = "Production"
+
+
+
 
 
 
@@ -39,11 +49,29 @@ import n_priors_code.utils
 # READ DATA
 
 
-base_dir ='/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
+no_lcdm_parameters =  ['massless_neutrinos', 'w', 'omnuh2']
+plot_now = ['massless_neutrinos']
+excluded_parameters = list(set(no_lcdm_parameters) -set(plot_now))
+# omnuh2
 
-fid = pickle.load(open(base_dir+'data/{}/run5/fid_values.p'.format('test_fisher'), "rb"))
-values = pickle.load(open(base_dir+'data/{}/run5/grid_values.p'.format('test_fisher'), "rb"))
-par_gaps = pickle.load(open(base_dir+'data/{}/run5/par_gaps.p'.format('test_fisher'), "rb"))
+# READ DATA
+# DEFINE YOUR FOLDER HERE
+base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
+data_type = 'varying_lambda'
+run_idx = 2
+lmax = 4499
+lmin = 4
+# ======
+fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
+values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
+par_gaps = pickle.load(open(base_dir + 'data/{}/run{}/par_gaps.p'.format(data_type, str(run_idx)), "rb"))
+fisher_mat = np.loadtxt(
+    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}.txt'.format(data_type, str(run_idx), lmin, lmax))
+
+par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
+    excluded_parameters, par_gaps, values, fid, fisher_mat)
+plot_param = list(set(fid.keys()) -set(excluded_parameters))
+
 index = {}
 
 index['hubble'] = 3
