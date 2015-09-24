@@ -1,9 +1,10 @@
-#!/usr/bin/env python
 '''
-This script plot the usual tringle ellispes plot for the given dataset.
-Remember this is a Fisher matrix code so everything is approximated to be gaussian.
+Plot scipt to plot the derivatives of CMB specctra respect to all the parameters of the Fisher matrix.
 
-This was written to compare our results with the one given by Zhen
+Different lines corresponde to different gaps and techniques.
+
+
+
 '''
 
 
@@ -13,11 +14,6 @@ __version__ = "2.0"
 __maintainer__ = "A.Manzotti"
 __email__ = "manzotti.alessandro@gmail.com"
 __status__ = "Production"
-
-
-
-
-
 
 
 import numpy as np
@@ -34,9 +30,10 @@ from itertools import cycle
 from matplotlib.ticker import MaxNLocator  # needed for tick
 import sys
 from matplotlib.patches import Ellipse
-import n_priors_code.utils
-
-
+import n_priors_code.utils as utils
+from palettable.colorbrewer.qualitative import Set1_9
+from scipy.optimize import fsolve
+from scipy.integrate import quad
 # ============================================
 # ============================================
 # ============================================
@@ -49,9 +46,9 @@ import n_priors_code.utils
 # READ DATA
 
 
-no_lcdm_parameters =  ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['massless_neutrinos']
-excluded_parameters = list(set(no_lcdm_parameters) -set(plot_now))
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
+plot_now = ['w']
+excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
 # READ DATA
@@ -70,7 +67,27 @@ fisher_mat = np.loadtxt(
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
-plot_param = list(set(fid.keys()) -set(excluded_parameters))
+# plot_param = list(set(fid.keys()) -set(excluded_parameters))
+print excluded_parameters
+print fid
+my_fisher_inv = np.linalg.inv(fisher_mat)
+
+
+# \===========================
+def integrand(z, w, H_0):
+    omega_m = fid['omch2'] / fid['hubble'] ** 2
+    return 1 / (H_0 * np.sqrt(omega_m * (1. + z) ** 3 + (1 - omega_m) * (1. + z) ** (3 * (1 + w))))
+
+H_0 = fid['hubble']
+w = fid['w']
+R = quad(integrand, 0, 1100, args=(w, H_0),epsrel=1.49e-09)[0]
+# Utilities to produce a constat DLSS curve
+
+H_array = np.linspace(H_0 - H_0 * 0.1, H_0 + H_0 * 0.1, 20)
+w_array = np.zeros_like(H_array)
+for i, h0 in enumerate(H_array):
+    func = lambda w: R - quad(integrand, 0, 1100, args=(w, h0), epsrel=1.49e-09)[0]
+    w_array[i] = w_sol = fsolve(func, -1.)
 
 index = {}
 
@@ -81,30 +98,6 @@ index['re_optical_depth'] = 2
 index['ombh2'] = 4
 index['ombch2'] = 5
 index['mnu'] = 6
-
-new_order = [index[fid.keys()[0]], index[fid.keys()[1]], index[fid.keys()[2]], index[fid.keys()[3]],
-             index[fid.keys()[4]], index[fid.keys()[5]], index[fid.keys()[6]]]
-# import zhen fisher
-fisher_zhen = np.genfromtxt(base_dir+'data/test_fisher/F_CMBS4.dat')
-
-reordered_fisher = np.zeros_like(fisher_zhen)
-reordered_fisher = fisher_zhen[:, new_order][new_order]
-fisher_zhen = reordered_fisher
-
-my_fisher_1 = np.genfromtxt(base_dir+'output/fisher_mat_test_run1.txt')
-my_fisher_2 = np.genfromtxt(base_dir+'output/fisher_mat_test_run2.txt')
-my_fisher_3 = np.genfromtxt(base_dir+'output/fisher_mat_test_run3.txt')
-my_fisher_4 = np.genfromtxt(base_dir+'output/fisher_mat_test_run4.txt')
-my_fisher_5 = np.genfromtxt(base_dir+'output/fisher_mat_test_run5.txt')
-
-
-my_fisher_inv_1 = (np.linalg.inv(my_fisher_1))
-my_fisher_inv_2 = (np.linalg.inv(my_fisher_2))
-my_fisher_inv_3 = (np.linalg.inv(my_fisher_3))
-my_fisher_inv_4 = (np.linalg.inv(my_fisher_4))
-my_fisher_inv_5 = (np.linalg.inv(my_fisher_5))
-
-fisher_zhen_inv = (np.linalg.inv(reordered_fisher))
 
 
 # ============================================
@@ -157,14 +150,14 @@ plt.rcParams['lines.linewidth'] = font_size / 1000
 # ============================================
 # TICKS
 
-plt.rcParams['xtick.major.width'] = 0.13/2.
-plt.rcParams['xtick.major.size'] = 5/2.
-plt.rcParams['xtick.minor.width'] = 0.13/2.
-plt.rcParams['xtick.minor.size'] = 2.8/2.
-plt.rcParams['ytick.major.width'] = 0.13/2.
-plt.rcParams['ytick.major.size'] = 5/2.
-plt.rcParams['ytick.minor.width'] = 0.13/2.
-plt.rcParams['ytick.minor.size'] = 2.8/2.
+plt.rcParams['xtick.major.width'] = 0.13 / 2.
+plt.rcParams['xtick.major.size'] = 5 / 2.
+plt.rcParams['xtick.minor.width'] = 0.13 / 2.
+plt.rcParams['xtick.minor.size'] = 2.8 / 2.
+plt.rcParams['ytick.major.width'] = 0.13 / 2.
+plt.rcParams['ytick.major.size'] = 5 / 2.
+plt.rcParams['ytick.minor.width'] = 0.13 / 2.
+plt.rcParams['ytick.minor.size'] = 2.8 / 2.
 
 
 #ax2 = plt.subplot2grid((1,2), (0, 1))
@@ -209,71 +202,55 @@ label = {}
 
 label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
-label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
 label['omnuh2'] = r'\Omega_{\nu}'
 label['re_optical_depth'] = r'~\tau'
-label['ombh2'] = '\Omega_{b}h^{2}'
-label['ombch2'] = '\Omega_{m}h^{2}'
-label['omch2'] = '\Omega_{c}h^{2}'
+label['ombh2'] = '\Omega_{b}'
+label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
 
-my_fisher_inv= my_fisher_inv_1
+# parameters =['mnu','ombch2']
+parameters = ['w', 'hubble']
 
-fg = plt.figure(figsize=(10,10))
-
-
-size = np.size(par_gaps.keys())
-for i, key_i in enumerate(par_gaps.keys()):
-
-    for j, key_j in enumerate(par_gaps.keys()):
-
-        if(j>i) :
-            print(i,j)
-            print key_i,key_j
-            ax1 = plt.subplot2grid((size-1, size-1), (i,j-1))
-
-            sigmax_squared= my_fisher_inv[fid.keys().index(key_j),fid.keys().index(key_j)]
-            sigmay_squared= my_fisher_inv[fid.keys().index(key_i),fid.keys().index(key_i)]
-            sigmaxy= my_fisher_inv[fid.keys().index(key_j),fid.keys().index(key_i)]
-            print 'rho',sigmax_squared,sigmay_squared
+fg = plt.figure(figsize=(10, 10))
+ax1 = plt.subplot2grid((1, 1), (0, 0))
 
 
-            a_fisher = (sigmax_squared+sigmay_squared)/2. + np.sqrt((sigmax_squared-sigmay_squared)**2/4.+sigmaxy**2)
-            b_fisher =  (sigmax_squared+sigmay_squared)/2. - np.sqrt((sigmax_squared-sigmay_squared)**2/4.+sigmaxy**2)
-            angle_fisher = np.degrees(np.arctan(2.*sigmaxy/(sigmax_squared-sigmay_squared)))/2.
-
-            if sigmax_squared>sigmay_squared:
-
-                one_sigma = Ellipse((fid[key_j], fid[key_i]), 2.*np.sqrt(np.amax([a_fisher,b_fisher]))*1.52, 2.*np.sqrt(np.amin([a_fisher,b_fisher]))*1.52,
-                             angle=angle_fisher, linewidth=0.8, fill=False)
-            elif sigmax_squared<sigmay_squared:
-                one_sigma = Ellipse((fid[key_j], fid[key_i]), 2.*np.sqrt(np.amin([a_fisher,b_fisher]))*1.52, 2.*np.sqrt(np.amax([a_fisher,b_fisher]))*1.52,
-                             angle=angle_fisher, linewidth=0.8, fill=False)
+sigmax_squared = my_fisher_inv[fid.keys().index(parameters[0]), fid.keys().index(parameters[0])]
+sigmay_squared = my_fisher_inv[fid.keys().index(parameters[1]), fid.keys().index(parameters[1])]
+sigmaxy = my_fisher_inv[fid.keys().index(parameters[0]), fid.keys().index(parameters[1])]
+print 'rho', np.sqrt(sigmay_squared) / fid[parameters[1]] * 100.
 
 
-            # two_sigma = Ellipse((fid[key_j], fid[key_i]), np.sqrt(a_fisher)*2.48, np.sqrt(b_fisher)*2.48,
-            #              angle=angle_fisher, linewidth=0.5, fill=False)
-            ax1.add_patch(one_sigma)
-            xl =fid[key_j]-2.52*np.sqrt(sigmax_squared)
-            xu = fid[key_j]+2.52*np.sqrt(sigmax_squared)
-            yl = fid[key_i]-2.52*np.sqrt(sigmay_squared)
-            yu = fid[key_i]+2.52*np.sqrt(sigmay_squared)
-            ax1.set_ylim(yl,yu)
-            ax1.set_xlim(xl,xu)
-            plt.locator_params(nbins=4)
-            if j==i+1:
-                ax1.set_xlabel(r'${}$'.format(label[key_j]))
-                ax1.set_ylabel(r'${}$'.format(label[key_i]))
-            else:
+a_fisher = (sigmax_squared + sigmay_squared) / 2. + np.sqrt((sigmax_squared - sigmay_squared) ** 2 / 4. + sigmaxy ** 2)
+b_fisher = (sigmax_squared + sigmay_squared) / 2. - np.sqrt((sigmax_squared - sigmay_squared) ** 2 / 4. + sigmaxy ** 2)
+angle_fisher = np.degrees(np.arctan(2. * sigmaxy / (sigmax_squared - sigmay_squared))) / 2.
+print sigmax_squared, sigmay_squared
+if sigmax_squared > sigmay_squared:
 
-                ax1.xaxis.set_ticklabels([])
-                ax1.yaxis.set_ticklabels([])
+    one_sigma = Ellipse((fid[parameters[0]], fid[parameters[1]]), 2. * np.sqrt(np.amax([a_fisher, b_fisher])) * 1.52, 2. * np.sqrt(np.amin([a_fisher, b_fisher])) * 1.52,
+                        angle=angle_fisher, linewidth=0.5, fill=True, alpha=0.6)
+elif sigmax_squared < sigmay_squared:
+    one_sigma = Ellipse((fid[parameters[0]], fid[parameters[1]]), 2. * np.sqrt(np.amin([a_fisher, b_fisher])) * 1.52, 2. * np.sqrt(np.amax([a_fisher, b_fisher])) * 1.52,
+                        angle=angle_fisher, linewidth=0.5, fill=True, alpha=0.6)
 
 
+# two_sigma = Ellipse((fid[key_j], fid[key_i]), np.sqrt(a_fisher)*2.48, np.sqrt(b_fisher)*2.48,
+#              angle=angle_fisher, linewidth=0.5, fill=False)
+ax1.add_patch(one_sigma)
+plt.axhline(fid[parameters[1]] - 1.52 * np.sqrt(sigmay_squared), linewidth=1)
+plt.axhline(fid[parameters[1]] + 1.52 * np.sqrt(sigmay_squared), linewidth=1)
 
-# fg.tight_layout()
+xl = fid[parameters[0]] - 2.52 * np.sqrt(sigmax_squared)
+xu = fid[parameters[0]] + 2.52 * np.sqrt(sigmax_squared)
+yl = fid[parameters[1]] - 2.52 * np.sqrt(sigmay_squared)
+yu = fid[parameters[1]] + 2.52 * np.sqrt(sigmay_squared)
+ax1.set_ylim(yl, yu)
+ax1.set_xlim(xl, xu)
+
+
+fg.tight_layout()
 
 # ============================================
 # FINALLY SAVE
@@ -290,6 +267,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('trinagle_1.pdf', dpi=400, papertype='Letter',
+plt.savefig('ellipse_w_hubble.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 plt.close()
