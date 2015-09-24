@@ -4041,3 +4041,865 @@ modifying w values= -1.08
 2.0307
 0.0925
 0.0009
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295425    
+Reion redshift       =  11.201
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1089.46
+r_s(zstar)/Mpc       =  144.66
+100*theta            =  1.042662
+zdrag                =  1058.52
+r_s(zdrag)/Mpc       =  147.41
+k_D(zstar) Mpc       =  0.1412
+100*theta_D          =  0.160393
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813345
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8294806    
+Reion redshift       =  11.284
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1089.95
+r_s(zstar)/Mpc       =  144.61
+100*theta            =  1.042348
+zdrag                =  1058.94
+r_s(zdrag)/Mpc       =  147.37
+k_D(zstar) Mpc       =  0.1407
+100*theta_D          =  0.160909
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813339
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295118    
+Reion redshift       =  11.452
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.97
+r_s(zstar)/Mpc       =  144.52
+100*theta            =  1.041692
+zdrag                =  1059.78
+r_s(zdrag)/Mpc       =  147.30
+k_D(zstar) Mpc       =  0.1398
+100*theta_D          =  0.161980
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813328
+tau_recomb/Mpc       =  280.37  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.36  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295741    
+Reion redshift       =  11.537
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1091.50
+r_s(zstar)/Mpc       =  144.48
+100*theta            =  1.041348
+zdrag                =  1060.20
+r_s(zdrag)/Mpc       =  147.26
+k_D(zstar) Mpc       =  0.1393
+100*theta_D          =  0.162534
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813322
+tau_recomb/Mpc       =  280.37  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.36  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8296076    
+Reion redshift       =  11.333
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.607301
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.392699
+100 theta (CosmoMC)  =  1.021324
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  14.448
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.021481
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.158256
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.797298
+tau_recomb/Mpc       =  280.52  tau_now/Mpc =  14433.2
+tau_recomb/Mpc       =  280.69  tau_now/Mpc =  14433.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8079433    
+Reion redshift       =  11.348
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.647550
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.352450
+100 theta (CosmoMC)  =  1.031703
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  14.122
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.031860
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.159863
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.805400
+tau_recomb/Mpc       =  280.67  tau_now/Mpc =  14290.9
+tau_recomb/Mpc       =  280.68  tau_now/Mpc =  14290.9
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8193539    
+Reion redshift       =  11.385
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.711487
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.288513
+100 theta (CosmoMC)  =  1.051824
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.520
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.051985
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.162981
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.821108
+tau_recomb/Mpc       =  280.69  tau_now/Mpc =  14022.8
+tau_recomb/Mpc       =  280.55  tau_now/Mpc =  14022.8
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8386491    
+Reion redshift       =  11.400
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.737119
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.262881
+100 theta (CosmoMC)  =  1.061588
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.241
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.061751
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.164494
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.828731
+tau_recomb/Mpc       =  280.55  tau_now/Mpc =  13896.4
+tau_recomb/Mpc       =  280.66  tau_now/Mpc =  13896.4
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8467828    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.052618
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    368.42 (m_nu =  0.067 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.31
+r_s(zstar)/Mpc       =  146.11
+100*theta            =  1.052866
+zdrag                =  1059.25
+r_s(zdrag)/Mpc       =  148.89
+k_D(zstar) Mpc       =  0.1397
+100*theta_D          =  0.162093
+z_EQ (if v_nu=1)     =  3546.74
+100*theta_EQ         =  0.796338
+tau_recomb/Mpc       =  283.45  tau_now/Mpc =  14160.6
+tau_recomb/Mpc       =  283.53  tau_now/Mpc =  14160.6
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8501312    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.047161
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    349.03 (m_nu =  0.064 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.38
+r_s(zstar)/Mpc       =  145.33
+100*theta            =  1.047365
+zdrag                =  1059.28
+r_s(zdrag)/Mpc       =  148.11
+k_D(zstar) Mpc       =  0.1400
+100*theta_D          =  0.161760
+z_EQ (if v_nu=1)     =  3472.69
+100*theta_EQ         =  0.804847
+tau_recomb/Mpc       =  282.05  tau_now/Mpc =  14158.0
+tau_recomb/Mpc       =  282.09  tau_now/Mpc =  14158.0
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8400466    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.036609
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    473.69 (m_nu =  0.081 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.52
+r_s(zstar)/Mpc       =  143.82
+100*theta            =  1.036726
+zdrag                =  1059.40
+r_s(zdrag)/Mpc       =  146.58
+k_D(zstar) Mpc       =  0.1406
+100*theta_D          =  0.161113
+z_EQ (if v_nu=1)     =  3333.50
+100*theta_EQ         =  0.821675
+tau_recomb/Mpc       =  279.26  tau_now/Mpc =  14151.6
+tau_recomb/Mpc       =  279.22  tau_now/Mpc =  14151.6
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8200819    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.031445
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    452.16 (m_nu =  0.078 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.58
+r_s(zstar)/Mpc       =  143.09
+100*theta            =  1.031521
+zdrag                =  1059.44
+r_s(zdrag)/Mpc       =  145.84
+k_D(zstar) Mpc       =  0.1409
+100*theta_D          =  0.160790
+z_EQ (if v_nu=1)     =  3268.00
+100*theta_EQ         =  0.829935
+tau_recomb/Mpc       =  277.89  tau_now/Mpc =  14149.1
+tau_recomb/Mpc       =  277.80  tau_now/Mpc =  14149.1
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8109146    
+Reion redshift       =  12.181
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.019861
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.686814
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.313186
+100 theta (CosmoMC)  =  1.047244
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.873
+zstar                =  1093.65
+r_s(zstar)/Mpc       =  146.25
+100*theta            =  1.047600
+zdrag                =  1054.02
+r_s(zdrag)/Mpc       =  149.87
+k_D(zstar) Mpc       =  0.1357
+100*theta_D          =  0.165856
+z_EQ (if v_nu=1)     =  3348.93
+100*theta_EQ         =  0.821003
+tau_recomb/Mpc       =  281.30  tau_now/Mpc =  14241.5
+tau_recomb/Mpc       =  281.19  tau_now/Mpc =  14241.5
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8444396    
+Reion redshift       =  11.754
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.020965
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.684364
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.315636
+100 theta (CosmoMC)  =  1.044574
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.843
+zstar                =  1091.97
+r_s(zstar)/Mpc       =  145.41
+100*theta            =  1.044834
+zdrag                =  1056.73
+r_s(zdrag)/Mpc       =  148.59
+k_D(zstar) Mpc       =  0.1380
+100*theta_D          =  0.163548
+z_EQ (if v_nu=1)     =  3375.30
+100*theta_EQ         =  0.817144
+tau_recomb/Mpc       =  280.97  tau_now/Mpc =  14197.6
+tau_recomb/Mpc       =  280.78  tau_now/Mpc =  14197.6
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8369210    
+Reion redshift       =  11.009
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.023171
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.679464
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.320536
+100 theta (CosmoMC)  =  1.039130
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.783
+zstar                =  1089.07
+r_s(zstar)/Mpc       =  143.73
+100*theta            =  1.039188
+zdrag                =  1061.88
+r_s(zdrag)/Mpc       =  146.12
+k_D(zstar) Mpc       =  0.1424
+100*theta_D          =  0.159504
+z_EQ (if v_nu=1)     =  3428.05
+100*theta_EQ         =  0.809570
+tau_recomb/Mpc       =  280.32  tau_now/Mpc =  14111.2
+tau_recomb/Mpc       =  280.24  tau_now/Mpc =  14111.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8222991    
+Reion redshift       =  10.680
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.024275
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.677014
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.322986
+100 theta (CosmoMC)  =  1.036379
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.754
+zstar                =  1087.80
+r_s(zstar)/Mpc       =  142.90
+100*theta            =  1.036335
+zdrag                =  1064.28
+r_s(zdrag)/Mpc       =  144.94
+k_D(zstar) Mpc       =  0.1444
+100*theta_D          =  0.157728
+z_EQ (if v_nu=1)     =  3454.42
+100*theta_EQ         =  0.805853
+tau_recomb/Mpc       =  280.01  tau_now/Mpc =  14068.7
+tau_recomb/Mpc       =  279.83  tau_now/Mpc =  14068.7
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8151891    
+Reion redshift       =  11.034
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.108261
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.708623
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.291377
+100 theta (CosmoMC)  =  1.028568
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  14.156
+zstar                =  1089.36
+r_s(zstar)/Mpc       =  147.80
+100*theta            =  1.028747
+zdrag                =  1058.44
+r_s(zdrag)/Mpc       =  150.64
+k_D(zstar) Mpc       =  0.1369
+100*theta_D          =  0.159782
+z_EQ (if v_nu=1)     =  3114.15
+100*theta_EQ         =  0.857928
+tau_recomb/Mpc       =  286.97  tau_now/Mpc =  14653.4
+tau_recomb/Mpc       =  287.12  tau_now/Mpc =  14653.4
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.7744637    
+Reion redshift       =  11.201
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.114276
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.695269
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.304731
+100 theta (CosmoMC)  =  1.035411
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.980
+zstar                =  1089.91
+r_s(zstar)/Mpc       =  146.15
+100*theta            =  1.035580
+zdrag                =  1058.90
+r_s(zdrag)/Mpc       =  148.96
+k_D(zstar) Mpc       =  0.1386
+100*theta_D          =  0.160631
+z_EQ (if v_nu=1)     =  3257.91
+100*theta_EQ         =  0.834820
+tau_recomb/Mpc       =  283.82  tau_now/Mpc =  14396.5
+tau_recomb/Mpc       =  283.64  tau_now/Mpc =  14396.5
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8025542    
+Reion redshift       =  11.525
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.126304
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.668560
+Om_K                 = -0.000000
+Om_m (1-Om_K-Om_L)   =  0.331440
+100 theta (CosmoMC)  =  1.047964
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.653
+zstar                =  1090.97
+r_s(zstar)/Mpc       =  143.04
+100*theta            =  1.048116
+zdrag                =  1059.78
+r_s(zdrag)/Mpc       =  145.77
+k_D(zstar) Mpc       =  0.1419
+100*theta_D          =  0.162206
+z_EQ (if v_nu=1)     =  3545.43
+100*theta_EQ         =  0.793292
+tau_recomb/Mpc       =  277.68  tau_now/Mpc =  13925.1
+tau_recomb/Mpc       =  277.54  tau_now/Mpc =  13925.1
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8554817    
+Reion redshift       =  11.681
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.132319
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.655205
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.344795
+100 theta (CosmoMC)  =  1.053739
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.501
+zstar                =  1091.49
+r_s(zstar)/Mpc       =  141.57
+100*theta            =  1.053881
+zdrag                =  1060.20
+r_s(zdrag)/Mpc       =  144.27
+k_D(zstar) Mpc       =  0.1435
+100*theta_D          =  0.162937
+z_EQ (if v_nu=1)     =  3689.19
+100*theta_EQ         =  0.774543
+tau_recomb/Mpc       =  274.65  tau_now/Mpc =  13708.0
+tau_recomb/Mpc       =  274.61  tau_now/Mpc =  13708.0
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8804222    
+Reion redshift       =  11.363
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000810
+Om_Lambda            =  0.682114
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.317886
+100 theta (CosmoMC)  =  1.041638
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    447.64 (m_nu =  0.075 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.815
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.041794
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.34
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161405
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813143
+tau_recomb/Mpc       =  280.71  tau_now/Mpc =  14157.5
+tau_recomb/Mpc       =  280.69  tau_now/Mpc =  14157.5
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8313996    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000855
+Om_Lambda            =  0.682014
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.317986
+100 theta (CosmoMC)  =  1.041752
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    472.50 (m_nu =  0.080 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.814
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.041909
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.34
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161421
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813238
+tau_recomb/Mpc       =  280.67  tau_now/Mpc =  14155.9
+tau_recomb/Mpc       =  280.67  tau_now/Mpc =  14155.9
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8304707    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000945
+Om_Lambda            =  0.681814
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318186
+100 theta (CosmoMC)  =  1.041979
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    522.24 (m_nu =  0.088 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.812
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042139
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161454
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813430
+tau_recomb/Mpc       =  280.61  tau_now/Mpc =  14152.5
+tau_recomb/Mpc       =  280.62  tau_now/Mpc =  14152.5
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8286152    
+Reion redshift       =  11.369
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000990
+Om_Lambda            =  0.681714
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318286
+100 theta (CosmoMC)  =  1.042092
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    547.11 (m_nu =  0.092 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.811
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042255
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161471
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813526
+tau_recomb/Mpc       =  280.57  tau_now/Mpc =  14150.9
+tau_recomb/Mpc       =  280.59  tau_now/Mpc =  14150.9
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8276891    
+Reion redshift       =  10.548
+Integrated opt depth =  0.0832
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0832
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295425    
+Reion redshift       =  10.960
+Integrated opt depth =  0.0879
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0879
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295425    
+Reion redshift       =  11.766
+Integrated opt depth =  0.0971
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0971
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295425    
+Reion redshift       =  12.157
+Integrated opt depth =  0.1017
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.1017
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8295425    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.7869731    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8085380    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8500282    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8700315    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8008983    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2
+ at z =   0.0000000E+00  sigma8 (all matter)=  0.8148983    
+Reion redshift       =  11.366
+Integrated opt depth =  0.0925
+Om_b h^2             =  0.022068
+Om_c h^2             =  0.120290
+Om_nu h^2            =  0.000900
+Om_Lambda            =  0.681914
+Om_K                 =  0.000000
+Om_m (1-Om_K-Om_L)   =  0.318086
+100 theta (CosmoMC)  =  1.041865
+ 1.0000 nu, m_nu*c^2/k_B/T_nu0   =    497.37 (m_nu =  0.084 eV)
+Reion opt depth      =  0.0925
+Age of universe/GYr  =  13.813
+zstar                =  1090.45
+r_s(zstar)/Mpc       =  144.57
+100*theta            =  1.042024
+zdrag                =  1059.36
+r_s(zdrag)/Mpc       =  147.33
+k_D(zstar) Mpc       =  0.1403
+100*theta_D          =  0.161437
+z_EQ (if v_nu=1)     =  3401.67
+100*theta_EQ         =  0.813334
+tau_recomb/Mpc       =  280.64  tau_now/Mpc =  14154.2

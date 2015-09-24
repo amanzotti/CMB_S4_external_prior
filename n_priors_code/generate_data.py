@@ -36,9 +36,9 @@ import collections
 import os
 import warnings
 
-output_folder = 'varying_w'
+output_folder = 'varying+Yp'
 output_folder_2 = 'run1'
-camb_location = '/home/manzotti/local/camb/camb'
+camb_location = '/home/manzotti/local/camb2013/camb'
 
 config = configparser.ConfigParser()
 configfile = './fiducial.ini'
@@ -63,7 +63,6 @@ omch2 = config.getfloat('camb', 'omch2')
 # ================================================
 # get fiducial values to figure out where to compute next
 
-
 # ================================================
 #  FIDUCIALS
 # ================================================
@@ -71,6 +70,7 @@ omch2 = config.getfloat('camb', 'omch2')
 fid = {}
 fid['hubble'] = config.getfloat('camb', 'hubble') / 100.
 fid['scalar_spectral_index(1)'] = config.getfloat('camb', 'scalar_spectral_index(1)')
+fid['helium_fraction'] = config.getfloat('camb', 'helium_fraction')
 fid['scalar_amp(1)'] = 10 ** 9 * config.getfloat('camb', 'scalar_amp(1)')
 fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos') + 1.
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
@@ -94,15 +94,16 @@ with open("./data/{}/{}/fid_values.p".format(output_folder, output_folder_2), "w
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble'] * 0.035
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.035
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.035
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.035
-pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.035
-pargaps_dict['ombh2'] = fid['ombh2'] * 0.035
-pargaps_dict['omch2'] = fid['omch2'] * 0.035
-pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.035
-pargaps_dict['w'] = fid['w'] * 0.035
+pargaps_dict['hubble'] = fid['hubble'] * 0.05
+pargaps_dict['helium_fraction'] = fid['helium_fraction'] * 0.05
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.05
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.05
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.05
+pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.05
+pargaps_dict['ombh2'] = fid['ombh2'] * 0.05
+pargaps_dict['omch2'] = fid['omch2'] * 0.05
+pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.05
+pargaps_dict['w'] = fid['w'] * 0.05
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
@@ -118,6 +119,7 @@ with open("./data/{}/{}/par_gaps.p".format(output_folder, output_folder_2), "wb"
 # generate values to compute Cls
 values = {}
 values['hubble'] = pargaps_dict['hubble'] * np.array([-2, -1, 1, 2]) + fid['hubble']
+values['helium_fraction'] = pargaps_dict['helium_fraction'] * np.array([-2, -1, 1, 2]) + fid['helium_fraction']
 values['scalar_spectral_index(1)'] = pargaps_dict['scalar_spectral_index(1)'] * \
     np.array([-2, -1, 1, 2]) + fid['scalar_spectral_index(1)']
 values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_amp(1)']

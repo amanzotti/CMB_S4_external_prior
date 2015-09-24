@@ -183,11 +183,11 @@ def C(iell, ell, parbin, data):
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
 lmin = 4
-N_det = 10 ** 6
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_lambda/run2'
-output_folder = 'varying_lambda/run2/output'
-fsky = 0.75
+N_det = 10 ** 5
+N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
+data_folder = 'varying+Yp/run1'
+output_folder = 'varying+Yp/run1/output'
+fsky = 0.5
 lensed = False
 exclude = None
 # =============================
@@ -290,7 +290,6 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             trace = np.sum (np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
-            print ell, fisher[1,1]
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
 
@@ -301,9 +300,9 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 print 'lmax =', ell
 # print fisher_inv
 
-np.savetxt('data/{}/no_marginalized_ell_joint.txt'.format(output_folder),
+np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_joint.txt'.format(output_folder),
+np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
 
 
@@ -316,11 +315,11 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-utils.save_cov_matrix(fisher_inv,'data/{}/param_cov.txt'.format(output_folder))
+utils.save_cov_matrix(fisher_inv,'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky))
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_joint.txt'.format(output_folder), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}.txt'.format(output_folder,lmin,lmax), fisher_single, header=header)
+np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky), np.sqrt(fisher_inv), header=header)
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky), fisher_single, header=header)
 
 print 'fisher=' , fisher
 
