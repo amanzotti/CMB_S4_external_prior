@@ -181,14 +181,15 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 4499
-lmin = 4
-N_det = 10 ** 5
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
-data_folder = 'varying+Yp/run1'
-output_folder = 'varying+Yp/run1/output'
-fsky = 0.5
+lmax = 3000
+lmin = 50
+N_det = 10 ** 4
+N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
+data_folder = 'varying_all/run4'
+output_folder = 'varying_all/run4/output'
+fsky = 0.75
 lensed = False
+# exclude = ['w','helium_fraction','wa','scalar_nrun(1)','massless_neutrinos','omk'] #None
 exclude = None
 # =============================
 # DERIVED
@@ -229,6 +230,8 @@ dats[ltmax_index:, 1, 1:] = 0.
 
 # creating the n_values by n_values matrix
 fisher = np.zeros((n_values, n_values))
+fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0]) ))
+
 fisher_inv = np.zeros((n_values, n_values))
 
 no_marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
@@ -254,7 +257,6 @@ for i in range(0, n_values):
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
     #  filling it the matrix l goes from l_min =2 to l_max =5000
-
 
     # c0 = np.zeros((3, 3))
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
@@ -292,6 +294,9 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
+            fisher_save[i,j,iell] = (2. * ell + 1.) / 2. * fsky * trace
+            # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
+
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
@@ -304,7 +309,11 @@ np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.tx
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
 np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
+np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder,lmin,lmax,N_det,fsky),
+           fisher_save)
 
+np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
+           dats[lmin_index:lmax_index, 0, 0], header=header)
 
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 

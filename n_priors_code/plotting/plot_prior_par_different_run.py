@@ -1,10 +1,6 @@
 '''
-This plotting script is used to plot the effect of external priors on all the parameters involved.
 
-To put all the parameters in the same plot the prior is defined as the improvement from the CMB S4 results we get.
-
-the same is true for the improvement on the y axis parameters
-
+Here you can use different run say teh prior from tau as a fucntion of l_min
 
 
 '''

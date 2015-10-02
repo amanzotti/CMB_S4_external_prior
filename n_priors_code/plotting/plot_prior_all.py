@@ -35,21 +35,21 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 
-no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction']
-plot_now = ['helium_fraction','massless_neutrinos']
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
+plot_now = ['omnuh2','massless_neutrinos','w']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
 # READ DATA
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
-data_type = 'varying+Yp'
-run_idx = 1
-lmax = 4499
-lmin = 4
-N_det = 10 ** 5
+data_type = 'varying_all'
+run_idx = 4
+lmax = 3000
+lmin = 50
+N_det = 10 ** 4
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
-fsky = 0.5
+fsky = 0.75
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -179,6 +179,8 @@ label['ombch2'] = '\Omega_{m}h^{2}'
 label['omch2'] = '\Omega_{c}h^{2}'
 label['helium_fraction'] = 'Y_{p}'
 label['w'] = 'w'
+label['scalar_nrun(1)'] = r'\alpha_{s}'
+
 fisher_inv = np.linalg.inv(fisher_mat)
 fisher_inplace = fisher_mat.copy()
 

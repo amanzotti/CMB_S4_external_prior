@@ -47,7 +47,7 @@ from scipy.integrate import quad
 
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['w']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -57,7 +57,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
 run_idx = 2
 lmax = 4499
-lmin = 4
+lmin = 50
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -73,31 +73,31 @@ print fid
 my_fisher_inv = np.linalg.inv(fisher_mat)
 
 
-# \===========================
-def integrand(z, w, H_0):
-    omega_m = fid['omch2'] / fid['hubble'] ** 2
-    return 1 / (H_0 * np.sqrt(omega_m * (1. + z) ** 3 + (1 - omega_m) * (1. + z) ** (3 * (1 + w))))
+# # \===========================
+# def integrand(z, w, H_0):
+#     omega_m = fid['omch2'] / fid['hubble'] ** 2
+#     return 1 / (H_0 * np.sqrt(omega_m * (1. + z) ** 3 + (1 - omega_m) * (1. + z) ** (3 * (1 + w))))
 
-H_0 = fid['hubble']
-w = fid['w']
-R = quad(integrand, 0, 1100, args=(w, H_0),epsrel=1.49e-09)[0]
-# Utilities to produce a constat DLSS curve
+# H_0 = fid['hubble']
+# w = fid['w']
+# R = quad(integrand, 0, 1100, args=(w, H_0),epsrel=1.49e-09)[0]
+# # Utilities to produce a constat DLSS curve
 
-H_array = np.linspace(H_0 - H_0 * 0.1, H_0 + H_0 * 0.1, 20)
-w_array = np.zeros_like(H_array)
-for i, h0 in enumerate(H_array):
-    func = lambda w: R - quad(integrand, 0, 1100, args=(w, h0), epsrel=1.49e-09)[0]
-    w_array[i] = w_sol = fsolve(func, -1.)
+# H_array = np.linspace(H_0 - H_0 * 0.1, H_0 + H_0 * 0.1, 20)
+# w_array = np.zeros_like(H_array)
+# for i, h0 in enumerate(H_array):
+#     func = lambda w: R - quad(integrand, 0, 1100, args=(w, h0), epsrel=1.49e-09)[0]
+#     w_array[i] = w_sol = fsolve(func, -1.)
 
-index = {}
+# index = {}
 
-index['hubble'] = 3
-index['scalar_spectral_index(1)'] = 1
-index['scalar_amp(1)'] = 0
-index['re_optical_depth'] = 2
-index['ombh2'] = 4
-index['ombch2'] = 5
-index['mnu'] = 6
+# index['hubble'] = 3
+# index['scalar_spectral_index(1)'] = 1
+# index['scalar_amp(1)'] = 0
+# index['re_optical_depth'] = 2
+# index['ombh2'] = 4
+# index['ombch2'] = 5
+# index['mnu'] = 6
 
 
 # ============================================
@@ -211,7 +211,7 @@ label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
 
 # parameters =['mnu','ombch2']
-parameters = ['w', 'hubble']
+parameters = ['omnuh2', 're_optical_depth']
 
 fg = plt.figure(figsize=(10, 10))
 ax1 = plt.subplot2grid((1, 1), (0, 0))
@@ -267,6 +267,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('ellipse_w_hubble.pdf', dpi=400, papertype='Letter',
+plt.savefig('ellipse_tau_Omnu2.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 plt.close()

@@ -27,9 +27,10 @@ from itertools import cycle
 from matplotlib.ticker import MaxNLocator  # needed for tick
 import n_priors_code.utils as utils
 
+plot_type ='lmax'
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction']
-plot_now = ['helium_fraction', 'massless_neutrinos']
+plot_now = ['scalar_spectral_index(1)','omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -38,11 +39,11 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying+Yp'
 run_idx = 1
-lmax = 4499
-lmin = 4
-N_det = 10 ** 5
+lmax = 3000
+lmin = 50
+N_det = 10 ** 6
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
-fsky = 0.5
+fsky = 0.75
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -57,6 +58,7 @@ sigma1 = np.loadtxt(base_dir + 'data/{}/run{}/output/marginalized_ell_joint_lmin
     data_type, str(run_idx), lmin, lmax, N_det, fsky))
 sigma_no = np.loadtxt(base_dir + 'data/{}/run{}/output/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(
     data_type, str(run_idx), lmin, lmax, N_det, fsky))
+full_fisher = np.load(base_dir+ 'data/{}/run{}/output/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(data_type, str(run_idx),lmin,lmax,N_det,fsky))
 
 # ============================================
 # ============================================
@@ -171,6 +173,17 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # next(linecycler), linewidth=1, color='r',label=r'$C^{T}$')
 
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
+key = 'scalar_spectral_index(1)'
+
+
+if plot_type=='lmin':
+    sigma_test = [ np.nan_to_num(np.sqrt((np.diag(np.linalg.inv(np.sum(full_fisher[:,:,i:], axis =2)))[fid.keys().index(key)]))) for i,j in enumerate(sigma1[:, 0])]
+
+elif plot_type=='lmax':
+    sigma_test = [ np.nan_to_num(np.sqrt((np.diag(np.linalg.inv(np.sum(full_fisher[:,:,:i], axis =2)))[fid.keys().index(key)]))) for i,j in enumerate(sigma1[:, 0])]
+else:
+    sys.exit('plot type wrong')
+
 
 label = {}
 
@@ -187,11 +200,13 @@ label['omch2'] = '\Omega_{c}h^{2}'
 label['helium_fraction'] = 'Y_{p}'
 label['w'] = 'w'
 
-key = 're_optical_depth'
-plot_type = plt.loglog
-plot2 = plot_type(sigma1[:, 0], sigma1[:, fid.keys().index(key) + 1], linewidth=1, label='Degeneracies')
-plot2 = plot_type(sigma_no[:, 0], sigma_no[:, fid.keys().index(key) + 1],
-                  linewidth=1, label='Perfect priors')
+plot = plt.plot
+# plot2 = plot_type(sigma1[:, 0], sigma1[:, fid.keys().index(key) + 1], linewidth=1, label='Degeneracies')
+plot2 = plot(sigma1[:80, 0], sigma_test[:80], linewidth=1)
+
+
+# plot2 = plot_type(sigma_no[:, 0], sigma_no[:, fid.keys().index(key) + 1],
+#                   linewidth=1, label='Perfect priors')
 
 # plot2=plt.axvline(0.01,linewidth=1, ls= '--')
 
@@ -202,7 +217,11 @@ ax1.legend(loc=0)
 # ============================================
 # FINALLY SAVE
 ax1.set_ylabel(r'$ \sigma(' + label[key]+ ')$')
-ax1.set_xlabel(r'$\ell_{\mathrm{max}}$')
+
+if plot_type =='lmax': ax1.set_xlabel(r'$\ell_{\mathrm{max}}$')
+
+if plot_type =='lmin': ax1.set_xlabel(r'$\ell_{\mathrm{min}}$')
+
 # ax1.set_xlim((0, 2000))
 # ax1.set_ylim((10 ** -9, 10 ** -3))
 ax1.minorticks_on()

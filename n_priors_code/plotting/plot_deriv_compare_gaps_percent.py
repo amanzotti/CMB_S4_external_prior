@@ -41,31 +41,51 @@ def bin_data(x,y,bins):
     bin_val = numpy.histogram(x, bins, weights=y)[0]/numpy.histogram(x, bins)[0]
     return centers,bin_val
 
-run_idx = 3
-lensed=True
-
-# # READ PARAMS
-dats = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
-# load fiducial parameters used
-fid = pickle.load(open('../data/run{}/fid_values.p'.format(run_idx), "rb"))
-print "fid ", fid# load parameter grid dictionary. The format is a pickle
-values = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
-par_gaps = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
-dats = utils.load_data(run_idx,values, lensed)
 
 
 
-run_idx = 4
+data_type ='varying+Yp'
+run_idx = 1
 
 
 # READ PARAMS
-dats2 = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
+dats = np.genfromtxt('../data/{}/run{}/fiducial_lenspotentialcls.dat'.format(data_type,run_idx))
 # load fiducial parameters used
-fid2 = pickle.load(open('../data/run{}/fid_values.p'.format(run_idx), "rb"))
-print "fid ", fid2# load parameter grid dictionary. The format is a pickle
-values2 = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
-par_gaps2 = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
-dats2 = utils.load_data(run_idx,values2, lensed)
+fid = pickle.load(open('../data/{}/run{}/fid_values.p'.format(data_type,run_idx), "rb"))
+print "fid ", fid# load parameter grid dictionary. The format is a pickle
+values = pickle.load(open('../data/{}/run{}/grid_values.p'.format(data_type,run_idx), "rb"))
+par_gaps = pickle.load(open('../data/{}/run{}/par_gaps.p'.format(data_type,run_idx), "rb"))
+
+for key, value in values.iteritems():
+    for i in np.arange(0, 4):
+        print key, values[key][i]
+        filename = '../data/{}/run{}/'.format(data_type,run_idx)
+        filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
+        newdat = np.genfromtxt(filename)
+        dats = np.dstack((dats, newdat))
+
+data_type ='varying+Yp'
+run_idx = 2
+
+
+# READ PARAMS
+dats2 = np.genfromtxt('../data/{}/run{}/fiducial_lenspotentialcls.dat'.format(data_type,run_idx))
+# load fiducial parameters used
+fid2 = pickle.load(open('../data/{}/run{}/fid_values.p'.format(data_type,run_idx), "rb"))
+print "fid ", fid# load parameter grid dictionary. The format is a pickle
+values2 = pickle.load(open('../data/{}/run{}/grid_values.p'.format(data_type,run_idx), "rb"))
+par_gaps2 = pickle.load(open('../data/{}/run{}/par_gaps.p'.format(data_type,run_idx), "rb"))
+
+for key, value in values2.iteritems():
+    for i in np.arange(0, 4):
+        print key, values2[key][i]
+        filename = '../data/{}/run{}/'.format(data_type,run_idx)
+        filename += key + '_{:.13f}'.format(values2[key][i]) + '_lenspotentialcls.dat'
+        newdat = np.genfromtxt(filename)
+        dats2 = np.dstack((dats2, newdat))
+
+
+
 
 # ============================================
 # ============================================
@@ -172,18 +192,21 @@ plt.rcParams['axes.linewidth'] = 1.0
 
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
 
+
 label = {}
 
 label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
+label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = r'\Omega_{\nu}'
-label['re_optical_depth'] = r'~\tau'
-label['ombh2'] = '\Omega_{b}'
-label['omch2'] = '\Omega_{c}'
+label['omnuh2'] = r'\Omega_{\nu}h^{2}'
+label['re_optical_depth'] = r'\tau'
+label['ombh2'] = '\Omega_{b}h^{2}'
+label['ombch2'] = '\Omega_{m}h^{2}'
+label['omch2'] = '\Omega_{c}h^{2}'
+label['helium_fraction'] = 'Y_{p}'
 label['w'] = 'w'
-
 
 
 # fg = plt.figure(figsize=fig_dims)
@@ -213,7 +236,7 @@ for i, key in enumerate(par_gaps.keys()):
 
     legend = ax1.legend()
     ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_T_compare_gaps_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+    plt.savefig('../data/{}/run{}/output/test_der_T_compare_gaps_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
 
@@ -242,7 +265,7 @@ for i, key in enumerate(par_gaps.keys()):
 
     legend = ax1.legend()
     ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_E_compare_gaps_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+    plt.savefig('../data/{}/run{}/output/test_der_E_compare_gaps_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
 
@@ -273,7 +296,7 @@ for i, key in enumerate(par_gaps.keys()):
     ax1.set_ylim(0,2.)
     legend = ax1.legend()
     ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_phi_compare_gaps_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+    plt.savefig('../data/{}/run{}/output/test_der_phi_compare_gaps_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
 
@@ -294,7 +317,7 @@ for i, key in enumerate(par_gaps.keys()):
     legend = ax1.legend()
     ax1.legend(loc=0)
 
-    plt.savefig('../../images/test_der_phiT_compare_gaps_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+    plt.savefig('../data/{}/run{}/output/test_der_phiT_compare_gaps_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
 
@@ -318,7 +341,7 @@ for i, key in enumerate(par_gaps.keys()):
     ax1.set_ylim(0,2.)
     legend = ax1.legend()
     ax1.legend(loc=0)
-    plt.savefig('../../images/test_der_TE_compare_gaps_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+    plt.savefig('../data/{}/run{}/output/test_der_TE_compare_gaps_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     plt.close()
 # ============================================

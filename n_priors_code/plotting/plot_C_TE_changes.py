@@ -26,21 +26,22 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 # READ DATA
 
 
-run_idx = 3
+data_type ='varying+Yp'
+run_idx = 1
 
 
 # READ PARAMS
-dats = np.genfromtxt('../data/run{}/fiducial_lenspotentialcls.dat'.format(run_idx))
+dats = np.genfromtxt('../data/{}/run{}/fiducial_lenspotentialcls.dat'.format(data_type,run_idx))
 # load fiducial parameters used
-fid = pickle.load(open('../data/run{}/fid_values.p'.format(run_idx), "rb"))
+fid = pickle.load(open('../data/{}/run{}/fid_values.p'.format(data_type,run_idx), "rb"))
 print "fid ", fid# load parameter grid dictionary. The format is a pickle
-values = pickle.load(open('../data/run{}/grid_values.p'.format(run_idx), "rb"))
-par_gaps = pickle.load(open('../data/run{}/par_gaps.p'.format(run_idx), "rb"))
+values = pickle.load(open('../data/{}/run{}/grid_values.p'.format(data_type,run_idx), "rb"))
+par_gaps = pickle.load(open('../data/{}/run{}/par_gaps.p'.format(data_type,run_idx), "rb"))
 
 for key, value in values.iteritems():
     for i in np.arange(0, 4):
         print key, values[key][i]
-        filename = '../data/run{}/'.format(run_idx)
+        filename = '../data/{}/run{}/'.format(data_type,run_idx)
         filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
         newdat = np.genfromtxt(filename)
         dats = np.dstack((dats, newdat))
@@ -164,14 +165,17 @@ label = {}
 
 label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
+label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = '\Omega_{nu}'
-label['ombh2'] = '\Omega_{b}'
-label['omch2'] = '\Omega_{c}'
+label['omnuh2'] = r'\Omega_{\nu}h^{2}'
+label['re_optical_depth'] = r'\tau'
+label['ombh2'] = '\Omega_{b}h^{2}'
+label['ombch2'] = '\Omega_{m}h^{2}'
+label['omch2'] = '\Omega_{c}h^{2}'
+label['helium_fraction'] = 'Y_{p}'
 label['w'] = 'w'
 
-label['re_optical_depth'] = '\tau'
 
 
 for i, key in enumerate(par_gaps.keys()):
@@ -193,7 +197,8 @@ for i, key in enumerate(par_gaps.keys()):
     ax1.set_xlabel(r'$\ell$')
     legend = ax1.legend()
     ax1.legend(loc=0)
-    plt.savefig('../../images/CL_TE_{}.pdf'.format(str(key)), dpi=400, papertype='Letter',
+
+    plt.savefig('../data/{}/run{}/output/CL_TE_{}.pdf'.format(data_type,run_idx,str(key)), dpi=400, papertype='Letter',
                 format='pdf', transparent=True)
     ax1.minorticks_on()
     # ============================================
