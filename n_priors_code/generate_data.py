@@ -36,9 +36,9 @@ import collections
 import os
 import warnings
 
-output_folder = 'varying_w'
-output_folder_2 = 'run1'
-camb_location = '/home/manzotti/local/camb/camb'
+output_folder = 'varying_all'
+output_folder_2 = 'run4'
+camb_location = '/home/manzotti/local/camb2013/camb'
 
 config = configparser.ConfigParser()
 configfile = './fiducial.ini'
@@ -63,7 +63,6 @@ omch2 = config.getfloat('camb', 'omch2')
 # ================================================
 # get fiducial values to figure out where to compute next
 
-
 # ================================================
 #  FIDUCIALS
 # ================================================
@@ -71,16 +70,18 @@ omch2 = config.getfloat('camb', 'omch2')
 fid = {}
 fid['hubble'] = config.getfloat('camb', 'hubble') / 100.
 fid['scalar_spectral_index(1)'] = config.getfloat('camb', 'scalar_spectral_index(1)')
+fid['helium_fraction'] = config.getfloat('camb', 'helium_fraction')
 fid['scalar_amp(1)'] = 10 ** 9 * config.getfloat('camb', 'scalar_amp(1)')
-fid['massless_neutrinos'] =  config.getfloat('camb', 'massless_neutrinos') + 1.
+fid['massless_neutrinos'] = config.getfloat('camb', 'massless_neutrinos') + 1.
 fid['re_optical_depth'] = config.getfloat('camb', 're_optical_depth')
-fid['w'] = config.getfloat('camb', 'w') #DE W parameters
+fid['w'] = config.getfloat('camb', 'w')  # DE W parameters
+fid['wa'] = config.getfloat('camb', 'wa')  # DE W parameters
 fid['ombh2'] = config.getfloat('camb', 'ombh2')
 fid['omch2'] = config.getfloat('camb', 'omch2')
+fid['omk'] = config.getfloat('camb', 'omk')
+fid['scalar_nrun(1)'] = config.getfloat('camb', 'scalar_nrun(1)')
 fid['omnuh2'] = config.getfloat('camb', 'omnuh2')
 fid = collections.OrderedDict(sorted(fid.items(), key=lambda t: t[0]))
-
-
 
 
 print fid
@@ -94,15 +95,21 @@ with open("./data/{}/{}/fid_values.p".format(output_folder, output_folder_2), "w
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble'] * 0.035
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.035
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.035
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.035
-pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.035
-pargaps_dict['ombh2'] = fid['ombh2'] * 0.035
-pargaps_dict['omch2'] = fid['omch2'] * 0.035
-pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.035
-pargaps_dict['w'] = fid['w'] * 0.035
+pargaps_dict['hubble'] = fid['hubble'] * 0.05
+pargaps_dict['helium_fraction'] = fid['helium_fraction'] * 0.05
+# for the value with fiducial = 0 we can not take a percentage. So fraction of 1509.07471 Table III
+pargaps_dict['omk'] = 0.02
+pargaps_dict['scalar_nrun(1)'] = 5e-2  # for the value with fiducial = 0 we can not take a percentage
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.04
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.05
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.16
+pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.15
+pargaps_dict['ombh2'] = fid['ombh2'] * 0.05
+pargaps_dict['omch2'] = fid['omch2'] * 0.05
+pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.05
+pargaps_dict['w'] = fid['w'] * 0.15
+# for the value with fiducial = 0 we can not take a percentage. So fraction of 1509.07471 Table III
+pargaps_dict['wa'] = 0.6 * 1.1
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
@@ -118,6 +125,7 @@ with open("./data/{}/{}/par_gaps.p".format(output_folder, output_folder_2), "wb"
 # generate values to compute Cls
 values = {}
 values['hubble'] = pargaps_dict['hubble'] * np.array([-2, -1, 1, 2]) + fid['hubble']
+values['helium_fraction'] = pargaps_dict['helium_fraction'] * np.array([-2, -1, 1, 2]) + fid['helium_fraction']
 values['scalar_spectral_index(1)'] = pargaps_dict['scalar_spectral_index(1)'] * \
     np.array([-2, -1, 1, 2]) + fid['scalar_spectral_index(1)']
 values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_amp(1)']
@@ -125,8 +133,12 @@ values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2
 values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * np.array([-2, -1, 1, 2]) + fid['re_optical_depth']
 values['omnuh2'] = pargaps_dict['omnuh2'] * np.array([-2, -1, 1, 2]) + fid['omnuh2']
 values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
+values['wa'] = pargaps_dict['wa'] * np.array([-2, -1, 1, 2]) + fid['wa']
 values['ombh2'] = pargaps_dict['ombh2'] * np.array([-2, -1, 1, 2]) + fid['ombh2']
 values['omch2'] = pargaps_dict['omch2'] * np.array([-2, -1, 1, 2]) + fid['omch2']
+values['omk'] = pargaps_dict['omk'] * np.array([-2, -1, 1, 2]) + fid['omk']
+values['scalar_nrun(1)'] = pargaps_dict['scalar_nrun(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_nrun(1)']
+
 
 values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
 # save a pickle of data values to be re-used
@@ -160,13 +172,19 @@ for key, value in values.iteritems():
         # if key == 'scalar_amp(1)':
         #     continue
 
-
+        if (key == 'massless_neutrinos'):
+            config.set('camb', key, str(values[key][i]))
+            # from eq (14) of http://arxiv.org/pdf/1402.4108v1.pdf
+            S = np.sqrt(1. + 7. * (key - 3.046) / 43.)
+            eta10 = 273.9 * fid['ombh2']
+            Y_p = 0.2486 + 0.0016 * ((eta10 - 6.) + 100. * (S - 1.))
+            config.set('camb', 'helium_fraction', str(Y_p))
 
         if (key == 'hubble'):
             config.set('camb', key, str(100. * values[key][i]))
 
         elif (key == 'massless_neutrinos'):
-            config.set('camb', key, str( values[key][i] - 1. ))
+            config.set('camb', key, str(values[key][i] - 1.))
 
         elif (key == 'scalar_amp(1)'):
             config.set('camb', key, str(values[key][i] * 10 ** (-9)))
@@ -182,7 +200,7 @@ for key, value in values.iteritems():
             key + '_{:.13f}'.format(values[key][i]) + '.ini'
         # if os.path.isfile(path): sys.exit('this inifile already exist, delete if you want to ovwrwrite')
         if os.path.isfile(configfile_temp):
-            print 'folder',configfile_temp
+            print 'folder', configfile_temp
             warnings.warn('THE DATA ALREADY EXIST IN {} I WILL SKIP IT. IF YOU WANT TO REGENERATE IT, DELETE.')
             continue
 
