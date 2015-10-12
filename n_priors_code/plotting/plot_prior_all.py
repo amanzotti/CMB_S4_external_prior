@@ -35,28 +35,31 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 
-no_lcdm_parameters =  ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2']
-excluded_parameters = list(set(no_lcdm_parameters) -set(plot_now))
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
+plot_now = ['omnuh2','massless_neutrinos','w']
+excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
 # READ DATA
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
-data_type = 'varying_lambda'
-run_idx = 2
-lmax = 4499
-lmin = 100
+data_type = 'varying_all'
+run_idx = 4
+lmax = 3000
+lmin = 50
+N_det = 10 ** 4
+# N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
+fsky = 0.75
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
 par_gaps = pickle.load(open(base_dir + 'data/{}/run{}/par_gaps.p'.format(data_type, str(run_idx)), "rb"))
 fisher_mat = np.loadtxt(
-    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}.txt'.format(data_type, str(run_idx), lmin, lmax))
+    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(data_type, str(run_idx), lmin, lmax, N_det, fsky))
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
-plot_param = list(set(fid.keys()) -set(excluded_parameters))
+plot_param = list(set(fid.keys()) - set(excluded_parameters))
 
 # ============================================
 # PLOTTING DEFINITION SKIP TO ~155
@@ -174,7 +177,10 @@ label['re_optical_depth'] = r'\tau'
 label['ombh2'] = '\Omega_{b}h^{2}'
 label['ombch2'] = '\Omega_{m}h^{2}'
 label['omch2'] = '\Omega_{c}h^{2}'
+label['helium_fraction'] = 'Y_{p}'
 label['w'] = 'w'
+label['scalar_nrun(1)'] = r'\alpha_{s}'
+
 fisher_inv = np.linalg.inv(fisher_mat)
 fisher_inplace = fisher_mat.copy()
 
@@ -230,8 +236,8 @@ for y, key_y in enumerate(plot_now):
     ax2.minorticks_on()
     ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100., y2 / np.abs(fid[key_y]) * 100.)
     new_ticks = ax2.get_yticks().tolist()
-    for i,tick in enumerate(ax2.get_yticks().tolist()):
-        new_ticks[i] = str(tick)+ r'$\%$'
+    for i, tick in enumerate(ax2.get_yticks().tolist()):
+        new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
     # ============================================
     # FINALLY SAVE
@@ -239,8 +245,7 @@ for y, key_y in enumerate(plot_now):
     # ============================================
 
     # ============================================
-
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax), dpi=400, papertype='Letter',
+    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='png', bbox_inches='tight')
     plt.clf()
 
