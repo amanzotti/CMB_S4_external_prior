@@ -37,7 +37,7 @@ import os
 import warnings
 
 output_folder = 'varying_all'
-output_folder_2 = 'run4'
+output_folder_2 = 'run2'
 camb_location = '/home/manzotti/local/camb2013/camb'
 
 config = configparser.ConfigParser()
@@ -95,21 +95,21 @@ with open("./data/{}/{}/fid_values.p".format(output_folder, output_folder_2), "w
 # ================================================
 
 pargaps_dict = {}
-pargaps_dict['hubble'] = fid['hubble'] * 0.05
-pargaps_dict['helium_fraction'] = fid['helium_fraction'] * 0.05
+pargaps_dict['hubble'] = fid['hubble'] * 0.02
+pargaps_dict['helium_fraction'] = fid['helium_fraction'] * 0.02
 # for the value with fiducial = 0 we can not take a percentage. So fraction of 1509.07471 Table III
-pargaps_dict['omk'] = 0.02
+pargaps_dict['omk'] = 0.01
 pargaps_dict['scalar_nrun(1)'] = 5e-2  # for the value with fiducial = 0 we can not take a percentage
-pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.04
-pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.05
-pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.16
-pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.15
-pargaps_dict['ombh2'] = fid['ombh2'] * 0.05
-pargaps_dict['omch2'] = fid['omch2'] * 0.05
-pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.05
-pargaps_dict['w'] = fid['w'] * 0.15
+pargaps_dict['scalar_spectral_index(1)'] = fid['scalar_spectral_index(1)'] * 0.02
+pargaps_dict['scalar_amp(1)'] = fid['scalar_amp(1)'] * 0.02
+pargaps_dict['re_optical_depth'] = fid['re_optical_depth'] * 0.03
+pargaps_dict['omnuh2'] = fid['omnuh2'] * 0.04
+pargaps_dict['ombh2'] = fid['ombh2'] * 0.02
+pargaps_dict['omch2'] = fid['omch2'] * 0.02
+pargaps_dict['massless_neutrinos'] = fid['massless_neutrinos'] * 0.02
+pargaps_dict['w'] = fid['w'] * 0.03
 # for the value with fiducial = 0 we can not take a percentage. So fraction of 1509.07471 Table III
-pargaps_dict['wa'] = 0.6 * 1.1
+pargaps_dict['wa'] = 0.1
 
 
 pargaps_dict = collections.OrderedDict(sorted(pargaps_dict.items(), key=lambda t: t[0]))
@@ -123,21 +123,24 @@ with open("./data/{}/{}/par_gaps.p".format(output_folder, output_folder_2), "wb"
 #  values x + dx  x-dx etc we will run CAMB on these
 # ================================================
 # generate values to compute Cls
+# step = np.array([-8,-4,-2, -1, 1, 2,4,8])
+step = np.array([-7,-5,-3,-1, 1,3,5,7])
+
 values = {}
-values['hubble'] = pargaps_dict['hubble'] * np.array([-2, -1, 1, 2]) + fid['hubble']
-values['helium_fraction'] = pargaps_dict['helium_fraction'] * np.array([-2, -1, 1, 2]) + fid['helium_fraction']
+values['hubble'] = pargaps_dict['hubble'] * step + fid['hubble']
+values['helium_fraction'] = pargaps_dict['helium_fraction'] * step + fid['helium_fraction']
 values['scalar_spectral_index(1)'] = pargaps_dict['scalar_spectral_index(1)'] * \
-    np.array([-2, -1, 1, 2]) + fid['scalar_spectral_index(1)']
-values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_amp(1)']
-values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * np.array([-2, -1, 1, 2]) + fid['massless_neutrinos']
-values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * np.array([-2, -1, 1, 2]) + fid['re_optical_depth']
-values['omnuh2'] = pargaps_dict['omnuh2'] * np.array([-2, -1, 1, 2]) + fid['omnuh2']
-values['w'] = pargaps_dict['w'] * np.array([-2, -1, 1, 2]) + fid['w']
-values['wa'] = pargaps_dict['wa'] * np.array([-2, -1, 1, 2]) + fid['wa']
-values['ombh2'] = pargaps_dict['ombh2'] * np.array([-2, -1, 1, 2]) + fid['ombh2']
-values['omch2'] = pargaps_dict['omch2'] * np.array([-2, -1, 1, 2]) + fid['omch2']
-values['omk'] = pargaps_dict['omk'] * np.array([-2, -1, 1, 2]) + fid['omk']
-values['scalar_nrun(1)'] = pargaps_dict['scalar_nrun(1)'] * np.array([-2, -1, 1, 2]) + fid['scalar_nrun(1)']
+    step + fid['scalar_spectral_index(1)']
+values['scalar_amp(1)'] = pargaps_dict['scalar_amp(1)'] * step + fid['scalar_amp(1)']
+values['massless_neutrinos'] = pargaps_dict['massless_neutrinos'] * step + fid['massless_neutrinos']
+values['re_optical_depth'] = pargaps_dict['re_optical_depth'] * step + fid['re_optical_depth']
+values['omnuh2'] = pargaps_dict['omnuh2'] * step + fid['omnuh2']
+values['w'] = pargaps_dict['w'] * step + fid['w']
+values['wa'] = pargaps_dict['wa'] * step + fid['wa']
+values['ombh2'] = pargaps_dict['ombh2'] * step + fid['ombh2']
+values['omch2'] = pargaps_dict['omch2'] * step + fid['omch2']
+values['omk'] = pargaps_dict['omk'] * step + fid['omk']
+values['scalar_nrun(1)'] = pargaps_dict['scalar_nrun(1)'] * step + fid['scalar_nrun(1)']
 
 
 values = collections.OrderedDict(sorted(values.items(), key=lambda t: t[0]))
@@ -147,12 +150,10 @@ with open("./data/{}/{}/grid_values.p".format(output_folder, output_folder_2), "
 
 print fid, values
 # ================================================
-
-
 # start loop on them and generate.
 
 for key, value in values.iteritems():
-    for i in np.arange(0, 4):
+    for i in np.arange(0, 8):
         print ''
 
         print 'modifying', key, 'values=', values[key][i]
@@ -172,19 +173,17 @@ for key, value in values.iteritems():
         # if key == 'scalar_amp(1)':
         #     continue
 
-        if (key == 'massless_neutrinos'):
-            config.set('camb', key, str(values[key][i]))
-            # from eq (14) of http://arxiv.org/pdf/1402.4108v1.pdf
-            S = np.sqrt(1. + 7. * (key - 3.046) / 43.)
-            eta10 = 273.9 * fid['ombh2']
-            Y_p = 0.2486 + 0.0016 * ((eta10 - 6.) + 100. * (S - 1.))
-            config.set('camb', 'helium_fraction', str(Y_p))
-
         if (key == 'hubble'):
             config.set('camb', key, str(100. * values[key][i]))
 
         elif (key == 'massless_neutrinos'):
+            # from eq (14) of http://arxiv.org/pdf/1402.4108v1.pdf
+
             config.set('camb', key, str(values[key][i] - 1.))
+            S = np.sqrt(1. + 7. * (values[key][i] - 3.046) / 43.)
+            eta10 = 273.9 * fid['ombh2']
+            Y_p = 0.2486 + 0.0016 * ((eta10 - 6.) + 100. * (S - 1.))
+            config.set('camb', 'helium_fraction', str(Y_p))
 
         elif (key == 'scalar_amp(1)'):
             config.set('camb', key, str(values[key][i] * 10 ** (-9)))

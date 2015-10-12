@@ -45,8 +45,10 @@ def load_data(data_folder,  values, lensed=False):
     dats = np.concatenate((cmb, lensing[:cmb.shape[0], :]), axis=1)
     # Load data for all parameters variations
     for key, value in values.iteritems():
-        for i in np.arange(0, 4):
-            print key, values[key][i]
+        if np.shape(values[values.keys()[0]])[0]!=4:
+            print "you are not using a 5 point formula are you sure?"
+        for i in np.arange(0, np.shape(values[values.keys()[0]])[0]):
+            print key, values[key][i],i
             filename = 'data/{}/'.format(data_folder)
             # filename_cmb = filename + key + '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat'
             filename_cmb = filename + key + \
@@ -59,7 +61,7 @@ def load_data(data_folder,  values, lensed=False):
             newdat = np.concatenate((cmb, lensing[:dats.shape[0], :]), axis=1)
             # newdat = np.genfromtxt(filename)
             dats = np.dstack((dats, newdat))
-
+    np.save('data/{}/fisher_data.npy'.format(data_folder),dats)
     return dats
 
 
@@ -448,7 +450,6 @@ def save_cov_matrix(fisher_inv, filename='output_cmb/param_cov.txt'):
         for j in range(n_values):
             if i != j:
                 param_cov[i, j] = fisher_inv[i, j] / np.sqrt(fisher_inv[i, i] * fisher_inv[j, j])
-    # print param_cov
     np.savetxt(filename, param_cov)
 
 

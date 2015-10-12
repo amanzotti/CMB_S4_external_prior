@@ -50,6 +50,7 @@ import matplotlib.pyplot as plt
 import utils
 import pickle
 import sys
+import collections
 
 # util.nl(noise_uK_arcmin, fwhm_arcmin, lmax)
 
@@ -65,7 +66,7 @@ def fsky2arcmin(fsky):
     return 41253. * fsky * 60. * 60.
 
 
-def calc_deriv_vectorial(fisher_index, dats, pargaps, values):
+def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
     '''
     Given CMB data dats it normalize them anf create a 3x3 matrix
 
@@ -75,8 +76,23 @@ def calc_deriv_vectorial(fisher_index, dats, pargaps, values):
     remember the order from CAMB
      l CTT CEE CBB CTE Cdd CdT CdE
     '''
-    ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
-          calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
+    if order == 5 and np.shape(values[values.keys()[0]])[0] == 4:
+        ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
+              calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
+
+    elif order == 7 and np.shape(values[values.keys()[0]])[0] == 6:
+        ci = (calc_c_general(dats, fisher_index * 6 + 6) - 9. * calc_c_general(dats, fisher_index * 6 + 5) + 45. *
+              calc_c_general(dats, fisher_index * 6 + 4) - 45. * calc_c_general(dats, fisher_index * 6 + 3) + 9. * calc_c_general(dats, fisher_index * 6 + 2) - calc_c_general(dats, fisher_index * 6 + 1)) / (60. * pargaps[values.keys()[fisher_index]])
+
+    elif order == 9 and np.shape(values[values.keys()[0]])[0] == 8:
+        ci = (-3. * calc_c_general(dats, fisher_index * 8 + 8) + 32. * calc_c_general(dats, fisher_index * 8 + 7) - 168. *
+              calc_c_general(dats, fisher_index * 8 + 6) + 672. * calc_c_general(dats, fisher_index * 8 + 5) - 672. * calc_c_general(dats, fisher_index * 8 + 4) + 168. * calc_c_general(dats, fisher_index * 8 + 3) - 32. * calc_c_general(dats, fisher_index * 8 + 2) + 3. * calc_c_general(dats, fisher_index * 8 + 1)) / (840. * pargaps[values.keys()[fisher_index]])
+    else:
+        sys.exit()
+    # if eight points
+    # ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
+    # calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats,
+    # fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
     return ci
 
 
@@ -118,7 +134,8 @@ def calc_c_fiducial(data):
 
     return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N, data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 6, 0]],
 
-                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] + fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
+                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
+                         fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
 
                      [data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
                       data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
@@ -137,9 +154,9 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[lmin_index:lmax_index, 1, parabin] , data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
-                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 2, parabin]
-                      ,  data[lmin_index:lmax_index, 2, parabin] * 0.],
+    return np.array([[data[lmin_index:lmax_index, 1, parabin], data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
+                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
+                                                                    2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
                      [data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
                       data[lmin_index:lmax_index, 5, parabin]]
                      ])
@@ -183,13 +200,14 @@ def C(iell, ell, parbin, data):
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 3000
 lmin = 50
-N_det = 10 ** 4
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_4.txt')
+N_det = 10 ** 6
+N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run4'
 output_folder = 'varying_all/run4/output'
 fsky = 0.75
 lensed = False
-# exclude = ['w','helium_fraction','wa','scalar_nrun(1)','massless_neutrinos','omk'] #None
+exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa']  # None
+# exclude = ['massless_neutrinos','w']
 exclude = None
 # =============================
 # DERIVED
@@ -213,7 +231,21 @@ print "fid ", fid
 values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
 par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
 
-# exclude = ['w','massless_neutrinos']
+# select values to change gaps in derivative
+new_value = {}
+order = 5
+
+# i = 0  # or 1 or 2 to select different gaps
+# for key in values.keys():
+#     new_value[key] = [values[key][i], values[key][i + 1], values[key][-i - 2], values[key][-i - 1]]
+
+#     if i != 2:
+#         par_gaps[key] = par_gaps[key] * (4 - 2 * i)
+
+# new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+# values = new_value
+
+
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
 
 print 'loading files'
@@ -230,7 +262,7 @@ dats[ltmax_index:, 1, 1:] = 0.
 
 # creating the n_values by n_values matrix
 fisher = np.zeros((n_values, n_values))
-fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0]) ))
+fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0])))
 
 fisher_inv = np.zeros((n_values, n_values))
 
@@ -243,15 +275,14 @@ pargaps = par_gaps
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray( (3,3,np.size(dats[lmin_index:lmax_index, 0, 0]),n_values), dtype= 'float64' )
+derivatives = np.ndarray((3, 3, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
 
 for i in range(0, n_values):
-            # computing derivatives.
-            # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
+    # computing derivatives.
+    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
                               #   12h
-            derivatives[:,:,:,i]= calc_deriv_vectorial(i, dats, pargaps, values)[:,:,:]
-
+    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, pargaps, values, order)[:, :, :]
 
 
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
@@ -262,12 +293,6 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
     c0 = C_inv_array[:, :, iell]
-    # print ''
-    # print 'c0', c0
-    # print ''
-    # print np.sum(C_inv_array[:,:,iell]-c0)
-    # print iell
-    # sys.exit()
 
     cinv = np.linalg.inv(c0)
 
@@ -279,24 +304,18 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
                   # ---------------------------------
                               #   12h
 
-            # ci = (-C(iell, ell, i * 4 + 4, dats) + 8. * C(iell, ell, i * 4 + 3, dats) - 8. *
-            #       C(iell, ell, i * 4 + 2, dats) + C(iell, ell, i * 4 + 1, dats)) / (12. * pargaps[values.keys()[i]])
-            # cj = (-C(iell, ell, j * 4 + 4, dats) + 8. * C(iell, ell, j * 4 + 3, dats) - 8. *
-            #       C(iell, ell, j * 4 + 2, dats) + C(iell, ell, j * 4 + 1, dats)) / (12. * pargaps[values.keys()[j]])
+            ci = derivatives[:, :, iell, i]
 
-            ci = derivatives[:,:,iell,i]
-
-            cj = derivatives[:,:,iell,j]
+            cj = derivatives[:, :, iell, j]
 
             # Eq 4.
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
-            trace = np.sum (np.dot(np.dot(cinv, ci),  cinv) * cj.T)
+            trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
             # assuming f Eq.4
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
-            fisher_save[i,j,iell] = (2. * ell + 1.) / 2. * fsky * trace
+            fisher_save[i, j, iell] = (2. * ell + 1.) / 2. * fsky * trace
             # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
-
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
@@ -305,14 +324,14 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 print 'lmax =', ell
 # print fisher_inv
 
-np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
+np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
+np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder,lmin,lmax,N_det,fsky),
-           fisher_save)
+np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
+        fisher_save)
 
-np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky),
+np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            dats[lmin_index:lmax_index, 0, 0], header=header)
 
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
@@ -324,12 +343,15 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-utils.save_cov_matrix(fisher_inv,'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky))
+utils.save_cov_matrix(
+    fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,lmin,lmax,N_det,fsky), fisher_single, header=header)
+np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+                                                                                            lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+                                                                                 lmin, lmax, N_det, fsky), fisher_single, header=header)
 
-print 'fisher=' , fisher
+print 'fisher=', fisher
 
 utils.print_resume_stat(fisher_single, fid)

@@ -57,7 +57,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_lambda'
 run_idx = 2
 lmax = 4499
-lmin = 100
+lmin = 4
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
@@ -213,7 +213,7 @@ label['ombh2'] = '\Omega_{b}'
 label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
 
-parameters =['omnuh2','omch2']
+parameters =['omnuh2','hubble']
 # parameters = ['w', 'hubble']
 
 fg = plt.figure(figsize=(10, 10))
@@ -274,6 +274,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('ellipse_Omega_M_M_nu1002.pdf', dpi=400, papertype='Letter',
+plt.savefig('ellipse_H_M_nu1002.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 plt.close()

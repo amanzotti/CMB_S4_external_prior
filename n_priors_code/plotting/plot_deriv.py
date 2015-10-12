@@ -39,9 +39,9 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 
 # READ DATA
 
-data_type ='varying+Yp'
+data_type ='varying_all'
 run_idx = 1
-
+print data_type
 
 # READ PARAMS
 dats = np.genfromtxt('../data/{}/run{}/fiducial_lenspotentialcls.dat'.format(data_type,run_idx))
@@ -167,22 +167,22 @@ plt.rcParams['axes.linewidth'] = 1.0
 
 # plot2 = plt.semilogx(data_fid[:,0] , 10.*np.nan_to_num((dats[:,1,]- dats[:,1,] )/data_fid[:,1]),linewidth=1, color='b',label=r'$C^{T}$')
 
+
 label = {}
 
 label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
-label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = r'\Omega_{\nu}h^{2}'
-label['re_optical_depth'] = r'\tau'
-label['ombh2'] = '\Omega_{b}h^{2}'
-label['ombch2'] = '\Omega_{m}h^{2}'
-label['omch2'] = '\Omega_{c}h^{2}'
-label['helium_fraction'] = 'Y_{p}'
+label['omnuh2'] = r'\Omega_{\nu}'
+label['re_optical_depth'] = r'~\tau'
+label['ombh2'] = '\Omega_{b}'
+label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
-
-
+label['wa'] = 'w_{a}'
+label['helium_fraction'] = 'Y_{p}'
+label['scalar_nrun(1)'] = r'\alpha_{s}'
+label['omk'] = r'\Omega_{k}'
 # fg = plt.figure(figsize=fig_dims)
 
 
