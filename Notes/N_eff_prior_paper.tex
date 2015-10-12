@@ -56,8 +56,9 @@
 \begin{abstract}
 The next generation of cosmic microwave background (CMB) experiments can dramatically improve what we know about neutrino physics, inflation, Dark Matter and Dark Energy. 
 Indeed the low level of noise, together with improved angular resolution, will drastically increase the signal to noise of the CMB polarized signal as well as the reconstructed lensing potential of high redshift large scale structure. 
-Projected constraints on cosmological parameters are extremely tight, but these can be improved even further with information from external experiments. Here, we examine quantitatively, with a Fisher matrix approach, the extent to which external priors can lead to improvement in projected constraints from a CMB-Stage 4 experiment.
-We find that CMB S4... 
+Projected constraints on cosmological parameters are extremely tight, but these can be improved even further with information from external experiments. Here, we examine quantitatively, with a Fisher matrix approach, the extent to which external priors can lead to improvement in projected constraints from a CMB-Stage 4 (S4) experiment.
+We find that CMB S4 constraints on neutrino masses can be limited by their degeneracies with the optical depth $\tau$  
+if the largest scale at reach is not enough to constraint $\tau$ internally. An external prior on the Hubble constant can improve the CMB S4 constraint significantly while complementary information on $n_{s}$ and the baryon fraction will improve the constraint on $N_{\rm eff}$.
 \end{abstract}
 
 \pacs{}
@@ -97,31 +98,19 @@ This paper is organized as follow: in \refsec{methods} we introduce the techniqu
 \section{Assumptions and methods \label{sec:methods}}
 
 
-In this paper we want to measure quantitatively the effect of external priors on the  cosmological parameters constraints derived from S4 CMB experiments.
-We start this section in \refssec{fm-formalism} by introducing the Fisher matrix formalism, a simple but powerful technique widely used to forecast future experimental constraints. To apply this technique, we need to specify our cosmological model ($\Lambda$CDM plus neutrinos and dark energy extensions in our case) as well as a set of fiducial parameters and the specifications of S4 CMB experiments. These will be presented in \refssec{cosmo-noise}.
+We want to measure quantitatively the effect of external priors on the  cosmological parameters constraints derived from S4 CMB experiments.
+We approach the problem with a Fisher matrix formalism, a simple but powerful technique widely used to forecast future experimental constraints. To apply this technique, we need to specify our cosmological model ($\Lambda$CDM plus neutrinos and dark energy extensions in our case) as well as a set of fiducial parameters and the specifications of S4 CMB experiments.
 
-To estimate errors on cosmological parameters we follow the Bayes theorem that relates the likelihood to measure a set of data given the parameters of the model $\mathcal{L}(d|\theta)$, to what we want: the posterior probability of those parameters given the data, $\mathcal{L}(\theta|d)$.
-These two are related by the prior probability of the parameters $P(\theta)$ through:
-\begin{equation}
-\mathcal{L}(\theta|d)\propto \mathcal{L}(d|\theta)P(\theta),
-\end{equation}
-where, as usual, we have neglected the probability of the data $P(d)$.
-These general framework can be simplified in our case. We will focus not on an entirely general posterior distribution, but we will assume that the likelihoods are gaussian.
-Furthermore we will not derive the global shape of the likelihood but we will obtain parameters errors by studying small perturbations around its maximum. These are the two basic assumptions of the Fisher-matrix approach.
-
-Regarding the first assumption, we recognize the fact that, even if the gaussian approximation has been shown to be appropriate most of the time, some problems have been found in other cases \cite{2012JCAP...09..009W}. Despite this, we do not need the level of accuracy that will require a careful modeling of the likelihoods, because we are looking for the general behavior of parameters errors as a function of external priors.
-Moreover the gaussian approximation gets better at smaller scales (high $\ell$ in Fourier space) which, with the exception of the optical depth parameters $\tau$, is where most of the constraining power of the CMB is coming from.
-
- 
-Secondly we will assume to know the true ``fiducial'' parameters that maximize the likelihood $\mathcal{L}(\theta|d)$ and we will get the errors on those from the likelihood curvature around the fiducial values.
-Indeed, as usual, we define the fisher matrix elements as the curvature:
+As usual, we define the fisher matrix elements as the curvature:
 \begin{equation}
 	\centering
 		F_{ij} \equiv - \left\langle\frac{\partial^2 \log \mathcal{L}}{\partial \theta_i \partial \theta_j} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta_0}}\right\rangle,
 	\label{eqn:Fij_def}
 \end{equation}
-where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters values array that, by definition, maximizes the likelihood.
- With the usual definition \cite{} $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$, where $a_{\ell m}^{X}$ represent the spherical harmonics coefficients of the field X, the Fisher matrix of a CMB experiment can be rewritten as:
+where $\theta_{i,j}$ represents two of the parameters and $\boldsymbol{\theta_0}$ is the parameters values array that, by definition, maximizes the likelihood. It is important to notice that \refeq{Fij_def} implicitly assume that the likelihood is gaussian. Even if the gaussian approximation has been shown to be appropriate most of the time, some problems have been found in other cases \cite{2012JCAP...09..009W}. Despite this, we do not need the level of accuracy that will require a careful modeling of the likelihoods, because we are looking for the general behavior of parameters errors as a function of external priors.
+Moreover the gaussian approximation gets better at smaller scales (high $\ell$ in Fourier space) which, with the exception of the optical depth parameters $\tau$, is where most of the constraining power of the CMB is coming from.
+
+With the usual definition $<a_{\ell m}^{X}a_{\ell' m'}^{Y}>=\delta_{\ell \ell'}\delta_{mm'}C^{X,Y}$, where $a_{\ell m}^{X}$ represent the spherical harmonics coefficients of the field X, the Fisher matrix of a CMB experiment can be rewritten as:
 \begin{equation}
  F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right).
  \label{eqn:Fij_def2}
@@ -238,7 +227,7 @@ Furthermore any possible significant deviation from this value could be a hint o
 %==========
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_massless_neutrinos_snow_mass.pdf}
+\includegraphics{prior_massless_neutrinos_snow_mass_lmin=4_lmax=4499.pdf}
 \caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of the strength of the prior on the other 6 cosmological parameters of the standard $\Lambda$CDM model. Each prior is expressed in units of the error that would be obtained internally from our suite of CMB experiments; e.g., $\sigma(H_0)_{\rm old}=4.1\%$. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$. The bottom-most (grey) curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.}
 \label{fig:prior_massless_neutrinos}
 \end{center}
@@ -253,14 +242,16 @@ Furthermore any possible significant deviation from this value could be a hint o
 Small scale structure formation is suppressed if fast-moving neutrinos comprise a significant part of the matter budget. This effect, probed by CMB lensing, will allow us to determine how much of the matter density is made up of neutrinos. Since the active neutrino number densities are known in the standard model, this can be directly transformed into a constraint on the the sum of the neutrino masses, $\sum m_\nu$. This is particularly exciting because there is a lower limit on $\sum m_\nu>0.05$ eV that emerges from oscillation experiments. 
 
 
+%==========
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_omnuh2_snow_mass.pdf}
+\includegraphics{prior_omnuh2_snow_mass_lmin=4_lmax=4499.pdf}
 \caption{Constraints on the sum of the neutrino masses as a function of priors on cosmological parameters, as in \reffig{prior_massless_neutrinos}.  Note that constraints would be improved significantly  by distance measurements that constrain $\Omega_ch^2$. The lower limit on the sum of the neutrino masses is 50 meV.}
 \label{fig:prior_omeganuh2}
 \end{center}
 \end{figure}
+%==========
 
 
 \reffig{prior_omeganuh2} shows that, without any external priors, upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 30 meV, corresponding to close to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed in \citet{2013arXiv1309.5383A}. There, the prior was deescribed as ``DESI BAO'', that is a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. Here, the same improvement is parametrized by a strong prior on $\Omega_ch^2$, which indeed determines these low-redshift distances. As found in \cite{2013arXiv1309.5383A}, the projected error falls below 20 meV with this prior. Adding in other priors would help further.
@@ -296,14 +287,16 @@ Small scale structure formation is suppressed if fast-moving neutrinos comprise 
 
 While the primordial CMB has limited information about the late-time dark energy equation of state, CMB lensing probes the growth of structure at late times and therefore is sensitive to $w$. Here we are using only the information from the lensing power spectrum as inferred from the CMB, but there is even more information not considered here contained in the many galaxy clusters that upcoming missions will detect via the Sunyaev-Zel'dovich effect. 
 
+%==========
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_w_snow_mass.pdf}
+\includegraphics{prior_w_snow_mass_lmin=4_lmax=4499.pdf}
 \caption{Constraints on the dark energy equation of state $w$ as a function of priors on cosmological parameters, as in \reffig{prior_massless_neutrinos}. An external prior on $H_{0}$ will be crucial to improve the constraint.} 
 \label{fig:prior_w}
 \end{center}
 \end{figure}
+%==========
 
 \reffig{prior_w} shows that without any priors, CMB experiments will not do much better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ considerably. {\bf We should try to understand why. Probably just a geometrical degeneracy in the way $w$ and $H_{0}$ enter the definition of the distance to the LSS $D(z_{\rm LSS})$}
 
