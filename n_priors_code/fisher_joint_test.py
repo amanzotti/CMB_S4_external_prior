@@ -198,15 +198,15 @@ def C(iell, ell, parbin, data):
 # TODO LOAD EVERYTHING FROM INI
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 3000
-lmin = 50
+lmax = 4499
+lmin = 4
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_all/run4'
-output_folder = 'varying_all/run4/output'
+data_folder = 'varying_all/run2'
+output_folder = 'varying_all/run2/output'
 fsky = 0.75
 lensed = False
-exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa']  # None
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
 # exclude = ['massless_neutrinos','w']
 exclude = None
 # =============================
@@ -230,12 +230,15 @@ print "fid ", fid
 # load parameter grid dictionary. The format is a pickle
 values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
 par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
+# order = 5
 
 # select values to change gaps in derivative
 new_value = {}
-order = 5
 
-# i = 0  # or 1 or 2 to select different gaps
+# ===============
+# order = 5
+
+# i = 0  # or 1 or 2 to select different gaps for 5 point formula
 # for key in values.keys():
 #     new_value[key] = [values[key][i], values[key][i + 1], values[key][-i - 2], values[key][-i - 1]]
 
@@ -244,7 +247,22 @@ order = 5
 
 # new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
 # values = new_value
+# ===============
 
+# ===============
+
+# use different order formula same gap
+order = 9
+# step = np.array([-4,-3,-2,-1,1,2,3,4])
+step = np.array([-8,-6,-4,-2,2,4,6,8])
+
+for key in values.keys():
+  new_value[key] = par_gaps[key] * step + fid[key]
+for key in values.keys():
+  par_gaps[key]= np.abs(new_value[key][0]-new_value[key][1])
+new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+values = new_value
+# ===============
 
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
 
@@ -271,7 +289,7 @@ marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_value
 
 
 print 'fisher_size', fisher.shape
-pargaps = par_gaps
+
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
@@ -282,7 +300,7 @@ for i in range(0, n_values):
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
                   # ---------------------------------
                               #   12h
-    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, pargaps, values, order)[:, :, :]
+    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
 
 
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):

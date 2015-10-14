@@ -124,7 +124,7 @@ with open("./data/{}/{}/par_gaps.p".format(output_folder, output_folder_2), "wb"
 # ================================================
 # generate values to compute Cls
 # step = np.array([-8,-4,-2, -1, 1, 2,4,8])
-step = np.array([-7,-5,-3,-1, 1,3,5,7])
+step = np.array([-6, 6])
 
 values = {}
 values['hubble'] = pargaps_dict['hubble'] * step + fid['hubble']
@@ -153,7 +153,7 @@ print fid, values
 # start loop on them and generate.
 
 for key, value in values.iteritems():
-    for i in np.arange(0, 8):
+    for i in np.arange(0, np.size(step)):
         print ''
 
         print 'modifying', key, 'values=', values[key][i]

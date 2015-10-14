@@ -141,32 +141,30 @@ plt.rcParams['font.weight'] = 400
 
 # ============================================
 # FONT SIZES
-font_size = 20
+font_size = 14
 plt.rcParams['font.size'] = font_size
-plt.rcParams['axes.labelsize'] = font_size / 1.2
-plt.rcParams['axes.linewidth'] = font_size / 38.
+plt.rcParams['axes.labelsize'] = font_size / 1.3
 plt.rcParams['axes.titlesize'] = font_size / 1.1
-plt.rcParams['legend.fontsize'] = font_size / 1.7
-plt.rcParams['xtick.labelsize'] = font_size / 2
-plt.rcParams['ytick.labelsize'] = font_size / 2
+plt.rcParams['legend.fontsize'] = font_size / 1.9
+plt.rcParams['xtick.labelsize'] = font_size / 2.
+plt.rcParams['ytick.labelsize'] = font_size / 2.
 
 
-plt.rcParams['lines.linewidth'] = font_size / 1000
+plt.rcParams['lines.linewidth'] = font_size / 20.
 
 
 # ============================================
 # ============================================
 # TICKS
 
-plt.rcParams['xtick.major.width'] = 0.13 / 2.
-plt.rcParams['xtick.major.size'] = 5 / 2.
-plt.rcParams['xtick.minor.width'] = 0.13 / 2.
-plt.rcParams['xtick.minor.size'] = 2.8 / 2.
-plt.rcParams['ytick.major.width'] = 0.13 / 2.
-plt.rcParams['ytick.major.size'] = 5 / 2.
-plt.rcParams['ytick.minor.width'] = 0.13 / 2.
-plt.rcParams['ytick.minor.size'] = 2.8 / 2.
-
+plt.rcParams['xtick.major.width'] = 0.13 / 1.1
+plt.rcParams['xtick.major.size'] = 5 / 1.1
+plt.rcParams['xtick.minor.width'] = 0.13 / 1.1
+plt.rcParams['xtick.minor.size'] = 2.8 / 1.1
+plt.rcParams['ytick.major.width'] = 0.13 / 1.1
+plt.rcParams['ytick.major.size'] = 5 / 1.1
+plt.rcParams['ytick.minor.width'] = 0.13 / 1.1
+plt.rcParams['ytick.minor.size'] = 2.8 / 1.1
 
 #ax2 = plt.subplot2grid((1,2), (0, 1))
 #ax3 = plt.subplot2grid((2,2), (1, 1))
@@ -221,7 +219,7 @@ label['w'] = 'w'
 parameters =['w','hubble']
 # parameters = ['w', 'hubble']
 
-fg = plt.figure(figsize=(10, 10))
+fg = plt.figure(figsize=fig_dims)
 ax1 = plt.subplot2grid((1, 1), (0, 0))
 
 # YOU CAN ADD PRIOR HERE
@@ -242,18 +240,20 @@ print a_fisher,b_fisher,angle_fisher
 if sigmax_squared > sigmay_squared:
 
     one_sigma = Ellipse((fid[parameters[0]], fid[parameters[1]]), 2. * np.sqrt(np.amax([a_fisher, b_fisher])) * 1.52, 2. * np.sqrt(np.amin([a_fisher, b_fisher])) * 1.52,
-                        angle=angle_fisher, linewidth=0.5, fill=True, alpha=0.6)
+                        angle=angle_fisher, linewidth=font_size / 10., fill=False, alpha=0.6)
 elif sigmax_squared < sigmay_squared:
     one_sigma = Ellipse((fid[parameters[0]], fid[parameters[1]]), 2. * np.sqrt(np.amin([a_fisher, b_fisher])) * 1.52, 2. * np.sqrt(np.amax([a_fisher, b_fisher])) * 1.52,
-                        angle=angle_fisher, linewidth=0.5, fill=True, alpha=0.6)
+                        angle=angle_fisher, linewidth=font_size / 10., fill=False, alpha=0.6)
 
 
 # two_sigma = Ellipse((fid[key_j], fid[key_i]), np.sqrt(a_fisher)*2.48, np.sqrt(b_fisher)*2.48,
 #              angle=angle_fisher, linewidth=0.5, fill=False)
 
 ax1.add_patch(one_sigma)
-plt.axhline(fid[parameters[1]] - 1.52 * np.sqrt(sigmay_squared), linewidth=1)
-plt.axhline(fid[parameters[1]] + 1.52 * np.sqrt(sigmay_squared), linewidth=1)
+# plt.axhline(fid[parameters[1]] - 1.52 * np.sqrt(sigmay_squared), linewidth=1)
+# plt.axhline(fid[parameters[1]] + 1.52 * np.sqrt(sigmay_squared), linewidth=1)
+ax1.set_ylabel(r'$' + label['hubble'] + r'$')
+ax1.set_xlabel(r'$' + label['w']  + r'$')
 
 xl = fid[parameters[0]] - 2.52 * np.sqrt(sigmax_squared)
 xu = fid[parameters[0]] + 2.52 * np.sqrt(sigmax_squared)
@@ -261,7 +261,7 @@ yl = fid[parameters[1]] - 2.52 * np.sqrt(sigmay_squared)
 yu = fid[parameters[1]] + 2.52 * np.sqrt(sigmay_squared)
 ax1.set_ylim(yl, yu)
 ax1.set_xlim(xl, xu)
-ax1.plot(w_array, H_array,'o-.' ,linewidth=1)
+ax1.plot(w_array, H_array,'-.' ,alpha=0.6 , linewidth=font_size / 10.)
 # ax1.invert_xaxis()
 
 fg.tight_layout()
@@ -283,4 +283,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 #             format='pdf', transparent=True)
 plt.savefig('ellipse_H_M_nu1002.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
+plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/ellipse_H0_w_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+                format='pdf', bbox_inches='tight')
 plt.close()
