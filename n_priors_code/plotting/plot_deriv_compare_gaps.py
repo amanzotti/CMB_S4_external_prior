@@ -35,9 +35,9 @@ import sys
 
 # READ DATA
 
-data_type ='varying+Yp'
+data_type ='varying_all'
 
-run_idx = 1
+run_idx = 4
 
 
 # READ PARAMS
@@ -57,7 +57,7 @@ for key, value in values.iteritems():
         dats = np.dstack((dats, newdat))
 
 
-run_idx = 2
+run_idx = 1
 
 
 # READ PARAMS
@@ -70,9 +70,9 @@ par_gaps2 = pickle.load(open('../data/{}/run{}/par_gaps.p'.format(data_type,run_
 
 for key, value in values.iteritems():
     for i in np.arange(0, 4):
-        print key, values[key][i]
+        print key, values2[key][i]
         filename = '../data/{}/run{}/'.format(data_type,run_idx)
-        filename += key + '_{:.13f}'.format(values[key][i]) + '_lenspotentialcls.dat'
+        filename += key + '_{:.13f}'.format(values2[key][i]) + '_lenspotentialcls.dat'
         newdat = np.genfromtxt(filename)
         dats2 = np.dstack((dats2, newdat))
 
@@ -192,6 +192,10 @@ label['re_optical_depth'] = r'~\tau'
 label['ombh2'] = '\Omega_{b}'
 label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
+label['wa'] = 'w_{a}'
+label['helium_fraction'] = 'Y_{p}'
+label['scalar_nrun(1)'] = r'\alpha_{s}'
+label['omk'] = r'\Omega_{k}'
 
 
 

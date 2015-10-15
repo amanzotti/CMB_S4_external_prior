@@ -36,7 +36,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
-plot_now = ['omnuh2','w']
+plot_now = ['omnuh2','massless_neutrinos']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -44,7 +44,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 4
+run_idx = 2
 lmax = 4499
 lmin = 4
 N_det = 10 ** 6
@@ -189,7 +189,7 @@ fisher_inplace = fisher_mat.copy()
 # CYCLE ON PARAMETERS (KEYS HERE)
 fg = plt.figure(figsize=fig_dims)
 
-for y, key_y in enumerate(plot_param):
+for  key_y in ['massless_neutrinos']:
     print key_y
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
@@ -199,7 +199,7 @@ for y, key_y in enumerate(plot_param):
 
     for i, key in enumerate(par_gaps.keys()):
 
-        if key == key_y:
+        if key == key_y :# or key =='scalar_amp(1)' or key == 're_optical_depth':
             continue
             # DO NOT TEST PRIOR ON ONE PARMS IN ITSELF; TRIVIAL
         # ERROR ON Y IN THE CMB S4
@@ -246,8 +246,8 @@ for y, key_y in enumerate(plot_param):
     # ============================================
 
     # ============================================
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
-                format='png', bbox_inches='tight')
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+                format='pdf', bbox_inches='tight')
     plt.clf()
 
 plt.close()

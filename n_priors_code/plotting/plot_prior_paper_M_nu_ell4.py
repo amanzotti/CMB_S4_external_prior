@@ -36,7 +36,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
-plot_now = ['omnuh2','w']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -44,7 +44,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 4
+run_idx = 2
 lmax = 4499
 lmin = 4
 N_det = 10 ** 6
@@ -189,7 +189,7 @@ fisher_inplace = fisher_mat.copy()
 # CYCLE ON PARAMETERS (KEYS HERE)
 fg = plt.figure(figsize=fig_dims)
 
-for y, key_y in enumerate(plot_param):
+for key_y in ['omnuh2']:
     print key_y
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
@@ -214,40 +214,47 @@ for y, key_y in enumerate(plot_param):
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
-
-        line_plot = ax1.plot(normalize_x, new_sigma, label=r'${0}={1:.1f}\%$'.format(
+        # *93.14 * 1000. to go to M_nu
+        line_plot = ax1.plot(normalize_x, new_sigma*94. * 1000., label=r'${0}={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
     new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)
 
-    plt.plot(normalize_x, new_sigma_all, label=r'All',
+    plt.plot(normalize_x, new_sigma_all*94. * 1000., label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
     ax1.legend(loc=0)
 
     ax1.minorticks_on()
-    ax1.set_ylim((0.8 * np.amin(new_sigma_all), 1.1 * np.amax(new_sigma)))
-    ax1.set_xlim((0.1, 3.1))
+    ax1.set_ylim((0.8 * np.amin(new_sigma_all)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
+    ax1.set_xlim((0.1 , 3.1))
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
-    ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
+    ax1.set_ylabel(r'$\sigma(M_{\nu}) $ meV')
     ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
+
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
-    minor_loc = ax1.yaxis.get_minor_locator()
+    # minor_loc = ax1.yaxis.get_minor_locator()
     ax2.minorticks_on()
-    ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100., y2 / np.abs(fid[key_y]) * 100.)
+    ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100. / (94. * 1000.), y2 / np.abs(fid[key_y]) * 100. / (94. * 1000.))
     new_ticks = ax2.get_yticks().tolist()
     for i, tick in enumerate(ax2.get_yticks().tolist()):
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
+
+    # Put snow mass line
+    ax1.axhline(15.3,xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
+
+
+
     # ============================================
     # FINALLY SAVE
     # ============================================
     # ============================================
 
     # ============================================
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
-                format='png', bbox_inches='tight')
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+                format='pdf', bbox_inches='tight')
     plt.clf()
 
 plt.close()
