@@ -83,7 +83,7 @@ my_fisher_inv = np.linalg.inv(fisher_mat)
 
 # \===========================
 def integrand(z, w, H_0):
-    omega_m = fid['omch2'] / H_0 ** 2
+    omega_m = (fid['omch2'] + fid['ombh2'] + fid['omnuh2']) / H_0 ** 2
     return 1 / (H_0 * np.sqrt(omega_m * (1. + z) ** 3 + (1 - omega_m) * (1. + z) ** (3 * (1 + w))))
 
 H_0 = fid['hubble']

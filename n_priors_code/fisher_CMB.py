@@ -194,16 +194,16 @@ def C(iell, ell, parbin, data):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 2
+lmin = 5
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run4'
 output_folder = 'varying_all/run4/output'
 fsky = 0.75
 lensed = False
-exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
 # exclude = ['massless_neutrinos','w']
-# exclude = None
+exclude = None
 # =============================
 # DERIVED
 arcmin_from_fsky = fsky2arcmin(fsky)

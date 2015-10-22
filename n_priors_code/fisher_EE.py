@@ -194,9 +194,9 @@ data_folder = 'varying_all/run4'
 output_folder = 'varying_all/run4/output'
 fsky = 0.75
 lensed = False
-exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa']  # None
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa']  # None
 # exclude = ['massless_neutrinos','w']
-# exclude = None
+exclude = None
 # =============================
 # DERIVED
 arcmin_from_fsky = fsky2arcmin(fsky)
@@ -324,7 +324,7 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
-    fisher_inv = np.linalg.inv(fisher)
+    fisher_inv =fisher # np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
