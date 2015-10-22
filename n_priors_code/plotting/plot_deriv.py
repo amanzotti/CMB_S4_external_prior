@@ -40,7 +40,7 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 # READ DATA
 
 data_type ='varying_all'
-run_idx = 1
+run_idx = 4
 print data_type
 
 # READ PARAMS

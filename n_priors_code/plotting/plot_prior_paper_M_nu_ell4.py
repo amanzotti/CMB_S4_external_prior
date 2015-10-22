@@ -44,7 +44,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 2
+run_idx = 4
 lmax = 4499
 lmin = 4
 N_det = 10 ** 6
