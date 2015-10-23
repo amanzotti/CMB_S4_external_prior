@@ -348,7 +348,7 @@ planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_co
 
 # print ''
 # print ''
-# fisher +=planck_fisher
+fisher +=planck_fisher
 
 print 'lmax =', ell
 # print fisher_inv

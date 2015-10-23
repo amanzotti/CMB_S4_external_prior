@@ -220,7 +220,7 @@ for key_y in ['omnuh2']:
 
     new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)
 
-    plt.plot(normalize_x, new_sigma_all, label=r'All',
+    plt.plot(normalize_x, new_sigma_all*94. * 1000., label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
     ax1.legend(loc=0)
