@@ -230,7 +230,7 @@ for  key_y in plot_now:
     ax1.set_xlim((0.1, 3.1))
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm CMB }$')
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
     minor_loc = ax1.yaxis.get_minor_locator()
