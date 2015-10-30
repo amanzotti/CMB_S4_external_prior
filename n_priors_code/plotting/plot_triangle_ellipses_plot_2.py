@@ -48,29 +48,32 @@ from palettable.colorbrewer.qualitative import Set1_9
 # READ DATA
 
 
-no_lcdm_parameters =  ['massless_neutrinos', 'w', 'omnuh2']
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
 plot_now = ['omnuh2']
-excluded_parameters = list(set(no_lcdm_parameters) -set(plot_now))
-excluded_parameters = None
+excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
 # READ DATA
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
-data_type = 'varying_lambda'
-run_idx = 2
+data_type = 'varying_all'
+run_idx = 4
 lmax = 4499
-lmin = 4
+lmin = 50
+N_det = 10 ** 6
+# N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
+fsky = 0.75
 # ======
 fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type, str(run_idx)), "rb"))
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
 par_gaps = pickle.load(open(base_dir + 'data/{}/run{}/par_gaps.p'.format(data_type, str(run_idx)), "rb"))
 fisher_mat = np.loadtxt(
-    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}.txt'.format(data_type, str(run_idx), lmin, lmax))
+    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(data_type, str(run_idx), lmin, lmax, N_det, fsky))
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
-# plot_param = list(set(fid.keys()) -set(excluded_parameters))
+plot_param = list(set(fid.keys()) - set(excluded_parameters))
+
 
 
 my_fisher_inv = np.linalg.inv(fisher_mat)
@@ -268,6 +271,5 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('triangle_all.pdf', dpi=400, papertype='Letter',
-            format='pdf', transparent=True)
+plt.savefig('triangle_all_prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str('joint_real'), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',format='pdf', transparent=True)
 plt.close()
