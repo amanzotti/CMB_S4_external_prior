@@ -5,7 +5,9 @@
 '''
 
 FAST VERSION
-Fisher code to test prior effect on N effective neutrino estimates
+
+Here we produce the Planck Fisher matrix we will lately add to our fisher.
+
 
 TODO:
 HIGH: lensing noise (almost there: Komatsu and quicklens.)
@@ -108,19 +110,34 @@ def calc_c_fiducial(data):
 
 
     '''
-    # noise definition from the number of observations and time
-    # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    # Y = 0.25  # 25% yeld
-    # N_det = 10 ** 6  # 1 milion of detectors
-    # these are taken from global
+
+    # THIS is a planck like experiment different from the usual formalism
+    # to combine different channel see eq 6 of 1403.5271v1
+
     global Y, sec_of_obs, arcmin_from_fsky, lmax_index
     ell = data[lmin_index:lmax_index, 0, 0]
-    s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
-    t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    # s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
+    s = {}
+    t = {}
+    N = {}
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
-    fac2 = (ell * (ell + 1.))
-    # Final CMB noise definition
-    N = (s * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t ** 2 / 8. / np.log(2))
+    N_tot = np.zeros_like(ell)
+    s['143'] = 43 # this is supposed to be in muk arcmin to fit in the later used formulas
+    s['217'] = 66
+    t['217'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['143'] = 7. / 60. / 180. * np.pi  # 2arcmin to rads beam
+
+    for nu in ['143', '217']:
+
+        # Final CMB noise definition
+        N[nu] = (s[nu] * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t[nu] ** 2 / 8. / np.log(2))
+        # print 'Nnu',N[nu]
+        N_tot += 1 / N[nu]
+
+    N_tot = 1. / N_tot
+    np.save('noise.npy',N_tot*fac)
+
+    # print 'N_tot', N_tot
     # this noise is in mu_K so check CMB accordingly
     # N_phi = 0. * N_phi_l[iell, 1] * ell ** 2
     # is it a 3x3 matrix? with
@@ -132,7 +149,12 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N]])
+
+    return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N_tot, data[lmin_index:lmax_index, 4, 0]],
+
+                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
+                         fac * N_tot * 2.]
+                     ])
 
 
 def calc_c_general(data, parabin):
@@ -146,35 +168,38 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[lmin_index:lmax_index, 1, parabin]]
+
+    return np.array([[data[lmin_index:lmax_index, 1, parabin], data[lmin_index:lmax_index, 4, parabin]],
+                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
+                                                                    2, parabin]]
                      ])
 
 
-# def C(iell, ell, parbin, data):
-#     '''
+def C(iell, ell, parbin, data):
+    '''
 
-#     Here is used to compute derivatives so we do not need noise
+    Here is used to compute derivatives so we do not need noise
 
-#     Given CMB data dats it normalize them anf create a 3x3 matrix
+    Given CMB data dats it normalize them anf create a 3x3 matrix
 
-#     ell is the multiple
-#     iell is the index in the data ell corresponds to
+    ell is the multiple
+    iell is the index in the data ell corresponds to
 
-#     remember the order from CAMB
-#      l CTT CEE CBB CTE Cdd CdT CdE
+    remember the order from CAMB
+     l CTT CEE CBB CTE Cdd CdT CdE
 
 
-#     '''
-#     # noise definition from the number of observations and time
-#     # eq 1 of W.hu et al snowmass paper 10^6 detectors
-#     # is it a 3x3 matrix? with
-#     # TT,TE,Tphi
-#     # TE,EE,Ephi
-#     # phiT,phiE,phiphi
-#     return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
-#                      [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
-#                      [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
-#                     )
+    '''
+    # noise definition from the number of observations and time
+    # eq 1 of W.hu et al snowmass paper 10^6 detectors
+    # is it a 3x3 matrix? with
+    # TT,TE,Tphi
+    # TE,EE,Ephi
+    # phiT,phiE,phiphi
+    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
+                     [data[iell, 4, parbin], data[iell, 2, parbin],               0.]
+                     ]
+                    )
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -185,16 +210,23 @@ def calc_c_general(data, parabin):
 
 # TODO LOAD EVERYTHING FROM INI
 # =============================
-l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 4499
-lmin = 5
-N_det = 10 ** 6
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
+
+# \THIS IS  A PLANCK \TIPE EXPERIMENT
+
+
+l_t_max = 2500  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foreground
+
+
+lmax = 2500
+lmin = 2
+N_det = 'Planck'
+# No lensing
+# N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run4'
-output_folder = 'varying_all/run4/output'
-fsky = 0.75
+output_folder = ''
+fsky = 0.44
 lensed = False
-# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa','re_optical_depth','scalar_amp(1)']  # None
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
 # exclude = ['massless_neutrinos','w']
 exclude = None
 # =============================
@@ -203,7 +235,7 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
-header = 'TT fisher CMB T E + phi lensing used \n'
+header = 'Joint fisher CMB T E + phi lensing used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
@@ -281,8 +313,7 @@ print 'fisher_size', fisher.shape
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray((1, 1, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
-
+derivatives = np.ndarray((2, 2, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
 for i in range(0, n_values):
     # computing derivatives.
     # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
@@ -318,37 +349,30 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
-            # assuming f Eq.4
+# See http://arxiv.org/pdf/1509.07471v1.pdf tabel IV
+            if ell<50:
+                fsky=0.44
+            else:
+                fsky=0.2
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
             fisher_save[i, j, iell] = (2. * ell + 1.) / 2. * fsky * trace
             # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
 
-    # no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
-    # fisher_inv = np.linalg.inv(fisher)
+    no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
+    fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
-
-
-print 'ADDING PLANCK'
-planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
-# print planck_fisher
-# print ''
-# print fisher
-
-# print ''
-# print ''
-# fisher +=planck_fisher
 
 print 'lmax =', ell
 # print fisher_inv
 
-np.savetxt('data/{}/no_marginalized_ell_TT_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_TT_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-np.save('data/{}/full_fisher_mat_TT_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
-        fisher_save)
+# np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+#            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
+# np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+#            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
+np.save('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
+        fisher)
 
-np.savetxt('data/{}/ell_indeces_TT_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            dats[lmin_index:lmax_index, 0, 0], header=header)
 
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
@@ -360,13 +384,13 @@ fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
-utils.save_cov_matrix(
-    fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
+# utils.save_cov_matrix(
+#     fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_TT_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
                                                                                             lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_TT_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
                                                                                  lmin, lmax, N_det, fsky), fisher_single, header=header)
 
 print 'fisher=', fisher

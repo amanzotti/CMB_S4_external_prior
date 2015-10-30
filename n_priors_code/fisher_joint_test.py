@@ -199,11 +199,11 @@ def C(iell, ell, parbin, data):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 4
+lmin = 5
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_all/run2'
-output_folder = 'varying_all/run2/output'
+data_folder = 'varying_all/run4'
+output_folder = 'varying_all/run4/output'
 fsky = 0.75
 lensed = False
 # exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
@@ -252,17 +252,17 @@ new_value = {}
 # ===============
 
 # use different order formula same gap
-order = 9
-# step = np.array([-4,-3,-2,-1,1,2,3,4])
-step = np.array([-8,-6,-4,-2,2,4,6,8])
+order = 5
+# # step = np.array([-4,-3,-2,-1,1,2,3,4])
+# step = np.array([-8,-6,-4,-2,2,4,6,8])
 
-for key in values.keys():
-  new_value[key] = par_gaps[key] * step + fid[key]
-for key in values.keys():
-  par_gaps[key]= np.abs(new_value[key][0]-new_value[key][1])
-new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
-values = new_value
-# ===============
+# for key in values.keys():
+#   new_value[key] = par_gaps[key] * step + fid[key]
+# for key in values.keys():
+#   par_gaps[key]= np.abs(new_value[key][0]-new_value[key][1])
+# new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+# values = new_value
+# # ===============
 
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
 
@@ -338,6 +338,17 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
     fisher_inv = np.linalg.inv(fisher)
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
+
+
+print 'ADDING PLANCK'
+planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
+# print planck_fisher
+# print ''
+# print fisher
+
+# print ''
+# print ''
+fisher +=planck_fisher
 
 print 'lmax =', ell
 # print fisher_inv

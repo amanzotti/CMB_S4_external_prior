@@ -44,7 +44,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 2
+run_idx = 4
 lmax = 4499
 lmin = 4
 N_det = 10 ** 6
@@ -229,8 +229,8 @@ for key_y in ['omnuh2']:
     ax1.set_ylim((0.8 * np.amin(new_sigma_all)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
     ax1.set_xlim((0.1 , 3.1))
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
-    ax1.set_ylabel(r'$\sigma(M_{\nu}) $ meV')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
+    ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm CMB}$')
 
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()

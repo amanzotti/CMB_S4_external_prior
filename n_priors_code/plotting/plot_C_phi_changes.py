@@ -26,8 +26,8 @@ from matplotlib.ticker import MaxNLocator  # needed for tick
 # READ DATA
 
 
-data_type ='varying+Yp'
-run_idx = 1
+data_type ='varying_all'
+run_idx = 4
 
 
 # READ PARAMS
@@ -164,19 +164,19 @@ plt.rcParams['legend.handletextpad'] = 0.3
 
 label = {}
 
-
 label['massless_neutrinos'] = 'N_{eff}'
 label['hubble'] = 'H_{0}'
-label['mnu'] = 'M'
 label['scalar_amp(1)'] = 'A_{s}'
 label['scalar_spectral_index(1)'] = 'n_{s}'
-label['omnuh2'] = r'\Omega_{\nu}h^{2}'
-label['re_optical_depth'] = r'\tau'
-label['ombh2'] = '\Omega_{b}h^{2}'
-label['ombch2'] = '\Omega_{m}h^{2}'
-label['omch2'] = '\Omega_{c}h^{2}'
-label['helium_fraction'] = 'Y_{p}'
+label['omnuh2'] = r'\Omega_{\nu}'
+label['re_optical_depth'] = r'~\tau'
+label['ombh2'] = '\Omega_{b}'
+label['omch2'] = '\Omega_{c}'
 label['w'] = 'w'
+label['wa'] = 'w_{a}'
+label['helium_fraction'] = 'Y_{p}'
+label['scalar_nrun(1)'] = r'\alpha_{s}'
+label['omk'] = r'\Omega_{k}'
 
 
 for i, key in enumerate(par_gaps.keys()):

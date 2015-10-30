@@ -36,7 +36,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
-plot_now = ['omnuh2','w']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -46,7 +46,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
 run_idx = 4
 lmax = 4499
-lmin = 4
+lmin = 50
 N_det = 10 ** 6
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
 fsky = 0.75
@@ -231,6 +231,7 @@ for y, key_y in enumerate(plot_param):
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
     ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm old}$')
+    ax1.set_title(r'${}<\ell$'.format(lmin))
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
     minor_loc = ax1.yaxis.get_minor_locator()
