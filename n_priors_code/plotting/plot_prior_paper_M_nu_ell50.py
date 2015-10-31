@@ -55,7 +55,7 @@ fid = pickle.load(open(base_dir + 'data/{}/run{}/fid_values.p'.format(data_type,
 values = pickle.load(open(base_dir + 'data/{}/run{}/grid_values.p'.format(data_type, str(run_idx)), "rb"))
 par_gaps = pickle.load(open(base_dir + 'data/{}/run{}/par_gaps.p'.format(data_type, str(run_idx)), "rb"))
 fisher_mat = np.loadtxt(
-    base_dir + 'data/{}/run{}/output/fisher_mat_CMB_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(data_type, str(run_idx), lmin, lmax, N_det, fsky))
+    base_dir + 'data/{}/run{}/output/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(data_type, str(run_idx), lmin, lmax, N_det, fsky))
 
 par_gaps, values, fid, fisher_mat = utils.exclude_parameters_from_fisher(
     excluded_parameters, par_gaps, values, fid, fisher_mat)
@@ -246,7 +246,7 @@ for key_y in ['omnuh2']:
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/CMB_prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     plt.clf()
 

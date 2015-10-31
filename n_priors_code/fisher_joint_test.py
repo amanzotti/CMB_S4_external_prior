@@ -199,7 +199,7 @@ def C(iell, ell, parbin, data):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 4
+lmin = 50
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run4'
@@ -348,7 +348,7 @@ planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_co
 
 # print ''
 # print ''
-# fisher +=planck_fisher
+fisher +=planck_fisher
 
 print 'lmax =', ell
 # print fisher_inv
