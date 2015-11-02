@@ -51,6 +51,8 @@ import utils
 import pickle
 import sys
 import collections
+from scipy.integrate import quad
+
 
 # util.nl(noise_uK_arcmin, fwhm_arcmin, lmax)
 
@@ -95,6 +97,63 @@ def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
     # fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
     return ci
 
+# ROUTINES TO COMPUTE WHAT BAO CONSTRAIN, rs/DV(z)
+
+# following EISENSTEIN & HU
+
+
+def z_d(omh2, ombh2, omnuh2=0.0009):
+    '''
+    redshift drag from Eisenstein hu
+
+    om is the total matter density omc+omb
+    '''
+    om0h2 = omh2 + ombh2 + omnuh2
+    b1 = 0.313 * (om0h2)**(-0.419) * (1. + 0.607 * (om0h2)**(0.674))
+    b2 = 0.238 * (om0h2)**(0.223)
+    return 1291 * (om0h2**(0.251)) / (1. + 0.659 * om0h2**0.828) * (1 + b1 * ombh2**b2)
+
+
+
+def R(z, ombh2, T_cmb=2.725 / 2.7):
+    return 31.5 * ombh2 * T_cmb**-4 * (z / 10**3)**-1
+
+
+def cs(z,ombh2,T_cmb=2.725 / 2.7):
+  c=1.
+  return c/np.sqrt(3.*(1.+R(ombh2, z, T_cmb=2.725 / 2.7)))
+
+
+def H_over_h0(z, ombh2, omh2, w, h0):
+    om = (omh2 + ombh2) / h0**2
+    om_rad = 5.46 * 10**-5
+    return np.sqrt((om) * (1 + z)**3 + om_rad**4 + (1 - om) * (1 + z)**(3. * (1. + w)))
+
+
+def Da(z, ombh2, omh2, w, h0):
+    '''comoving distance'''
+    from scipy.integrate import quad
+    def integrand(z, ombh2, omh2, w, h0):
+        return (3000 / h0) / (H_over_h0(z, ombh2, omh2, w, h0))
+    return quad(integrand, 0, 1090, args=(ombh2, omh2, w, h0), epsrel=1.49e-09)[0]
+
+
+def Dv(z, ombh2, omh2, w, h0):
+    '''
+    from eq 2 of
+    1304.6984v2
+    '''
+    c=1.
+    return ((1 + z)**2 * Da(z, ombh2, omh2, w, h0)**2 * c * z / H(z, ombh2, omh2, w, h0))
+
+
+def rs(z,ombh2, omh2, w, h0):
+    from scipy.integrate import quad
+    def integrand(z, ombh2, omh2, w, h0):
+        return cs(z,ombh2,T_cmb=2.725 / 2.7)/(h0*H_over_h0(z, ombh2, omh2, w, h0))
+    rs = quad(integrand, z_d(omh2, ombh2, omnuh2=0.0009), 3100, args=(ombh2, omh2, w, h0), epsrel=1.49e-09)[0]
+    return rs
+
 
 def calc_c_fiducial(data):
     '''
@@ -132,7 +191,15 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-    return np.array([[data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]])
+    return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N, data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 6, 0]],
+
+                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
+                         fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
+
+                     [data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
+                      data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
+
+                     ])
 
 
 def calc_c_general(data, parabin):
@@ -146,34 +213,39 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
-    return np.array([[data[lmin_index:lmax_index, 5, parabin]]])
+    return np.array([[data[lmin_index:lmax_index, 1, parabin], data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
+                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
+                                                                    2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
+                     [data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
+                      data[lmin_index:lmax_index, 5, parabin]]
+                     ])
 
 
-# def C(iell, ell, parbin, data):
-#     '''
+def C(iell, ell, parbin, data):
+    '''
 
-#     Here is used to compute derivatives so we do not need noise
+    Here is used to compute derivatives so we do not need noise
 
-#     Given CMB data dats it normalize them anf create a 3x3 matrix
+    Given CMB data dats it normalize them anf create a 3x3 matrix
 
-#     ell is the multiple
-#     iell is the index in the data ell corresponds to
+    ell is the multiple
+    iell is the index in the data ell corresponds to
 
-#     remember the order from CAMB
-#      l CTT CEE CBB CTE Cdd CdT CdE
+    remember the order from CAMB
+     l CTT CEE CBB CTE Cdd CdT CdE
 
 
-#     '''
-#     # noise definition from the number of observations and time
-#     # eq 1 of W.hu et al snowmass paper 10^6 detectors
-#     # is it a 3x3 matrix? with
-#     # TT,TE,Tphi
-#     # TE,EE,Ephi
-#     # phiT,phiE,phiphi
-#     return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
-#                      [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
-#                      [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
-#                     )
+    '''
+    # noise definition from the number of observations and time
+    # eq 1 of W.hu et al snowmass paper 10^6 detectors
+    # is it a 3x3 matrix? with
+    # TT,TE,Tphi
+    # TE,EE,Ephi
+    # phiT,phiE,phiphi
+    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
+                     [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
+                     [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
+                    )
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -186,14 +258,14 @@ def calc_c_general(data, parabin):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 50
+lmin = 5
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run4'
 output_folder = 'varying_all/run4/output'
 fsky = 0.75
 lensed = False
-# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w', 'wa','re_optical_depth','scalar_amp(1)']  # None
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
 # exclude = ['massless_neutrinos','w']
 exclude = None
 # =============================
@@ -202,7 +274,7 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
-header = 'phi fisher CMB T E + phi lensing used \n'
+header = 'Joint fisher CMB T E + phi lensing used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
@@ -280,7 +352,7 @@ print 'fisher_size', fisher.shape
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
 
-derivatives = np.ndarray((1, 1, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
+derivatives = np.ndarray((3, 3, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
 
 for i in range(0, n_values):
     # computing derivatives.
@@ -323,31 +395,32 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
 
     no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
-    # fisher_inv = np.linalg.inv(fisher)
-    # marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
+    fisher_inv = np.linalg.inv(fisher)
+    marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
 print 'ADDING PLANCK'
-planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
+planck_fisher = np.loadtxt(
+    '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
 # print planck_fisher
 # print ''
 # print fisher
 
 # print ''
 # print ''
-fisher +=planck_fisher
+fisher += planck_fisher
 
 print 'lmax =', ell
 # print fisher_inv
 
-np.savetxt('data/{}/no_marginalized_ell_phi_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_phi_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-np.save('data/{}/full_fisher_mat_phi_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
+np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
         fisher_save)
 
-np.savetxt('data/{}/ell_indeces_phi_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            dats[lmin_index:lmax_index, 0, 0], header=header)
 
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
@@ -363,9 +436,9 @@ utils.save_cov_matrix(
     fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_phi_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
                                                                                             lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_phi_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
                                                                                  lmin, lmax, N_det, fsky), fisher_single, header=header)
 
 print 'fisher=', fisher

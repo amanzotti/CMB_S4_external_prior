@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{9}%
+\begin{thebibliography}{13}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -222,6 +222,18 @@
   {volume} {405}},\ \bibinfo {pages} {2639} (\bibinfo {year} {2010})},\ \Eprint
   {http://arxiv.org/abs/astro-ph/0601389} {astro-ph/0601389} \BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {{Benoit-L{\'e}vy}}\ \emph {et~al.}(2012)\citenamefont
+  {{Benoit-L{\'e}vy}}, \citenamefont {{Smith}},\ and\ \citenamefont
+  {{Hu}}}]{benoit-levy:2012}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {{Benoit-L{\'e}vy}}}, \bibinfo {author} {\bibfnamefont {K.~M.}\ \bibnamefont
+  {{Smith}}}, \ and\ \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
+  {{Hu}}},\ }\href {\doibase 10.1103/PhysRevD.86.123008} {\bibfield  {journal}
+  {\bibinfo  {journal} {\prd}\ }\textbf {\bibinfo {volume} {86}},\ \bibinfo
+  {eid} {123008} (\bibinfo {year} {2012})},\ \Eprint
+  {http://arxiv.org/abs/1205.0474} {arXiv:1205.0474 [astro-ph.CO]} \BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
   {et~al.}(2014{\natexlab{b}})\citenamefont {{Planck Collaboration}},
   \citenamefont {{Ade}}, \citenamefont {{Aghanim}}, \citenamefont
@@ -275,4 +287,52 @@
   {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ } (\bibinfo
   {year} {2015})},\ \Eprint {http://arxiv.org/abs/1509.07471}
   {arXiv:1509.07471} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Liu}}\ \emph {et~al.}(2015)\citenamefont {{Liu}},
+  \citenamefont {{Pritchard}}, \citenamefont {{Allison}}, \citenamefont
+  {{Parsons}}, \citenamefont {{Seljak}},\ and\ \citenamefont
+  {{Sherwin}}}]{liu:2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {{Liu}}}, \bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont
+  {{Pritchard}}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {{Allison}}}, \bibinfo {author} {\bibfnamefont {A.~R.}\ \bibnamefont
+  {{Parsons}}}, \bibinfo {author} {\bibfnamefont {U.}~\bibnamefont {{Seljak}}},
+  \ and\ \bibinfo {author} {\bibfnamefont {B.~D.}\ \bibnamefont {{Sherwin}}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ }
+  (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1509.08463}
+  {arXiv:1509.08463} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Kogut}}\ \emph {et~al.}(2011)\citenamefont
+  {{Kogut}}, \citenamefont {{Fixsen}}, \citenamefont {{Chuss}}, \citenamefont
+  {{Dotson}}, \citenamefont {{Dwek}}, \citenamefont {{Halpern}}, \citenamefont
+  {{Hinshaw}}, \citenamefont {{Meyer}}, \citenamefont {{Moseley}},
+  \citenamefont {{Seiffert}}, \citenamefont {{Spergel}},\ and\ \citenamefont
+  {{Wollack}}}]{kogut:2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {{Kogut}}}, \bibinfo {author} {\bibfnamefont {D.~J.}\ \bibnamefont
+  {{Fixsen}}}, \bibinfo {author} {\bibfnamefont {D.~T.}\ \bibnamefont
+  {{Chuss}}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {{Dotson}}},
+  \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {{Dwek}}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {{Halpern}}}, \bibinfo {author}
+  {\bibfnamefont {G.~F.}\ \bibnamefont {{Hinshaw}}}, \bibinfo {author}
+  {\bibfnamefont {S.~M.}\ \bibnamefont {{Meyer}}}, \bibinfo {author}
+  {\bibfnamefont {S.~H.}\ \bibnamefont {{Moseley}}}, \bibinfo {author}
+  {\bibfnamefont {M.~D.}\ \bibnamefont {{Seiffert}}}, \bibinfo {author}
+  {\bibfnamefont {D.~N.}\ \bibnamefont {{Spergel}}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {E.~J.}\ \bibnamefont {{Wollack}}},\ }\href {\doibase
+  10.1088/1475-7516/2011/07/025} {\bibfield  {journal} {\bibinfo  {journal}
+  {\jcap}\ }\textbf {\bibinfo {volume} {7}},\ \bibinfo {eid} {025} (\bibinfo
+  {year} {2011})},\ \Eprint {http://arxiv.org/abs/1105.2044} {arXiv:1105.2044}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Baumann}}\ \emph {et~al.}(2015)\citenamefont
+  {{Baumann}}, \citenamefont {{Green}}, \citenamefont {{Meyers}},\ and\
+  \citenamefont {{Wallisch}}}]{baumann:2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {{Baumann}}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {{Green}}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {{Meyers}}}, \ and\
+  \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {{Wallisch}}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ }
+  (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1508.06342}
+  {arXiv:1508.06342} \BibitemShut {NoStop}%
 \end{thebibliography}%
