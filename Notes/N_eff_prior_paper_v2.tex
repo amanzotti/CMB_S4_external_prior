@@ -37,16 +37,16 @@
 
 %Title of paper
 \title{External priors for the next generation of CMB experiments.}
-
-\author{Alessandro Manzotti}
-\email{\href{mailto:manzotti.alessandro@gmail.com}{manzotti.alessandro@gmail.com}}
-\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
-\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
-\author{Scott Dodelson}
-
-\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
-\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
-\affiliation{Fermilab Center for Particle Astrophysics, Fermi National Accelerator Laboratory, Batavia, IL 60510-0500}
+%
+%\author{Alessandro Manzotti}
+%\email{\href{mailto:manzotti.alessandro@gmail.com}{manzotti.alessandro@gmail.com}}
+%\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
+%\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
+%\author{Scott Dodelson}
+%
+%\affiliation{Department of Astronomy \& Astrophysics, University of Chicago, Chicago IL 60637}
+%\affiliation{Kavli Institute for Cosmological Physics, Enrico Fermi Institute, University of Chicago, Chicago, IL 60637}
+%\affiliation{Fermilab Center for Particle Astrophysics, Fermi National Accelerator Laboratory, Batavia, IL 60510-0500}
 
 \date{\today}
 \begin{abstract}
@@ -89,7 +89,7 @@ This paper is organized as follow: in \refsec{methods} we introduce the techniqu
 \section{Assumptions and methods \label{sec:methods}}
 
 
-To measure quantitatively the impact of external priors on the CMB ability to constrain cosmological parameters we use a Fisher matrix formalism. In this section we will quickly review  the technique and we will then present our fiducial cosmological model together with the experimental specifications we used.
+To measure quantitatively the impact of external priors on the CMB ability to constrain cosmological parameters we use a Fisher matrix formalism. In this section we will quickly review the technique and we will then present our fiducial cosmological model together with the experimental specifications we used.
 
 As usual, we define the Fisher matrix elements as the curvature of the likelihood:
 \begin{equation}
@@ -111,16 +111,17 @@ In this work we constrain cosmological parameters with CMB temperature and E mod
 		\mathbf{C}_\ell \equiv \left( \begin{array}{ccc}C_\ell^{TT} + N_\ell^{TT} & C_\ell^{TE} & C_\ell^{T\phi} \\ C_\ell^{TE} & C_\ell^{EE} + N_\ell^{EE} & 0 \\ C_\ell^{T\phi} & 0 & C_\ell^{\phi} + N_\ell^{\phi}\end{array}\right).
 	\label{eqn:cov_definition}
 \end{eqnarray}
-Note that we are neglecting the term $C_\ell^{E\phi}$. As also noticed in previous literature \cite{wu:2014,2013PhRvD..87h3008H} this term contains very little information while adding possible numerical issues.
 The terms $N_\ell^{X}$ represents the instrumental noise power of the specific experiment and will be described at the end of this section.
+Note that we are neglecting the term $C_\ell^{E\phi}$. As also noticed in previous literature \cite{wu:2014,2013PhRvD..87h3008H} this term contains very little information while adding possible numerical issues.
+Furthermore, as in \cite{wu:2014}, we decided to use \textit{unlensed} spectra and gaussian covariances in \refeq{Fij_def2}. An eventual imperfect reconstruction of the unlensed spectra (delensing) and non gaussian effects described in \cite{benoit-levy:2012} will degrade the parameters constrained derived in this work.
 
-A lower bound on the error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, can be easily obtained as:
+A lower bound on the error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, can be obtained as:
 \begin{equation}
 \sigma_i \equiv \sigma (\theta_i) \geq \sqrt{(\mathbf{ F^{-1}})_{ii}}.
 \label{eqn:cramer-rao}
 \end{equation}
-Furthermore it is easy to introduce external priors on cosmological parameters.
-Indeed we simply need to add to the Fisher matrixes elements the external priors (before we perform the matrix inversion of \refeq{cramer-rao}).
+Furthermore we can introduce external priors on cosmological parameters.
+Indeed we simply need to add to the Fisher matrix elements the external priors (before we perform the matrix inversion of \refeq{cramer-rao}).
 For example, a $1\%$ prior on the parameter $i$ can be added by:
 \begin{equation}
 F_{ii} \rightarrow F_{ii} + \frac{1}{(1\% \times  \theta_{i,\text{fid}})^2}.
@@ -171,7 +172,12 @@ In this section we present our main results. We will start from our base $\nu \L
 
 \subsection{Neutrino Masses, $\sum m_\nu$}
 
-Small scale structure formation is suppressed if fast-moving neutrinos comprise a significant part of the matter budget. This effect, probed by CMB lensing, will allow us to determine the contribution of neutrinos to the total matter density. Since the active neutrino number densities are known in the standard model, this can be directly transformed into a constraint on the the sum of the neutrino masses, $\sum m_\nu$. This is particularly exciting because we now know that neutrinos are massive, with a lower limit  $\sum m_\nu>0.05$ eV that emerges from oscillation experiments. 
+
+
+Small scale structure formation is suppressed if fast-moving neutrinos comprise a significant part of the matter budget. 
+Indeed, below the current free-streaming scale, the matter power power spectrum is suppressed in the presence of
+massive neutrinos by a factor -8$f_{\nu}$ , where $f_{\nu} = \Omega_{\nu} / \Omega_{m}$ is the contribution of neutrinos to the total matter density.
+This effect is probed by CMB lensing and since the active neutrino number densities are known in the standard model, this can be directly transformed into a constraint on the the sum of the neutrino masses, $\sum m_\nu$. This is particularly exciting because we now know that neutrinos are massive, with a lower limit  $\sum m_\nu>0.05$ eV that emerges from oscillation experiments. 
 
 %In CMB experiment, neutrino masses constraint comes almost entirely from lensing. When the total mass of neutrinos the CMB lensing power spectrum amplitude decreases at scales smaller than the free-streeming scale of neutrinos. This effect is degenerate with an overall change of the power spectrum amplitude $A_{s}$.    
 
@@ -191,7 +197,7 @@ In the figure, the constraints on the sum of the neutrino masses as a function o
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{{prior_omnuh2_snow_mass_lmin=50_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
-\caption{Some as \reffig{prior_omeganuh2} but with $\pmb{\ell_{\rm min}>50}$ as a function of priors on cosmological parameters, as in \reffig{prior_massless_neutrinos}. }
+\caption{Some as \reffig{prior_omeganuh2} but with $\pmb{\ell_{\rm min}>50}$. Here $A_{s}$ and $\tau$ priors will also helps because of their degeneracy with $\sum m_{\nu}$.}
 \label{fig:prior_omeganuh2_tau}
 \end{center}
 \end{figure}
@@ -200,13 +206,18 @@ In the figure, the constraints on the sum of the neutrino masses as a function o
 
 \reffig{prior_omeganuh2} shows the errors on $\sum m_\nu$ with a CMB S4 experiment ($N_{det}=10^{6}$, $f_{sky}=0.75$,  $2<\ell<5000$) as a function of external priors.
 Without any external priors, upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 30 meV, corresponding to close to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed in \cite{2013arXiv1309.5383A,pan:2015,allison:2015}. 
-There, the prior was described as ``DESI BAO'', that is a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. Here, the same improvement is parametrized by a strong prior on $\Omega_ch^2$ and $H_{0}$, which indeed determines these low-redshift distances. 
-Notice that external prior effect are not completely independent. An external prior on $H_{0}$ for example, improve the internal reconstruction of $\Omega_ch^2$ as well.
-As found in \cite{2013arXiv1309.5383A}, the projected error falls below 20 meV with this prior. Adding in other priors would help further.
+There, the prior was described as ``DESI BAO'', that is a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. Here, the same improvement is parametrized by a strong prior on $\Omega_ch^2$ and $H_{0}$, which indeed are constrained by these low-redshift distances.
+The improvement given by a prior on $\Omega_ch^2$ is a consequence of the fact that the CMB lensing is sensitive to $f_\nu$, therefore in order to constrain $\Omega_{\nu}h^2$ from this ratio we need to determine the matter energy density. 
+A prior on  $H_{0}$ would help as well since the effects of external priors are not completely independent.
+The position of the CMB peaks, well constrained by measurement, is a function $\Omega_ch^3$ and for this reason an external prior on $H_{0}$ will improve the internal reconstruction of $\Omega_ch^2$.
+As found in \cite{2013arXiv1309.5383A}, the projected error falls below 20 meV with these priors. Adding in other priors would help further.
 
 In \reffig{prior_omeganuh2_tau} we limit CMB accessible modes to $\ell_{\rm min}>50$. 
-Together with the importance of $H_{0}$ and $\Omega_ch^2$ that we also observed in \reffig{prior_omeganuh2}, in this case external priors on $A_{s}$ and $\tau$ will be helpful.
-Indeed as recently pointed out by \cite{allison:2015}, a degeneracy exists between $\sum m_\nu$ and $\tau$. A measurement of the optical depth will help to constraint the primordial amplitude $A_{s}$ which is degenerate with the mass of neutrinos. Indeed, increasing the mass of neutrinos will decrease the CMB lensing power spectrum and this can be compensating by increasing $A_{s}$.
+Together with the importance of $H_{0}$ and $\Omega_ch^2$ that we also observed in \reffig{prior_omeganuh2}, in this case external priors on $A_{s}$ and $\tau$ will also be helpful.
+Indeed, as recently pointed out by \cite{allison:2015}, a degeneracy exists between $\sum m_\nu$ and $A_{s}$ and as a consequence between $\sum m_\nu$ and $\tau$. This can be understood as follow.
+The CMB lensing reconstruction is noisy at scales larger than the neutrino free streaming scale (see Fig.5 of \cite{2013arXiv1309.5383A}). For this reason it is hard to measured the unsuppressed lensing CMB power spectra that is needed to constrain the values of $f_{\nu}$. The unsuppressed amplitude is actually derived from the primordial amplitude $A_{s}$.
+%Indeed, increasing the mass of neutrinos will decrease the CMB lensing power spectrum and this can be compensating by increasing $A_{s}$.
+A measurement of the optical depth will help to constraint the primordial amplitude $A_{s}$ internally since the CMB is sensitive to $A_{s}\exp^{-2\tau}$. If CMB S4 will not be designed to measure scales $\ell<50$ an external prior on the optical depth from future 21 cm surveys \cite{liu:2015} or CMB satellite experiments like PIXIE \cite{kogut:2011} will be needed to fully exploit the CMB constraining power.
 
 \subsection{Relativistic Degrees of Freedom, $N_{\rm eff}$}
 
@@ -223,7 +234,10 @@ Furthermore any possible significant deviation from this value could be a hint o
 \end{figure}
 %==========
 
-\reffig{prior_massless_neutrinos} shows projections for how well our suite of CMB experiments will do at measuring $N_{\rm eff}$ as a function of priors on the other 6 parameters in the standard cosmological model ($H_0, \Omega_mh^2,\Omega_bh^2, n_s, A_s,$ and $\tau$). With no priors on the other parameters, the projected $1$-sigma error is  about $0.02$, suggesting a 2-sigma detection of the deviation from $N_{\rm eff}=3$. The sensitivity comes from the effect of extra species on the damping tail of the CMB anisotropies \cite{2013PhRvD..87h3008H}, both in temperature and polarization, so parameters that also affect the shape of the damping tail, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are most degenerate with $N_{\rm eff}$. As such, \reffig{prior_massless_neutrinos} shows that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to ensure a 3-sigma detection of the partial decoupling prediction. The bottom-most curve shows that if all parameters were constrained externally, then the projected error on $N_{\rm eff}$ would improve significantly.
+\reffig{prior_massless_neutrinos} shows projections for how well our suite of CMB experiments will do at measuring $N_{\rm eff}$ as a function of priors on the other six parameters. With no priors on the other parameters, the projected $1$-sigma error is  about $0.02$, suggesting a 2-sigma detection of the deviation from $N_{\rm eff}=3$. The bottom-most curve shows that if all parameters were constrained externally, then the projected error on $N_{\rm eff}$ would improve significantly. 
+
+The sensitivity to relativistic degrees of freedom comes from the effect of extra species on the damping tail of the CMB anisotropies \cite{2013PhRvD..87h3008H}, both in temperature and polarization, so parameters that also strongly affect this part of the spectrum, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are the most degenerate with $N_{\rm eff}$. As such, \reffig{prior_massless_neutrinos} shows that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to ensure a 3-sigma detection of the partial decoupling prediction. Also as noticed in \cite{baumann:2015} tight constraints on $N_{\rm eff}$ will allow to rule out early thermalized particles that decoupled early in the thermal history.
+
 
 \subsection{Dark Energy Equation of State, $w$}
 
@@ -254,13 +268,13 @@ Furthermore the CMB lensing probes the growth of structure at late times which i
 
 
 \reffig{prior_w} shows that without any priors, CMB experiments will not do much better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ considerably. 
-This primarily due to the fact that CMB constrained $w$ through a measurement of the last scattering surface. However that distance can be kept fixed while varying $w$ by accordingly changing the value of $H_{0}$ (and $\Omega_{\Lambda}$ to keep the universe flat). Indeed in a two dimensional ($H_{0},w$) the CMB constrained approximately lies on the region of constant large scattering surface as shown in \reffig{ellipse_w_H0}.
+This primarily due to the fact that CMB constrained $w$ through a precise measurement of the comoving distance to the last scattering surface. However that can be kept fixed while varying $w$ by accordingly changing the value of $H_{0}$ (and $\Omega_{\Lambda}$ to keep the universe flat). Indeed in a two dimensional ($H_{0},w$) the CMB constrained approximately lies on the region of constant large scattering surface distance as shown in \reffig{ellipse_w_H0}.
 Notice that an external prior on $H_{0}$ three times more accurate than CMB S4 can improve the CMB constraint almost by a factor of three from a $8\%$ error to a $3\%$ level.
 
 \section{Conclusions  \label{sec:conclusions}}
-The design of the next CMB Stage IV experiments represents an exciting challenge. The possible reward is remarkable. We can finally put a tight constraint on the total mass of neutrinos with deeply implications on particle physics like, for example, the solution of the mass hierarchy problem. We will measure with great accuracy the number of relativistic species, both testing standard model prediction and, eventually, probing new physics. The same is true for dark energy where we will tighten the constraint on $w$,$w_{a}$ getting closer to test the nature of the accelerated expansion of the universe. These results, however, will not be possible without an optimal synergy with the other experiments observing a variety of others cosmological probes.
+The design of the next CMB Stage IV experiments represents an exciting challenge. The possible reward is remarkable. We can finally put a tight constraint on the total mass of neutrinos with deeply implications on particle physics like, for example, the solution of the mass hierarchy problem. We will measure with great accuracy the number of relativistic species, both testing standard model prediction and, eventually, probing new physics. The same is true for dark energy where we will tighten the constraint on $w$,$w_{a}$ getting closer to test the nature of the accelerated expansion of the universe. These results, however, will not be possible without an optimal synergy with external experiments observing a variety of others cosmological probes.
 Indeed this should be taken into account, especially during the CMB Stage IV planning phase. Understanding CMB weaknesses and the impact of external data can have a deep influence in the needed experiment specifications.
-For this reason in this work we explored the impact of external priors on CMB S$4$ cosmological constraints and in particular on the neutrino sector and dark energy parameters.
+For this reason in this work we explored the impact of external priors on CMB S4 cosmological constraints and in particular on the neutrino sector and dark energy parameters.
 We find:
 \begin{description}
 \item[$\sum m_\nu$] To improve the CMB constraint by a factor of two, low-redshift measurements will be needed... If the final design of CMB S4 will not include measurement at large scale ($\ell<50$) external constraint on the primordial amplitude will be needed. Moreover, an external prior on $\tau$ will allow the CMB to constraint $A_{s}$ internally thus strongly alleviating the problem.
