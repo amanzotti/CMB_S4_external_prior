@@ -14,6 +14,7 @@
 
 %\newcommand\sd[1]{{\bf SD: #1}}
 \newcommand{\sd}[1]{\textcolor{red}{[{\bf SD}: #1]}}
+\newcommand{\am}[1]{\textcolor{blue}{[{\bf AM}: #1]}}
 
 %\newcommand\refsec[1]{\S\ref{sec:#1}}
 %\newcommand\refeq[1]{Eq.~(\ref{eqn:#1})}
@@ -91,7 +92,7 @@ We find that CMB S4 constraints on neutrino mass will be strongly enhanced by ex
 Since their earliest incarnations, Cosmic Microwave Background (CMB) experiments have been crucial in furthering our understanding of the universe. They will maintain their role also in the near future, thanks to the unprecedented low level of noise and high resolution expected in next generation, dubbed Stage IV (S4)~\cite{2013arXiv1309.5383A}.
 The recent past is  reassuring. Every new generation of satellite experiments improved the level of sensitivity by almost a factor of ten compared to its predecessor, from the first generation instrument COBE to WMAP all the way to the current state of the art represented by Planck \cite{2015arXiv150201589P,2014A&A...571A..16P,2003ApJS..148..175S,2000ApJ...545L...5H,2000Natur.404..955D}.
 These led us from the first detection of anisotropy in the CMB temperature with COBE to a cosmic variance limited measurement of several acoustic peaks with Planck. With the improved sensitivity we have extended our understanding of the universe so that we now have solid evidence for a flat geometry and a well tested model $\Lambda$CDM with percent level constraints on its parameters.
-The same success has characterized ground CMB experiments, where the evolution from \sd{need to add at least boomerang, probably lots others if we are going to list a few} DASI \cite{2002ApJ...568...38H} to SPT and ACT \cite{2011ApJ...739...52D} \cite{2011ApJ...743...28K} allowed us to measure the small scale damping tale of the CMB spectrum with increasing accuracy.
+The same success has characterized ground CMB experiments, where the evolution from \sd{need to add at least boomerang, probably lots others if we are going to list a few} \am{it is ok for me to skip the list entirely otherwise feel free to add names I can add references later} DASI \cite{2002ApJ...568...38H} to SPT and ACT \cite{2011ApJ...739...52D} \cite{2011ApJ...743...28K} allowed us to measure the small scale damping tale of the CMB spectrum with increasing accuracy.
 
 This pattern of successes is far from over. The next generation of CMB experiments (S4), now in its planning stage, will potentially measure the E-mode polarization with cosmic variance limited precision together with an order of magnitude improvement in B-mode measurement and lensing reconstruction. As has happened in the past, this new sensitivity together with the progress in the measurement of other cosmological probes will improve our understanding of several areas of astrophysics like dark matter, inflation, dark energy and neutrinos. 
 
@@ -141,7 +142,9 @@ In this work we constrain cosmological parameters with CMB temperature and E mod
 \end{eqnarray}
 The terms $N_\ell^{X}$ represent the instrumental noise power of the specific experiment and will be described at the end of this section.
 Note that we are neglecting the term $C_\ell^{E\phi}$ since it  contains very little information while adding possible numerical issues~\cite{wu:2014,2013PhRvD..87h3008H}.
-Furthermore, as in \cite{wu:2014}, we use \textit{unlensed} spectra and gaussian covariances in \refeq{Fij_def2}. \sd{Can we say something more positive about these effects? Why are we allowing ourselves to make this approximation?} Introducing eventual imperfect reconstruction of the unlensed spectra (delensing) and non-gaussian effects described in \cite{benoit-levy:2012} will go in the direction of degrading the parameters constrained derived in this work.
+Furthermore, as in \cite{wu:2014}, we use \textit{unlensed} spectra and gaussian covariances in \refeq{Fij_def2}. 
+\am{My understanding is that people do that: unlensed to avoid double counting in the informations with $C^{\phi}$, Aurelien and Wayne showed that unlensed + gaussian is similar to lensed + non-gaussian how big is the effect i do not know. Aurelien is writing a paper about that}
+\sd{Can we say something more positive about these effects? Why are we allowing ourselves to make this approximation?} Introducing eventual imperfect reconstruction of the unlensed spectra (delensing) and non-gaussian effects described in \cite{benoit-levy:2012} will go in the direction of degrading the parameters constrained derived in this work.
 
 The projected error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, is then:
 \begin{equation}
@@ -213,7 +216,7 @@ This effect is probed by CMB lensing and, since the active neutrino number densi
 \includegraphics{{prior_omnuh2_snow_mass_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
 \caption{
 Constraints on the sum of the neutrino masses as a function of priors on cosmological parameters. %($N_{det}=10^{6}$,$f_{sky}=0.75$, $2<\ell<5000$ ). 
-Each prior is expressed in units of the error that would be obtained internally from the CMB experiment; e.g., $\sigma(H_0)_{\rm CMB}=0.6\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.6\%. $H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV and we impose a Planck-like prior\sd{What does Planck prior mean here?}. The blue horizontal line correspond to the CMB S4+BAO constraint of \cite{wu:2014}.}
+Each prior is expressed in units of the error that would be obtained internally from the CMB experiment; e.g., $\sigma(H_0)_{\rm CMB}=0.6\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.6\%. $H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV and we impose a Planck-pol prior . The blue horizontal line correspond to the CMB S4+BAO constraint of \cite{wu:2014}.}
 \label{fig:prior_omeganuh2}
 \end{center}
 \end{figure}
@@ -231,12 +234,13 @@ Each prior is expressed in units of the error that would be obtained internally 
 %==========
 %As recently pointed out by \cite{allison:2015} there are two important regimes for neutrino masses constraint. In the first one,  large scale are assumed to be accessible by CMB experiments and, as a consequence the optical depth $\tau$ can be constrained internally by measuring the reionization bump. A second possibility is that CMB S4 will be  limited to smaller scales and therefore it will have to rely on external priors to constrain $\tau$. This can be given by current stage CMB experiments like Planck as well as future 21 cm survey \cite{liu:2015}. This distinction is important because the optical depth and the neutrino mass are quite degenerate and this will be limiting the constraint in the context of very precise future CMB experiments (see \cite{allison:2015} for details).
 
-\reffig{prior_omeganuh2} shows the errors on $\sum m_\nu$ with a CMB S4 + Planck experiment\sd{What does Planck prior mean?} %($N_{det}=10^{6}$, $f_{sky}=0.75$,  $2<\ell<5000$) 
-as a function of external priors. Without any external priors (far right in figure), upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 30 meV, corresponding to close to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed, for example, in \cite{2013arXiv1309.5383A,pan:2015,allison:2015}. 
+\reffig{prior_omeganuh2} shows the errors on $\sum m_\nu$ with a CMB S4 + Planck experiment as a function of external priors. 
+Our Planck prior corresponds to the ``Planck-pol'' specifications of \cite{allison:2015}, where noise levels were approximated by scaling the current sensitivities according to the Planck Blue Book.
+Without any external priors (far right in figure), upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 30 meV, corresponding to close to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed, for example, in \cite{2013arXiv1309.5383A,pan:2015,allison:2015}. 
 There, the prior was described as ``DESI BAO'', that is a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. Here, the same improvement is parametrized by a strong prior on $\Omega_ch^2$ and $H_{0}$, which indeed are constrained by these low-redshift distances.
 The improvement given by a prior on $\Omega_ch^2$ is also a consequence of the fact that the CMB lensing is sensitive to $f_\nu$; therefore in order to constrain $\Omega_{\nu}h^2$ from this ratio we need to determine the matter energy density. 
 A prior on  $H_{0}$ helps with this as well since the effects of external priors are not completely independent.
-The position of the CMB peaks, well constrained by measurement, is a function $\Omega_ch^3$\sd{get the right power from the Planck paper and cite that} and for this reason too an external prior on $H_{0}$ will improve the internal reconstruction of $\Omega_ch^2$.
+The position of the CMB peaks, well constrained by measurement, is a function $\Omega_ch^{2.93}$ \cite{planck-collaboration:2014} and for this reason too an external prior on $H_{0}$ will improve the internal reconstruction of $\Omega_ch^2$.
 As found in \cite{2013arXiv1309.5383A,pan:2015,allison:2015}, the projected error falls below 20 meV with these priors.
 
 It may be difficult to get the very low-$l$ modes from the ground with CMB-S4, so in \reffig{prior_omeganuh2_tau} we limit the modes to $\ell_{\rm min}>50$. 
@@ -318,7 +322,7 @@ Furterhemore, if the final design of CMB S4 will not include measurement at larg
 
 
 \begin{acknowledgments}
-AM wants to thank Zhen Pan who allowed a careful cross-check of our results.
+We thank Wayne Hu for useful discussions. AM wants to thank Zhen Pan who allowed a careful cross-check of our results.
 This work was partially supported by the Kavli Institute for Cosmological Physics at the University of Chicago through grants NSF PHY-1125897 and an endowment from the Kavli Foundation and its founder Fred Kavli.
 %%%=================================================================
 The work of SD is supported by the U.S. Department of Energy, including grant DE-FG02-95ER40896.
