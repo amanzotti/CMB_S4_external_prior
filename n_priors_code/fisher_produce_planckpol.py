@@ -118,16 +118,31 @@ def calc_c_fiducial(data):
     ell = data[lmin_index:lmax_index, 0, 0]
     # s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
     s = {}
+    s_pol = {}
     t = {}
     N = {}
+    N_pol = {}
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
     N_tot = np.zeros_like(ell)
-    s['143'] = 43 # this is supposed to be in muk arcmin to fit in the later used formulas
-    s['217'] = 66
-    t['217'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads beam
-    t['143'] = 7. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    N_pol_tot = np.zeros_like(ell)
 
-    for nu in ['143', '217']:
+    # 30,44,70,100,143,217,353
+    s['30'] = 145  # this is supposed to be in muk arcmin to fit in the later used formulas
+    s['44'] = 149
+    s['70'] = 137
+    s['100'] = 65
+    s['143'] = 43
+    s['217'] = 66
+    s['353'] = 200
+
+    t['30'] = 33. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['44'] = 23. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['70'] = 14. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['100'] = 10. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['143'] = 7. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['217'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads beam
+    t['353'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads bea
+    for nu in ['30', '44', '70', '100', '143', '217', '353']:
 
         # Final CMB noise definition
         N[nu] = (s[nu] * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t[nu] ** 2 / 8. / np.log(2))
@@ -135,7 +150,26 @@ def calc_c_fiducial(data):
         N_tot += 1 / N[nu]
 
     N_tot = 1. / N_tot
-    np.save('noise.npy',N_tot*fac)
+
+    # 30,44,70,100,143,217,353
+    s_pol['30'] = 0.  # this is supposed to be in muk arcmin to fit in the later used formulas
+    s_pol['44'] = 0.
+    s_pol['70'] = 450.
+    s_pol['100'] = 103.
+    s_pol['143'] = 81.
+    s_pol['217'] = 134.
+    s_pol['353'] = 406.
+
+    for nu in ['30', '44', '70', '100', '143', '217', '353']:
+
+        # Final CMB noise definition
+        N_pol[nu] = (s_pol[nu] * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t[nu] ** 2 / 8. / np.log(2))
+        # print 'Nnu',N[nu]
+        N_pol_tot += 1 / N_pol[nu]
+
+    N_pol_tot = 1. / N_pol_tot
+
+    # np.save('noise.npy',N_tot*fac)
 
     # print 'N_tot', N_tot
     # this noise is in mu_K so check CMB accordingly
@@ -149,11 +183,10 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
 
-
     return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N_tot, data[lmin_index:lmax_index, 4, 0]],
 
                      [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
-                         fac * N_tot * 2.]
+                         fac * N_pol_tot]
                      ])
 
 
@@ -222,13 +255,14 @@ lmin = 2
 N_det = 'Planck'
 # No lensing
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_all/run4'
+data_folder = 'varying_all/run7'
 output_folder = ''
 fsky = 0.44
 lensed = False
 # exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
-# exclude = ['massless_neutrinos','w']
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos']  # None
 exclude = None
+
 # =============================
 # DERIVED
 arcmin_from_fsky = fsky2arcmin(fsky)
@@ -272,16 +306,28 @@ new_value = {}
 # ===============
 
 # use different order formula same gap
+# use different order formula same gap
 order = 5
-# # step = np.array([-4,-3,-2,-1,1,2,3,4])
-# step = np.array([-8,-6,-4,-2,2,4,6,8])
+# step = np.array([-8,-7,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8])
 
-# for key in values.keys():
-#   new_value[key] = par_gaps[key] * step + fid[key]
-# for key in values.keys():
-#   par_gaps[key]= np.abs(new_value[key][0]-new_value[key][1])
-# new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
-# values = new_value
+step = np.array([-2, -1, 1, 2])
+
+for key in values.keys():
+    if key == 'massless_neutrinos':
+        new_value[key] = par_gaps[key] * step + fid[key]
+        continue
+    # if key=='omnuh2':
+    #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
+    #   print new_value[key]
+    #   continue
+
+    new_value[key] = par_gaps[key] * step + fid[key]
+for key in values.keys():
+    par_gaps[key] = np.abs(new_value[key][0] - new_value[key][1])
+new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+values = new_value
+print values, par_gaps
+
 # # ===============
 
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
@@ -350,10 +396,10 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
 # See http://arxiv.org/pdf/1509.07471v1.pdf tabel IV
-            if ell<50:
-                fsky=0.44
+            if ell < 50:
+                fsky = 0.44
             else:
-                fsky=0.2
+                fsky = 0.2
             fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
             fisher_save[i, j, iell] = (2. * ell + 1.) / 2. * fsky * trace
             # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
@@ -364,35 +410,38 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
 print 'lmax =', ell
 # print fisher_inv
-
+# BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
+# print 'ADDING BAO'
+# fisher += BAO_fisher
 # np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
 #            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
 # np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
 #            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-np.save('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
-        fisher)
+# np.save('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
+#         fisher)
 
-np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           dats[lmin_index:lmax_index, 0, 0], header=header)
+# np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+#            dats[lmin_index:lmax_index, 0, 0], header=header)
 
-# utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
-
-
-print 'finally how much constraint on parameters without prior?'
-print ''
-fisher_single = fisher.copy()
-
-fisher_inv = np.linalg.inv(fisher_single)
-
-# utils.save_cov_matrix(
-#     fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
+# # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-                                                                                            lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-                                                                                 lmin, lmax, N_det, fsky), fisher_single, header=header)
+# print 'finally how much constraint on parameters without prior?'
+# print ''
+# fisher_single = fisher.copy()
+
+# fisher_inv = np.linalg.inv(fisher_single)
+
+# # utils.save_cov_matrix(
+# #     fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
+
+
+# np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+# lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
+
+print np.shape(fisher)
+np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt', fisher, header=header)
 
 print 'fisher=', fisher
 
-utils.print_resume_stat(fisher_single, fid)
+utils.print_resume_stat(fisher, fid)

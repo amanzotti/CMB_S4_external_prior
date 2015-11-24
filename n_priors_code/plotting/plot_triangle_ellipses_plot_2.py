@@ -59,7 +59,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
 run_idx = 4
 lmax = 4499
-lmin = 50
+lmin = 4
 N_det = 10 ** 6
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
 fsky = 0.75
@@ -271,5 +271,5 @@ plt.rcParams['legend.handletextpad'] = 0.3
 # ============================================
 # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
 #             format='pdf', transparent=True)
-plt.savefig('triangle_all_prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str('joint_real'), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',format='pdf', transparent=True)
+plt.savefig('triangle_all_prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}_no_planck.pdf'.format(str('joint_real'), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',format='pdf', transparent=True)
 plt.close()

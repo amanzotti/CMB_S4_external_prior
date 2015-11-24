@@ -46,7 +46,7 @@ from scipy.integrate import quad
 # READ DATA
 
 
-no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
 plot_now = ['omnuh2','w']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
@@ -55,7 +55,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 2
+run_idx = 7
 lmax = 4499
 lmin = 4
 N_det = 10 ** 6

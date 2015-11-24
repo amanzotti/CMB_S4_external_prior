@@ -36,7 +36,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
-plot_now = ['omnuh2']
+plot_now = ['omnuh2','w']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -247,7 +247,7 @@ for y, key_y in enumerate(plot_param):
     # ============================================
 
     # ============================================
-    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig(base_dir + 'data/{}/run{}/output/prior_{}_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}_planck_w.png'.format(data_type, str(run_idx), str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='png', bbox_inches='tight')
     plt.clf()
 

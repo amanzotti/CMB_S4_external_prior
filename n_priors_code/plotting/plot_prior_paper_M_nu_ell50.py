@@ -35,7 +35,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 
-no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2', 'helium_fraction','wa','omk','scalar_nrun(1)']
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
 plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
@@ -44,7 +44,7 @@ excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # DEFINE YOUR FOLDER HERE
 base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
-run_idx = 4
+run_idx = 7
 lmax = 4499
 lmin = 50
 N_det = 10 ** 6
@@ -230,7 +230,7 @@ for key_y in ['omnuh2']:
     ax1.set_xlim((0.1, 3.1))
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck }$')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol + ~BAO15}$')
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
     minor_loc = ax1.yaxis.get_minor_locator()

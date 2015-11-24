@@ -51,6 +51,7 @@ import utils
 import pickle
 import sys
 import collections
+import statsmodels.api as sm
 
 # util.nl(noise_uK_arcmin, fwhm_arcmin, lmax)
 
@@ -68,15 +69,16 @@ def fsky2arcmin(fsky):
 
 def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
     '''
-    Given CMB data dats it normalize them anf create a 3x3 matrix
-
-    ell is the multiple
-    iell is the index in the data ell corresponds to
-
-    remember the order from CAMB
-     l CTT CEE CBB CTE Cdd CdT CdE
+    Vectorize derivative computation. Each -calc_c_general gives you the matrix C for all ell and here you
+    compute the derivative in a vectorize fashion
     '''
-    if order == 5 and np.shape(values[values.keys()[0]])[0] == 4:
+
+    if order == 3 and np.shape(values[values.keys()[0]])[0] == 2:
+
+        ci = (-calc_c_general(dats, fisher_index * 2 + 2) - calc_c_general(dats,
+                                                                           fisher_index * 2 + 1)) / (2. * pargaps[values.keys()[fisher_index]])
+
+    elif order == 5 and np.shape(values[values.keys()[0]])[0] == 4:
         ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
               calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats, fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
 
@@ -88,11 +90,8 @@ def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
         ci = (-3. * calc_c_general(dats, fisher_index * 8 + 8) + 32. * calc_c_general(dats, fisher_index * 8 + 7) - 168. *
               calc_c_general(dats, fisher_index * 8 + 6) + 672. * calc_c_general(dats, fisher_index * 8 + 5) - 672. * calc_c_general(dats, fisher_index * 8 + 4) + 168. * calc_c_general(dats, fisher_index * 8 + 3) - 32. * calc_c_general(dats, fisher_index * 8 + 2) + 3. * calc_c_general(dats, fisher_index * 8 + 1)) / (840. * pargaps[values.keys()[fisher_index]])
     else:
-        sys.exit()
-    # if eight points
-    # ci = (-calc_c_general(dats, fisher_index * 4 + 4) + 8. * calc_c_general(dats, fisher_index * 4 + 3) - 8. *
-    # calc_c_general(dats, fisher_index * 4 + 2) + calc_c_general(dats,
-    # fisher_index * 4 + 1)) / (12. * pargaps[values.keys()[fisher_index]])
+        sys.exit('order chosen or input given not correct')
+
     return ci
 
 
@@ -130,17 +129,21 @@ def calc_c_fiducial(data):
     # C_inv = [[data[:lmax_index, 1, 0] + fac * N
     #     , data[:lmax_index, 4, 0], data[:lmax_index, 6, 0]],
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
-    #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]]
+    #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
+
 
     return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N, data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 6, 0]],
 
-                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
-                         fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
+                 [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
+                     fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
 
-                     [data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
-                      data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
+                 [ data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
+                  data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
 
-                     ])
+                 ])
+
+
+
 
 
 def calc_c_general(data, parabin):
@@ -154,39 +157,16 @@ def calc_c_general(data, parabin):
      l CTT CEE CBB CTE Cdd CdT CdE
 
     '''
+
     return np.array([[data[lmin_index:lmax_index, 1, parabin], data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
-                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
-                                                                    2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
-                     [data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
-                      data[lmin_index:lmax_index, 5, parabin]]
-                     ])
+                 [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
+                                                                2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
+                 [ data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
+                  data[lmin_index:lmax_index, 5, parabin]]
+                 ])
 
 
-def C(iell, ell, parbin, data):
-    '''
 
-    Here is used to compute derivatives so we do not need noise
-
-    Given CMB data dats it normalize them anf create a 3x3 matrix
-
-    ell is the multiple
-    iell is the index in the data ell corresponds to
-
-    remember the order from CAMB
-     l CTT CEE CBB CTE Cdd CdT CdE
-
-
-    '''
-    # noise definition from the number of observations and time
-    # eq 1 of W.hu et al snowmass paper 10^6 detectors
-    # is it a 3x3 matrix? with
-    # TT,TE,Tphi
-    # TE,EE,Ephi
-    # phiT,phiE,phiphi
-    return np.array([[data[iell, 1, parbin], data[iell, 4, parbin], data[iell, 6, parbin]],
-                     [data[iell, 4, parbin], data[iell, 2, parbin],               0.],
-                     [data[iell, 6, parbin],          0.,         data[iell, 5, parbin]]]
-                    )
 
 # loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
 #  so the structure is data(:,:,i) is the i change in the parameters.
@@ -199,15 +179,15 @@ def C(iell, ell, parbin, data):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 50
+lmin = 4
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_all/run4'
-output_folder = 'varying_all/run4/output'
+data_folder = 'varying_all/run7'
+output_folder = 'varying_all/run7/output'
 fsky = 0.75
 lensed = False
-# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
-# exclude = ['massless_neutrinos','w']
+# exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos','w']  # None
+# exclude = ['massless_neutrinos']  # None
 exclude = None
 # =============================
 # DERIVED
@@ -236,38 +216,40 @@ par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
 new_value = {}
 
 # ===============
-# order = 5
-
-# i = 0  # or 1 or 2 to select different gaps for 5 point formula
-# for key in values.keys():
-#     new_value[key] = [values[key][i], values[key][i + 1], values[key][-i - 2], values[key][-i - 1]]
-
-#     if i != 2:
-#         par_gaps[key] = par_gaps[key] * (4 - 2 * i)
-
-# new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
-# values = new_value
-# ===============
 
 # ===============
 
 # use different order formula same gap
+# use different order formula same gap
 order = 5
-# # step = np.array([-4,-3,-2,-1,1,2,3,4])
-# step = np.array([-8,-6,-4,-2,2,4,6,8])
+# step = np.array([-8,-7,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8])
 
-# for key in values.keys():
-#   new_value[key] = par_gaps[key] * step + fid[key]
-# for key in values.keys():
-#   par_gaps[key]= np.abs(new_value[key][0]-new_value[key][1])
-# new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
-# values = new_value
+step = np.array([-2, -1, 1, 2])
+
+for key in values.keys():
+    if key=='massless_neutrinos':
+      new_value[key] = par_gaps[key] * step + fid[key]
+      continue
+    # if key=='omnuh2':
+    #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
+    #   print new_value[key]
+    #   continue
+
+    new_value[key] = par_gaps[key] * step + fid[key]
+for key in values.keys():
+    par_gaps[key] = np.abs(new_value[key][0] - new_value[key][1])
+new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+values = new_value
+print values,par_gaps
+
 # # ===============
 
+print par_gaps
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
-
 print 'loading files'
 dats = utils.load_data(data_folder, values, lensed)
+
+
 n_values = np.size(values.keys())
 lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
 ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
@@ -302,11 +284,14 @@ for i in range(0, n_values):
                               #   12h
     derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
 
+ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
+derivatives[:2, :2, 300:, fid.keys().index('w')]= 1/3.41 * derivatives[:2, :2, 300:, fid.keys().index('hubble')]
 
+
+# print derivatives[:2, :2, 10, fid.keys().index('w')]
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
     #  filling it the matrix l goes from l_min =2 to l_max =5000
-
     # c0 = np.zeros((3, 3))
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
@@ -340,15 +325,20 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
-print 'ADDING PLANCK'
-planck_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
+planck_fisher = np.loadtxt(
+    '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
+BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
 # print planck_fisher
 # print ''
 # print fisher
 
+# # print ''
 # print ''
-# print ''
-fisher +=planck_fisher
+print 'ADDING PLANCK POL'
+fisher += planck_fisher
+
+print 'ADDING BAO'
+fisher += BAO_fisher
 
 print 'lmax =', ell
 # print fisher_inv
@@ -366,7 +356,7 @@ np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.forma
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 
 
-print 'finally how much constraint on parameters without prior?'
+print 'finally how much constraint on parameters without external prior?'
 print ''
 fisher_single = fisher.copy()
 

@@ -210,7 +210,7 @@ for i,probes in enumerate(['CMB', 'joint']):
 
 
     # parameters =['mnu','ombch2']
-    parameters = ['omnuh2', 'hubble']
+    parameters = ['omnuh2', 'omch2']
 
 
     sigmax_squared = my_fisher_inv[fid.keys().index(parameters[0]), fid.keys().index(parameters[0])]
@@ -235,16 +235,17 @@ for i,probes in enumerate(['CMB', 'joint']):
     # two_sigma = Ellipse((fid[key_j], fid[key_i]), np.sqrt(a_fisher)*2.48, np.sqrt(b_fisher)*2.48,
     #              angle=angle_fisher, linewidth=0.5, fill=False)
     ax1.add_patch(one_sigma)
+    one_sigma.set(clip_box=ax1.bbox,
+          label=probes)
     # plt.axhline(fid[parameters[1]] - 1.52 * np.sqrt(sigmay_squared), linewidth=1)
     # plt.axhline(fid[parameters[1]] + 1.52 * np.sqrt(sigmay_squared), linewidth=1)
 
-    xl = fid[parameters[0]] - 2.52 * np.sqrt(sigmax_squared)
-    xu = fid[parameters[0]] + 2.52 * np.sqrt(sigmax_squared)
-    yl = fid[parameters[1]] - 2.52 * np.sqrt(sigmay_squared)
-    yu = fid[parameters[1]] + 2.52 * np.sqrt(sigmay_squared)
+    xl = fid[parameters[0]] - 0.8 * fid[parameters[0]]
+    xu = fid[parameters[0]] + 0.8 * fid[parameters[0]]
+    yl = fid[parameters[1]]  - 0.03 * fid[parameters[1]]
+    yu = fid[parameters[1]]  + 0.03 * fid[parameters[1]]
     ax1.set_ylim(yl, yu)
     ax1.set_xlim(xl, xu)
-    ax1.plot(omnuh2_array, H_array,'-.' ,alpha=0.6 , linewidth=font_size / 10.)
 
     fg.tight_layout()
 
@@ -263,8 +264,9 @@ for i,probes in enumerate(['CMB', 'joint']):
     # ============================================
     # plt.savefig('../../images/trinagle.pdf', dpi=400, papertype='Letter',
     #             format='pdf', transparent=True)
+ax1.plot(omnuh2_array, H_array,'-.' ,alpha=0.6 , linewidth=font_size / 10.,label = 'LSS constant')
 
-
-plt.savefig('ellipse_hubble_Omnu2_50_omch2_fixed.pdf', dpi=400, papertype='Letter',
+plt.legend(loc =0)
+plt.savefig('ellipse_Omc2_Omnu2_50_no_planck.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
 plt.close()
