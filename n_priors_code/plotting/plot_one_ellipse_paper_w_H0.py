@@ -235,7 +235,7 @@ print 'rho', np.sqrt(sigmay_squared) / fid[parameters[1]] * 100.
 
 a_fisher = (sigmax_squared + sigmay_squared) / 2. + np.sqrt((sigmax_squared - sigmay_squared) ** 2 / 4. + sigmaxy ** 2)
 b_fisher = (sigmax_squared + sigmay_squared) / 2. - np.sqrt((sigmax_squared - sigmay_squared) ** 2 / 4. + sigmaxy ** 2)
-angle_fisher = -np.degrees(np.arctan(2. * sigmaxy / (sigmax_squared - sigmay_squared))) / 2.
+angle_fisher = -np.degrees(np.arctan(-2. * sigmaxy / (sigmax_squared - sigmay_squared))) / 2.
 print a_fisher,b_fisher,angle_fisher
 if sigmax_squared > sigmay_squared:
 
@@ -262,7 +262,6 @@ yu = fid[parameters[1]] + 2.52 * np.sqrt(sigmay_squared)
 ax1.set_ylim(yl, yu)
 ax1.set_xlim(xl, xu)
 ax1.plot(w_array, H_array,'-.' ,alpha=0.6 , linewidth=font_size / 10.)
-# ax1.invert_xaxis()
 
 fg.tight_layout()
 
@@ -283,6 +282,6 @@ plt.rcParams['legend.handletextpad'] = 0.3
 #             format='pdf', transparent=True)
 plt.savefig('ellipse_H_M_nu1002.pdf', dpi=400, papertype='Letter',
             format='pdf', transparent=True)
-plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/ellipse_H0_w_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/ellipse_H0_w_snow_mass_lmin={}_lmax={}_ndet={}_fsky={}_NOBAO.pdf'.format(lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
 plt.close()

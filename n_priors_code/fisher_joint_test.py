@@ -352,13 +352,14 @@ np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.form
 
 np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            dats[lmin_index:lmax_index, 0, 0], header=header)
+fisher_single = fisher.copy()
 
 # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
-
+np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+                                                                                 lmin, lmax, N_det, fsky), fisher_single, header=header)
 
 print 'finally how much constraint on parameters without external prior?'
 print ''
-fisher_single = fisher.copy()
 
 fisher_inv = np.linalg.inv(fisher_single)
 
@@ -368,8 +369,6 @@ utils.save_cov_matrix(
 
 np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
                                                                                             lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
-np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-                                                                                 lmin, lmax, N_det, fsky), fisher_single, header=header)
 
 print 'fisher=', fisher
 
