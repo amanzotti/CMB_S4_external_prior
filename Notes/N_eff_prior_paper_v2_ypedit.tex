@@ -130,7 +130,7 @@ As usual, we define the Fisher matrix elements as the curvature of the likelihoo
 where $\theta_{i,j}$ represents two of the cosmological parameters and $\boldsymbol{\theta_0}$ is the fiducial values array that, by definition, maximizes the likelihood. 
 %It is important to notice that \refeq{Fij_def} implicitly assume that the likelihood is gaussian. Even if the gaussian approximation has been shown to be appropriate most of the time, exceptions exist in the literature \cite{2012JCAP...09..009W}. However, the level of accuracy needed in this work does not require a more careful modeling of the likelihoods. Moreover the gaussian approximation gets better at smaller scales (high $\ell$ in Fourier space) which, with the exception of the optical depth parameters $\tau$, is where most of the constraining power of the CMB is coming from.
 
-For CMB experiments the Fisher matrix can be related to the power spectrum $\boldsymbol{C}_\ell$ by \yp{I believe if you refer to $\boldsymbol{C}_\ell$ as the power spectrum, the trace in the following equation must be removed; the sum over ell is the trace taking. This equation seems to be in line with Eq. 3 though, so perhaps you can just call $\boldsymbol{C}_\ell$ the covariance matrix?} :
+For CMB experiments the Fisher matrix can be related to the covariance matrix $\boldsymbol{C}_\ell$ by:
 \begin{equation}
  F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{\rm sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right)
  \label{eqn:Fij_def2}
@@ -145,8 +145,8 @@ In this work we constrain cosmological parameters with CMB temperature and E-mod
 The terms $N_\ell^{X}$ represent the instrumental noise power of the specific experiment and will be described at the end of this section.
 Note that we are neglecting the term $C_\ell^{E\phi}$ since it  contains very little information while adding possible numerical issues~\cite{wu:2014,2013PhRvD..87h3008H}.
 Furthermore, as in \cite{wu:2014}, we use \textit{unlensed} spectra and gaussian covariances in \refeq{Fij_def2}. 
-\am{My understanding is that people do that: unlensed to avoid double counting in the informations with $C^{\phi}$, Aurelien and Wayne showed that unlensed + gaussian is similar to lensed + non-gaussian how big is the effect i do not know. Aurelien is writing a paper about that}
 \sd{Can we say something more positive about these effects? Why are we allowing ourselves to make this approximation?} Introducing eventual imperfect reconstruction of the unlensed spectra (delensing) and non-gaussian effects described in \cite{benoit-levy:2012} will go in the direction of degrading the parameters constrained derived in this work.
+However, we expect this approximations to have a small impact on the final results and, for this reason, a more careful modeling is beyond the scope of this work. For example, we checked that using lensed spectra will change the final constraint by less than 10$\%$.
 
 The projected error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, is then:
 \begin{equation}
@@ -167,7 +167,7 @@ F_{ii} \rightarrow F_{ii} + \frac{1}{(1\% \times  \theta_{i,\text{fid}})^2}.
 %Fisher matrix indeed can become ill-conditioned: a small change in the fisher matrix lead to a big change in its inverse. Because we use \refeq{cramer-rao} this can be a problem for error estimation. 
 %Even if other methods have been used \cite{2006JCAP...10..013P,2006astro.ph..9591A} Fisher matrices are still the standard procedure used to forecast future constrains \cite{wu:2014}.
 %We carefully try to avoid any possible source of errors in computing the elements of \refeq{Fij_def2} and in the matrix inversion of \refeq{cramer-rao}.
-We compute the power spectra $C_{\ell}$ and the noise power $N_{\ell}$ in \refeq{Fij_def2} using CAMB \yp{cite CAMB?} and
+We compute the power spectra $C_{\ell}$ and the noise power $N_{\ell}$ in \refeq{Fij_def2} using CAMB \cite{Howlett:2012mh,Lewis:1999bs} and
 the derivatives in \refeq{Fij_def2} using a 5 points finite difference formula:
 %\begin{equation}
 %\begin{split}
@@ -186,7 +186,7 @@ The fiducial values of these are $N_{\rm eff}=3.046$ and a cosmological constant
 
 The instrumental noise power $N_{\ell}^{T,E}$ and the lensing reconstruction $N_{\ell}^{\phi}$ in \refeq{Fij_def2} correspond to the optimistic level for the next generation of CMB experiments (S4) assumed in ~\cite{2013arXiv1309.5383A,wu:2014,2013PhRvD..87h3008H}.
 For the temperature and E-mode polarization of the CMB, together with the improved depth and resolution we also assume that large scale foregrounds, like dust, are under control or negligible. This allows us to use all the polarization power spectrum multipoles all the way up to $\ell_{\rm E,max}=5000$. We deal with the Poisson noise from point sources in the temperature signal by simply discarding all the small scales modes with $\ell>\ell_{\rm T,max}=3000$.
-The remaining source of noise, the instrumental noise, is added to the power spectrum in the usual way \yp{cite?}:
+The remaining source of noise, the instrumental noise, is added to the power spectrum in the usual way \cite{knox:1995}:
  \begin{equation}
  	\centering
 		N^{X}_\ell = s^{\, 2} \exp \left(\ell(\ell+1) \frac{\theta^{\ 2}_{\textsc{fwhm}}}{8\log2}\right),
@@ -209,7 +209,7 @@ Small scale structure formation is suppressed if fast-moving neutrinos comprise 
 Indeed, below the current free-streaming scale, the matter power power spectrum is suppressed in the presence of
 massive neutrinos by a factor $\Delta P/P\simeq -8f_{\nu}$ , where $f_{\nu} = \Omega_{\nu} / \Omega_{m}$ is the contribution of neutrinos to the total matter density.
 This effect is probed by CMB lensing and, since the active neutrino number densities are known in the standard model, can be directly transformed into a constraint on the the sum of the neutrino masses $\sum m_\nu$. This is particularly exciting because we now know that neutrinos are massive, with a lower limit  $\sum m_\nu>50$ meV that emerges from oscillation experiments. 
-\yp{Consider changing $H_0 = 0.6\%$ to $\sigma(H_0) = 0.6\%$ in the legends to match the caption.}
+
 %In CMB experiment, neutrino masses constraint comes almost entirely from lensing. When the total mass of neutrinos the CMB lensing power spectrum amplitude decreases at scales smaller than the free-streeming scale of neutrinos. This effect is degenerate with an overall change of the power spectrum amplitude $A_{s}$.    
 
 %==========
@@ -306,7 +306,7 @@ This is primarily due to the fact that CMB constrains $w$ through a precise meas
 Notice that an external prior on $H_{0}$ two times more accurate than CMB S4 can improve the CMB constraint almost by a factor of 2 from a $8\%$ error to a $4\%$ level.
 
 \section{Conclusions  \label{sec:conclusions}}
-The design of the next CMB Stage IV experiments represents an exciting challenge. The possible reward is remarkable. We can finally put a tight constraint on the total mass of neutrinos with deep implications on particle physics like, for example, the solution of the mass hierarchy problem. We can also measure with great accuracy the number of relativistic species, thereby testing the standard model prediction and possibly probing new physics. The same is true for dark energy: we can tighten the constraint on $w$,~$w_{a}$ and test the nature of the accelerated expansion of the universe. \yp{$w_a$ was never mentioned in this paper; perhaps it is better not to discuss it entirely.}
+The design of the next CMB Stage IV experiments represents an exciting challenge. The possible reward is remarkable. We can finally put a tight constraint on the total mass of neutrinos with deep implications on particle physics like, for example, the solution of the mass hierarchy problem. We can also measure with great accuracy the number of relativistic species, thereby testing the standard model prediction and possibly probing new physics. The same is true for dark energy: we can tighten the constraint on $w$ and test the nature of the accelerated expansion of the universe.
 
 These results, however, will not be possible without an optimal synergy with external experiments observing a variety of others cosmological probes.
 Understanding the impact of such external information is crucial in determining the experimental specifications and requirements needed for CMB-S4, and ultimately in maximizing the scientific impact of the future CMB experiments. 
