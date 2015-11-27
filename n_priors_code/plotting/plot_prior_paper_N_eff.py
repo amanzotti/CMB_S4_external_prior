@@ -30,7 +30,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 # TO DO
-#
+# DESI level 0.506429907922 %
 # ============================================
 # ============================================
 # ============================================
@@ -240,6 +240,8 @@ for  key_y in ['massless_neutrinos']:
     for i, tick in enumerate(ax2.get_yticks().tolist()):
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
+    ax1.axhline(0.506429907/100.*fid['massless_neutrinos'],xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
+
     # ============================================
     # FINALLY SAVE
     # ============================================

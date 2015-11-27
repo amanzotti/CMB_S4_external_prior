@@ -30,7 +30,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 # TO DO
-#
+# DESI LEVEL = 13.099%
 # ============================================
 # ============================================
 # ============================================
@@ -243,7 +243,7 @@ for key_y in ['omnuh2']:
     ax2.set_yticklabels(new_ticks)
 
     # Put snow mass line
-    ax1.axhline(15.3,xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
+    ax1.axhline(13.099/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
 
 
 
