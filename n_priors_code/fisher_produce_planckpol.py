@@ -259,9 +259,9 @@ data_folder = 'varying_all/run7'
 output_folder = ''
 fsky = 0.44
 lensed = False
-# exclude = ['helium_fraction', 'scalar_nrun(1)', 'massless_neutrinos', 'omk', 'w','wa']  # None
+exclude = ['massless_neutrinos', 'w','omnuh2']  # None
 # exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos']  # None
-exclude = None
+# exclude = None
 
 # =============================
 # DERIVED
@@ -443,5 +443,12 @@ print np.shape(fisher)
 np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt', fisher, header=header)
 
 print 'fisher=', fisher
+
+# no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
+# # plot_now = ['omnuh2']
+# excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
+
+# par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
+#     excluded_parameters, par_gaps, values, fid, fisher_single)
 
 utils.print_resume_stat(fisher, fid)

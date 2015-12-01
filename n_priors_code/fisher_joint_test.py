@@ -179,7 +179,7 @@ def calc_c_general(data, parabin):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 50
+lmin = 4
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run7'
@@ -340,7 +340,7 @@ print 'ADDING PLANCK POL'
 fisher += planck_fisher
 
 print 'ADDING BAO'
-fisher += BAO_fisher
+fisher += BAO_fisher_DESI
 
 print 'lmax =', ell
 # print fisher_inv
