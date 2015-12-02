@@ -115,6 +115,8 @@ def calc_c_fiducial(data):
     global Y, sec_of_obs, arcmin_from_fsky, lmax_index
     ell = data[lmin_index:lmax_index, 0, 0]
     s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
+    # print s
+    # s=1.
     t = 1. / 60. / 180. * np.pi  # 2arcmin to rads beam
     fac = (ell * (ell + 1.) / 2. / np.pi) / (7.4311 * 10 ** 12)
     fac2 = (ell * (ell + 1.))
@@ -179,7 +181,7 @@ def calc_c_general(data, parabin):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 4
+lmin = 50
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run7'
@@ -340,7 +342,7 @@ print 'ADDING PLANCK POL'
 fisher += planck_fisher
 
 print 'ADDING BAO'
-fisher += BAO_fisher_DESI
+fisher += BAO_fisher
 
 print 'lmax =', ell
 # print fisher_inv
@@ -374,7 +376,7 @@ np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.
 
 print 'fisher=', fisher
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2']
+plot_now = ['omnuh2','w']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 
 par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(

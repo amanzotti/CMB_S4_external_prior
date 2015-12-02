@@ -259,9 +259,9 @@ data_folder = 'varying_all/run7'
 output_folder = ''
 fsky = 0.44
 lensed = False
-exclude = ['massless_neutrinos', 'w','omnuh2']  # None
+# exclude = ['massless_neutrinos', 'w','omnuh2']  # None
 # exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos']  # None
-# exclude = None
+exclude = None
 
 # =============================
 # DERIVED
