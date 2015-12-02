@@ -223,11 +223,13 @@ for  key_y in ['massless_neutrinos']:
     plt.plot(normalize_x, new_sigma_all, label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
-    ax1.legend(loc=0)
 
     ax1.minorticks_on()
     ax1.set_ylim((0.8 * np.amin(new_sigma_all), 1.1 * np.amax(new_sigma)))
     ax1.set_xlim((0.1, 3.1))
+    ax1.axhline(0.51/100.*fid['massless_neutrinos'],xmin=0.,xmax=0.35,alpha=0.5,linewidth=3,label='DESI')
+
+    ax1.legend(loc=0)
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
     ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol + ~BAO15 }$')
@@ -240,8 +242,8 @@ for  key_y in ['massless_neutrinos']:
     for i, tick in enumerate(ax2.get_yticks().tolist()):
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
-    ax1.axhline(0.51/100.*fid['massless_neutrinos'],xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
 
+    # Put snow mass line
     # ============================================
     # FINALLY SAVE
     # ============================================

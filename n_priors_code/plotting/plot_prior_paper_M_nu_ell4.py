@@ -223,11 +223,15 @@ for key_y in ['omnuh2']:
     plt.plot(normalize_x, new_sigma_all*94. * 1000., label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
 
-    ax1.legend(loc=0)
 
     ax1.minorticks_on()
     ax1.set_ylim((0.8 * np.amin(new_sigma_all)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
     ax1.set_xlim((0.1 , 3.1))
+    ax1.axhline(16.4/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.35,alpha=0.5,linewidth=3,label='DESI')
+
+
+    ax1.legend(loc=0)
+
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
     ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm \rm S4~ +~ Planck ~ Pol + ~BAO15}$')
@@ -243,8 +247,6 @@ for key_y in ['omnuh2']:
     ax2.set_yticklabels(new_ticks)
 
     # Put snow mass line
-    ax1.axhline(16.4/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.25,alpha=0.5,linewidth=4)
-
 
 
     # ============================================
