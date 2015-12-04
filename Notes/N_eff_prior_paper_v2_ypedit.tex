@@ -145,7 +145,7 @@ In this work we constrain cosmological parameters with CMB temperature and E-mod
 The terms $N_\ell^{X}$ represent the instrumental noise power of the specific experiment and will be described at the end of this section.
 Note that we are neglecting the term $C_\ell^{E\phi}$ since it  contains very little information while adding possible numerical issues~\cite{wu:2014,2013PhRvD..87h3008H}.
 Furthermore, as in \cite{wu:2014}, we use \textit{unlensed} spectra and gaussian covariances in \refeq{Fij_def2}. 
-\sd{Can we say something more positive about these effects? Why are we allowing ourselves to make this approximation?} Introducing eventual imperfect reconstruction of the unlensed spectra (delensing) and non-gaussian effects described in \cite{benoit-levy:2012} will go in the direction of degrading the parameters constrained derived in this work.
+\sd{Can we say something more positive about these effects? Why are we allowing ourselves to make this approximation?} This assumptions neglect the possibility of imperfect reconstruction of the unlensed spectra (delensing) and the non-gaussian effects described in \cite{benoit-levy:2012}.
 However, we expect this approximations to have a small impact on the final results and, for this reason, a more careful modeling is beyond the scope of this work. For example, we checked that using lensed spectra will change the final constraint by less than 10$\%$.
 
 The projected error on the parameter $i$, marginalized over all the other parameters, $\sigma_i$, is then:
@@ -167,7 +167,7 @@ F_{ii} \rightarrow F_{ii} + \frac{1}{(1\% \times  \theta_{i,\text{fid}})^2}.
 %Fisher matrix indeed can become ill-conditioned: a small change in the fisher matrix lead to a big change in its inverse. Because we use \refeq{cramer-rao} this can be a problem for error estimation. 
 %Even if other methods have been used \cite{2006JCAP...10..013P,2006astro.ph..9591A} Fisher matrices are still the standard procedure used to forecast future constrains \cite{wu:2014}.
 %We carefully try to avoid any possible source of errors in computing the elements of \refeq{Fij_def2} and in the matrix inversion of \refeq{cramer-rao}.
-We compute the power spectra $C_{\ell}$ and the noise power $N_{\ell}$ in \refeq{Fij_def2} using CAMB \cite{Howlett:2012mh,Lewis:1999bs} and
+We compute the power spectra $C_{\ell}$ in \refeq{Fij_def2} using CAMB \cite{Howlett:2012mh,Lewis:1999bs} and
 the derivatives in \refeq{Fij_def2} using a 5 points finite difference formula:
 %\begin{equation}
 %\begin{split}
@@ -175,14 +175,14 @@ the derivatives in \refeq{Fij_def2} using a 5 points finite difference formula:
 %\end{split}
 %\label{eqn:deriv}
 %\end{equation}
-this high order approach allows us to use larger step-sizes around the fiducial parameters to compute derivatives. As a consequence the differences of power spectra corresponding to different values of the parameters are big enough to ensure numerical accuracy. % issues in computing $\boldsymbol{C}_\ell$.
+this high order approach allows us to use larger step-sizes around the fiducial parameters to compute derivatives improving numerical accuracy.
 We also test the robustness of this calculation by changing the derivative steps in the range $2-7\%$ of the correspondent $\theta_{0}$. The constraints change by at most $10\%$ that should then be considered as a conservative estimate of numerical uncertainties. \yp{Can the number 10\% be justified a bit more here?}
 
-Our philosophy is to consider as few extensions as possible. Given the current success of the standard models of particle physics and cosmology, one of the primary goals of CMB-S4 will be to find cracks in these models. As such, the key question is: What information is needed to reliably conclude that an additional parameter is required. The natural first baby step is to include massive neutrinos, which (i) are a small extension to the Standard Model and (ii) are known to exist. So our fiducial cosmology is flat $\nu \Lambda$CDM, with assumed 
+Our philosophy is to consider as few extensions as possible. Given the current success of the standard models of particle physics and cosmology, one of the primary goals of CMB-S4 will be to find cracks in these models. As such, the key question is what information is needed to reliably conclude that an additional parameter is required. The natural first step is to include massive neutrinos, which (i) are a small extension to the Standard Model and (ii) are known to exist. So our fiducial cosmology is flat $\nu \Lambda$CDM, with assumed 
 parameters from Table 2 of the \textit{Planck} best fit \cite{planck-collaboration:2014g}, i.e. $\Omega_c h^2 = 0.12029$, $\Omega_b h^2 = 0.022068$, $A_s = 2.215\times10^{-9}$ at $k_0 = 0.05\ {\rm Mpc}^{-1}$, $n_s = 0.9624$, $\tau = 0.0925$, $H_0 = 67.11$ km/s/Mpc, supplemented by an arbitrary choice of $\sum m_\nu$ $\simeq$ 85\ meV.  
 We then extend the parameter space by introducing $N_{\rm eff}$ and $w$ as free parameters, in each case keeping the other parameter fixed.
 The fiducial values of these are $N_{\rm eff}=3.046$ and a cosmological constant equation of state, $w=-1$.
-%It is important to notice that while we vary one parameter to compute derivatives in \refeq{Fij_def2} we keep all the others fixed with the exception of $\Omega_{\Lambda}$ which is always changed in order to keep the universe flat ($\Omega_{\rm k} = 0$).
+It is important to notice that while we vary one parameter to compute derivatives in \refeq{Fij_def2} we keep all the others fixed with the exception of $\Omega_{\Lambda}$ which is always changed in order to keep the universe flat ($\Omega_{\rm k} = 0$). Furthermore we vary the value of the relic helium abundance $Y_{P}$ consistently with the value of $N_{\rm eff}$ and $\Omega_b h^2$ in such a way to keep $N_{\rm eff}^{\rm BBN}$ the same as $N_{\rm eff}^{\rm CMB}$\cite{1475-7516-2008-06-016}. Practically we impose Eq. 14 of \cite{wu:2014}. As pointed out in \cite{wu:2014} this goes in the direction of improving the constraint by $15-20\%$ compared with fixing $Y_{P}$ to its fiducial value $Y_{P}=0.248$.
 
 The instrumental noise power $N_{\ell}^{T,E}$ and the lensing reconstruction $N_{\ell}^{\phi}$ in \refeq{Fij_def2} correspond to the optimistic level for the next generation of CMB experiments (S4) assumed in ~\cite{2013arXiv1309.5383A,wu:2014,2013PhRvD..87h3008H}.
 For the temperature and E-mode polarization of the CMB, together with the improved depth and resolution we also assume that large scale foregrounds, like dust, are under control or negligible. This allows us to use all the polarization power spectrum multipoles all the way up to $\ell_{\rm E,max}=5000$. We deal with the Poisson noise from point sources in the temperature signal by simply discarding all the small scales modes with $\ell>\ell_{\rm T,max}=3000$.
@@ -218,7 +218,7 @@ This effect is probed by CMB lensing and, since the active neutrino number densi
 \includegraphics{{prior_omnuh2_snow_mass_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
 \caption{
 Constraints on the sum of the neutrino masses as a function of priors on cosmological parameters. %($N_{det}=10^{6}$,$f_{sky}=0.75$, $2<\ell<5000$ ). 
-Each prior is expressed in units of the error that would be obtained internally from the CMB experiment; e.g., $\sigma(H_0)_{\rm CMB}=0.6\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.6\%. $H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV and we impose a Planck-pol prior . The blue horizontal line correspond to the CMB S4+BAO constraint of \cite{wu:2014}.}
+Each prior is expressed in units of the error that would be obtained internally from the CMB S4 experiment together with the current BAO and Planck results; e.g., $\sigma(H_0)_{\rm CMB+Planck pol+BAO15}=0.5\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.5\%. $H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV. The bottom-most curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously. The blue horizontal line correspond to the CMB S4+Planck pol+DESI constraint.}
 \label{fig:prior_omeganuh2}
 \end{center}
 \end{figure}
@@ -236,10 +236,12 @@ Each prior is expressed in units of the error that would be obtained internally 
 %==========
 %As recently pointed out by \cite{allison:2015} there are two important regimes for neutrino masses constraint. In the first one,  large scale are assumed to be accessible by CMB experiments and, as a consequence the optical depth $\tau$ can be constrained internally by measuring the reionization bump. A second possibility is that CMB S4 will be  limited to smaller scales and therefore it will have to rely on external priors to constrain $\tau$. This can be given by current stage CMB experiments like Planck as well as future 21 cm survey \cite{liu:2015}. This distinction is important because the optical depth and the neutrino mass are quite degenerate and this will be limiting the constraint in the context of very precise future CMB experiments (see \cite{allison:2015} for details).
 
-\reffig{prior_omeganuh2} shows the errors on $\sum m_\nu$ with a CMB S4 + Planck experiment as a function of external priors. 
-Our Planck prior corresponds to the ``Planck-pol'' specifications of \cite{allison:2015}, where noise levels were approximated by scaling the current sensitivities according to the Planck Blue Book.
+\reffig{prior_omeganuh2} shows the errors on $\sum m_\nu$ with a CMB S4 + Planck experiment and current BAO measurement (BAO15) as a function of external priors. \am{we should probably say why we add BAO and Planck here}
+Throughout this work our Planck prior corresponds to the ``Planck-pol'' specifications of \cite{allison:2015}, where noise levels were approximated by scaling the current sensitivities according to the Planck Blue Book.
+Furthermore for BAO15, we follow table V of \cite{allison:2015}.
 Without any external priors (far right in figure), upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 30 meV, corresponding to close to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed, for example, in \cite{2013arXiv1309.5383A,pan:2015,allison:2015}. 
-There, the added prior was ``DESI BAO'', representing a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. In this study, we find the same improvement by adding a strong prior on $\Omega_ch^2$ and $H_{0}$, which indeed are constrained by these low-redshift distances.
+There, the added prior was ``DESI BAO'', representing a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by DESI. The accuracy given a ``DESI BAO'' prior is shown in \reffig{prior_omeganuh2} by the horizontal line.
+In this study, we find the same improvement by adding a strong prior on $\Omega_ch^2$ and $H_{0}$, which indeed are constrained by these low-redshift distances.
 The improvement given by a prior on $\Omega_ch^2$ is also a consequence of the fact that the CMB lensing is sensitive to $f_\nu$; therefore in order to constrain $\Omega_{\nu}h^2$ from this ratio we need to determine the matter energy density. 
 A prior on  $H_{0}$ helps with this as well since the effects of external priors are not completely independent.
 The position of the CMB peaks, well constrained by measurement, is a function $\Omega_ch^{2.93}$ \cite{planck-collaboration:2014} and for this reason too an external prior on $H_{0}$ will improve the internal reconstruction of $\Omega_ch^2$.
@@ -263,7 +265,7 @@ Furthermore, any possible significant deviation from this value could be a hint 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{{prior_massless_neutrinos_snow_mass_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
-\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of external priors. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$. The bottom-most curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.}
+\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of external priors. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$.}
 \label{fig:prior_massless_neutrinos}
 \end{center}
 \end{figure}
@@ -276,7 +278,7 @@ The sensitivity to relativistic degrees of freedom comes from the effect of extr
 \subsection{Dark Energy Equation of State, $w$}
 
 The CMB constrains the late-time dark energy equation of state in two ways. The observed CMB spectra are very sensitive to the distance to the last scattering surface which depends on $w$. 
-Furthermore CMB lensing probes the growth of structure at late times which is different for different dark energy equations of state.
+Furthermore CMB lensing probes the growth of structure at late times which is different for different dark energy equations of state. \am{we should probably add a few lines on the physical constraint from BAO}
 %==========
 
 \begin{figure}[htbp]
@@ -293,17 +295,17 @@ Furthermore CMB lensing probes the growth of structure at late times which is di
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{{ellipse_H0_w_snow_mass_lmin=4_lmax=4499_ndet=1000000_fsky=0_75}.pdf}
-\caption{Two dimensional constraint (CMB S4 + Planck) 1$\sigma$ ellipse for $w,H_{0}$ space. The dashed (red) line correspond to values in the plane corresponding to the same distance to the last scattering surface.} 
+\includegraphics{{ellipse_H0_w_snow_mass_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Two dimensional constraint (CMB S4 + Planck) 1$\sigma$ ellipse for $w,H_{0}$ space. The dashed (blue) line correspond to values in the plane corresponding to the same distance to the last scattering surface.} 
 \label{fig:ellipse_w_H0}
 \end{center}
 \end{figure}
 %==========
 
 
-\reffig{prior_w} shows that without any priors, CMB experiments will not do much better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ considerably. 
+\reffig{prior_w} shows that without any priors, CMB S4 experiments together with the current state of the art BAO measurement (BAO15) will not do much better than current constraints, which hover around 5\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ considerably. 
 This is primarily due to the fact that CMB constrains $w$ through a precise measurement of the comoving distance to the last scattering surface. However that can be kept fixed while varying $w$ by accordingly changing the value of $H_{0}$ (and $\Omega_{\Lambda}$ to keep the universe flat). Indeed in a two dimensional ($H_{0},w$) space the CMB constrained approximately lies on the region of constant large scattering surface distance as shown in \reffig{ellipse_w_H0}.
-Notice that an external prior on $H_{0}$ two times more accurate than CMB S4 can improve the CMB constraint almost by a factor of 2 from a $8\%$ error to a $4\%$ level.
+Notice that an external prior on $H_{0}$ two times more accurate than CMB S4 can improve the CMB constraint almost by a factor of 2 from a $4\%$ error to a $2\%$ level.
 
 \section{Conclusions  \label{sec:conclusions}}
 The design of the next CMB Stage IV experiments represents an exciting challenge. The possible reward is remarkable. We can finally put a tight constraint on the total mass of neutrinos with deep implications on particle physics like, for example, the solution of the mass hierarchy problem. We can also measure with great accuracy the number of relativistic species, thereby testing the standard model prediction and possibly probing new physics. The same is true for dark energy: we can tighten the constraint on $w$ and test the nature of the accelerated expansion of the universe.
