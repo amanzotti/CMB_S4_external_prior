@@ -244,10 +244,6 @@ for key_y in ['omnuh2']:
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
 
-    ax1.axhline(18.8/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.35,alpha=0.5,linewidth=3,label='DESI')
-
-
-    ax1.legend(loc=0)
 
     # ============================================
     # FINALLY SAVE
