@@ -244,7 +244,11 @@ for key_y in ['omnuh2']:
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
 
+    # Put a legend below current axis
+    ax1.legend(loc='upper center', bbox_to_anchor=(0.5, -0.25),
+              fancybox=True, shadow=True, ncol=2)
 
+    ax1.grid(True, alpha=0.4, linewidth=0.01)
     # ============================================
     # FINALLY SAVE
     # ============================================
