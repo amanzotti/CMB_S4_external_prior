@@ -30,7 +30,7 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 # TO DO
-# DESI LEVEL = 16.4%
+# DESI LEVEL = 16.9%
 # ============================================
 # ============================================
 # ============================================
@@ -227,7 +227,7 @@ for key_y in ['omnuh2']:
     ax1.set_ylim((0.8 * np.amin(new_sigma_all) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
     ax1.set_xlim((0.1, 3.1))
 
-    ax1.axhline(16.4 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.45, linewidth=3, label='DESI')
+    ax1.axhline(16.9 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.45, linewidth=3, label='DESI')
 
     ax1.legend(loc=0)
 
