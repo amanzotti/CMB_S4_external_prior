@@ -181,7 +181,7 @@ def calc_c_general(data, parabin):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 50
+lmin = 4
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run7'
@@ -376,7 +376,7 @@ np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.
 
 print 'fisher=', fisher
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2','w']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 
 par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(

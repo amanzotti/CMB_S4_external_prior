@@ -37,11 +37,11 @@ import os
 import warnings
 
 output_folder = 'varying_all'
-output_folder_2 = 'run7'
+output_folder_2 = 'dunkley'
 camb_location = '/home/manzotti/local/camb2013/camb'
 
 config = configparser.ConfigParser()
-configfile = './fiducial.ini'
+configfile = './fiducial_dunkley.ini'
 config.read(configfile)
 config.set('camb', 'output_root',
            './data/{}/{}/'.format(output_folder, output_folder_2) + 'fiducial')
@@ -104,7 +104,7 @@ pargaps_dict['scalar_spectral_index(1)'] = 0.0075
 pargaps_dict['scalar_amp(1)'] = 0.05
 pargaps_dict['re_optical_depth'] = 0.008
 pargaps_dict['omnuh2'] = 0.00015
-pargaps_dict['ombh2'] = 0.0008
+pargaps_dict['ombh2'] = 0.0012
 pargaps_dict['omch2'] = 0.003
 pargaps_dict['massless_neutrinos'] = 0.16
 pargaps_dict['w'] = 0.15

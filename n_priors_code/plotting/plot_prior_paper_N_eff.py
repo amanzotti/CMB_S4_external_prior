@@ -249,6 +249,17 @@ for  key_y in ['massless_neutrinos']:
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
 
+
+    # Shrink current axis's height by 10% on the bottom
+    box = ax1.get_position()
+    # ax1.set_position([box.x0, box.y0 + box.height * 0.1,
+    #                  box.width, box.height * 0.9])
+
+    # Put a legend below current axis
+    ax1.legend(loc='upper center', bbox_to_anchor=(0.5, -0.25),
+              fancybox=True, shadow=True, ncol=2)
+
+    ax1.grid(True, alpha=0.4, linewidth=0.01)
     # Put snow mass line
     # ============================================
     # FINALLY SAVE

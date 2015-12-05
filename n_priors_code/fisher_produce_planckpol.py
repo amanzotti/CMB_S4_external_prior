@@ -142,6 +142,7 @@ def calc_c_fiducial(data):
     t['143'] = 7. / 60. / 180. * np.pi  # 2arcmin to rads beam
     t['217'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads beam
     t['353'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads bea
+
     for nu in ['30', '44', '70', '100', '143', '217', '353']:
 
         # Final CMB noise definition
@@ -160,7 +161,7 @@ def calc_c_fiducial(data):
     s_pol['217'] = 134.
     s_pol['353'] = 406.
 
-    for nu in ['30', '44', '70', '100', '143', '217', '353']:
+    for nu in ['70', '100', '143', '217', '353']:
 
         # Final CMB noise definition
         N_pol[nu] = (s_pol[nu] * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t[nu] ** 2 / 8. / np.log(2))
