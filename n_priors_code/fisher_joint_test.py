@@ -5,15 +5,12 @@
 '''
 
 FAST VERSION
-Fisher code to test prior effect on N effective neutrino estimates
+Fisher code for CMB T,E,+ lensing phi.  used for the priors paper but pretty versatile.
+
 
 TODO:
-HIGH: lensing noise (almost there: Komatsu and quicklens.)
-
-low importance: ini file. Think about PCA to understand what is more important for N_eff
-
-
-create classes or at least external utilities. Maybe a better way to interface with cosmosis
+low importance: ini file. or sys argv passing parameters
+create classes or at least external utilities.
 
 # DATA FROM CAMB
 
@@ -24,17 +21,12 @@ we use the _lenspotentialcls so
 
   CX are l(l+1)Cl/2pi and Cdd=[l(l+1)]^2 Clphi/2pi, CdT=[l(l+1)]^(3/2) ClphiT/2pi, CdE=[l(l+1)]^(3/2)ClphiE/2pi
 
-
-The matrix is going to run an 4 parameters:
-
 CONVENTIONS:
 alphabetical in CAMB description. Use the ordered dict tools to explore it.
 hubble,massless_neutrinos,omnuh2,re_optical_depth,scalar_amp(1),scalar_spectral_index(1)
 
 
 GOAL
-
-1) reproduce Wu paper and beyond/ DONE. Cross checked with Zhen Pan UC Davis
 
 '''
 __author__ = "A.Manzotti"
@@ -45,16 +37,13 @@ __email__ = "manzotti.alessandro@gmail.com"
 __status__ = "Production"
 
 import numpy as np
-import math
-import matplotlib.pyplot as plt
 import utils
 import pickle
 import sys
 import collections
-import statsmodels.api as sm
 
-# util.nl(noise_uK_arcmin, fwhm_arcmin, lmax)
 
+# Auxiliary functions.
 
 def years2sec(years):
     ''' years to sec '''
@@ -70,7 +59,9 @@ def fsky2arcmin(fsky):
 def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
     '''
     Vectorize derivative computation. Each -calc_c_general gives you the matrix C for all ell and here you
-    compute the derivative in a vectorize fashion
+    compute the derivative in a vectorize fashion.
+
+    We accept 4 different 2 sides formulas. You pass the data so be careful you are doing i in a coherent way.
     '''
 
     if order == 3 and np.shape(values[values.keys()[0]])[0] == 2:
@@ -98,9 +89,9 @@ def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
 def calc_c_fiducial(data):
     '''
     Given CMB data dats it normalize them anf create a 3x3 matrix
+    Used in calc_deriv_vectorial.
+    This also is now vectorized it does that for all ells.
 
-    ell is the multiple
-    iell is the index in the data ell corresponds to
 
     remember the order from CAMB
      l CTT CEE CBB CTE Cdd CdT CdE
@@ -133,25 +124,20 @@ def calc_c_fiducial(data):
     #                  [data[:lmax_index, 4, 0], data[:lmax_index, 2, 0] + fac * N * 2.,               0.],
     #                  [data[:lmax_index, 6, 0],          0.,         data[:lmax_index, 5, 0] + N_phi_l[:lmax_index, 1]]
 
-
     return np.array([[data[lmin_index:lmax_index, 1, 0] + fac * N, data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 6, 0]],
 
-                 [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
-                     fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
+                     [data[lmin_index:lmax_index, 4, 0], data[lmin_index:lmax_index, 2, 0] +
+                      fac * N * 2.,  data[lmin_index:lmax_index, 2, 0] * 0.],
 
-                 [ data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
-                  data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
+                     [data[lmin_index:lmax_index, 6, 0], data[lmin_index:lmax_index, 2, 0] * 0.,
+                      data[lmin_index:lmax_index, 5, 0] + N_phi_l[lmin_index:lmax_index, 1]]
 
-                 ])
-
-
-
+                     ])
 
 
 def calc_c_general(data, parabin):
     '''
     Given CMB data dats it normalize them anf create a 3x3 matrix
-
     ell is the multiple
     iell is the index in the data ell corresponds to
 
@@ -161,18 +147,11 @@ def calc_c_general(data, parabin):
     '''
 
     return np.array([[data[lmin_index:lmax_index, 1, parabin], data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index, 6, parabin]],
-                 [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
-                                                                2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
-                 [ data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
-                  data[lmin_index:lmax_index, 5, parabin]]
-                 ])
-
-
-
-
-# loading data. Each of this is a cmb Spectrum? probably cmb Tand E plus lensing
-#  so the structure is data(:,:,i) is the i change in the parameters.
-# rgw 2 :,: are the multiples and the column and the type of data respectively
+                     [data[lmin_index:lmax_index, 4, parabin], data[lmin_index:lmax_index,
+                                                                    2, parabin],  data[lmin_index:lmax_index, 2, parabin] * 0.],
+                     [data[lmin_index:lmax_index, 6, parabin], data[lmin_index:lmax_index, 2, parabin] * 0.,
+                      data[lmin_index:lmax_index, 5, parabin]]
+                     ])
 
 
 # parameters
@@ -181,15 +160,15 @@ def calc_c_general(data, parabin):
 # =============================
 l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
 lmax = 4499
-lmin = 4
+lmin = 50
 N_det = 10 ** 6
 N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
 data_folder = 'varying_all/run7'
 output_folder = 'varying_all/run7/output'
 fsky = 0.75
 lensed = False
+# exclude paramters from being loaded and included here if you want.
 # exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos','w']  # None
-# exclude = ['massless_neutrinos']  # None
 exclude = None
 # =============================
 # DERIVED
@@ -197,13 +176,13 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
+# Write an header for the file output.
 header = 'Joint fisher CMB T E + phi lensing used \n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
 
 # READ PARAMS
-# load fiducial data
 # load fiducial parameters used
 fid = pickle.load(open('data/{}/fid_values.p'.format(data_folder), "rb"))
 
@@ -218,56 +197,58 @@ par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
 new_value = {}
 
 # ===============
-
+#  Below there is a rough weay to change gaps etc given how data are simulated.
 # ===============
 
-# use different order formula same gap
 # use different order formula same gap
 order = 5
 # step = np.array([-8,-7,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8])
 
-step = np.array([-1.5, -0.75, 0.75, 1.5])
+step = np.array([-2, -1, 1, 2])
 
 for key in values.keys():
-    if key=='massless_neutrinos':
-      new_value[key] = par_gaps[key] * step + fid[key]
-      continue
+  # if you just want to change gap in 1 parameters.
+
     # if key=='omnuh2':
     #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
     #   print new_value[key]
     #   continue
 
     new_value[key] = par_gaps[key] * step + fid[key]
+
 for key in values.keys():
     par_gaps[key] = np.abs(new_value[key][0] - new_value[key][1])
+
 new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
 values = new_value
-print values,par_gaps
+print values, par_gaps
 
 # # ===============
 
 print par_gaps
 par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
 print 'loading files'
+# to do this is the bottleneck. it can be speeded up.
 dats = utils.load_data(data_folder, values, lensed)
 
 
+#  the index of lmax etc can be different for lmax. For example cause CAMB start from l=2.
 n_values = np.size(values.keys())
 lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
 ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
 lmin_index = np.where(dats[:, 0, 0] == lmin)[0][0]
 
-# cut Cl^T at ells bigger than l_t_max
+# cut Cl^T at ells bigger than l_t_max. WE can not clean point sources there.
+
 dats[ltmax_index:, 1, 1:] = 0.
+
 # phi_T has oscillations in it.
 # dats[900:, 6, 0:] = 0.
 
 # creating the n_values by n_values matrix
 fisher = np.zeros((n_values, n_values))
 fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0])))
-
 fisher_inv = np.zeros((n_values, n_values))
-
 no_marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
 marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
 
@@ -276,24 +257,24 @@ print 'fisher_size', fisher.shape
 
 # generate C for fiducial at all ell
 C_inv_array = calc_c_fiducial(dats)
-
 derivatives = np.ndarray((3, 3, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
 
 for i in range(0, n_values):
-    # computing derivatives.
-    # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
-                  # ---------------------------------
-                              #   12h
+    # computing derivatives at all ells.
     derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
 
-ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
-derivatives[:2, :2, 300:, fid.keys().index('w')]= 1/3.41 * derivatives[:2, :2, 300:, fid.keys().index('hubble')]
+
+# you may want not to compute the derivatives but to impose a known degeneracy.
+
+# ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
+derivatives[:2, :2, 1000:, fid.keys().index('w')] = 1 / 3.41 * derivatives[:2, :2, 1000:, fid.keys().index('hubble')]
 
 
 # print derivatives[:2, :2, 10, fid.keys().index('w')]
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
-    #  filling it the matrix l goes from l_min =2 to l_max =5000
+    #  filling it the matrix l goes from l_min to l_max derivetives are pre_computed.
+    # There is a faster way yo do it. But this is not the speed limiting factor. Data loading is.
     # c0 = np.zeros((3, 3))
     # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
     # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
@@ -327,6 +308,7 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
+# LOADING EXTERNAL DATA TO BE ADDED.
 planck_fisher = np.loadtxt(
     '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
 BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
@@ -346,6 +328,11 @@ fisher += BAO_fisher
 
 print 'lmax =', ell
 # print fisher_inv
+
+
+# ===================================
+#  SAVING FILES AND PRINT
+# ===================================
 
 np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
@@ -376,7 +363,7 @@ np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.
 
 print 'fisher=', fisher
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2']
+plot_now = ['omnuh2', 'w']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 
 par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(

@@ -10,12 +10,7 @@ Here we produce the Planck Fisher matrix we will lately add to our fisher.
 
 
 TODO:
-HIGH: lensing noise (almost there: Komatsu and quicklens.)
-
 low importance: ini file. Think about PCA to understand what is more important for N_eff
-
-
-create classes or at least external utilities. Maybe a better way to interface with cosmosis
 
 # DATA FROM CAMB
 
@@ -47,15 +42,14 @@ __email__ = "manzotti.alessandro@gmail.com"
 __status__ = "Production"
 
 import numpy as np
-import math
-import matplotlib.pyplot as plt
 import utils
 import pickle
 import sys
 import collections
 
-# util.nl(noise_uK_arcmin, fwhm_arcmin, lmax)
 
+# Auxiliary functions.
+# ===================
 
 def years2sec(years):
     ''' years to sec '''
@@ -66,6 +60,7 @@ def fsky2arcmin(fsky):
     '''convert fsky in fraction of unity to arcmin^2'''
     # 41253 square degrees in all sky
     return 41253. * fsky * 60. * 60.
+# ===================
 
 
 def calc_deriv_vectorial(fisher_index, dats, pargaps, values, order=5):
@@ -102,8 +97,7 @@ def calc_c_fiducial(data):
     '''
     Given CMB data dats it normalize them anf create a 3x3 matrix
 
-    ell is the multiple
-    iell is the index in the data ell corresponds to
+    THE LEVEL OF NOISE IN THE CHANNEL IS TAKEN FROM ALLISON ET AL (DUNKLEY)
 
     remember the order from CAMB
      l CTT CEE CBB CTE Cdd CdT CdE
@@ -116,7 +110,6 @@ def calc_c_fiducial(data):
 
     global Y, sec_of_obs, arcmin_from_fsky, lmax_index
     ell = data[lmin_index:lmax_index, 0, 0]
-    # s = 350. * np.sqrt(arcmin_from_fsky) / np.sqrt(N_det * Y * sec_of_obs)  # half sky in arcmin^2
     s = {}
     s_pol = {}
     t = {}
@@ -142,6 +135,9 @@ def calc_c_fiducial(data):
     t['143'] = 7. / 60. / 180. * np.pi  # 2arcmin to rads beam
     t['217'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads beam
     t['353'] = 5. / 60. / 180. * np.pi  # 2arcmin to rads bea
+
+
+# NOISE IN DIFFERENT CHANNELS IS ADDED IN QUADRATURE.
 
     for nu in ['30', '44', '70', '100', '143', '217', '353']:
 
@@ -249,8 +245,6 @@ def C(iell, ell, parbin, data):
 
 
 l_t_max = 2500  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foreground
-
-
 lmax = 2500
 lmin = 2
 N_det = 'Planck'
@@ -314,9 +308,9 @@ order = 5
 step = np.array([-2, -1, 1, 2])
 
 for key in values.keys():
-    if key == 'massless_neutrinos':
-        new_value[key] = par_gaps[key] * step + fid[key]
-        continue
+    # if key == 'massless_neutrinos':
+    #     new_value[key] = par_gaps[key] * step + fid[key]
+    #     continue
     # if key=='omnuh2':
     #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
     #   print new_value[key]
@@ -368,6 +362,11 @@ for i in range(0, n_values):
                               #   12h
     derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
 
+# you may want not to compute the derivatives but to impose a known degeneracy.
+
+# ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
+derivatives[:2, :2, 1000:, fid.keys().index('w')] = 1 / 3.41 * derivatives[:2, :2, 1000:, fid.keys().index('hubble')]
+
 
 for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
@@ -396,7 +395,7 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
             # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
             trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
 
-# See http://arxiv.org/pdf/1509.07471v1.pdf tabel IV
+            # See http://arxiv.org/pdf/1509.07471v1.pdf tabel IV THIS IS what to do if to be combined with S4 experiment.
             if ell < 50:
                 fsky = 0.44
             else:
