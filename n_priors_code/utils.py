@@ -347,6 +347,38 @@ def return_simgax_all_prior(fid, fisher_mat, key_y):
     return np.sqrt(np.linalg.inv(fisher_mat_multi)[:, fid.keys().index(key_y), fid.keys().index(key_y)])
 
 
+def return_simgax_list_prior(fid, fisher_mat, key_prior_list,key_y):
+    '''
+    Concept return sigma x given a possible prior on list of the other parameters
+
+    As an input it gets the fisher matrix but what it spits out is not a relative sigma.
+    just sigma.
+
+    NOTE : *IMPORTANT*  here the applieded prior is the same for everyone
+
+
+    '''
+    fisher_inv = np.linalg.inv(fisher_mat)
+    prior_size = 900
+    fisher_mat_multi = np.array([fisher_mat for i in range(prior_size)])
+    # this is  s [prior_size,9,9] 3d matrix
+    for i, key in enumerate(key_prior_list):
+
+        if key == key_y:
+            continue
+        # print key
+
+        sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
+        prior_value = np.linspace(sigma_just_CMB_x / 10., sigma_just_CMB_x * 4.5, prior_size)
+        # if you have an array of prior to apply, cycle on them.
+        fisher_mat_multi[:, fid.keys().index(key), fid.keys().index(key)] += 1 / \
+            (prior_value * fid[key]) ** 2
+
+    return np.sqrt(np.linalg.inv(fisher_mat_multi)[:, fid.keys().index(key_y), fid.keys().index(key_y)])
+
+
+
+
 def return_simgax_y_prior2D(fid, fisher, x, y, prior_val1, prior_val2):
     '''
     Concept return sigma x given a possible prior on y

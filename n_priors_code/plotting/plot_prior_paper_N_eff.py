@@ -219,6 +219,12 @@ for  key_y in ['massless_neutrinos']:
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
     new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)
+    new_sigma_ns_omb  =  utils.return_simgax_list_prior(fid, fisher_mat, ['scalar_spectral_index(1)', 'ombh2'] ,key_y)
+
+    plt.plot(normalize_x, new_sigma_ns_omb, label=r'${}+{}$'.format(
+            str(label['ombh2']),str(label['scalar_spectral_index(1)'])),
+             linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
+
 
     plt.plot(normalize_x, new_sigma_all, label=r'All',
              linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
@@ -243,6 +249,17 @@ for  key_y in ['massless_neutrinos']:
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
 
+
+    # Shrink current axis's height by 10% on the bottom
+    box = ax1.get_position()
+    # ax1.set_position([box.x0, box.y0 + box.height * 0.1,
+    #                  box.width, box.height * 0.9])
+
+    # Put a legend below current axis
+    ax1.legend(loc='upper center', bbox_to_anchor=(0.5, -0.25),
+              fancybox=True, shadow=True, ncol=2)
+
+    ax1.grid(True, alpha=0.4, linewidth=0.01)
     # Put snow mass line
     # ============================================
     # FINALLY SAVE
