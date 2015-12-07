@@ -238,7 +238,7 @@ for  key_y in ['massless_neutrinos']:
     ax1.legend(loc=0)
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol + ~BAO15 }$')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol (\ell<50) + ~BAO15 }$')
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
     minor_loc = ax1.yaxis.get_minor_locator()

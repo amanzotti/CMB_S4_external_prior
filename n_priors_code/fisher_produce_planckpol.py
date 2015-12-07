@@ -245,7 +245,7 @@ def C(iell, ell, parbin, data):
 
 
 l_t_max = 2500  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foreground
-lmax = 2500
+lmax = 50
 lmin = 2
 N_det = 'Planck'
 # No lensing
@@ -440,7 +440,7 @@ print 'lmax =', ell
 # lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
 
 print np.shape(fisher)
-np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt', fisher, header=header)
+np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=50_ndet=Planck_fsky=0.2.txt', fisher, header=header)
 
 print 'fisher=', fisher
 

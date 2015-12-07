@@ -227,13 +227,13 @@ for key_y in ['omnuh2']:
     ax1.minorticks_on()
     ax1.set_ylim((0.8 * np.amin(new_sigma_all)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
     ax1.set_xlim((0.1, 3.1))
-    ax1.axhline(23.2/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.35,alpha=0.4,linewidth=2,label='DESI')
+    ax1.axhline(23.24/100.*fid['omnuh2']*94. * 1000.,xmin=0.,xmax=0.35,alpha=0.4,linewidth=2,label='DESI')
 
 
     ax1.legend(loc=0)
     # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
     ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol + ~BAO15}$')
+    ax1.set_xlabel(r'$\rm{prior}/\sigma(x)_{\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15}$')
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
     minor_loc = ax1.yaxis.get_minor_locator()

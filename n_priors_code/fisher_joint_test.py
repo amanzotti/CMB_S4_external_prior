@@ -310,7 +310,7 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
 # LOADING EXTERNAL DATA TO BE ADDED.
 planck_fisher = np.loadtxt(
-    '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=2500_ndet=Planck_fsky=0.2.txt')
+    '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=50_ndet=Planck_fsky=0.2.txt')
 BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
 BAO_fisher_DESI = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO_DESI.txt')
 
@@ -324,7 +324,7 @@ print 'ADDING PLANCK POL'
 fisher += planck_fisher
 
 print 'ADDING BAO'
-fisher += BAO_fisher
+fisher += BAO_fisher_DESI
 
 print 'lmax =', ell
 # print fisher_inv
@@ -363,7 +363,7 @@ np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.
 
 print 'fisher=', fisher
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2', 'w']
+plot_now = ['omnuh2']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 
 par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
