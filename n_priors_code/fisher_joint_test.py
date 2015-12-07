@@ -324,7 +324,7 @@ print 'ADDING PLANCK POL'
 fisher += planck_fisher
 
 print 'ADDING BAO'
-fisher += BAO_fisher_DESI
+fisher += BAO_fisher
 
 print 'lmax =', ell
 # print fisher_inv
