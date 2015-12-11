@@ -29,7 +29,7 @@ def noise_uK_arcmin(noise_uK_arcmin, fwhm_arcmin, lmax):
     return (noise_uK_arcmin * np.pi / 180. / 60.) ** 2 / bl(fwhm_arcmin, lmax) ** 2
 
 
-def load_data(data_folder,  values, lensed=False):
+def load_data(data_folder,  values, lensed=False, verbose = True):
     '''
     build the dats matrix of data used in the fisher code. If lensed it is composed by lesned CMB cls + CMB lensing cls like cldd clde cldt
 
@@ -46,9 +46,9 @@ def load_data(data_folder,  values, lensed=False):
     # Load data for all parameters variations
     for key, value in values.iteritems():
         if np.shape(values[values.keys()[0]])[0]!=4:
-            print "you are not using a 5 point formula are you sure?"
+            if verbose: print "you are not using a 5 point formula are you sure?"
         for i in np.arange(0, np.shape(values[values.keys()[0]])[0]):
-            print key, values[key][i],i
+            if verbose: print key, values[key][i],i
             filename = 'data/{}/'.format(data_folder)
             # filename_cmb = filename + key + '_{:.13f}'.format(values[key][i]) + '_lensedcls.dat'
             filename_cmb = filename + key + \

@@ -158,215 +158,226 @@ def calc_c_general(data, parabin):
 
 # TODO LOAD EVERYTHING FROM INI
 # =============================
-l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
-lmax = 4499
-lmin = 50
-N_det = 10 ** 6
-N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
-data_folder = 'varying_all/run7'
-output_folder = 'varying_all/run7/output'
-fsky = 0.75
-lensed = False
-# exclude paramters from being loaded and included here if you want.
-# exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos','w']  # None
-exclude = None
-# =============================
-# DERIVED
-arcmin_from_fsky = fsky2arcmin(fsky)
-sec_of_obs = years2sec(5)
-Y = 0.25  # 25% yeld
-# ===================
-# Write an header for the file output.
-header = 'Joint fisher CMB T E + phi lensing used \n'
-header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
-    lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
+
+for lmin in xrange(4,60):
+    print ''
+    print ''
+    print ''
+    print ''
+    print lmin
+    print ''
+    print ''
+    print ''
+    print ''
+    l_t_max = 3000  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foregrounds
+    lmax = 4499
+    lmin = lmin
+    N_det = 10 ** 6
+    N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_6.txt')
+    data_folder = 'varying_all/run7'
+    output_folder = 'varying_all/run7/output'
+    fsky = 0.75
+    lensed = False
+    # exclude paramters from being loaded and included here if you want.
+    # exclude = ['helium_fraction', 'scalar_nrun(1)', 'omk', 'wa','massless_neutrinos','w']  # None
+    exclude = None
+    # =============================
+    # DERIVED
+    arcmin_from_fsky = fsky2arcmin(fsky)
+    sec_of_obs = years2sec(5)
+    Y = 0.25  # 25% yeld
+    # ===================
+    # Write an header for the file output.
+    header = 'Joint fisher CMB T E + phi lensing used \n'
+    header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
+        lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
 
-# READ PARAMS
-# load fiducial parameters used
-fid = pickle.load(open('data/{}/fid_values.p'.format(data_folder), "rb"))
+    # READ PARAMS
+    # load fiducial parameters used
+    fid = pickle.load(open('data/{}/fid_values.p'.format(data_folder), "rb"))
 
-print "fid ", fid
+    print "fid ", fid
 
-# load parameter grid dictionary. The format is a pickle
-values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
-par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
-# order = 5
+    # load parameter grid dictionary. The format is a pickle
+    values = pickle.load(open('data/{}/grid_values.p'.format(data_folder), "rb"))
+    par_gaps = pickle.load(open('data/{}/par_gaps.p'.format(data_folder), "rb"))
+    # order = 5
 
-# select values to change gaps in derivative
-new_value = {}
+    # select values to change gaps in derivative
+    new_value = {}
 
-# ===============
-#  Below there is a rough weay to change gaps etc given how data are simulated.
-# ===============
+    # ===============
+    #  Below there is a rough weay to change gaps etc given how data are simulated.
+    # ===============
 
-# use different order formula same gap
-order = 5
-# step = np.array([-8,-7,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8])
+    # use different order formula same gap
+    order = 5
+    # step = np.array([-8,-7,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8])
 
-step = np.array([-2, -1, 1, 2])
+    step = np.array([-2, -1, 1, 2])
 
-for key in values.keys():
-  # if you just want to change gap in 1 parameters.
+    for key in values.keys():
+      # if you just want to change gap in 1 parameters.
 
-    # if key=='omnuh2':
-    #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
-    #   print new_value[key]
-    #   continue
+        # if key=='omnuh2':
+        #   new_value[key] = par_gaps[key] * np.array([-2,-1,1,2]) + fid[key]
+        #   print new_value[key]
+        #   continue
 
-    new_value[key] = par_gaps[key] * step + fid[key]
+        new_value[key] = par_gaps[key] * step + fid[key]
 
-for key in values.keys():
-    par_gaps[key] = np.abs(new_value[key][0] - new_value[key][1])
+    for key in values.keys():
+        par_gaps[key] = np.abs(new_value[key][0] - new_value[key][1])
 
-new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
-values = new_value
-print values, par_gaps
+    new_value = collections.OrderedDict(sorted(new_value.items(), key=lambda t: t[0]))
+    values = new_value
+    print values, par_gaps
 
-# # ===============
+    # # ===============
 
-print par_gaps
-par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
-print 'loading files'
-# to do this is the bottleneck. it can be speeded up.
-dats = utils.load_data(data_folder, values, lensed)
-
-
-#  the index of lmax etc can be different for lmax. For example cause CAMB start from l=2.
-n_values = np.size(values.keys())
-lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
-ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
-lmin_index = np.where(dats[:, 0, 0] == lmin)[0][0]
-
-# cut Cl^T at ells bigger than l_t_max. WE can not clean point sources there.
-
-dats[ltmax_index:, 1, 1:] = 0.
-
-# phi_T has oscillations in it.
-# dats[900:, 6, 0:] = 0.
-
-# creating the n_values by n_values matrix
-fisher = np.zeros((n_values, n_values))
-fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0])))
-fisher_inv = np.zeros((n_values, n_values))
-no_marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
-marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
+    print par_gaps
+    par_gaps, values, fid = utils.exclude_parameters(exclude, par_gaps, values, fid)
+    print 'loading files'
+    # to do this is the bottleneck. it can be speeded up.
+    dats = utils.load_data(data_folder, values, lensed)
 
 
-print 'fisher_size', fisher.shape
+    #  the index of lmax etc can be different for lmax. For example cause CAMB start from l=2.
+    n_values = np.size(values.keys())
+    lmax_index = np.where(dats[:, 0, 0] == lmax)[0][0]
+    ltmax_index = np.where(dats[:, 0, 0] == l_t_max)[0][0]
+    lmin_index = np.where(dats[:, 0, 0] == lmin)[0][0]
 
-# generate C for fiducial at all ell
-C_inv_array = calc_c_fiducial(dats)
-derivatives = np.ndarray((3, 3, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
+    # cut Cl^T at ells bigger than l_t_max. WE can not clean point sources there.
 
-for i in range(0, n_values):
-    # computing derivatives at all ells.
-    derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
+    dats[ltmax_index:, 1, 1:] = 0.
+
+    # phi_T has oscillations in it.
+    # dats[900:, 6, 0:] = 0.
+
+    # creating the n_values by n_values matrix
+    fisher = np.zeros((n_values, n_values))
+    fisher_save = np.zeros((n_values, n_values, np.size(dats[lmin_index:lmax_index, 0, 0])))
+    fisher_inv = np.zeros((n_values, n_values))
+    no_marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
+    marginalized_ell = np.zeros((np.size(dats[lmin_index:lmax_index, 0, 0]), n_values))
 
 
-# you may want not to compute the derivatives but to impose a known degeneracy.
+    print 'fisher_size', fisher.shape
 
-# ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
-derivatives[:2, :2, 1000:, fid.keys().index('w')] = 1 / 3.41 * derivatives[:2, :2, 1000:, fid.keys().index('hubble')]
-
-
-# print derivatives[:2, :2, 10, fid.keys().index('w')]
-for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
-
-    #  filling it the matrix l goes from l_min to l_max derivetives are pre_computed.
-    # There is a faster way yo do it. But this is not the speed limiting factor. Data loading is.
-    # c0 = np.zeros((3, 3))
-    # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
-    # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
-    c0 = C_inv_array[:, :, iell]
-
-    cinv = np.linalg.inv(c0)
+    # generate C for fiducial at all ell
+    C_inv_array = calc_c_fiducial(dats)
+    derivatives = np.ndarray((3, 3, np.size(dats[lmin_index:lmax_index, 0, 0]), n_values), dtype='float64')
 
     for i in range(0, n_values):
-
-        for j in range(0, n_values):
-            # computing derivatives.
-            # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
-                  # ---------------------------------
-                              #   12h
-
-            ci = derivatives[:, :, iell, i]
-
-            cj = derivatives[:, :, iell, j]
-
-            # Eq 4.
-            # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
-            trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
-
-            # assuming f Eq.4
-            fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
-            fisher_save[i, j, iell] = (2. * ell + 1.) / 2. * fsky * trace
-            # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
-
-    no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
-    fisher_inv = np.linalg.inv(fisher)
-    marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
+        # computing derivatives at all ells.
+        derivatives[:, :, :, i] = calc_deriv_vectorial(i, dats, par_gaps, values, order)[:, :, :]
 
 
-# LOADING EXTERNAL DATA TO BE ADDED.
-planck_fisher = np.loadtxt(
-    '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=50_ndet=Planck_fsky=0.2.txt')
-BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
-BAO_fisher_DESI = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO_DESI.txt')
+    # you may want not to compute the derivatives but to impose a known degeneracy.
 
-# print planck_fisher
-# print ''
-# print fisher
-
-# # print ''
-# print ''
-print 'ADDING PLANCK POL'
-fisher += planck_fisher
-
-print 'ADDING BAO'
-fisher += BAO_fisher
-
-print 'lmax =', ell
-# print fisher_inv
+    # ratio = derivatives[:2, :2, 300:, fid.keys().index('w')]/derivatives[:2, :2, 300:, fid.keys().index('hubble')]
+    derivatives[:2, :2, 1000:, fid.keys().index('w')] = 1 / 3.41 * derivatives[:2, :2, 1000:, fid.keys().index('hubble')]
 
 
-# ===================================
-#  SAVING FILES AND PRINT
-# ===================================
+    # print derivatives[:2, :2, 10, fid.keys().index('w')]
+    for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
 
-np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
-        fisher_save)
+        #  filling it the matrix l goes from l_min to l_max derivetives are pre_computed.
+        # There is a faster way yo do it. But this is not the speed limiting factor. Data loading is.
+        # c0 = np.zeros((3, 3))
+        # c0 = C(iell, ell, 0, dats)  # 3x3 matrix in the fiducial cosmology
+        # this is the covariance matrix of the data. So in this case we have C^T C^E C^phi
+        c0 = C_inv_array[:, :, iell]
 
-np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-           dats[lmin_index:lmax_index, 0, 0], header=header)
-fisher_single = fisher.copy()
+        cinv = np.linalg.inv(c0)
 
-# utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
-np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-                                                                                 lmin, lmax, N_det, fsky), fisher_single, header=header)
+        for i in range(0, n_values):
 
-print 'finally how much constraint on parameters without external prior?'
-print ''
+            for j in range(0, n_values):
+                # computing derivatives.
+                # f' = -f(x+2h) + 8f(x+h) -8f(x-h)+f(x-2h)
+                      # ---------------------------------
+                                  #   12h
 
-fisher_inv = np.linalg.inv(fisher_single)
+                ci = derivatives[:, :, iell, i]
 
-utils.save_cov_matrix(
-    fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
+                cj = derivatives[:, :, iell, j]
+
+                # Eq 4.
+                # tot = np.dot(np.dot(np.dot(cinv, ci),  cinv), cj)
+                trace = np.sum(np.dot(np.dot(cinv, ci),  cinv) * cj.T)
+
+                # assuming f Eq.4
+                fisher[i, j] += (2. * ell + 1.) / 2. * fsky * trace
+                fisher_save[i, j, iell] = (2. * ell + 1.) / 2. * fsky * trace
+                # print np.sum(fisher_save[:,:,:], axis =2)[0,0],fisher[0,0]
+
+        no_marginalized_ell[iell, :] = 1. / np.sqrt(np.diag(fisher))
+        fisher_inv = np.linalg.inv(fisher)
+        marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 
-np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-                                                                                            lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
+    # LOADING EXTERNAL DATA TO BE ADDED.
+    planck_fisher = np.loadtxt(
+        '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=50_ndet=Planck_fsky=0.2.txt')
+    BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
+    BAO_fisher_DESI = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO_DESI.txt')
 
-print 'fisher=', fisher
-no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2']
-excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
+    # print planck_fisher
+    # print ''
+    # print fisher
 
-par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
-    excluded_parameters, par_gaps, values, fid, fisher_single)
+    # # print ''
+    # print ''
+    print 'ADDING PLANCK POL'
+    fisher += planck_fisher
 
-utils.print_resume_stat(fisher_single, fid)
+    print 'ADDING BAO'
+    fisher += BAO_fisher
+
+    print 'lmax =', ell
+    # print fisher_inv
+
+
+    # ===================================
+    #  SAVING FILES AND PRINT
+    # ===================================
+
+    np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+               np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
+    np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+               np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
+    np.save('data/{}/full_fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
+            fisher_save)
+
+    np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
+               dats[lmin_index:lmax_index, 0, 0], header=header)
+    fisher_single = fisher.copy()
+
+    # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
+    np.savetxt('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+                                                                                     lmin, lmax, N_det, fsky), fisher_single, header=header)
+
+    print 'finally how much constraint on parameters without external prior?'
+    print ''
+
+    fisher_inv = np.linalg.inv(fisher_single)
+
+    utils.save_cov_matrix(
+        fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
+
+
+    np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
+                                                                                                lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
+
+    print 'fisher=', fisher
+    no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
+    plot_now = ['omnuh2']
+    excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
+
+    par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
+        excluded_parameters, par_gaps, values, fid, fisher_single)
+
+    utils.print_resume_stat(fisher_single, fid)
