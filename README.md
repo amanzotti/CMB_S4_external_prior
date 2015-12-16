@@ -2,22 +2,13 @@
 ### What is this repository for? ###
 
 * Compute fisher matrix estimation using CMB E,T,Lensing
-* 1.0
+* 2.0 Used to produce data for http://arxiv.org/abs/1512.02654
 
 ### How do I get set up? ###
 
-* Summary of set up
 * Configuration
-* Dependencies
-* Database configuration
+* Dependencies: the usual numPy SciPy etc. And you need a working CAMB installed.
 * How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
 
 ### Contact ###
 
