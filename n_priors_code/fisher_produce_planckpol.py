@@ -119,6 +119,7 @@ def calc_c_fiducial(data):
     N_tot = np.zeros_like(ell)
     N_pol_tot = np.zeros_like(ell)
 
+
     # 30,44,70,100,143,217,353
     s['30'] = 145  # this is supposed to be in muk arcmin to fit in the later used formulas
     s['44'] = 149
@@ -157,7 +158,9 @@ def calc_c_fiducial(data):
     s_pol['217'] = 134.
     s_pol['353'] = 406.
 
-    for nu in ['70', '100', '143', '217', '353']:
+#Use this for Planck below for planck pol
+    for nu in ['70']:
+    # for nu in ['70', '100', '143', '217', '353']:
 
         # Final CMB noise definition
         N_pol[nu] = (s_pol[nu] * np.pi / 180. / 60.) ** 2 * np.exp(ell * (ell + 1.) * t[nu] ** 2 / 8. / np.log(2))
@@ -245,7 +248,7 @@ def C(iell, ell, parbin, data):
 
 
 l_t_max = 2500  # this is the multipole you want to cut the temperature Cl at, to simulate the effect of foreground
-lmax = 50
+lmax = 2500
 lmin = 2
 N_det = 'Planck'
 # No lensing
@@ -264,7 +267,7 @@ arcmin_from_fsky = fsky2arcmin(fsky)
 sec_of_obs = years2sec(5)
 Y = 0.25  # 25% yeld
 # ===================
-header = 'Joint fisher CMB T E + phi lensing used \n'
+header = 'Joint fisher CMB T E + phi lensing use Planck noise\n'
 header += 'lmax={} \n lmin={} \n l_t_max={} \n fsky={} \n lensed={} \n data_folder={} \n N_det={} \n'.format(
     lmax, lmin, l_t_max, fsky, lensed, data_folder, N_det)
 
@@ -409,46 +412,25 @@ for iell, ell in enumerate(dats[lmin_index:lmax_index, 0, 0]):
     marginalized_ell[iell, :] = np.sqrt(np.diag(fisher_inv))
 
 print 'lmax =', ell
-# print fisher_inv
-# BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
-# print 'ADDING BAO'
-# fisher += BAO_fisher
-# np.savetxt('data/{}/no_marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-#            np.column_stack((dats[lmin_index:lmax_index, 0, 0], no_marginalized_ell)), header=header)
-# np.savetxt('data/{}/marginalized_ell_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-#            np.column_stack((dats[lmin_index:lmax_index, 0, 0], marginalized_ell)), header=header)
-# np.save('data/{}/fisher_mat_joint_lmin={}_lmax={}_ndet={}_fsky={}.npy'.format(output_folder, lmin, lmax, N_det, fsky),
-#         fisher)
-
-# np.savetxt('data/{}/ell_indeces_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky),
-#            dats[lmin_index:lmax_index, 0, 0], header=header)
-
-# # utils.study_prior_tau_on_N_eff(fid, fisher, 'data/' + output_folder, header)
 
 
-# print 'finally how much constraint on parameters without prior?'
-# print ''
-# fisher_single = fisher.copy()
+BAO_fisher = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO.txt')
+BAO_fisher_DESI = np.loadtxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_BAO_DESI.txt')
 
-# fisher_inv = np.linalg.inv(fisher_single)
+print 'ADDING BAO'
+fisher += BAO_fisher
 
-# # utils.save_cov_matrix(
-# #     fisher_inv, 'data/{}/param_cov_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder, lmin, lmax, N_det, fsky))
-
-
-# np.savetxt('data/{}/invetered_sqrt_fisher_joint_lmin={}_lmax={}_ndet={}_fsky={}.txt'.format(output_folder,
-# lmin, lmax, N_det, fsky), np.sqrt(fisher_inv), header=header)
 
 print np.shape(fisher)
-np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_joint_lmin=2_lmax=50_ndet=Planck_fsky=0.2.txt', fisher, header=header)
+np.savetxt('/home/manzotti/n_eff-dependence-on-prior/n_priors_code/data/fisher_mat_Planck.txt', fisher, header=header)
 
 print 'fisher=', fisher
 
-# no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-# # plot_now = ['omnuh2']
-# excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
+no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
+plot_now = ['']
+excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 
-# par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
-#     excluded_parameters, par_gaps, values, fid, fisher_single)
+par_gaps, values, fid, fisher_single = utils.exclude_parameters_from_fisher(
+    excluded_parameters, par_gaps, values, fid, fisher)
 
-utils.print_resume_stat(fisher, fid)
+utils.print_resume_stat(fisher_single, fid)

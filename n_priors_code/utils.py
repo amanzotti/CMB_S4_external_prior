@@ -202,6 +202,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
 
     '''
 
+    print "CHECK"
     if isinstance(prior_val, (int, long, float)):
         assert (fid.has_key(x))
         assert (fid.has_key(y))
@@ -210,7 +211,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
         # Cicle on H0 priors
         fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
             (prior_val * fid[y]) ** 2
-        print np.diag(fisher1)
+        # print np.diag(fisher1)
 
         return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
 
@@ -219,55 +220,62 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
         sigma_x_prior = np.zeros(np.size(prior_val))
         for i, prior in enumerate(prior_val):
             # print 'prior in single',prior
+            # print 'fisher', fisher[0,0]
             fisher1 = fisher.copy()
             # Cicle on H0 priors
 
             fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
                 (prior * fid[y]) ** 2
 
+            # print prior,y
+            print np.linalg.inv(fisher1).diagonal()/np.linalg.inv(fisher).diagonal()
+            # print ''
             sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+            # print 'fisher', fisher[0,0]
+            # print ''
+#
         return sigma_x_prior
     else:
         sys.exit('type not recognized')
 
 
-def return_simgax_y_prior(fid, fisher, x, y, prior_val):
-    '''
-    Concept return sigma x given a possible prior on y
+# def return_simgax_y_prior(fid, fisher, x, y, prior_val):
+#     '''
+#     Concept return sigma x given a possible prior on y
 
-    As an input it gets the fisher matrix but what it spits out is not a relative sigma.
-    just sigma.
+#     As an input it gets the fisher matrix but what it spits out is not a relative sigma.
+#     just sigma.
 
 
-    '''
+#     '''
 
-    if isinstance(prior_val, (int, long, float)):
-        assert (fid.has_key(x))
-        assert (fid.has_key(y))
+#     if isinstance(prior_val, (int, long, float)):
+#         assert (fid.has_key(x))
+#         assert (fid.has_key(y))
 
-        fisher1 = fisher.copy()
-        # Cicle on H0 priors
-        fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-            (prior_val * fid[y]) ** 2
-        print np.diag(fisher1)
+#         fisher1 = fisher.copy()
+#         # Cicle on H0 priors
+#         fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
+#             (prior_val * fid[y]) ** 2
+#         print np.diag(fisher1)
 
-        return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+#         return np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
 
-    elif (isinstance(prior_val, (np.ndarray))) or (isinstance(prior_val, list)):
+#     elif (isinstance(prior_val, (np.ndarray))) or (isinstance(prior_val, list)):
 
-        sigma_x_prior = np.zeros(np.size(prior_val))
-        for i, prior in enumerate(prior_val):
-            # print 'prior in single',prior
-            fisher1 = fisher.copy()
-            # Cicle on H0 priors
+#         sigma_x_prior = np.zeros(np.size(prior_val))
+#         for i, prior in enumerate(prior_val):
+#             # print 'prior in single',prior
+#             fisher1 = fisher.copy()
+#             # Cicle on H0 priors
 
-            fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
-                (prior * fid[y]) ** 2
+#             fisher1[fid.keys().index(y), fid.keys().index(y)] += 1 / \
+#                 (prior * fid[y]) ** 2
 
-            sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
-        return sigma_x_prior
-    else:
-        sys.exit('type not recognized')
+#             sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
+#         return sigma_x_prior
+#     else:
+#         sys.exit('type not recognized')
 
 
 def apply_simgax_y_prior(fid, fisher, x, y, prior_val):
