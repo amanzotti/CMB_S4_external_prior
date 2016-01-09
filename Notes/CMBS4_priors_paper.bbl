@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{27}%
+\begin{thebibliography}{28}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -157,170 +157,55 @@
   {journal} {\bibinfo  {journal} {ArXiv e-prints}\ } (\bibinfo {year}
   {2013})},\ \Eprint {http://arxiv.org/abs/1309.5383} {arXiv:1309.5383}
   \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
-  {et~al.}(2015)\citenamefont {{Planck Collaboration}}, \citenamefont {{Ade}},
-  \citenamefont {{Aghanim}}, \citenamefont {{Arnaud}}, \citenamefont
-  {{Ashdown}}, \citenamefont {{Aumont}}, \citenamefont {{Baccigalupi}},
-  \citenamefont {{Banday}}, \citenamefont {{Barreiro}}, \citenamefont
-  {{Bartlett}},\ and\ \citenamefont {et~al.}}]{2015arXiv150201589P}%
+\bibitem [{\citenamefont {{Fixsen}}\ \emph {et~al.}(1996)\citenamefont
+  {{Fixsen}}, \citenamefont {{Cheng}}, \citenamefont {{Gales}}, \citenamefont
+  {{Mather}}, \citenamefont {{Shafer}},\ and\ \citenamefont
+  {{Wright}}}]{fixsen:1996}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
-  Collaboration}}}, \bibinfo {author} {\bibfnamefont {P.~A.~R.}\ \bibnamefont
-  {{Ade}}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {{Aghanim}}},
-  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {{Arnaud}}}, \bibinfo
-  {author} {\bibfnamefont {M.}~\bibnamefont {{Ashdown}}}, \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {{Aumont}}}, \bibinfo {author}
-  {\bibfnamefont {C.}~\bibnamefont {{Baccigalupi}}}, \bibinfo {author}
-  {\bibfnamefont {A.~J.}\ \bibnamefont {{Banday}}}, \bibinfo {author}
-  {\bibfnamefont {R.~B.}\ \bibnamefont {{Barreiro}}}, \bibinfo {author}
-  {\bibfnamefont {J.~G.}\ \bibnamefont {{Bartlett}}}, \ and\ \bibinfo {author}
-  {\bibnamefont {et~al.}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
-  {journal} {ArXiv e-prints}\ } (\bibinfo {year} {2015})},\ \Eprint
-  {http://arxiv.org/abs/1502.01589} {arXiv:1502.01589} \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
-  {et~al.}(2014{\natexlab{a}})\citenamefont {{Planck Collaboration}},
-  \citenamefont {{Ade}}, \citenamefont {{Aghanim}}, \citenamefont
-  {{Armitage-Caplan}}, \citenamefont {{Arnaud}}, \citenamefont {{Ashdown}},
-  \citenamefont {{Atrio-Barandela}}, \citenamefont {{Aumont}}, \citenamefont
-  {{Baccigalupi}}, \citenamefont {{Banday}},\ and\ \citenamefont
-  {et~al.}}]{planck-collaboration:2014}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~J.}\ \bibnamefont
+  {{Fixsen}}}, \bibinfo {author} {\bibfnamefont {E.~S.}\ \bibnamefont
+  {{Cheng}}}, \bibinfo {author} {\bibfnamefont {J.~M.}\ \bibnamefont
+  {{Gales}}}, \bibinfo {author} {\bibfnamefont {J.~C.}\ \bibnamefont
+  {{Mather}}}, \bibinfo {author} {\bibfnamefont {R.~A.}\ \bibnamefont
+  {{Shafer}}}, \ and\ \bibinfo {author} {\bibfnamefont {E.~L.}\ \bibnamefont
+  {{Wright}}},\ }\href {\doibase 10.1086/178173} {\bibfield  {journal}
+  {\bibinfo  {journal} {\apj}\ }\textbf {\bibinfo {volume} {473}},\ \bibinfo
+  {pages} {576} (\bibinfo {year} {1996})},\ \Eprint
+  {http://arxiv.org/abs/astro-ph/9605054} {astro-ph/9605054} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {consortium}(2005)}]{BlueBook2005}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
-  Collaboration}}}, \bibinfo {author} {\bibfnamefont {P.~A.~R.}\ \bibnamefont
-  {{Ade}}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {{Aghanim}}},
-  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {{Armitage-Caplan}}},
-  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {{Arnaud}}}, \bibinfo
-  {author} {\bibfnamefont {M.}~\bibnamefont {{Ashdown}}}, \bibinfo {author}
-  {\bibfnamefont {F.}~\bibnamefont {{Atrio-Barandela}}}, \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {{Aumont}}}, \bibinfo {author}
-  {\bibfnamefont {C.}~\bibnamefont {{Baccigalupi}}}, \bibinfo {author}
-  {\bibfnamefont {A.~J.}\ \bibnamefont {{Banday}}}, \ and\ \bibinfo {author}
-  {\bibnamefont {et~al.}},\ }\href {\doibase 10.1051/0004-6361/201321591}
-  {\bibfield  {journal} {\bibinfo  {journal} {\aap}\ }\textbf {\bibinfo
-  {volume} {571}},\ \bibinfo {eid} {A16} (\bibinfo {year}
-  {2014}{\natexlab{a}})},\ \Eprint {http://arxiv.org/abs/1303.5076}
-  {arXiv:1303.5076} \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {{Spergel}}\ \emph {et~al.}(2003)\citenamefont
-  {{Spergel}}, \citenamefont {{Verde}}, \citenamefont {{Peiris}}, \citenamefont
-  {{Komatsu}}, \citenamefont {{Nolta}}, \citenamefont {{Bennett}},
-  \citenamefont {{Halpern}}, \citenamefont {{Hinshaw}}, \citenamefont
-  {{Jarosik}}, \citenamefont {{Kogut}}, \citenamefont {{Limon}}, \citenamefont
-  {{Meyer}}, \citenamefont {{Page}}, \citenamefont {{Tucker}}, \citenamefont
-  {{Weiland}}, \citenamefont {{Wollack}},\ and\ \citenamefont
-  {{Wright}}}]{2003ApJS..148..175S}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.~P.}\ \bibnamefont
+  {consortium}},\ }\href@noop {} {\emph {\bibinfo {title} {PLANCK - The
+  Scientific Programme, ESA-SCI(2005)1, PLANCK Bluebook}}}\ (\bibinfo
+  {publisher} {ESA-SCI(2005)1},\ \bibinfo {year} {2005})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Bennett}}\ \emph {et~al.}(2003)\citenamefont
+  {{Bennett}}, \citenamefont {{Bay}}, \citenamefont {{Halpern}}, \citenamefont
+  {{Hinshaw}}, \citenamefont {{Jackson}}, \citenamefont {{Jarosik}},
+  \citenamefont {{Kogut}}, \citenamefont {{Limon}}, \citenamefont {{Meyer}},
+  \citenamefont {{Page}}, \citenamefont {{Spergel}}, \citenamefont {{Tucker}},
+  \citenamefont {{Wilkinson}}, \citenamefont {{Wollack}},\ and\ \citenamefont
+  {{Wright}}}]{bennett:2003}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~N.}\ \bibnamefont
-  {{Spergel}}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {{Verde}}},
-  \bibinfo {author} {\bibfnamefont {H.~V.}\ \bibnamefont {{Peiris}}}, \bibinfo
-  {author} {\bibfnamefont {E.}~\bibnamefont {{Komatsu}}}, \bibinfo {author}
-  {\bibfnamefont {M.~R.}\ \bibnamefont {{Nolta}}}, \bibinfo {author}
-  {\bibfnamefont {C.~L.}\ \bibnamefont {{Bennett}}}, \bibinfo {author}
-  {\bibfnamefont {M.}~\bibnamefont {{Halpern}}}, \bibinfo {author}
-  {\bibfnamefont {G.}~\bibnamefont {{Hinshaw}}}, \bibinfo {author}
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~L.}\ \bibnamefont
+  {{Bennett}}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {{Bay}}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {{Halpern}}}, \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {{Hinshaw}}}, \bibinfo {author}
+  {\bibfnamefont {C.}~\bibnamefont {{Jackson}}}, \bibinfo {author}
   {\bibfnamefont {N.}~\bibnamefont {{Jarosik}}}, \bibinfo {author}
   {\bibfnamefont {A.}~\bibnamefont {{Kogut}}}, \bibinfo {author} {\bibfnamefont
   {M.}~\bibnamefont {{Limon}}}, \bibinfo {author} {\bibfnamefont {S.~S.}\
   \bibnamefont {{Meyer}}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont
-  {{Page}}}, \bibinfo {author} {\bibfnamefont {G.~S.}\ \bibnamefont
-  {{Tucker}}}, \bibinfo {author} {\bibfnamefont {J.~L.}\ \bibnamefont
-  {{Weiland}}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {{Page}}}, \bibinfo {author} {\bibfnamefont {D.~N.}\ \bibnamefont
+  {{Spergel}}}, \bibinfo {author} {\bibfnamefont {G.~S.}\ \bibnamefont
+  {{Tucker}}}, \bibinfo {author} {\bibfnamefont {D.~T.}\ \bibnamefont
+  {{Wilkinson}}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
   {{Wollack}}}, \ and\ \bibinfo {author} {\bibfnamefont {E.~L.}\ \bibnamefont
-  {{Wright}}},\ }\href {\doibase 10.1086/377226} {\bibfield  {journal}
-  {\bibinfo  {journal} {\apjs}\ }\textbf {\bibinfo {volume} {148}},\ \bibinfo
-  {pages} {175} (\bibinfo {year} {2003})},\ \Eprint
-  {http://arxiv.org/abs/astro-ph/0302209} {astro-ph/0302209} \BibitemShut
+  {{Wright}}},\ }\href {\doibase 10.1086/345346} {\bibfield  {journal}
+  {\bibinfo  {journal} {\apj}\ }\textbf {\bibinfo {volume} {583}},\ \bibinfo
+  {pages} {1} (\bibinfo {year} {2003})},\ \Eprint
+  {http://arxiv.org/abs/astro-ph/0301158} {astro-ph/0301158} \BibitemShut
   {NoStop}%
-\bibitem [{\citenamefont {{Hanany}}\ \emph {et~al.}(2000)\citenamefont
-  {{Hanany}}, \citenamefont {{Ade}}, \citenamefont {{Balbi}}, \citenamefont
-  {{Bock}}, \citenamefont {{Borrill}}, \citenamefont {{Boscaleri}},
-  \citenamefont {{de Bernardis}}, \citenamefont {{Ferreira}}, \citenamefont
-  {{Hristov}}, \citenamefont {{Jaffe}}, \citenamefont {{Lange}}, \citenamefont
-  {{Lee}}, \citenamefont {{Mauskopf}}, \citenamefont {{Netterfield}},
-  \citenamefont {{Oh}}, \citenamefont {{Pascale}}, \citenamefont {{Rabii}},
-  \citenamefont {{Richards}}, \citenamefont {{Smoot}}, \citenamefont
-  {{Stompor}}, \citenamefont {{Winant}},\ and\ \citenamefont
-  {{Wu}}}]{2000ApJ...545L...5H}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {{Hanany}}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {{Ade}}},
-  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {{Balbi}}}, \bibinfo
-  {author} {\bibfnamefont {J.}~\bibnamefont {{Bock}}}, \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {{Borrill}}}, \bibinfo {author}
-  {\bibfnamefont {A.}~\bibnamefont {{Boscaleri}}}, \bibinfo {author}
-  {\bibfnamefont {P.}~\bibnamefont {{de Bernardis}}}, \bibinfo {author}
-  {\bibfnamefont {P.~G.}\ \bibnamefont {{Ferreira}}}, \bibinfo {author}
-  {\bibfnamefont {V.~V.}\ \bibnamefont {{Hristov}}}, \bibinfo {author}
-  {\bibfnamefont {A.~H.}\ \bibnamefont {{Jaffe}}}, \bibinfo {author}
-  {\bibfnamefont {A.~E.}\ \bibnamefont {{Lange}}}, \bibinfo {author}
-  {\bibfnamefont {A.~T.}\ \bibnamefont {{Lee}}}, \bibinfo {author}
-  {\bibfnamefont {P.~D.}\ \bibnamefont {{Mauskopf}}}, \bibinfo {author}
-  {\bibfnamefont {C.~B.}\ \bibnamefont {{Netterfield}}}, \bibinfo {author}
-  {\bibfnamefont {S.}~\bibnamefont {{Oh}}}, \bibinfo {author} {\bibfnamefont
-  {E.}~\bibnamefont {{Pascale}}}, \bibinfo {author} {\bibfnamefont
-  {B.}~\bibnamefont {{Rabii}}}, \bibinfo {author} {\bibfnamefont {P.~L.}\
-  \bibnamefont {{Richards}}}, \bibinfo {author} {\bibfnamefont {G.~F.}\
-  \bibnamefont {{Smoot}}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {{Stompor}}}, \bibinfo {author} {\bibfnamefont {C.~D.}\ \bibnamefont
-  {{Winant}}}, \ and\ \bibinfo {author} {\bibfnamefont {J.~H.~P.}\ \bibnamefont
-  {{Wu}}},\ }\href {\doibase 10.1086/317322} {\bibfield  {journal} {\bibinfo
-  {journal} {\apjl}\ }\textbf {\bibinfo {volume} {545}},\ \bibinfo {pages} {L5}
-  (\bibinfo {year} {2000})},\ \Eprint {http://arxiv.org/abs/astro-ph/0005123}
-  {astro-ph/0005123} \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {{de Bernardis}}\ \emph {et~al.}(2000)\citenamefont
-  {{de Bernardis}}, \citenamefont {{Ade}}, \citenamefont {{Bock}},
-  \citenamefont {{Bond}}, \citenamefont {{Borrill}}, \citenamefont
-  {{Boscaleri}}, \citenamefont {{Coble}}, \citenamefont {{Crill}},
-  \citenamefont {{De Gasperis}}, \citenamefont {{Farese}}, \citenamefont
-  {{Ferreira}}, \citenamefont {{Ganga}}, \citenamefont {{Giacometti}},
-  \citenamefont {{Hivon}}, \citenamefont {{Hristov}}, \citenamefont
-  {{Iacoangeli}}, \citenamefont {{Jaffe}}, \citenamefont {{Lange}},
-  \citenamefont {{Martinis}}, \citenamefont {{Masi}}, \citenamefont {{Mason}},
-  \citenamefont {{Mauskopf}}, \citenamefont {{Melchiorri}}, \citenamefont
-  {{Miglio}}, \citenamefont {{Montroy}}, \citenamefont {{Netterfield}},
-  \citenamefont {{Pascale}}, \citenamefont {{Piacentini}}, \citenamefont
-  {{Pogosyan}}, \citenamefont {{Prunet}}, \citenamefont {{Rao}}, \citenamefont
-  {{Romeo}}, \citenamefont {{Ruhl}}, \citenamefont {{Scaramuzzi}},
-  \citenamefont {{Sforna}},\ and\ \citenamefont
-  {{Vittorio}}}]{2000Natur.404..955D}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {{de
-  Bernardis}}}, \bibinfo {author} {\bibfnamefont {P.~A.~R.}\ \bibnamefont
-  {{Ade}}}, \bibinfo {author} {\bibfnamefont {J.~J.}\ \bibnamefont {{Bock}}},
-  \bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont {{Bond}}}, \bibinfo
-  {author} {\bibfnamefont {J.}~\bibnamefont {{Borrill}}}, \bibinfo {author}
-  {\bibfnamefont {A.}~\bibnamefont {{Boscaleri}}}, \bibinfo {author}
-  {\bibfnamefont {K.}~\bibnamefont {{Coble}}}, \bibinfo {author} {\bibfnamefont
-  {B.~P.}\ \bibnamefont {{Crill}}}, \bibinfo {author} {\bibfnamefont
-  {G.}~\bibnamefont {{De Gasperis}}}, \bibinfo {author} {\bibfnamefont {P.~C.}\
-  \bibnamefont {{Farese}}}, \bibinfo {author} {\bibfnamefont {P.~G.}\
-  \bibnamefont {{Ferreira}}}, \bibinfo {author} {\bibfnamefont
-  {K.}~\bibnamefont {{Ganga}}}, \bibinfo {author} {\bibfnamefont
-  {M.}~\bibnamefont {{Giacometti}}}, \bibinfo {author} {\bibfnamefont
-  {E.}~\bibnamefont {{Hivon}}}, \bibinfo {author} {\bibfnamefont {V.~V.}\
-  \bibnamefont {{Hristov}}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {{Iacoangeli}}}, \bibinfo {author} {\bibfnamefont {A.~H.}\ \bibnamefont
-  {{Jaffe}}}, \bibinfo {author} {\bibfnamefont {A.~E.}\ \bibnamefont
-  {{Lange}}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {{Martinis}}},
-  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {{Masi}}}, \bibinfo
-  {author} {\bibfnamefont {P.~V.}\ \bibnamefont {{Mason}}}, \bibinfo {author}
-  {\bibfnamefont {P.~D.}\ \bibnamefont {{Mauskopf}}}, \bibinfo {author}
-  {\bibfnamefont {A.}~\bibnamefont {{Melchiorri}}}, \bibinfo {author}
-  {\bibfnamefont {L.}~\bibnamefont {{Miglio}}}, \bibinfo {author}
-  {\bibfnamefont {T.}~\bibnamefont {{Montroy}}}, \bibinfo {author}
-  {\bibfnamefont {C.~B.}\ \bibnamefont {{Netterfield}}}, \bibinfo {author}
-  {\bibfnamefont {E.}~\bibnamefont {{Pascale}}}, \bibinfo {author}
-  {\bibfnamefont {F.}~\bibnamefont {{Piacentini}}}, \bibinfo {author}
-  {\bibfnamefont {D.}~\bibnamefont {{Pogosyan}}}, \bibinfo {author}
-  {\bibfnamefont {S.}~\bibnamefont {{Prunet}}}, \bibinfo {author}
-  {\bibfnamefont {S.}~\bibnamefont {{Rao}}}, \bibinfo {author} {\bibfnamefont
-  {G.}~\bibnamefont {{Romeo}}}, \bibinfo {author} {\bibfnamefont {J.~E.}\
-  \bibnamefont {{Ruhl}}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {{Scaramuzzi}}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
-  {{Sforna}}}, \ and\ \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont
-  {{Vittorio}}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {\nat}\ }\textbf {\bibinfo {volume} {404}},\ \bibinfo {pages} {955} (\bibinfo
-  {year} {2000})},\ \Eprint {http://arxiv.org/abs/astro-ph/0004404}
-  {astro-ph/0004404} \BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Halverson}}\ \emph {et~al.}(2002)\citenamefont
   {{Halverson}}, \citenamefont {{Leitch}}, \citenamefont {{Pryke}},
   \citenamefont {{Kovac}}, \citenamefont {{Carlstrom}}, \citenamefont
@@ -526,6 +411,29 @@
   {\prd}\ }\textbf {\bibinfo {volume} {87}},\ \bibinfo {eid} {083008} (\bibinfo
   {year} {2013})},\ \Eprint {http://arxiv.org/abs/1104.2333} {arXiv:1104.2333
   [astro-ph.CO]} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}\ \emph
+  {et~al.}(2014{\natexlab{a}})\citenamefont {{Planck Collaboration}},
+  \citenamefont {{Ade}}, \citenamefont {{Aghanim}}, \citenamefont
+  {{Armitage-Caplan}}, \citenamefont {{Arnaud}}, \citenamefont {{Ashdown}},
+  \citenamefont {{Atrio-Barandela}}, \citenamefont {{Aumont}}, \citenamefont
+  {{Baccigalupi}}, \citenamefont {{Banday}},\ and\ \citenamefont
+  {et~al.}}]{planck-collaboration:2014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}}, \bibinfo {author} {\bibfnamefont {P.~A.~R.}\ \bibnamefont
+  {{Ade}}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {{Aghanim}}},
+  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {{Armitage-Caplan}}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {{Arnaud}}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {{Ashdown}}}, \bibinfo {author}
+  {\bibfnamefont {F.}~\bibnamefont {{Atrio-Barandela}}}, \bibinfo {author}
+  {\bibfnamefont {J.}~\bibnamefont {{Aumont}}}, \bibinfo {author}
+  {\bibfnamefont {C.}~\bibnamefont {{Baccigalupi}}}, \bibinfo {author}
+  {\bibfnamefont {A.~J.}\ \bibnamefont {{Banday}}}, \ and\ \bibinfo {author}
+  {\bibnamefont {et~al.}},\ }\href {\doibase 10.1051/0004-6361/201321591}
+  {\bibfield  {journal} {\bibinfo  {journal} {\aap}\ }\textbf {\bibinfo
+  {volume} {571}},\ \bibinfo {eid} {A16} (\bibinfo {year}
+  {2014}{\natexlab{a}})},\ \Eprint {http://arxiv.org/abs/1303.5076}
+  {arXiv:1303.5076} \BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Jassal}}\ \emph {et~al.}(2010)\citenamefont
   {{Jassal}}, \citenamefont {{Bagla}},\ and\ \citenamefont
   {{Padmanabhan}}}]{2010MNRAS.405.2639J}%
@@ -785,6 +693,31 @@
   {journal} {\mnras}\ }\textbf {\bibinfo {volume} {454}},\ \bibinfo {pages}
   {3200} (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1506.07493}
   {arXiv:1506.07493} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Levi}}\ \emph {et~al.}(2013)\citenamefont {{Levi}},
+  \citenamefont {{Bebek}}, \citenamefont {{Beers}}, \citenamefont {{Blum}},
+  \citenamefont {{Cahn}}, \citenamefont {{Eisenstein}}, \citenamefont
+  {{Flaugher}}, \citenamefont {{Honscheid}}, \citenamefont {{Kron}},
+  \citenamefont {{Lahav}}, \citenamefont {{McDonald}}, \citenamefont {{Roe}},
+  \citenamefont {{Schlegel}},\ and\ \citenamefont {{representing the DESI
+  collaboration}}}]{levi:2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {{Levi}}}, \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {{Bebek}}},
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {{Beers}}}, \bibinfo
+  {author} {\bibfnamefont {R.}~\bibnamefont {{Blum}}}, \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {{Cahn}}}, \bibinfo {author} {\bibfnamefont
+  {D.}~\bibnamefont {{Eisenstein}}}, \bibinfo {author} {\bibfnamefont
+  {B.}~\bibnamefont {{Flaugher}}}, \bibinfo {author} {\bibfnamefont
+  {K.}~\bibnamefont {{Honscheid}}}, \bibinfo {author} {\bibfnamefont
+  {R.}~\bibnamefont {{Kron}}}, \bibinfo {author} {\bibfnamefont
+  {O.}~\bibnamefont {{Lahav}}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {{McDonald}}}, \bibinfo {author} {\bibfnamefont
+  {N.}~\bibnamefont {{Roe}}}, \bibinfo {author} {\bibfnamefont
+  {D.}~\bibnamefont {{Schlegel}}}, \ and\ \bibinfo {author} {\bibnamefont
+  {{representing the DESI collaboration}}},\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ } (\bibinfo {year}
+  {2013})},\ \Eprint {http://arxiv.org/abs/1308.0847} {arXiv:1308.0847
+  [astro-ph.CO]} \BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Liu}}\ \emph {et~al.}(2015)\citenamefont {{Liu}},
   \citenamefont {{Pritchard}}, \citenamefont {{Allison}}, \citenamefont
   {{Parsons}}, \citenamefont {{Seljak}},\ and\ \citenamefont
@@ -902,4 +835,12 @@
   }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ArXiv e-prints}\ }
   (\bibinfo {year} {2015})},\ \Eprint {http://arxiv.org/abs/1508.06342}
   {arXiv:1508.06342} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{LSST Dark Energy Science
+  Collaboration}}(2012)}]{lsst-dark-energy-science-collaboration:2012}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{LSST Dark Energy
+  Science Collaboration}}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {ArXiv e-prints}\ } (\bibinfo {year} {2012})},\ \Eprint
+  {http://arxiv.org/abs/1211.0310} {arXiv:1211.0310 [astro-ph.CO]} \BibitemShut
+  {NoStop}%
 \end{thebibliography}%
