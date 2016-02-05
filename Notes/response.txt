@@ -1,0 +1,127 @@
+Major comments:
+
+- In my opinion the authors are over-discussing well known
+degeneracies between cosmological parameters adding no new
+information. They formulate the key question in the second-to-last
+paragraph of the introduction but there is no answer at the end of the
+reading. While acknowledging the importance of having priors on some
+parameters to better constrain neutrinos and dark energy, I think the
+authors should explain or highlight how those priors will be obtained,
+i.e., which external experiments are needed and how they will help CMB
+Stage-IV. Moreover, additional datasets like galaxies surveys have
+already been proved to be useful by a number of papers in the
+literature, the authors should highlight what is new in their results.
+Following on these concerns, it is not clear to me if the authors have
+an idea on how to get those improvements, for example how to get a
+better prior on n_s with non-CMB data. I find the discussion simply
+speculative. This impacts in particular the abstract, the results and
+the conclusion sections.
+
+The key issue here seems to be: How best to address the question: What external information can be used to improve projected constraints by breaking degeneracies? We think the referee is saying there are 2 parts to this answer: (i) quantify how much the added information on other parameters breaks degeneracies and (ii) give a sense of how we could get that information. The referee points out that we did not do a good job explaining the possibilities for (ii) and that at least qualitatively other papers have discussed degeneracies.
+
+
+- The baseline dataset in all the results is using CMB+BAO which means
+already CMB + external information. This is confusing, we are not
+improving on CMB then but rather on a combination of CMB and some
+galaxy data.
+
+
+Right; we were not clear that CMB+BAO includes current BAO constraints, from e.g., BOSS. It doesn't make sense to us to exclude things we currently know, so we think
+it important to include these constraints as our baseline.
+
+- I cannot understand Figures 1,2,3,4. If the far right is the
+expected CMB S4+Planck-Pol+BAO15 then the lines starting point should
+correspond to prior/sigma = 1. How is it possible than adding a prior
+on a parameter 3 times bigger than the sigma from CMB
+S4+Planck-Pol+BAO15 (e.g., on Ho) gives a better constrain? If I think
+about it in the likelihood space I am multiplying a distribution with
+another one having 3 times its width and I do not expect to have any
+impact on the combined result. Also, I do not understand why we should
+consider adding a prior which is bigger than the baseline sigma from
+CMB S4+Planck-Pol+BAO. What is shown on the right axis?
+
+
+We agree that this was unecessarily complicated so have changed all the figures to absolute priors on the parameters. The referee's question still remains: why does a 3% prior on H_0 say help if the data itself constrain it to 1%. We stand by our result that it does help. Imagine a 1-D likelihood with one experiment giving a 1% constraint and another [here called "external"] a similar 1% constraint. When combining the 2, the constraint will be tighter, with the new error given by the inverse square root of the sum of the two inverse variances: [1/\sigma_1^2 + 1/\sigma_2^2]^{-1/2}. In the simple example above the external prior is equal to the internal constraint, so the total constraint is reduced by \sqrt{2}. In the example given by the referee [external constraint 3 times looser], there will still be improvement, albeit only by a factor of \sqrt{1 + 1/9}, ~5%. In multi-dimensional space, things are not that simple, but the plots show how things improve. To come back to our first response, we believe this information is extremely important for future planning. While it is true that people have studied degeneracies before, their impact has not been presented in this way. The very fact that the plots are not familiar indicates that we are introducing a new way, a productive way, of thinking about planning. We have added a paragraph in the text that attempts to explain this point more clearly and -- as noted -- have changed the x-axis on all plots to make things less confusing.
+
+- I think that the claim of dramatically improving dark energy is
+wrong. That authors themselves show that in the best case scenario
+with lots of external information we will improve on w no more than a
+factor of 2. More generally I think the discussion on dark energy need
+to say more explicitly that the CMB is not the best probe of DE and it
+will tell us something only in combination with other data.
+
+Good point. We've toned down the language especially in the abstract and added the sentence: "For this reason CMB provides limited information about dark energy on its own. However CMB plays an important role in dark energy studies when combined with low redshift probes."'
+
+- The references are not adequate in many cases, see minor comments
+for details.
+
+- I encourage the authors to review the text:
+- - adjectives like “dramatically” and “extremely” are not useful in
+giving an idea of an experiment constraining power;
+
+good point; removed these
+
+- - in the abstract the authors mention signal to noise of the CMB
+polarization signal and I think they mean data;
+
+got it; thanks
+
+- - in the abstract high redshift large scale structure is wrong, the
+CMB is a high redshift signal lensed by low redshift large scale
+structure though;
+
+right; we meant "high redshift" compared to other lensing data, but the wording is clearly bad. We've fixed by removing "high redshift"
+
+"'"
+- - in the introduction rephrase the 4th sentence. New experiments are
+built to have a better sensitivity, it is not a success, it is meant
+to happen;
+
+not sure we understand this point
+
+- - in the introduction rephrase the dark energy section following my
+comment above.
+
+done; as mentioned above
+
+- Why do the authors use fsky=0.75? CMB S4 is expected to observe
+roughly half the sky which, after galaxy removal, should correspond to
+fsky ~ 0.4 .
+
+Right; this is aggressive and the true value will be determined, but we chose this to be consistent with Ref. 11. Added a footnote: "The exact specifications of CMB-S4 are to be determined; we choose this value of fsky to afford easy comparison with the results of [11]."
+
+- Keeping the helium fraction fixed is wrong, Yp varies with baryon
+density AND Neff.
+
+That's what we did, but the old version did not explain. We changed to:
+"Similarly, when we vary $N_{\rm eff}$ we adjust the helium abundance to its canonical value from Big Bang Nucleosynthesis, which depends also on the baryon density."'
+
+
+
+Minor comments:
+
+- In the introduction: Ref. 4 is WMAP 1year results, in this context
+the general WMAP experiment paper Bennett et al. 2003 or the final
+mission results Bennet et al. 2012 would be more appropriate. Same
+thing for Planck, cite the Blue Book and/or the 2015 Overview papers.
+Ref. 5 is Maxima and Ref. 6 is Boomerang, they are not satellites and
+are not mentioned in the text.
+- ACT and SPT did not follow DASI, they have measured temperature with
+ACTPol and SPTPol going for polarization. The first two should go into
+the above temperature discussion with references to latest results or
+general papers describing the experiments, and the last two should
+contribute to the polarization discussion.
+- In the introduction the cosmological dependence on neutrinos
+properties jumps from number to masses to number again, it is
+confusing please rephrase.
+- Choose between Universe or universe.
+- Define the cosmological parameters listed in the introduction.
+- In the introduction “model LCDM” -> “LCDM model”
+- Section II, “additional parameter is required” -> “additional
+parameter is required?”
+- Section II, the natural first “baby” step is not a step. The massive
+neutrinos LCDM is the authors baseline model.
+- Define FWHM.
+- Section IIIA, cite DESI.
+- Section IIIA, what do the authors mean with the “current
+

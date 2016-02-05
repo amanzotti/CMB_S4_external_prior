@@ -6,7 +6,7 @@
 %  Add 'draft' option to mark overfull boxes with black boxes
 %  Add 'showpacs' option to make PACS codes appear
 %  Add 'showkeys' option to make keywords appear
-\documentclass[aps,prd,reprint,superscriptaddress]{revtex4-1}
+\documentclass[aps,prd,reprint,superscriptaddress,nofootinbib]{revtex4-1}
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{lineno}
@@ -111,7 +111,7 @@ For CMB experiments the Fisher matrix is related to the angular power spectra $\
  F_{ij} = \sum_\ell \frac{2\ell+1}{2} f_{\rm sky} {\rm Tr} \left(  \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_i} \boldsymbol{C}^{-1}_\ell( \theta) \frac{\partial \boldsymbol{C}_\ell}{\partial \theta_j}  \right)
  \label{eqn:Fij_def2}
  \end{equation}
- where $f_{\rm sky}$, the fraction of sky covered, is set to 0.75 throughout.
+ where $f_{\rm sky}$, the fraction of sky covered, is set to 0.75 throughout\footnote{The exact specifications of CMB-S4 are to be determined; we choose this value of $f_{\rm sky}$ to afford easy comparison with the results of \cite{wu:2014}.}
 In this work we constrain cosmological parameters with CMB temperature and E-mode polarization together with the reconstructed lensing potential of large scale structure. Therefore, $\boldsymbol{C}_\ell$ in \refeq{Fij_def2} is:
  \begin{eqnarray}
  	\centering
