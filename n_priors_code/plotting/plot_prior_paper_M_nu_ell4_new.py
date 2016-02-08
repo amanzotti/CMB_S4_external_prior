@@ -195,7 +195,7 @@ for key_y in ['omnuh2']:
 
     sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
-    for i, key in enumerate(par_gaps.keys()):
+    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
         plt.clf()
         plt.close()
         fg = plt.figure(figsize=fig_dims)
@@ -220,15 +220,16 @@ for key_y in ['omnuh2']:
         # normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
         # *93.14 * 1000. to go to M_nu
-        line_plot = ax1.plot(prior_value*100, new_sigma * 94. * 1000., label=r'$\sigma({0})={1:.1f}\%$'.format(
+        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+
 
         ax1.minorticks_on()
         ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
         # ax1.set_xlim((0.1, 3.1))
         ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., alpha=0.4, linewidth=2, label='DESI')
         ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-        ax1.set_xlabel(r'$\rm{External ~ prior}$')
+        ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
 
         vals = ax1.get_xticks()
         ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])

@@ -193,7 +193,7 @@ for  key_y in ['w']:
 
     sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
-    for i, key in enumerate(par_gaps.keys()):
+    for i, key in enumerate(['omnuh2','hubble','omch2']):
 
         if key == key_y:
             continue
@@ -217,9 +217,11 @@ for  key_y in ['w']:
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         # plot
 
-        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma({0})={1:.1f}\%$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+        # line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma({0})={1:.1f}\%$'.format(
+        #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
+        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
 
 
@@ -238,7 +240,7 @@ for  key_y in ['w']:
         ax1.legend(loc=0)
         # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
         ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
-        ax1.set_xlabel(r'$\rm{External ~ prior}$')
+        ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
         y1, y2 = ax1.get_ylim()
         ax2 = ax1.twinx()
         minor_loc = ax1.yaxis.get_minor_locator()
