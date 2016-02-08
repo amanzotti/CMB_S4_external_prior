@@ -220,7 +220,7 @@ for key_y in ['omnuh2']:
         # normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
         # *93.14 * 1000. to go to M_nu
-        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+        line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
 
