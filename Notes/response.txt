@@ -125,7 +125,9 @@ describing actpol and sptpol.
 - In the introduction the cosmological dependence on neutrinos
 properties jumps from number to masses to number again, it is
 confusing please rephrase.
--------------
+
+We introduce the two main topics of that paragraph (N_eff and M_nu) in the first sentence and we then
+describe one after the other in the remaining. We strengthen the connector hopefully reducing the confusion.
 
 - Choose between Universe or universe.
 
@@ -133,7 +135,9 @@ Done (Universe)
 
 
 - Define the cosmological parameters listed in the introduction.
--------------
+
+The parameters used in our pipelines are quite standard in the field, and we think that pointing the
+reader who wants to know more to the Planck cosmology paper is probably enough.
 
 - In the introduction “model LCDM” -> “LCDM model”
 
