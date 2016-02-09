@@ -195,7 +195,7 @@ for key_y in ['omnuh2']:
 
     sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
+    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)','re_optical_depth']):
         plt.clf()
         plt.close()
         fg = plt.figure(figsize=fig_dims)
