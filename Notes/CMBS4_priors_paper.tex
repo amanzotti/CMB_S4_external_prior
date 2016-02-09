@@ -140,7 +140,7 @@ F_{ii} \rightarrow F_{ii} + \frac{1}{(1\% \times  \theta_{i,\text{fid}})^2}.
 We compute the power spectra $C_{\ell}$ in \refeq{Fij_def2} using CAMB \cite{Howlett:2012mh,Lewis:1999bs} and
 the derivatives in \refeq{Fij_def2} using a 5 point finite difference formula:
 this high order approach allows us to use larger step-sizes around the fiducial parameters to compute derivatives. As a consequence the differences of power spectra corresponding to different values of the parameters are big enough to ensure numerical accuracy. We also test the robustness of this calculation by varying the derivative steps in the range $2-7\%$ . The constraints change by at most $10\%$ that should then be considered as a conservative estimate of numerical uncertainties. 
-Our philosophy is to consider as few extensions as possible. Given the current success of the standard models of particle physics and cosmology, one of the primary goals of CMB-S4 will be to find cracks in these models. As such, the key question is: What information is needed to reliably conclude that an additional parameter is required?. In our baseline model we decide to include massive neutrinos, which (i) are a small extension to the Standard Model and (ii) are known to exist. So our fiducial cosmology is flat $\nu \Lambda$CDM, with assumed 
+Our philosophy is to consider as few extensions as possible. Given the current success of the standard models of particle physics and cosmology, one of the primary goals of CMB-S4 will be to find cracks in these models. As such, the key question is: What information is needed to reliably conclude that an additional parameter is required? In our baseline model we decide to include massive neutrinos, which (i) are a small extension to the Standard Model and (ii) are known to exist. So our fiducial cosmology is flat $\nu \Lambda$CDM, with assumed 
 parameters from Table 2 of the \textit{Planck} best fit \cite{planck-collaboration:2014g}, i.e. $\Omega_c h^2 = 0.12029$, $\Omega_b h^2 = 0.022068$, $A_s = 2.215\times10^{-9}$ at $k_0 = 0.05\ {\rm Mpc}^{-1}$, $n_s = 0.9624$, $\tau = 0.0925$, $H_0 = 67.11$ km/s/Mpc, supplemented by an choice of $\sum m_\nu$ $\simeq$ 85\ meV to be consistent with \cite{wu:2014}.  
 We then extend the parameter space by introducing $N_{\rm eff}$ and $w$ as free parameters, in each case keeping the other parameter fixed.
 The fiducial values of these are $N_{\rm eff}=3.046$ and a cosmological constant equation of state, $w=-1$. In this same spirit, we keep the curvature fixed to zero, as the level predicted in the vast majority of inflationary models is of order $10^{-5}$, much too small to have an impact on the parameters we consider. Similarly, when we vary $N_{\rm eff}$ we adjust the helium abundance to its canonical value from Big Bang Nucleosynthesis, which depends also on the baryon density.
@@ -173,53 +173,117 @@ In this section we present our main results. We will start from $\nu \Lambda$CDM
 Small scale structure formation is suppressed if fast-moving neutrinos comprise a significant part of the matter budget. 
 Indeed, below the current free-streaming scale, the matter power spectrum is suppressed in the presence of
 massive neutrinos by a factor $\Delta P/P\simeq -8f_{\nu}$ , where $f_{\nu} = \Omega_{\nu} / \Omega_{m}$ is the contribution of neutrinos to the total matter density.
-This effect is probed by CMB lensing and, since the active neutrino number densities are known in the standard model, can be directly transformed into a constraint on the sum of the neutrino masses $\sum m_\nu$. This is particularly exciting because we now know that neutrinos are massive, with a lower limit $\sum m_\nu>50$ meV that emerges from oscillation experiments. 
+This effect is probed by CMB lensing and, since the active neutrino number densities are known in the standard model, can be directly transformed into a constraint on the sum of the neutrino masses $\sum m_\nu$. This is particularly exciting because we now know that neutrinos are massive, with a lower limit $\sum m_\nu>50$ meV that emerges from oscillation experiments (see \cite{bellini:2013} and references therein). 
  
 
 %==========
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics{prior_omnuh2.pdf}
+%\caption{
+%Constraints on the sum of the neutrino masses as a function of priors on cosmological parameters. 
+%Each prior is expressed in units of the error that would be obtained internally from the CMB S4 experiment (+Planck+current BAO); e.g., $\sigma(H_0)_{\rm S4 + Planck Pol + BAO15}=0.6\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.6\%.
+%The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI. The bottom-most curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.
+%$H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV.}
+%\label{fig:prior_omeganuh2}
+%\end{center}
+%\end{figure}
+
+%==========
+
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_omnuh2.pdf}
-\caption{
-Constraints on the sum of the neutrino masses as a function of priors on cosmological parameters. 
-Each prior is expressed in units of the error that would be obtained internally from the CMB S4 experiment (+Planck+current BAO); e.g., $\sigma(H_0)_{\rm S4 + Planck Pol + BAO15}=0.6\%$, so the value of unity on the x-axis corresponds to imposing an external prior on $H_0$ of 0.6\%.
-The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI. The bottom-most curve shows the impact of imposing the given prior on {\it all} the other parameters simultaneously.
-$H_{0}$ and $\Omega_{c}h^{2}$ are shown to be the most important external priors to improve neutrino mass constraints. We chose a fiducial value $\sum m_{\nu}=85 $ meV.}
-\label{fig:prior_omeganuh2}
+\includegraphics{{prior_omnuh2_hubble_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on the Hubble parameter, H$_{0}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-h}
 \end{center}
 \end{figure}
 %==========
 
 %==========
 
-\reffig{prior_omeganuh2} shows the projected errors on $\sum m_\nu$ from CMB-S4 (+Planck+current BAO) as a function of external priors. 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_omnuh2_omch2_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on $\Omega_{c} h^{2}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-omch2}
+\end{center}
+\end{figure}
+%==========
+
+%==========
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_omnuh2_scalar_amp(1)_lmin=50_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on the Hubble parameter $A_{s}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-50-as}
+\end{center}
+\end{figure}
+%==========
+
+%==========
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_omnuh2_hubble_lmin=50_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on the Hubble parameter $H_{0}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-50-h}
+\end{center}
+\end{figure}
+%==========
+
+
+%==========
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_omnuh2_omch2_lmin=50_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on the Hubble parameter $\Omega_{c} h^{2}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-50-omch2}
+\end{center}
+\end{figure}
+%==========
+
+%==========
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_omnuh2_scalar_spectral_index(1)_lmin=50_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on the sum of the neutrino masses (absolute on the left and and relative to its value on the right) as a function of priors on the Hubble parameter $n_{s}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_omeganuh2-50-ns}
+\end{center}
+\end{figure}
+%==========
+
+
+
+%==========
+
+\reffig{prior_omeganuh2-h} and \reffig{prior_omeganuh2-omch2} show the projected errors on $\sum m_\nu$ from CMB-S4 (+Planck+current BAO) as a function of external priors. 
 Without any external priors (far right in figure), upcoming CMB experiments are poised to obtain 1-sigma limits on $\sum m_\nu$ of order 25 meV, corresponding to a 2-sigma detection even in the worst case scenario. Adding in external priors helps this significantly though, as discussed, for example, in \cite{di-valentino:2015,2013arXiv1309.5383A,pan:2015a,allison:2015}. 
-There, the added prior was ``DESI BAO'', representing a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by the planned experiment DESI \cite{levi:2013}. This is represented by the blue band in \reffig{prior_omeganuh2}. In addition to showing the implications of introducing this fixed external constraint, \reffig{prior_omeganuh2} generalizes the extent to which external information will improve the neutrino mass constraints. For example, the red curve shows the improvement as additional information on the Hubble constant is applied. The projected, marginalized constraint on $H_0$ from just CMB-S4+Planck+BAO15 is $0.6\%$ (and similarly the values for the other parameters are given below the figure). So imposing {\it external} information with this value of $\sigma_{H_0}/H_0=0.006$ corresponds to 1 on the $x$-axis. This would improve the neutrino mass constraint to 17 meV. Similarly, introducing an external constraint on the dark matter density equal to its internal constraint of 0.4\% (so again 1 on the $x$-axis) improves the projected neutrino mass constraint to 20 meV. It is not surprising that this is close to the constraint obtained with DESI because the BAO distances in this model depends most sensitively on $\Omega_ch^2$ and $H_{0}$.
+There, the added prior was ``DESI BAO'', representing a measurement of distances as a function of redshift from the baryon acoustic oscillation feature probed by the planned experiment DESI \cite{levi:2013}. This is represented by the blue band in our figures. In addition to showing the implications of introducing this fixed external constraint, \reffig{prior_omeganuh2-h} and \reffig{prior_omeganuh2-omch2} generalize the extent to which external information will improve the neutrino mass constraints. For example, in \reffig{prior_omeganuh2-h} the red curve shows the improvement as additional information on the Hubble constant is applied. Note that the projected, marginalized constraint on $H_0$ from just CMB-S4+Planck+BAO15 is $0.6\%$ (and similarly the values for the other parameters are given below the figure). So imposing {\it external} information with this value of $\sigma_{H_0}/H_0=0.6\%$ would improve the neutrino mass constraint to 17 meV. Similarly, in \reffig{prior_omeganuh2-omch2} introducing an external constraint on the dark matter density equal to its internal constraint of 0.4\% improves the projected neutrino mass constraint to 20 meV. It is not surprising that this is close to the constraint obtained with DESI because the BAO distances in this model depends most sensitively on $\Omega_ch^2$ and $H_{0}$.
 
 The physical reason underlying this improvement is simple: lensing constrains $f_\nu$, the ratio of the neutrino density to the matter density. In order to extract the neutrino density (and therefore the neutrino mass), we need to know the matter density. A prior on $H_{0}$ helps for a related, but subtle reason. 
 The position of the CMB peaks, well constrained by measurement, in a flat Universe depends on the combination $\Omega_ch^{2.93}$ \cite{planck-collaboration:2014} 
 . Therefore, an external prior on $H_{0}$ will improve the internal reconstruction of $\Omega_ch^2$, leading back to tighter neutrino mass constraints.
 As found in \cite{2013arXiv1309.5383A,pan:2015a,allison:2015}, the projected error falls below 20 meV with these priors. 
-The left-hand side of \reffig{prior_omeganuh2} shows that even tighter external constraints on either $H_0$ or $\Omega_ch^2$ would significantly improve the neutrino mass constraints.
+The left-hand side of \reffig{prior_omeganuh2-h} and \reffig{prior_omeganuh2-omch2} shows that even tighter external constraints on either $H_0$ or $\Omega_ch^2$ would significantly improve the neutrino mass constraints.
 
 
 %==========
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics{prior_omnuh2_50.pdf}
-\caption{Same as \reffig{prior_omeganuh2} but with $\ell^{\rm CMB-S4}_{\rm min}>50$. Here $A_{s}$ and $\tau$ priors will also helps because of their degeneracy with $\sum m_{\nu}$.}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics{prior_omnuh2_50.pdf}
+%\caption{Same as \reffig{prior_omeganuh2} but with $\ell^{\rm CMB-S4}_{\rm min}>50$. Here $A_{s}$ and $\tau$ priors will also helps because of their degeneracy with $\sum m_{\nu}$.}
+%\label{fig:prior_omeganuh2_tau}
+%\end{center}
+%\end{figure}
 
-\label{fig:prior_omeganuh2_tau}
-\end{center}
-\end{figure}
-
-It may be difficult to get the very low-$l$ modes from the ground with CMB-S4, so in \reffig{prior_omeganuh2_tau} we limit the modes to $\ell>\ell_{\rm min}=50$. 
-Together with the importance of $H_{0}$ and $\Omega_ch^2$ previously observed in \reffig{prior_omeganuh2}, in this case external priors on $A_{s}$ and $\tau$ are found to be helpful.
+It may be difficult to get the very low-$l$ modes from the ground with CMB-S4, so in Fig.\ref{fig:prior_omeganuh2-50-as}-\ref{fig:prior_omeganuh2-50-ns} we limit the modes to $\ell>\ell_{\rm min}=50$. 
+Together with the importance of $H_{0}$ and $\Omega_ch^2$ previously observed, in this case external priors on $A_{s}$ and $\tau$ are found to be helpful (see \reffig{prior_omeganuh2-50-ns} and \reffig{prior_omeganuh2-50-as}).
 
 Indeed, as recently pointed out by \cite{allison:2015}, a degeneracy exists between $\sum m_\nu$ and $A_{s}$ and, as a consequence, between $\sum m_\nu$ and $\tau$. This can be understood as follows.
 The CMB lensing reconstruction is noisy at scales larger than the neutrino free streaming scale (see Fig. 5 of \cite{2013arXiv1309.5383A}). For this reason it is hard to measure the unsuppressed CMB lensing power spectra that is then compared to the small scale suppressed one to constrain the values of $f_{\nu}$. The unsuppressed amplitude of the lensing spectrum is actually better constrained by the primordial amplitude $A_{s}$, which is probed by the primordial CMB. Unfortunately, the CMB spectra are sensitive to $A_{s}\exp^{-2\tau}$, so 
-a measurement of the optical depth is required to infer $A_{s}$ and therefore to tighten the constraints on $\sum m_\nu$. If CMB S4 will not be designed to measure scales $\ell<50$ to avoid difficulties in dealing with atmospheric noise, an external prior on the optical depth from future 21 cm surveys \cite{liu:2015} or CMB satellite experiments like PIXIE \cite{kogut:2011} or balloon-borne experiments like SPIDER \cite{filippini:2010}, will be needed to fully exploit the CMB constraining power.
+a measurement of the optical depth is required to infer $A_{s}$ and therefore to tighten the constraints on $\sum m_\nu$. If CMB S4 will not be designed to measure scales $\ell<50$ to avoid difficulties in dealing with atmospheric noise, an external prior on the optical depth from future 21 cm surveys \cite{liu:2015} or CMB satellite experiments like LiteBIRD \cite{matsumura:2014}, PIXIE\cite{kogut:2011}, and COrE/PRISM \cite{the-core-collaboration:2011,prism-collaboration:2013}, balloon-borne experiments like SPIDER \cite{filippini:2010}, EBEX \cite{reichborn-kjennerud:2010} or eventually ground experiments like CLASS \cite{essinger-hileman:2014}, will be needed to fully exploit the CMB constraining power.
 
 \subsection{Relativistic Degrees of Freedom, $N_{\rm eff}$}
 
@@ -227,34 +291,78 @@ In the standard model of cosmology, three active neutrinos are thermally produce
 Upcoming experiments have the potential to measure this tiny deviation of $N_{\rm eff}$ from 3. This will be a precision test of our understanding of the Universe when it was about a second old. It also will constrain Beyond the Standard Model physics. For example, as pointed out in \cite{baumann:2015}, tight constraints on $N_{\rm eff}$ will allow us to rule out new particles with couplings that enabled them to thermalize early on but that decoupled when the temperature was above $\sim$100 GeV.
 
 
-%==========
+
+
+
+
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_massless_neutrinos.pdf}
-\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of external priors. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$.}
-\label{fig:prior_massless_neutrinos}
+\includegraphics{{prior_massless_neutrinos_ombh2_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on $N_{\rm{eff}}$ (absolute on the left and and relative to its value on the right) as a function of priors on the $\Omega _{b} h^{2}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_neff-ombh2}
 \end{center}
 \end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_massless_neutrinos_omch2_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on $N_{\rm{eff}}$ (absolute on the left and and relative to its value on the right) as a function of priors on $\Omega_{c} h^{2}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_neff-omch2}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{{prior_massless_neutrinos_scalar_spectral_index(1)_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on $N_{\rm{eff}}$ (absolute on the left and and relative to its value on the right) as a function of priors on $n_{s}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_neff-ns}
+\end{center}
+\end{figure}
+
+
+
 %==========
 
-\reffig{prior_massless_neutrinos} shows projections for how well CMB-S4 will do at measuring $N_{\rm eff}$ as a function of priors on the other seven parameters (the sum of the neutrino masses must be included as a free parameter). With no priors on the other parameters, the projected $1$-sigma error is $0.016$, close to a 3-sigma detection of the expected deviation from $N_{\rm eff}=3$. 
 
-The sensitivity to relativistic degrees of freedom comes from the effect of extra species on the damping tail of the CMB anisotropies \cite{2013PhRvD..87h3008H}, both in temperature and polarization, so parameters that also strongly affect this part of the spectrum, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are the most relevant to improve the $N_{\rm eff}$ constraint. As such, \reffig{prior_massless_neutrinos} shows that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to get close to a 4-sigma detection of the partial decoupling prediction. The bottom-most curve shows that if all parameters were constrained externally, then the projected error on $N_{\rm eff}$ would improve significantly. 
+%==========
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics{prior_massless_neutrinos.pdf}
+%\caption{Projected 1-sigma error on $N_{\rm eff}$ as a function of external priors. The parameters that would be most useful to constrain externally for the purposes of determining $N_{\rm eff}$ are $n_s$ and $\Omega_bh^2$.}
+%\label{fig:prior_massless_neutrinos}
+%\end{center}
+%\end{figure}
+%==========
+
+\reffig{prior_neff-omch2}, \reffig{prior_neff-ns} and  \reffig{prior_neff-ombh2} show projections for how well CMB-S4 will do at measuring $N_{\rm eff}$ as a function of priors on $H_{0}$, $\Omega_{c}h^{2}$ and $\Omega_{b}h^{2}$(the sum of the neutrino masses must be included as a free parameter). With no priors on the other parameters, the projected $1$-sigma error is $0.016$, close to a 3-sigma detection of the expected deviation from $N_{\rm eff}=3$. 
+
+The sensitivity to relativistic degrees of freedom comes from the effect of extra species on the damping tail of the CMB anisotropies \cite{2013PhRvD..87h3008H}, both in temperature and polarization, so parameters that also strongly affect this part of the spectrum, like the slope $n_s$ and the baryon density $\Omega_bh^2$, are the most relevant to improve the $N_{\rm eff}$ constraint. As such, \reffig{prior_neff-ombh2} and \reffig{prior_neff-ns} show that obtaining external priors on either of these would reduce the errors on $N_{\rm eff}$ to get close to a 4-sigma detection of the partial decoupling prediction.
 
 \subsection{Dark Energy Equation of State, $w$}
 
 The CMB constrains the late-time dark energy equation of state in two ways. The observed CMB spectra are very sensitive to the distance to the last scattering surface which depends on $w$. 
 Furthermore CMB lensing probes the growth of structure at late times which is different for different dark energy equations of state.
-%==========
+
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics{prior_w.pdf}
-\caption{Constraints on the dark energy equation of state $w$ as a function of external priors on cosmological parameters. 
-An external prior on $H_{0}$ will be crucial to improve the constraint.} 
-\label{fig:prior_w}
+\includegraphics{{prior_w_hubble_lmin=4_lmax=4499_ndet=1000000_fsky=0.75}.pdf}
+\caption{Constraints on $w$ (absolute on the left and and relative to its value on the right) as a function of priors on $H_{0}$. The horizontal (blue) line correspond to CMB S4 experiment + Planck Pol + DESI.}
+\label{fig:prior_w-h}
 \end{center}
 \end{figure}
+
+
+%==========
+%
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics{prior_w.pdf}
+%\caption{Constraints on the dark energy equation of state $w$ as a function of external priors on cosmological parameters. 
+%An external prior on $H_{0}$ will be crucial to improve the constraint.} 
+%\label{fig:prior_w}
+%\end{center}
+%\end{figure}
 %==========
 
 
@@ -270,7 +378,7 @@ An external prior on $H_{0}$ will be crucial to improve the constraint.}
 %==========
 
 
-\reffig{prior_w} shows that without any priors, CMB experiments (+BAO15) will do better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ by a factor of 2. 
+\reffig{prior_w-h} shows that without any priors, CMB experiments (+BAO15) will do better than current constraints, which hover around 10\%. However, an external constraint on the Hubble constant would improve the CMB constraints on $w$ by a factor of 2. 
 This is primarily due to the fact that CMB constrains $w$ through a precise measurement of the comoving distance to the last scattering surface. However that can be kept fixed while varying $w$ by accordingly changing the value of $H_{0}$ (and $\Omega_{\Lambda}$ to keep the Universe flat). Indeed in a two dimensional ($H_{0},w$) space the CMB constraint approximately lies on the region of constant large scattering surface distance as shown in \reffig{ellipse_w_H0}.
 Notice that an external prior on $H_{0}$ two times more accurate than CMB S4 can improve the CMB constraint on $w$ by a factor of two.
 
@@ -278,6 +386,8 @@ Notice that an external prior on $H_{0}$ two times more accurate than CMB S4 can
 A CMB-S4 experiment will measure the sum of the neutrino masses, constrain extra relativistic degrees of freedom predicted in many extensions of the Standard Model, and measure the dark energy equation of state at the few percent level. 
 These results can be improved even further by combining them with information from external experiments.
 Understanding the impact of such external information is crucial in determining the experimental specifications and requirements needed for CMB-S4, and ultimately in maximizing the scientific impact of the future CMB experiments. 
+
+
 
 Toward that goal, we investigated here how these constraints depend on external priors:
 \begin{description}
