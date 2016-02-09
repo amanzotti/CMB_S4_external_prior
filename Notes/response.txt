@@ -25,9 +25,8 @@ already CMB + external information. This is confusing, we are not
 improving on CMB then but rather on a combination of CMB and some
 galaxy data.
 
-
-Right; we were not clear that CMB+BAO includes current BAO constraints, from e.g., BOSS. It doesn't make sense to us to exclude things we currently know, so we think
-it important to include these constraints as our baseline.
+The referee is right; we were not clear that CMB+BAO includes current BAO constraints, from e.g., BOSS.
+It doesn't make sense to us to exclude things we currently know, so we think it important to include these constraints as our baseline. For example that will strongly bias the foracasted performance of CMB S4 when considered without future BAO experiments like DESI.
 
 - I cannot understand Figures 1,2,3,4. If the far right is the
 expected CMB S4+Planck-Pol+BAO15 then the lines starting point should
@@ -50,16 +49,18 @@ factor of 2. More generally I think the discussion on dark energy need
 to say more explicitly that the CMB is not the best probe of DE and it
 will tell us something only in combination with other data.
 
-Good point. We've toned down the language especially in the abstract and added the sentence: "For this reason CMB provides limited information about dark energy on its own. However CMB plays an important role in dark energy studies when combined with low redshift probes."'
+Good point. We agree and we have toned down the language especially in the abstract and added the sentence: "For this reason CMB provides limited information about dark energy on its own. However CMB plays an important role in dark energy studies when combined with low redshift probes."'
 
 - The references are not adequate in many cases, see minor comments
 for details.
+
+see below
 
 - I encourage the authors to review the text:
 - - adjectives like “dramatically” and “extremely” are not useful in
 giving an idea of an experiment constraining power;
 
-good point; removed these
+good point; removed these.
 
 - - in the abstract the authors mention signal to noise of the CMB
 polarization signal and I think they mean data;
@@ -93,7 +94,7 @@ Right; this is aggressive and the true value will be determined, but we chose th
 - Keeping the helium fraction fixed is wrong, Yp varies with baryon
 density AND Neff.
 
-That's what we did, but the old version did not explain. We changed to:
+That's indeed what we did, but the old version of the text did not explain. We changed to:
 "Similarly, when we vary $N_{\rm eff}$ we adjust the helium abundance to its canonical value from Big Bang Nucleosynthesis, which depends also on the baryon density."'
 
 
@@ -106,22 +107,118 @@ mission results Bennet et al. 2012 would be more appropriate. Same
 thing for Planck, cite the Blue Book and/or the 2015 Overview papers.
 Ref. 5 is Maxima and Ref. 6 is Boomerang, they are not satellites and
 are not mentioned in the text.
+
+Thanks, Fixed with Bennett et al. 2003 and Blue book
+
+
 - ACT and SPT did not follow DASI, they have measured temperature with
 ACTPol and SPTPol going for polarization. The first two should go into
 the above temperature discussion with references to latest results or
 general papers describing the experiments, and the last two should
 contribute to the polarization discussion.
+
+We organized the discussion into ground base and satellite experiments. For this reason
+we mentioned ACT and SPT toghether with DASI. WE added references to general papers
+describing actpol and sptpol.
+
+
 - In the introduction the cosmological dependence on neutrinos
 properties jumps from number to masses to number again, it is
 confusing please rephrase.
+
+We introduce the two main topics of that paragraph (N_eff and M_nu) in the first sentence and we then
+describe one after the other in the remaining. We strengthen the connector hopefully reducing the confusion.
+
 - Choose between Universe or universe.
+
+Done (Universe)
+
+
 - Define the cosmological parameters listed in the introduction.
+
+The parameters used in our pipelines are quite standard in the field, and we think that pointing the
+reader who wants to know more to the Planck cosmology paper is probably enough.
+
 - In the introduction “model LCDM” -> “LCDM model”
+
+Done
+
+
 - Section II, “additional parameter is required” -> “additional
 parameter is required?”
+
+Done
+
+
 - Section II, the natural first “baby” step is not a step. The massive
 neutrinos LCDM is the authors baseline model.
-- Define FWHM.
-- Section IIIA, cite DESI.
-- Section IIIA, what do the authors mean with the “current
 
+Good point, we rephrased it.
+
+
+- Define FWHM.
+
+Done.
+
+
+- Section IIIA, cite DESI.
+
+Done (http://arxiv.org/abs/1308.0847)
+
+
+- Section IIIA, what do the authors mean with the “current”
+free-streaming scale?
+
+We removed the word current
+
+
+- Section IIIA “power power spectrum is suppressed” -> “power spectrum
+is suppressed”
+
+Thanks, done.
+
+
+- Section IIIA, what is the meaning of “since the active neutrino
+number density are known in the standard model”?
+
+We meant that what is probed by the CMB is the energy density of neutrinos which can be
+turned into a total neutrino mass (in the massive case) by knowing the number density
+E= m n
+We rephrease the sentence cause the presence of the term standard model can cause confusion.
+
+
+- Section IIIA, “a constraint on the the” -> “a constraint on the”
+
+Done.
+
+
+- Section IIIA, add a reference to oscillation experiments result.
+
+Done.
+
+
+- Section IIIA, measuring ell<50 is not a design goal but rather an
+analysis one given that the problem is the atmospheric emission.
+
+We rephrase it --> If CMB S4 will not be designed to measure scales l < 50 to avoid difficulties in dealing with atmospheric noise
+
+
+- Section IIIA, with satellites need to cite LiteBird and Core/Prism,
+with the balloons Ebex and then Class for large modes from the ground.
+
+Done PRISM(http://arxiv.org/abs/1306.2259) LiteBIRD(http://arxiv.org/abs/1311.2847)
+EBEX (http://arxiv.org/abs/1007.3672) CLASS (http://arxiv.org/abs/1408.4788)
+
+
+- Fig. 5 caption, there is no red line in the plot
+We fixed it.
+
+- Last part of Section IV, cite LSST.
+
+Done (http://arxiv.org/abs/1211.0310)
+
+- Last part of Section IV, what do the authors mean with surveys
+beyoond DESI and LSST? LSST is beyond DESI and I am not aware of
+post-LSST surveys. Also, galaxy surveys will not help in constraining
+n_s.
+---------------------
