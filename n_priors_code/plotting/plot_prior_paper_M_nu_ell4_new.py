@@ -223,6 +223,7 @@ for key_y in ['omnuh2']:
         line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
+        plt.title(r'$\rm S4~ + ~BAO15$')
 
         ax1.minorticks_on()
         low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
