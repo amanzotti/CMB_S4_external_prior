@@ -239,6 +239,8 @@ for key_y in ['massless_neutrinos']:
 
         vals = ax1.get_xticks()
         ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
+        if key == 'ombh2':
+            ax1.set_xticklabels([r'{:3.2f}$\%$'.format(x) for x in vals])
         xticks = ax1.xaxis.get_major_ticks()
         xticks[0].label1.set_visible(False)
         plt.title(r'$\rm S4~ + ~BAO15$')

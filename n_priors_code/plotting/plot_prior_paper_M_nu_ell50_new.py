@@ -231,12 +231,13 @@ for key_y in ['omnuh2']:
         print ax1.get_ylim()
         plt.title(r'$\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15$')
         # ax1.set_xlim((0.1, 3.1))
-        ax1.axhline(23.24 / 100. * fid['omnuh2'] * 94. * 1000., alpha=0.4, linewidth=2, label='DESI')
+        ax1.axhline(23.24 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
         ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
         ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
         vals = ax1.get_xticks()
         ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
-
+        if key == 'ombh2':
+            ax1.set_xticklabels([r'{:3.2f}$\%$'.format(x) for x in vals])
         xticks = ax1.xaxis.get_major_ticks()
         xticks[0].label1.set_visible(False)
         y1, y2 = ax1.get_ylim()
