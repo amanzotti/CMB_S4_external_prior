@@ -241,6 +241,7 @@ for key_y in ['massless_neutrinos']:
         ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
         xticks = ax1.xaxis.get_major_ticks()
         xticks[0].label1.set_visible(False)
+        plt.title(r'$\rm S4~ + ~BAO15$')
 
 
         ax1.minorticks_on()

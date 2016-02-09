@@ -222,9 +222,11 @@ for key_y in ['omnuh2']:
         # *93.14 * 1000. to go to M_nu
         line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+        plt.title(r'$\rm S4~ + ~BAO15$')
 
 
         ax1.minorticks_on()
+        low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
         ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
         # ax1.set_xlim((0.1, 3.1))
         ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., alpha=0.4, linewidth=2, label='DESI')

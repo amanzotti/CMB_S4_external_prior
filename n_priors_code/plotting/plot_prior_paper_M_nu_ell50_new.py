@@ -224,9 +224,14 @@ for key_y in ['omnuh2']:
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
         ax1.minorticks_on()
-        ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
+        # low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 23.24  / 100. * fid['omnuh2'])
+        # print 'lowlim', low_lim
+        print ax1.get_ylim()
+        ax1.set_ylim((0.8 * np.amin(new_sigma)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
+        print ax1.get_ylim()
+        plt.title(r'$\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15$')
         # ax1.set_xlim((0.1, 3.1))
-        ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., alpha=0.4, linewidth=2, label='DESI')
+        ax1.axhline(23.24 / 100. * fid['omnuh2'] * 94. * 1000., alpha=0.4, linewidth=2, label='DESI')
         ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
         ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
         vals = ax1.get_xticks()
@@ -243,6 +248,7 @@ for key_y in ['omnuh2']:
         for i, tick in enumerate(ax2.get_yticks().tolist()):
             new_ticks[i] = str(tick) + r'$\%$'
         ax2.set_yticklabels(new_ticks)
+        print ax1.get_ylim()
 
         # Put snow mass line
         # Put a legend below current axis

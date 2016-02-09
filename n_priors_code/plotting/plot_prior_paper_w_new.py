@@ -230,6 +230,7 @@ for  key_y in ['w']:
         xticks = ax1.xaxis.get_major_ticks()
         xticks[0].label1.set_visible(False)
 
+        plt.title(r'$\rm S4~ + ~BAO15$')
 
 
 
