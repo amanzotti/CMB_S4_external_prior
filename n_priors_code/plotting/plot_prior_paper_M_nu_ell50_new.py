@@ -227,7 +227,7 @@ for key_y in ['omnuh2']:
         # low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 23.24  / 100. * fid['omnuh2'])
         # print 'lowlim', low_lim
         print ax1.get_ylim()
-        ax1.set_ylim((0.8 * np.amin(new_sigma)*94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
+        ax1.set_ylim((20.24 / 100. * fid['omnuh2'] * 94. * 1000., 1.1 * np.amax(new_sigma)*94. * 1000.))
         print ax1.get_ylim()
         plt.title(r'$\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15$')
         # ax1.set_xlim((0.1, 3.1))
