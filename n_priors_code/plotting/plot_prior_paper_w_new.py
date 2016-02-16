@@ -193,7 +193,7 @@ for  key_y in ['w']:
 
     sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
-    for i, key in enumerate(['omnuh2','hubble','omch2']):
+    for i, key in enumerate(['hubble']):
 
         if key == key_y:
             continue
@@ -210,7 +210,7 @@ for  key_y in ['w']:
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(sigma_just_CMB_x / 10., sigma_just_CMB_x * 4.5, 900)
+        prior_value = np.linspace(0.0001, 0.08, 900)
         # print sigma_just_CMB_x
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         # compute the new sigma on y given the prior
