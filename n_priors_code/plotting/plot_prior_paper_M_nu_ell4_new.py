@@ -200,7 +200,7 @@ for key_y in ['omnuh2']:
     lines = ["-", "--", "-.", ":"]
     linecycler = cycle(lines)
 
-    for i, key in enumerate(['hubble','omch2']):
+    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
 
         print key
 
@@ -211,7 +211,7 @@ for key_y in ['omnuh2']:
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(0.0001, 0.03, 900)
+        prior_value = np.linspace(0.0001, 0.025, 900)
         # print sigma_just_CMB_x
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         # normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
@@ -228,10 +228,12 @@ for key_y in ['omnuh2']:
     ax1.minorticks_on()
     low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
     ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
+    ax1.set_ylim((12, 28))
+
     # ax1.set_xlim((0.1, 3.1))
     ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
     ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-    ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
+    ax1.set_xlabel(r'$\rm{External ~ prior~on~(\%)}$')
 
     vals = ax1.get_xticks()
     ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
