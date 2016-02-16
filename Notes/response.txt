@@ -40,7 +40,9 @@ consider adding a prior which is bigger than the baseline sigma from
 CMB S4+Planck-Pol+BAO. What is shown on the right axis?
 
 
-We agree that this was unecessarily complicated so have changed all the figures to absolute priors on the parameters. The referee's question still remains: why does a 3% prior on H_0 say help if the data itself constrain it to 1%. We stand by our result that it does help. Imagine a 1-D likelihood with one experiment giving a 1% constraint and another [here called "external"] a similar 1% constraint. When combining the 2, the constraint will be tighter, with the new error given by the inverse square root of the sum of the two inverse variances: [1/\sigma_1^2 + 1/\sigma_2^2]^{-1/2}. In the simple example above the external prior is equal to the internal constraint, so the total constraint is reduced by \sqrt{2}. In the example given by the referee [external constraint 3 times looser], there will still be improvement, albeit only by a factor of \sqrt{1 + 1/9}, ~5%. In multi-dimensional space, things are not that simple, but the plots show how things improve. To come back to our first response, we believe this information is extremely important for future planning. While it is true that people have studied degeneracies before, their impact has not been presented in this way. The very fact that the plots are not familiar indicates that we are introducing a new way, a productive way, of thinking about planning. We have added a paragraph in the text that attempts to explain this point more clearly and -- as noted -- have changed the x-axis on all plots to make things less confusing.
+We agree that this was unecessarily complicated so have changed all the figures to absolute priors on the parameters.
+We also explicitly describe the right axis that corresponds to the fractional error (obsolute error on the left axis)
+The referee's question still remains: why does a 3% prior on H_0 say help if the data itself constrain it to 1%. We stand by our result that it does help. Imagine a 1-D likelihood with one experiment giving a 1% constraint and another [here called "external"] a similar 1% constraint. When combining the 2, the constraint will be tighter, with the new error given by the inverse square root of the sum of the two inverse variances: [1/\sigma_1^2 + 1/\sigma_2^2]^{-1/2}. In the simple example above the external prior is equal to the internal constraint, so the total constraint is reduced by \sqrt{2}. In the example given by the referee [external constraint 3 times looser], there will still be improvement, albeit only by a factor of \sqrt{1 + 1/9}, ~5%. In multi-dimensional space, things are not that simple, but the plots show how things improve. To come back to our first response, we believe this information is extremely important for future planning. While it is true that people have studied degeneracies before, their impact has not been presented in this way. The very fact that the plots are not familiar indicates that we are introducing a new way, a productive way, of thinking about planning. We have added a paragraph in the text that attempts to explain this point more clearly and -- as noted -- have changed the x-axis on all plots to make things less confusing.
 
 - I think that the claim of dramatically improving dark energy is
 wrong. That authors themselves show that in the best case scenario
@@ -108,7 +110,7 @@ thing for Planck, cite the Blue Book and/or the 2015 Overview papers.
 Ref. 5 is Maxima and Ref. 6 is Boomerang, they are not satellites and
 are not mentioned in the text.
 
-Thanks, Fixed with Bennett et al. 2003 and Blue book
+Thanks, Fixed adding Bennett et al. 2003 and Blue book
 
 
 - ACT and SPT did not follow DASI, they have measured temperature with
@@ -118,7 +120,7 @@ general papers describing the experiments, and the last two should
 contribute to the polarization discussion.
 
 We organized the discussion into ground base and satellite experiments. For this reason
-we mentioned ACT and SPT toghether with DASI. WE added references to general papers
+we mentioned ACT and SPT toghether with DASI. We added references to general papers
 describing actpol and sptpol.
 
 
@@ -127,17 +129,17 @@ properties jumps from number to masses to number again, it is
 confusing please rephrase.
 
 We introduce the two main topics of that paragraph (N_eff and M_nu) in the first sentence and we then
-describe one after the other in the remaining. We strengthen the connector hopefully reducing the confusion.
+describe one after the other in the remaining. We strengthen the connector, hopefully reducing the confusion.
 
 - Choose between Universe or universe.
 
-Done (Universe)
+Done
 
 
 - Define the cosmological parameters listed in the introduction.
 
 The parameters used in our pipelines are quite standard in the field, and we think that pointing the
-reader who wants to know more to the Planck cosmology paper is probably enough.
+reader to the Planck cosmology paper is probably enough.
 
 - In the introduction “model LCDM” -> “LCDM model”
 
@@ -169,7 +171,7 @@ Done (http://arxiv.org/abs/1308.0847)
 - Section IIIA, what do the authors mean with the “current”
 free-streaming scale?
 
-We removed the word current
+Thanks, We removed the word current.
 
 
 - Section IIIA “power power spectrum is suppressed” -> “power spectrum
@@ -200,7 +202,7 @@ Done.
 - Section IIIA, measuring ell<50 is not a design goal but rather an
 analysis one given that the problem is the atmospheric emission.
 
-We rephrase it --> If CMB S4 will not be designed to measure scales l < 50 to avoid difficulties in dealing with atmospheric noise
+We rephrase it --> If CMB S4 will not be designed to measure scales l < 50 to avoid difficulties in dealing with atmospheric emission
 
 
 - Section IIIA, with satellites need to cite LiteBird and Core/Prism,
