@@ -6,9 +6,7 @@ To put all the parameters in the same plot the prior is defined as the improveme
 the same is true for the improvement on the y axis parameters
 
 
-JAN 2016
 
-modify to absolute uncertaintes with the goal of improving clarity.
 '''
 
 
@@ -32,13 +30,13 @@ from palettable.colorbrewer.qualitative import Set1_9
 # ============================================
 # ============================================
 # TO DO
-# DESI LEVEL = 16.9%
+# DESI level 0.51 %
 # ============================================
 # ============================================
 # ============================================
 
 no_lcdm_parameters = ['massless_neutrinos', 'w', 'omnuh2']
-plot_now = ['omnuh2']
+plot_now = ['omnuh2', 'massless_neutrinos']
 excluded_parameters = list(set(no_lcdm_parameters) - set(plot_now))
 # omnuh2
 
@@ -48,7 +46,7 @@ base_dir = '/home/manzotti/n_eff-dependence-on-prior/n_priors_code/'
 data_type = 'varying_all'
 run_idx = 7
 lmax = 4499
-lmin = 50
+lmin = 4
 N_det = 10 ** 6
 # N_phi_l = np.loadtxt('data/noise/wu_cdd_noise_5.txt')
 fsky = 0.75
@@ -190,27 +188,28 @@ fisher_inplace = fisher_mat.copy()
 
 # CYCLE ON PARAMETERS (KEYS HERE)
 
-for key_y in ['omnuh2']:
+for key_y in ['massless_neutrinos']:
     print key_y
-
-    sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
     fg = plt.figure(figsize=fig_dims)
     ax1 = plt.subplot2grid((1, 1), (0, 0))
     ax1.set_color_cycle(Set1_9.mpl_colors)
     lines = ["-", "--", "-.", ":"]
     linecycler = cycle(lines)
+    sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
 
-
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
-
-        if key == key_y:
+    for i, key in enumerate(['omch2','ombh2','scalar_spectral_index(1)']):
+        print key
+        if key == key_y:  # or key =='scalar_amp(1)' or key == 're_optical_depth':
             continue
             # DO NOT TEST PRIOR ON ONE PARMS IN ITSELF; TRIVIAL
         # ERROR ON Y IN THE CMB S4
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
+
+        sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
+
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(0.0001, 0.025, 900)
+        prior_value = np.linspace(0.0001, 0.01, 900)
         # print sigma_just_CMB_x
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         # normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
@@ -218,51 +217,58 @@ for key_y in ['omnuh2']:
         new_sigma = utils.return_simgax_y_prior(fid, fisher_mat, key_y, key, prior_value)
         # normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
-        # *93.14 * 1000. to go to M_nu
-        line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+
+        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
-    ax1.minorticks_on()
-    # low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 23.24  / 100. * fid['omnuh2'])
-    # print 'lowlim', low_lim
-    print ax1.get_ylim()
-    ax1.set_ylim((12, 35))
-    # ax1.set_ylim(0,1)
-    print ax1.get_ylim()
-    plt.title(r'$\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15$')
-    # ax1.set_xlim((0.1, 3.1))
-    ax1.axhline(23.24 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
-    ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-    ax1.set_xlabel(r'$\rm{External ~ prior~ (\%)}$')
+        # new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)
+        # # new_sigma_ns_omb  =  utils.return_simgax_list_prior(fid, fisher_mat, ['scalar_spectral_index(1)', 'ombh2'] ,key_y)
+
+        # plt.plot(normalize_x, new_sigma_ns_omb, label=r'${}+{}$'.format(
+        #         str(label['ombh2']),str(label['scalar_spectral_index(1)'])),
+        #          linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
+
+        # plt.plot(normalize_x, new_sigma_all, label=r'All',
+        #          linestyle=next(linecycler), linewidth=font_size / 10., alpha=0.6)
+
     vals = ax1.get_xticks()
     ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
-    if key == 'ombh2':
-        ax1.set_xticklabels([r'{:3.2f}$\%$'.format(x) for x in vals])
+    # if key == 'ombh2':
+    #     ax1.set_xticklabels([r'{:3.2f}$\%$'.format(x) for x in vals])
     xticks = ax1.xaxis.get_major_ticks()
     xticks[0].label1.set_visible(False)
+    plt.title(r'$\rm S4~ + ~BAO15$')
+
+
+    ax1.minorticks_on()
+    # ax1.set_ylim((0.8 * np.amin(new_sigma), 1.1 * np.amax(new_sigma)))
+    ax1.set_ylim((0.011, 0.017))
+    ax1.axhline(0.51 / 100. * fid['massless_neutrinos'], xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
+    print ax1.get_ylim()
+
+    ax1.legend(loc=0)
+    # ax1.set_title(r'$\sigma({0})={1:.1f}\%$'.format(str(label[key_y]), np.abs(sigma_just_CMB_y / fid[key_y] * 100.)))
+    ax1.set_ylabel(r'$\sigma(' + label[key_y] + r')$')
+    ax1.set_xlabel(r'$\rm{External ~ prior~ (\%)}$')
     y1, y2 = ax1.get_ylim()
     ax2 = ax1.twinx()
-    # minor_loc = ax1.yaxis.get_minor_locator()
+    minor_loc = ax1.yaxis.get_minor_locator()
     ax2.minorticks_on()
-    # ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100. / (94. * 1000.), y2 / np.abs(fid[key_y]) * 100. / (94. * 1000.))
+    ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100., y2 / np.abs(fid[key_y]) * 100.)
     new_ticks = ax2.get_yticks().tolist()
     for i, tick in enumerate(ax2.get_yticks().tolist()):
         new_ticks[i] = str(tick) + r'$\%$'
     ax2.set_yticklabels(new_ticks)
-    print ax1.get_ylim()
-
-    # Put snow mass line
-    # Put a legend below current axis
-    ax1.legend(loc=0,fancybox=True)
 
     ax1.grid(True, alpha=0.4, linewidth=0.01)
+    # Put snow mass line
     # ============================================
     # FINALLY SAVE
     # ============================================
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_notau_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     plt.clf()
 

@@ -194,15 +194,15 @@ for key_y in ['omnuh2']:
     print key_y
 
     sigma_just_CMB_y = (np.sqrt(fisher_inv[fid.keys().index(key_y), fid.keys().index(key_y)]))
+    fg = plt.figure(figsize=fig_dims)
+    ax1 = plt.subplot2grid((1, 1), (0, 0))
+    ax1.set_color_cycle(Set1_9.mpl_colors)
+    lines = ["-", "--", "-.", ":"]
+    linecycler = cycle(lines)
 
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
-        plt.clf()
-        plt.close()
-        fg = plt.figure(figsize=fig_dims)
-        ax1 = plt.subplot2grid((1, 1), (0, 0))
-        ax1.set_color_cycle(Set1_9.mpl_colors)
-        lines = ["-", "--", "-.", ":"]
-        linecycler = cycle(lines)
+    for i, key in enumerate(['hubble','omch2']):
+
+        print key
 
         if key == key_y:
             continue
@@ -211,7 +211,7 @@ for key_y in ['omnuh2']:
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(sigma_just_CMB_x / 10., sigma_just_CMB_x * 4.5, 900)
+        prior_value = np.linspace(0.0001, 0.03, 900)
         # print sigma_just_CMB_x
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         # normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
@@ -223,44 +223,44 @@ for key_y in ['omnuh2']:
         line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
-        plt.title(r'$\rm S4~ + ~BAO15$')
+    plt.title(r'$\rm S4~ + ~BAO15$')
 
-        ax1.minorticks_on()
-        low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
-        ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
-        # ax1.set_xlim((0.1, 3.1))
-        ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
-        ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-        ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
+    ax1.minorticks_on()
+    low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
+    ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
+    # ax1.set_xlim((0.1, 3.1))
+    ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
+    ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
+    ax1.set_xlabel(r'$\rm{External ~ prior~on~'+ label[key] +'(\%)}$')
 
-        vals = ax1.get_xticks()
-        ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
-        xticks = ax1.xaxis.get_major_ticks()
-        xticks[0].label1.set_visible(False)
+    vals = ax1.get_xticks()
+    ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
+    xticks = ax1.xaxis.get_major_ticks()
+    xticks[0].label1.set_visible(False)
 
-        y1, y2 = ax1.get_ylim()
-        ax2 = ax1.twinx()
-        # minor_loc = ax1.yaxis.get_minor_locator()
-        ax2.minorticks_on()
-        ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100. / (94. * 1000.), y2 / np.abs(fid[key_y]) * 100. / (94. * 1000.))
-        new_ticks = ax2.get_yticks().tolist()
-        for i, tick in enumerate(ax2.get_yticks().tolist()):
-            new_ticks[i] = str(tick) + r'$\%$'
-        ax2.set_yticklabels(new_ticks)
+    y1, y2 = ax1.get_ylim()
+    ax2 = ax1.twinx()
+    # minor_loc = ax1.yaxis.get_minor_locator()
+    ax2.minorticks_on()
+    ax2.set_ylim(y1 / np.abs(fid[key_y]) * 100. / (94. * 1000.), y2 / np.abs(fid[key_y]) * 100. / (94. * 1000.))
+    new_ticks = ax2.get_yticks().tolist()
+    for i, tick in enumerate(ax2.get_yticks().tolist()):
+        new_ticks[i] = str(tick) + r'$\%$'
+    ax2.set_yticklabels(new_ticks)
 
-        # Put snow mass line
-        # Put a legend below current axis
-        ax1.legend(loc=0,fancybox=True)
+    # Put snow mass line
+    # Put a legend below current axis
+    ax1.legend(loc=0,fancybox=True)
 
-        ax1.grid(True, alpha=0.4, linewidth=0.01)
-        # ============================================
-        # FINALLY SAVE
-        # ============================================
-        # ============================================
+    ax1.grid(True, alpha=0.4, linewidth=0.01)
+    # ============================================
+    # FINALLY SAVE
+    # ============================================
+    # ============================================
 
-        # ============================================
-        plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), str(key),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
-                    format='pdf', bbox_inches='tight')
-        plt.clf()
+    # ============================================
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+                format='pdf', bbox_inches='tight')
+    # plt.clf()
 
 plt.close()

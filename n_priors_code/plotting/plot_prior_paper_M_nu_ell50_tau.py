@@ -201,7 +201,7 @@ for key_y in ['omnuh2']:
     linecycler = cycle(lines)
 
 
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
+    for i, key in enumerate(['re_optical_depth']):
 
         if key == key_y:
             continue
@@ -210,7 +210,7 @@ for key_y in ['omnuh2']:
         # RELATIVE ERROR ON X IN THE CMB S4 we need relative cause this is how prior are used
         sigma_just_CMB_x = (np.sqrt(fisher_inv[fid.keys().index(key), fid.keys().index(key)]) / np.abs(fid[key]))
         # the abs value abbove is taken to deal with the negative fiducial value of w
-        prior_value = np.linspace(0.0001, 0.025, 900)
+        prior_value = np.linspace(0.001, 0.08, 900)
         # print sigma_just_CMB_x
         # sigma_just_CMB_y_percent =sigma_just_CMB_y_percent /fid[key_y]
         # normalize_x = prior_value / sigma_just_CMB_x  # prior respect to actual error
@@ -226,7 +226,7 @@ for key_y in ['omnuh2']:
     # low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 23.24  / 100. * fid['omnuh2'])
     # print 'lowlim', low_lim
     print ax1.get_ylim()
-    ax1.set_ylim((12, 35))
+    ax1.set_ylim((18, 32))
     # ax1.set_ylim(0,1)
     print ax1.get_ylim()
     plt.title(r'$\rm S4~ +~ Planck ~ Pol  (\ell<50) + ~BAO15$')
@@ -262,7 +262,7 @@ for key_y in ['omnuh2']:
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_notau_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_tau_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     plt.clf()
 

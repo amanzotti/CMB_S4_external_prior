@@ -202,7 +202,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
 
     '''
 
-    print "CHECK"
+    # print "CHECK"
     if isinstance(prior_val, (int, long, float)):
         assert (fid.has_key(x))
         assert (fid.has_key(y))
@@ -228,7 +228,7 @@ def return_simgax_y_prior(fid, fisher, x, y, prior_val):
                 (prior * fid[y]) ** 2
 
             # print prior,y
-            print np.linalg.inv(fisher1).diagonal()/np.linalg.inv(fisher).diagonal()
+            # print np.linalg.inv(fisher1).diagonal()/np.linalg.inv(fisher).diagonal()
             # print ''
             sigma_x_prior[i] = np.sqrt(np.linalg.inv(fisher1)[fid.keys().index(x), fid.keys().index(x)])
             # print 'fisher', fisher[0,0]
