@@ -17,7 +17,9 @@ better prior on n_s with non-CMB data. I find the discussion simply
 speculative. This impacts in particular the abstract, the results and
 the conclusion sections.
 
-The key issue here seems to be: How best to address the question: What external information can be used to improve projected constraints by breaking degeneracies? We think the referee is saying there are 2 parts to this answer: (i) quantify how much the added information on other parameters breaks degeneracies and (ii) give a sense of how we could get that information. The referee points out that we did not do a good job explaining the possibilities for (ii) and that at least qualitatively other papers have discussed degeneracies.
+The key issue raised here seems to be: How best to address the question: What external information can be used to improve projected constraints by breaking degeneracies? We think the referee is saying there are 2 parts to this answer: (i) quantify how much the added information on other parameters breaks degeneracies and (ii) give a sense of how we could get that information. The referee points out that we did not do a good job explaining the possibilities for (ii) and that for (i) at least qualitatively other papers have discussed degeneracies. We think this paper does advance the discussion of how degeneracies impact future constraints. The plots in Figs. 1-4 are a new way of answering this question and we think quite useful. We thought it important to explain the degeneracies in the text for completeness, but we agree with the referee that these explanations are not new. It is the quantitative information in the plots that is new. 
+
+The second issue is explaining how to get this information. In the case of mnu, we have added text about the importance of getting \tau from either 21 cm reionization measurements or low-l cmb polarization experiments. For N_eff, we point out that high-z surveys obtain more Fourier modes in the linear regime, and therefore the range of modes [k_min,k_max] that are measured precisely can be widened. It is this widening that will improve the constraints on n_s [and therefore N_eff]. We now emphasize that z>1 surveys are crucial for this. H_0 is clearer: there are already a number of efforts underway to improve direct measurements of H_0, so the plots here are useful in that they lend further importance to those measurements.
 
 
 - The baseline dataset in all the results is using CMB+BAO which means
@@ -26,7 +28,7 @@ improving on CMB then but rather on a combination of CMB and some
 galaxy data.
 
 The referee is right; we were not clear that CMB+BAO includes current BAO constraints, from e.g., BOSS.
-It doesn't make sense to us to exclude things we currently know, so we think it important to include these constraints as our baseline. For example that will strongly bias the foracasted performance of CMB S4 when considered without future BAO experiments like DESI.
+It doesn't make sense to us to exclude things we currently know, so we think it important to include these constraints as our baseline. For example that will strongly bias the forecasted performance of CMB S4 when considered without future BAO experiments like DESI. We’ve added a line to make clear why we are including current BAO.
 
 - I cannot understand Figures 1,2,3,4. If the far right is the
 expected CMB S4+Planck-Pol+BAO15 then the lines starting point should
