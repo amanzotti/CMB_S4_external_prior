@@ -201,7 +201,7 @@ for key_y in ['omnuh2']:
     linecycler = cycle(lines)
 
 
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
+    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)','re_optical_depth']):
 
         if key == key_y:
             continue
@@ -253,8 +253,10 @@ for key_y in ['omnuh2']:
 
     # Put snow mass line
     # Put a legend below current axis
-    ax1.legend(loc=0,fancybox=True)
-
+    # ax1.legend(loc=0,fancybox=True)
+        # Put a legend below current axis
+    ax1.legend(loc='upper center', bbox_to_anchor=(0.5, -0.25),
+              fancybox=True, shadow=True, ncol=2)
     ax1.grid(True, alpha=0.4, linewidth=0.01)
     # ============================================
     # FINALLY SAVE
