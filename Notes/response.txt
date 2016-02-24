@@ -17,7 +17,9 @@ better prior on n_s with non-CMB data. I find the discussion simply
 speculative. This impacts in particular the abstract, the results and
 the conclusion sections.
 
-The key issue here seems to be: How best to address the question: What external information can be used to improve projected constraints by breaking degeneracies? We think the referee is saying there are 2 parts to this answer: (i) quantify how much the added information on other parameters breaks degeneracies and (ii) give a sense of how we could get that information. The referee points out that we did not do a good job explaining the possibilities for (ii) and that at least qualitatively other papers have discussed degeneracies.
+The key issue raised here seems to be: How best to address the question: What external information can be used to improve projected constraints by breaking degeneracies? We think the referee is saying there are 2 parts to this answer: (i) quantify how much the added information on other parameters breaks degeneracies and (ii) give a sense of how we could get that information. The referee points out that we did not do a good job explaining the possibilities for (ii) and that for (i) at least qualitatively other papers have discussed degeneracies. We think this paper does advance the discussion of how degeneracies impact future constraints. The plots in Figs. 1-4 are a new way of answering this question and we think quite useful. We thought it important to explain the degeneracies in the text for completeness, but we agree with the referee that these explanations are not new. It is the quantitative information in the plots that is new. 
+
+The second issue is explaining how to get this information. In the case of mnu, we have added text about the importance of getting \tau from either 21 cm reionization measurements or low-l cmb polarization experiments. For N_eff, we point out that high-z surveys obtain more Fourier modes in the linear regime, and therefore the range of modes [k_min,k_max] that are measured precisely can be widened. It is this widening that will improve the constraints on n_s [and therefore N_eff]. We now emphasize that z>1 surveys are crucial for this. H_0 is clearer: there are already a number of efforts underway to improve direct measurements of H_0, so the plots here are useful in that they lend further importance to those measurements.
 
 
 - The baseline dataset in all the results is using CMB+BAO which means
@@ -26,7 +28,7 @@ improving on CMB then but rather on a combination of CMB and some
 galaxy data.
 
 The referee is right; we were not clear that CMB+BAO includes current BAO constraints, from e.g., BOSS.
-It doesn't make sense to us to exclude things we currently know, so we think it important to include these constraints as our baseline. For example that will strongly bias the foracasted performance of CMB S4 when considered without future BAO experiments like DESI.
+It doesn't make sense to us to exclude things we currently know, so we think it important to include these constraints as our baseline. For example that will strongly bias the forecasted performance of CMB S4 when considered without future BAO experiments like DESI. We’ve added a line to make clear why we are including current BAO.
 
 - I cannot understand Figures 1,2,3,4. If the far right is the
 expected CMB S4+Planck-Pol+BAO15 then the lines starting point should
@@ -40,9 +42,9 @@ consider adding a prior which is bigger than the baseline sigma from
 CMB S4+Planck-Pol+BAO. What is shown on the right axis?
 
 
-We agree that this was unecessarily complicated so have changed all the figures to absolute priors on the parameters.
-We also explicitly describe the right axis that corresponds to the fractional error (obsolute error on the left axis)
-The referee's question still remains: why does a 3% prior on H_0 say help if the data itself constrain it to 1%. We stand by our result that it does help. Imagine a 1-D likelihood with one experiment giving a 1% constraint and another [here called "external"] a similar 1% constraint. When combining the 2, the constraint will be tighter, with the new error given by the inverse square root of the sum of the two inverse variances: [1/\sigma_1^2 + 1/\sigma_2^2]^{-1/2}. In the simple example above the external prior is equal to the internal constraint, so the total constraint is reduced by \sqrt{2}. In the example given by the referee [external constraint 3 times looser], there will still be improvement, albeit only by a factor of \sqrt{1 + 1/9}, ~5%. In multi-dimensional space, things are not that simple, but the plots show how things improve. To come back to our first response, we believe this information is extremely important for future planning. While it is true that people have studied degeneracies before, their impact has not been presented in this way. The very fact that the plots are not familiar indicates that we are introducing a new way, a productive way, of thinking about planning. We have added a paragraph in the text that attempts to explain this point more clearly and -- as noted -- have changed the x-axis on all plots to make things less confusing.
+We agree that this was unnecessarily complicated so have changed all the figures to absolute priors on the parameters.
+We also explicitly include the the fractional error on right axis in addition to the absolute error on the left axis.
+The referee's question still remains: why does a 3% prior on H_0, say, help if the data itself constrain it to 1%. We stand by our result that it does help. Imagine a 1-D likelihood with one experiment giving a 1% constraint and another [here called "external"] a similar 1% constraint. When combining the 2, the constraint will be tighter, with the new error given by the inverse square root of the sum of the two inverse variances: [1/\sigma_1^2 + 1/\sigma_2^2]^{-1/2}. In the simple example above the external prior is equal to the internal constraint, so the total constraint is reduced by \sqrt{2}. In the example given by the referee [external constraint 3 times looser], there will still be improvement, albeit only by a factor of \sqrt{1 + 1/9}, ~5%. In multi-dimensional space, things are not that simple, but the plots show how things improve. To come back to our first response, we believe this information is extremely important for future planning. While it is true that people have studied degeneracies before, their impact has not been presented in this way. The very fact that the plots are not familiar indicates that we are introducing a new way, we think a productive way, of thinking about planning. We have added a paragraph in the text that attempts to explain this point more clearly and -- as noted -- have changed the x-axis on all plots to make things less confusing.
 
 - I think that the claim of dramatically improving dark energy is
 wrong. That authors themselves show that in the best case scenario
@@ -75,7 +77,7 @@ structure though;
 
 right; we meant "high redshift" compared to other lensing data, but the wording is clearly bad. We've fixed by removing "high redshift"
 
-"'"
+
 - - in the introduction rephrase the 4th sentence. New experiments are
 built to have a better sensitivity, it is not a success, it is meant
 to happen;
@@ -119,17 +121,14 @@ the above temperature discussion with references to latest results or
 general papers describing the experiments, and the last two should
 contribute to the polarization discussion.
 
-We organized the discussion into ground base and satellite experiments. For this reason
-we mentioned ACT and SPT toghether with DASI. We added references to general papers
-describing actpol and sptpol.
+We were not focused so much on the experiments but the achievements that feed into the projections in this paper. First, there was detection of polarization; then measurement of small scale anisotropies that yield the damping tail and the lensing maps. Reworded taking out explicit mention of the experiments to be clearer.
 
 
 - In the introduction the cosmological dependence on neutrinos
 properties jumps from number to masses to number again, it is
 confusing please rephrase.
 
-We introduce the two main topics of that paragraph (N_eff and M_nu) in the first sentence and we then
-describe one after the other in the remaining. We strengthen the connector, hopefully reducing the confusion.
+We introduce the two main topics of that paragraph (N_eff and M_nu) in the first sentence and we then describe one after the other in the remaining. We strengthen the connector, hopefully reducing the confusion.
 
 - Choose between Universe or universe.
 
@@ -138,8 +137,7 @@ Done
 
 - Define the cosmological parameters listed in the introduction.
 
-The parameters used in our pipelines are quite standard in the field, and we think that pointing the
-reader to the Planck cosmology paper is probably enough.
+Done
 
 - In the introduction “model LCDM” -> “LCDM model”
 
@@ -183,10 +181,7 @@ Thanks, done.
 - Section IIIA, what is the meaning of “since the active neutrino
 number density are known in the standard model”?
 
-We meant that what is probed by the CMB is the energy density of neutrinos which can be
-turned into a total neutrino mass (in the massive case) by knowing the number density
-E= m n
-We rephrease the sentence cause the presence of the term standard model can cause confusion.
+We meant that the number density of active neutrinos is a robust prediction emerging from the Standard Model of particle physics. Capitalized to make a little clearer
 
 
 - Section IIIA, “a constraint on the the” -> “a constraint on the”
@@ -220,7 +215,11 @@ We fixed it.
 Done (http://arxiv.org/abs/1211.0310)
 
 - Last part of Section IV, what do the authors mean with surveys
-beyoond DESI and LSST? LSST is beyond DESI and I am not aware of
+beyond DESI and LSST? LSST is beyond DESI and I am not aware of
 post-LSST surveys. Also, galaxy surveys will not help in constraining
 n_s.
+
+Part of the point here is to motivate surveys that extract more of the information on the sky than will DESI and LSST. We agree with the referee that such surveys [galaxy or otherwise] are not currently planned, but we think the arguments here can help motivate people to start planning them. Already, several of the plots in this paper were shown at the NRAO 2020 Futures meeting [https://science.nrao.edu/science/meetings/2015/2020futures/program]
+
+
 ---------------------
