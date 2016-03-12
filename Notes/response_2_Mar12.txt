@@ -1,0 +1,54 @@
+If I understand correctly - if I do not then the text needs to explain
+better what is plotted - the curves are showing improvements on a
+given constraint going from the no-prior case, far right, to tighter
+priors included, moving to the left, and each curve corresponds to
+priors on a different cosmological parameter. If this is the case then
+the label of the curves should be the parameter which has the prior
+and the sigma of the pipeline has no meaning for the curve, it could
+be added as a vertical line or just reported in the text. In the text
+the authors describe the x axis as sigma/param, the sigma_pipeline
+should have the same notation to easily compare numbers.
+
+
+
+Also, why insome cases the curves are above the no-prior level (as in Fig. 3)?
+
+    This is related to the limits of the x-axis we chose. We attached a different version of Fig.3
+    that extends beyond the 1% level of external prior and as you can see the curves converge to the
+    pipeline only value.
+
+We resctict the x-axis to zoom in into the interesting region of the curves.
+
+
+
+I am assuming that the curves have changed compared to the previous
+version of the paper because the x axis is different, can the authors
+please confirm this?
+
+    The referee is right. The main difference in the new version of the plots is that
+    the x-axis is now the external prior as a percent of the value under consideration, i.e.
+    sigma_ext(X)/X.
+    Before we were using a different, slightly confusing x-axis, simga_ext(X)/simga_pipeline(X)
+
+Minor corrections:
+- “Similarly, we vary Neff” -> “We vary Neff” - similarly is a
+leftover from the previous version where the authors were fixing Yp.
+
+Done
+- Label Fig. 1 “External Prior” with no “on”
+Done
+
+- “However, an external an external” -> “However, an external”
+- “all-sky CMB experiments” -> “CMB experiments measuring the large
+scales” - CLASS is not full-sky for example
+
+Done
+
+Leftover from previous comments:
+- Section IIIA, “since the active neutrino number densities are known
+in the Standard Model”, I suggest the authors use the sentence they
+wrote in the response, e.g, “considering the robust prediction from
+particle physics Standard Model for the number density of active
+neutrinos”.
+
+Done
