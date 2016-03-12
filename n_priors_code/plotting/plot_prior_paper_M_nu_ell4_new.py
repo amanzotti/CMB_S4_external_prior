@@ -187,7 +187,7 @@ label['scalar_nrun(1)'] = r'\alpha_{s}'
 fisher_inv = np.linalg.inv(fisher_mat)
 fisher_inplace = fisher_mat.copy()
 
-
+utils.print_resume_stat(fisher_mat,fid)
 # CYCLE ON PARAMETERS (KEYS HERE)
 
 for key_y in ['omnuh2']:
@@ -220,7 +220,10 @@ for key_y in ['omnuh2']:
         # normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
         # *93.14 * 1000. to go to M_nu
-        line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+        # line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+        #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+
+        line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
     plt.title(r'$\rm S4~ + ~BAO15$')
@@ -233,7 +236,7 @@ for key_y in ['omnuh2']:
     # ax1.set_xlim((0.1, 3.1))
     ax1.axhline(16.94 / 100. * fid['omnuh2'] * 94. * 1000., xmin=0., xmax=0.35, alpha=0.4, linewidth=2, label='DESI')
     ax1.set_ylabel(r'$\sigma(\sum m_\nu) $ meV')
-    ax1.set_xlabel(r'$\rm{External ~ prior~on~(\%)}$')
+    ax1.set_xlabel(r'$\rm{External ~ prior~ (\%)}$')
 
     vals = ax1.get_xticks()
     ax1.set_xticklabels([r'{:3.1f}$\%$'.format(x) for x in vals])
@@ -261,7 +264,7 @@ for key_y in ['omnuh2']:
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_omnuh2_lmin4.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     # plt.clf()
 

@@ -218,7 +218,10 @@ for key_y in ['massless_neutrinos']:
         # normalize_y = new_sigma / sigma_just_CMB_y  # make the new sigma y relative.
         # plot
 
-        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+        # line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
+        #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+
+        line_plot = ax1.plot(prior_value*100., new_sigma , label=r'$\sigma_{{\rm{{pipeline}}}}({0})$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
         # new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)
@@ -268,7 +271,7 @@ for key_y in ['massless_neutrinos']:
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_massless_neutrinos.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     plt.clf()
 

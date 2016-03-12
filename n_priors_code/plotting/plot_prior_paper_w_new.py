@@ -220,9 +220,9 @@ for  key_y in ['w']:
         # line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma({0})={1:.1f}\%$'.format(
         #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
-        line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
+        line_plot = ax1.plot(prior_value*100., new_sigma , label=r'$\sigma_{{\rm{{pipeline}}}}({0})$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
 
         vals = ax1.get_xticks()
@@ -259,7 +259,7 @@ for  key_y in ['w']:
         # ============================================
 
         # ============================================
-        plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_{}_{}_lmin={}_lmax={}_ndet={}_fsky={}.pdf'.format(str(key_y),str(key), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+        plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_w_hubble.pdf'.format(str(key_y),str(key), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                     format='pdf', bbox_inches='tight')
         plt.clf()
 
