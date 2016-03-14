@@ -221,7 +221,7 @@ for key_y in ['massless_neutrinos']:
         # line_plot = ax1.plot(prior_value*100., new_sigma, label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
         #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
-        line_plot = ax1.plot(prior_value*100., new_sigma , label=r'$\sigma_{{\rm{{pipeline}}}}({0})$'.format(
+        line_plot = ax1.plot(prior_value*100., new_sigma , label=r'${0}$'.format(
             str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
 
         # new_sigma_all = utils.return_simgax_all_prior(fid, fisher_mat, key_y)

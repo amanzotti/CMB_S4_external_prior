@@ -187,7 +187,7 @@ label['scalar_nrun(1)'] = r'\alpha_{s}'
 fisher_inv = np.linalg.inv(fisher_mat)
 fisher_inplace = fisher_mat.copy()
 
-utils.print_resume_stat(fisher_mat,fid)
+utils.print_resume_stat(fisher_mat, fid)
 # CYCLE ON PARAMETERS (KEYS HERE)
 
 for key_y in ['omnuh2']:
@@ -200,7 +200,7 @@ for key_y in ['omnuh2']:
     lines = ["-", "--", "-.", ":"]
     linecycler = cycle(lines)
 
-    for i, key in enumerate(['hubble','omch2','scalar_spectral_index(1)','scalar_amp(1)']):
+    for i, key in enumerate(['hubble', 'omch2', 'scalar_spectral_index(1)', 'scalar_amp(1)']):
 
         print key
 
@@ -222,14 +222,18 @@ for key_y in ['omnuh2']:
         # *93.14 * 1000. to go to M_nu
         # line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})={1:.1f}\%$'.format(
         #     str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+        linestyle = next(linecycler)
+        color = next(colorcycler)
 
-        line_plot = ax1.plot(prior_value*100., new_sigma * 94. * 1000., label=r'$\sigma_{{\rm{{pipeline}}}}({0})$'.format(
-            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), linestyle=next(linecycler))
+        # ax1.axvline(x=np.abs(sigma_just_CMB_x * 100.), ymin=0.9, linestyle=linestyle, color=color,alpha=0.8)
+
+        line_plot = ax1.plot(prior_value * 100., new_sigma * 94. * 1000., label=r'${0}$'.format(
+            str(label[key]), np.abs(sigma_just_CMB_x * 100.)), color=color, linestyle=linestyle)
 
     plt.title(r'$\rm S4~ + ~BAO15$')
 
     ax1.minorticks_on()
-    low_lim = np.min(0.8 * np.amin(new_sigma),0.8 * 16.94 / 100. * fid['omnuh2'])
+    low_lim = np.min(0.8 * np.amin(new_sigma), 0.8 * 16.94 / 100. * fid['omnuh2'])
     ax1.set_ylim((0.8 * np.amin(new_sigma) * 94. * 1000., 1.1 * np.amax(new_sigma) * 94. * 1000.))
     ax1.set_ylim((12, 28))
 
@@ -255,7 +259,7 @@ for key_y in ['omnuh2']:
 
     # Put snow mass line
     # Put a legend below current axis
-    ax1.legend(loc=0,fancybox=True)
+    ax1.legend(loc=0, fancybox=True)
 
     ax1.grid(True, alpha=0.4, linewidth=0.01)
     # ============================================
@@ -264,7 +268,7 @@ for key_y in ['omnuh2']:
     # ============================================
 
     # ============================================
-    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_omnuh2_lmin4.pdf'.format(str(key_y),lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
+    plt.savefig('/home/manzotti/n_eff-dependence-on-prior/Notes/images/prior_omnuh2_lmin4.pdf'.format(str(key_y), lmin, lmax, N_det, fsky), dpi=400, papertype='Letter',
                 format='pdf', bbox_inches='tight')
     # plt.clf()
 
