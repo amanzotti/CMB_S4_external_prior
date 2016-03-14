@@ -9,16 +9,19 @@ be added as a vertical line or just reported in the text. In the text
 the authors describe the x axis as sigma/param, the sigma_pipeline
 should have the same notation to easily compare numbers.
 
+    We decided to remove the values of the pipeline constrains from the labels of the curves, leaving only the parameter
+    they refer to.
+    We placed the pipeline constraints in the caption text using a consistent notation sigma/param. We tried other options, like the vertical line one, but they tend to make they figure crowded and hard to understand.
+
 
 
 Also, why insome cases the curves are above the no-prior level (as in Fig. 3)?
 
-    This is related to the limits of the x-axis we chose. We attached a different version of Fig.3
-    that extends beyond the 1% level of external prior and as you can see the curves converge to the
-    pipeline only value.
+    This is due to the limits of the x-axis we chose. We attached a different version of Fig.3
+    that extends beyond the 1% level of external prior and it shows that the curves converge to the
+    "pipeline only" value.
 
-We resctict the x-axis to zoom in into the interesting region of the curves.
-
+    We resctict the x-axis to zoom in into the interesting region of the curves.
 
 
 I am assuming that the curves have changed compared to the previous
@@ -30,19 +33,32 @@ please confirm this?
     sigma_ext(X)/X.
     Before we were using a different, slightly confusing x-axis, simga_ext(X)/simga_pipeline(X)
 
+
+
+
 Minor corrections:
+
 - “Similarly, we vary Neff” -> “We vary Neff” - similarly is a
 leftover from the previous version where the authors were fixing Yp.
 
-Done
+    Done. Thanks.
+
+
 - Label Fig. 1 “External Prior” with no “on”
-Done
+
+    Done. Thanks.
+
 
 - “However, an external an external” -> “However, an external”
+
+    Done. Thanks.
+
+
 - “all-sky CMB experiments” -> “CMB experiments measuring the large
 scales” - CLASS is not full-sky for example
 
-Done
+    Done. Thanks.
+
 
 Leftover from previous comments:
 - Section IIIA, “since the active neutrino number densities are known
@@ -51,4 +67,4 @@ wrote in the response, e.g, “considering the robust prediction from
 particle physics Standard Model for the number density of active
 neutrinos”.
 
-Done
+    Done. Thanks.
